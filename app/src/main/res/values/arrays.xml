@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="notification_values">
+        <item>@string/notification_always</item>
+        <item>@string/notification_never</item>
+        <item>@string/notification_background</item>
+    </array>
+    <array name="alarm_values">
+        <item>@string/alarm_never</item>
+        <item>@string/alarm_daily</item>
+        <item>@string/alarm_weekly</item>
+    </array>
+</resources>

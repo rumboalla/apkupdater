@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.apkupdater"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+    >
+        <activity
+            android:name="com.apkupdater.activity.MainActivity_"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"
+        >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.apkupdater.activity.SettingsActivity_"
+            android:label="@string/app_name"
+            android:theme="@style/PreferenceScreenTheme"
+        />
+
+        <service android:name="com.apkupdater.service.UpdaterService_"/>
+
+        <receiver android:name=".service.AlarmReceiver_" android:exported="false">
+            <intent-filter>
+                <action android:name="com.apkupdater.alarm"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".service.BootReceiver_">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
