@@ -3,10 +3,11 @@ APKUpdater is a tool that simplifies the process of finding updates for your ins
 
 # Features
 * Get updates from multiple sources.
-* Schedule background checks.
+* Schedule background update checks.
 * Supports Android 2.3 to 7.0.
 * Modern material design.
 * Display notifications when updates are found.
+* Ignore list for apps that should not be checked for updates.
 
 # Used libraries
 Big thanks to the developers of these wonderful libraries:
