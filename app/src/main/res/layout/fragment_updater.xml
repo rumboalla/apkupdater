@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_view"
+    />
+    <ProgressBar
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:id="@+id/loader"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+    />
+</RelativeLayout>
