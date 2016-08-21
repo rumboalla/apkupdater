@@ -27,6 +27,7 @@ At the moment three sources are supported:
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836761/22a2c24e-679e-11e6-83b4-1d48ba1035bf.png" width="256">
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836764/22a4d660-679e-11e6-9d3b-0ff6bdde7880.png" width="256">
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836763/22a40744-679e-11e6-8353-ab2f7f474f43.png" width="256">
+<img src="https://cloud.githubusercontent.com/assets/21153554/17836815/42c6e856-679f-11e6-91dc-c68bc39b3f15.png" width="256">
 
 # License
 Copyright &copy; 2016 Rumboalla.
