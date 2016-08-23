@@ -20,7 +20,7 @@ Big thanks to the developers of these wonderful libraries:
 At the moment three sources are supported:
 * [APKMirror](http://androidannotations.org)
 * [APKPure](https://apkpure.com)
-* [Google Play](https://play.google.com) (Download from [Evozi](https://apps.evozi.com/apk-downloader/)
+* [Google Play](https://play.google.com) (Download from [Evozi](https://apps.evozi.com/apk-downloader/))
 
 # Screenshots
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836760/228bca80-679e-11e6-8394-2fa321702709.png" width="256">
