@@ -27,6 +27,8 @@
     <string name="preferences_general_ignorelist_key">preferences_general_ignorelist_key</string>
     <string name="preferences_general_notification_title">Notifications</string>
     <string name="preferences_general_notification_key">preferences_general_notification_key</string>
+    <string name="preferences_general_theme_title">Theme</string>
+    <string name="preferences_general_theme_key">preferences_general_theme_key</string>
     <string name="preferences_general_alarm_title">Check for updates</string>
     <string name="preferences_general_alarm_key">preferences_general_alarm_key</string>
     <string name="preferences_general_use_apkmirror_title">Updates from APKMirror</string>
@@ -44,6 +46,10 @@
     <string name="alarm_never">Never</string>
     <string name="alarm_daily">Daily</string>
     <string name="alarm_weekly">Weekly</string>
+    <string name="theme_blue">Blue</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_orange">Orange</string>
     <string name="content_description_app_icon">App Icon</string>
 </resources>
 
