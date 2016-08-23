@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.updater.Update;
 import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.ColorUtitl;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -56,7 +57,7 @@ public class UpdaterView
 		mPname.setText(update.getPname());
 		mVersion.setText(update.getVersion());
 		mUrl.setText(update.getUrl());
-
+		mUrl.setTextColor(ColorUtitl.getColorFromTheme(getContext().getTheme(), R.attr.colorAccent));
 		try {
 			Drawable icon = getContext().getPackageManager().getApplicationIcon(update.getPname());
 			mIcon.setImageDrawable(icon);

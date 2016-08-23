@@ -1,59 +1,53 @@
 <resources>
 
-    <!--<style name="AppThemeBlue" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!--<item name="android:textColorPrimary">@color/textColorPrimary</item>-->
-        <!--<item name="android:textColorSecondary">@color/textColorSecondary</item>-->
-        <!--<item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>-->
-        <!--<item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>-->
-        <!--<item name="windowActionBar">false</item>-->
-        <!--<item name="windowNoTitle">true</item>-->
-    <!--</style>-->
-
-    <style name="AppThemeBlue" parent="Theme.AppCompat.Light">
+    <!-- Blue Theme -->
+    <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#0D47A1</item>
-        <item name="colorPrimaryDark">#000000</item>
-        <item name="colorAccent">#BAD9FF</item>
-        <item name="colorControlNormal">#BAD9FF</item>
+        <item name="colorPrimaryDark">#092b61</item>
+        <item name="colorAccent">#6dabf7</item>
+        <item name="colorControlNormal">#6dabf7</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#99FFFFFF</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppThemeOrange" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="PreferenceThemeBlue" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#0D47A1</item>
+        <item name="colorPrimaryDark">#092b61</item>
+    </style>
+
+    <!-- Orange Theme -->
+    <style name="AppThemeOrange" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FF9800</item>
         <item name="colorPrimaryDark">#F57C00</item>
         <item name="colorAccent">#FF5252</item>
         <item name="colorControlNormal">#FF5252</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#99FFFFFF</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppThemeLight" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#CCCCCC</item>
-        <item name="colorPrimaryDark">#000000</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppThemeDark" parent="Theme.AppCompat">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-
-
-    <style name="PreferenceScreenThemeBlue" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorAccent">#0D47A1</item>
-    </style>
-
-    <style name="PreferenceScreenThemeOrange" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="PreferenceThemeOrange" parent="Theme.AppCompat.Light">
         <item name="colorAccent">#FF9800</item>
+        <item name="colorPrimaryDark">#F57C00</item>
     </style>
+
+    <!-- Pink Theme -->
+    <style name="AppThemePink" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">#dc64d0</item>
+        <item name="colorPrimaryDark">#994691</item>
+        <item name="colorAccent">#f7ff00</item>
+        <item name="colorControlNormal">#f7ff00</item>
+    </style>
+
+    <style name="PreferenceThemePink" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#dc64d0</item>
+        <item name="colorPrimaryDark">#994691</item>
+    </style>
+
+    <!-- Dark Theme -->
+    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">#16ac01</item>
+        <item name="colorControlNormal">#16ac01</item>
+    </style>
+    <style name="PreferenceThemeDark" parent="AppThemeDark"/>
 
 </resources>
