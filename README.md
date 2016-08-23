@@ -29,6 +29,9 @@ At the moment three sources are supported:
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836764/22a4d660-679e-11e6-9d3b-0ff6bdde7880.png" width="256">
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836763/22a40744-679e-11e6-8353-ab2f7f474f43.png" width="256">
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836815/42c6e856-679f-11e6-91dc-c68bc39b3f15.png" width="256">
+<img src="https://cloud.githubusercontent.com/assets/21153554/17906593/460c77f8-6978-11e6-9675-b5361166584d.png" width="256">
+<img src="https://cloud.githubusercontent.com/assets/21153554/17906592/460c3a36-6978-11e6-896d-371c181c4797.png" width="256">
+<img src="https://cloud.githubusercontent.com/assets/21153554/17906591/460c0a84-6978-11e6-9b85-c29b76680a43.png" width="256">
 
 # License
 Copyright &copy; 2016 Rumboalla.
