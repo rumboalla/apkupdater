@@ -189,12 +189,15 @@ public class MainActivity
 		} else if (options.getTheme().equals(getString(R.string.theme_dark))) {
 			setTheme(R.style.AppThemeDark);
 			mCurrentTheme = getString(R.string.theme_dark);
-		} else if (options.getTheme().equals(getString(R.string.theme_light))) {
-			setTheme(R.style.AppThemeLight);
-			mCurrentTheme = getString(R.string.theme_light);
+		} else if (options.getTheme().equals(getString(R.string.theme_pink))) {
+			setTheme(R.style.AppThemePink);
+			mCurrentTheme = getString(R.string.theme_pink);
 		}else if (options.getTheme().equals(getString(R.string.theme_orange))) {
 			setTheme(R.style.AppThemeOrange);
 			mCurrentTheme = getString(R.string.theme_orange);
+		} else {
+			setTheme(R.style.AppThemeBlue);
+			mCurrentTheme = getString(R.string.theme_blue);
 		}
 	}
 
