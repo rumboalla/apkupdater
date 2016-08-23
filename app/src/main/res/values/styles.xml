@@ -1,23 +1,59 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+    <!--<style name="AppThemeBlue" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--<item name="android:textColorPrimary">@color/textColorPrimary</item>-->
+        <!--<item name="android:textColorSecondary">@color/textColorSecondary</item>-->
+        <!--<item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>-->
+        <!--<item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+    <!--</style>-->
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppThemeBlue" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#0D47A1</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#BAD9FF</item>
+        <item name="colorControlNormal">#BAD9FF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#99FFFFFF</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppThemeOrange" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#FF9800</item>
+        <item name="colorPrimaryDark">#F57C00</item>
+        <item name="colorAccent">#FF5252</item>
+        <item name="colorControlNormal">#FF5252</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#99FFFFFF</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#CCCCCC</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="PreferenceScreenTheme" parent="AppTheme.NoActionBar">
-        <item name="colorAccent">@color/colorPrimary</item>
+    <style name="AppThemeDark" parent="Theme.AppCompat">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+
+    <style name="PreferenceScreenThemeBlue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">#0D47A1</item>
+    </style>
+
+    <style name="PreferenceScreenThemeOrange" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">#FF9800</item>
     </style>
 
 </resources>
