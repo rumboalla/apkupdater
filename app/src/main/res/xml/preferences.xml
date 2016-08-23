@@ -5,13 +5,20 @@
     <PreferenceCategory
         android:title="@string/preferences_general_category"
         android:key="pref_key_general_settings"
-        android:layout="@layout/preference_category"
     >
         <SwitchPreference
             android:key="@string/preferences_general_skip_experimental_key"
             android:summary="@string/preferences_general_skip_experimental_summary"
             android:title="@string/preferences_general_skip_experimental_title"
             android:defaultValue="false"
+        />
+        <ListPreference
+            android:key="@string/preferences_general_theme_key"
+            android:title="@string/preferences_general_theme_title"
+            android:summary="%s"
+            android:entries="@array/theme_values"
+            android:entryValues="@array/theme_values"
+            android:defaultValue="@string/theme_blue"
         />
         <ListPreference
             android:key="@string/preferences_general_notification_key"
@@ -40,7 +47,6 @@
     <PreferenceCategory
         android:title="@string/preferences_sources_category"
         android:key="pref_key_sources_settings"
-        android:layout="@layout/preference_category"
     >
         <SwitchPreference
             android:key="@string/preferences_general_use_apkmirror_key"

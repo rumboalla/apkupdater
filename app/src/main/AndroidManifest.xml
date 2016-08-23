@@ -10,12 +10,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppThemeBlue"
     >
         <activity
             android:name="com.apkupdater.activity.MainActivity_"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop"
         >
             <intent-filter>
@@ -27,7 +26,6 @@
         <activity
             android:name="com.apkupdater.activity.SettingsActivity_"
             android:label="@string/app_name"
-            android:theme="@style/PreferenceScreenTheme"
         />
 
         <service android:name="com.apkupdater.service.UpdaterService_"/>
