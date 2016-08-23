@@ -1,5 +1,5 @@
 # APKUpdater
-APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it.
+APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it. This is a very useful app for those who want to rund Android without an app store.
 
 # Features
 * Get updates from multiple sources.
