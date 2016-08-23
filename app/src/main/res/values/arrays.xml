@@ -12,7 +12,7 @@
     </array>
     <array name="theme_values">
         <item>@string/theme_blue</item>
-        <item>@string/theme_light</item>
+        <item>@string/theme_pink</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_orange</item>
     </array>

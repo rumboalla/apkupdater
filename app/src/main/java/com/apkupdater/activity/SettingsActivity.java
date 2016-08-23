@@ -2,6 +2,7 @@ package com.apkupdater.activity;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,13 +60,15 @@ public class SettingsActivity
 	) {
 		UpdaterOptions options = new UpdaterOptions(mContext);
 		if(options.getTheme().equals(getString(R.string.theme_blue))) {
-			setTheme(R.style.PreferenceScreenThemeBlue);
+			setTheme(R.style.PreferenceThemeBlue);
 		} else if (options.getTheme().equals(getString(R.string.theme_dark))) {
-			setTheme(R.style.AppThemeDark);
-		} else if (options.getTheme().equals(getString(R.string.theme_light))) {
-			setTheme(R.style.AppThemeLight);
+			setTheme(R.style.PreferenceThemeDark);
+		} else if (options.getTheme().equals(getString(R.string.theme_pink))) {
+			setTheme(R.style.PreferenceThemePink);
 		}else if (options.getTheme().equals(getString(R.string.theme_orange))) {
-			setTheme(R.style.PreferenceScreenThemeOrange);
+			setTheme(R.style.PreferenceThemeOrange);
+		} else {
+			setTheme(R.style.PreferenceThemeBlue);
 		}
 	}
 
