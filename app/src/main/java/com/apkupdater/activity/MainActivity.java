@@ -5,7 +5,6 @@ package com.apkupdater.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +14,9 @@ import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.R;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
-import com.apkupdater.service.AlarmReceiver_;
 import com.apkupdater.service.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.MyBus;
 import com.squareup.otto.Subscribe;
 
@@ -28,9 +27,11 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EActivity(R.layout.activity_main)
+@EActivity
 @OptionsMenu(R.menu.menu_main)
 public class MainActivity
 	extends AppCompatActivity
@@ -49,8 +50,19 @@ public class MainActivity
 	@Bean
 	MyBus mBus;
 
+	private String mCurrentTheme;
+
 	// Not sure how safe this is...maybe save it on saveInstanceState
 	static boolean mFirstStart = true;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setThemeFromOptions();
+		setContentView(R.layout.activity_main);
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -167,6 +179,39 @@ public class MainActivity
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void setThemeFromOptions(
+	) {
+		UpdaterOptions options = new UpdaterOptions(this);
+		if(options.getTheme().equals(getString(R.string.theme_blue))) {
+			setTheme(R.style.AppThemeBlue);
+			mCurrentTheme = getString(R.string.theme_blue);
+		} else if (options.getTheme().equals(getString(R.string.theme_dark))) {
+			setTheme(R.style.AppThemeDark);
+			mCurrentTheme = getString(R.string.theme_dark);
+		} else if (options.getTheme().equals(getString(R.string.theme_light))) {
+			setTheme(R.style.AppThemeLight);
+			mCurrentTheme = getString(R.string.theme_light);
+		}else if (options.getTheme().equals(getString(R.string.theme_orange))) {
+			setTheme(R.style.AppThemeOrange);
+			mCurrentTheme = getString(R.string.theme_orange);
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		UpdaterOptions options = new UpdaterOptions(this);
+		if (!mCurrentTheme.equals(options.getTheme())) {
+			finish();
+			MainActivity_.intent(this).flags(FLAG_ACTIVITY_CLEAR_TOP).extra("tab", mTabLayout.getSelectedTabPosition()).start();
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

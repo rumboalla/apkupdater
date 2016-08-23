@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_version"
-            android:textColor="@color/colorPrimaryDark"
+
             android:textSize="12sp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"

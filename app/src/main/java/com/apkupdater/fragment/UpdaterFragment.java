@@ -23,6 +23,7 @@ import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.installedapp.InstalledAppUtil;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.updater.Update;
+import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.SnackBarUtil;
 import com.google.gson.Gson;
@@ -250,7 +251,7 @@ public class UpdaterFragment
 	) {
 		// Set the correct color for the ProgressBar
 		mProgressBar.setIndeterminate(true);
-		mProgressBar.getIndeterminateDrawable().setColorFilter(mPrimaryColor, android.graphics.PorterDuff.Mode.MULTIPLY);
+		mProgressBar.getIndeterminateDrawable().setColorFilter(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
 		loadDataFromSharedPrefs();
 
 		if (isMyServiceRunning(UpdaterService_.class)) {
