@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0d47a1</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#ffffff</color>
+    <!--<color name="colorPrimary">#0d47a1</color>-->
+    <!--<color name="colorAccent">#ffffff</color>-->
+    <!--<color name="colorAccentDark">#77ffffff</color>-->
+
+    <color name="colorPrimary">#0D47A1</color>
+    <color name="colorPrimaryDark">#0c3791</color>
+    <color name="colorPrimaryLight">#FFFFFF</color>
+
+    <!-- accent color: red -->
+    <color name="colorAccent">#BAD9FF</color>
+
+    <!-- text color: white -->
+    <color name="textColorPrimary">#FF0000</color>
+    <color name="textColorSecondary">#FFFF00</color>
+
+    <!-- inverse text color: 87% black -->
+    <color name="textColorPrimaryInverse">#00FF00</color>
+    <color name="textColorSecondaryInverse">#00FFFF</color>
+
 </resources>

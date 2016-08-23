@@ -10,4 +10,10 @@
         <item>@string/alarm_daily</item>
         <item>@string/alarm_weekly</item>
     </array>
+    <array name="theme_values">
+        <item>@string/theme_blue</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_orange</item>
+    </array>
 </resources>
