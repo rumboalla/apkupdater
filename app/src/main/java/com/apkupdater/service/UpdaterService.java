@@ -1,17 +1,10 @@
 package com.apkupdater.service;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.NotificationCompat;
 
 import com.apkupdater.R;
-import com.apkupdater.activity.MainActivity;
-import com.apkupdater.activity.MainActivity_;
 import com.apkupdater.event.UpdateFinalProgressEvent;
 import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
@@ -27,7 +20,6 @@ import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
 import com.apkupdater.util.MyBus;
-import com.google.gson.Gson;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -39,9 +31,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import com.apkupdater.model.AppState;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +49,9 @@ public class UpdaterService
 
 	@Bean
 	InstalledAppUtil mInstalledAppUtil;
+
+	@Bean
+	AppState mAppState;
 
 	private final Lock mMutex = new ReentrantLock(true);
 	private List<Update> mUpdates = new ArrayList<>();
@@ -134,7 +130,7 @@ public class UpdaterService
 				return;
 			}
 
-			clearResultsFromSharedPrefs();
+			mAppState.clearUpdates();
 
 			// Send start event
 			mBus.post(new UpdateStartEvent());
@@ -181,7 +177,7 @@ public class UpdaterService
 			}
 
 			// Notify that the update check is over
-			saveResultsToSharedPrefs();
+			mAppState.setUpdates(mUpdates);
 			mNotification.finishNotification(mUpdates.size());
 			mBus.post(new UpdateFinalProgressEvent(mUpdates));
 			mBus.post(new UpdateStopEvent(exit_message));
@@ -192,25 +188,6 @@ public class UpdaterService
 			mNotification.failNotification();
 			mMutex.unlock();
 		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void saveResultsToSharedPrefs(
-	) {
-		SharedPreferences.Editor editor = getBaseContext().getSharedPreferences("updates", MODE_PRIVATE).edit();
-		Gson gson = new Gson();
-		editor.putString("updates", gson.toJson(mUpdates));
-		editor.commit();
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void clearResultsFromSharedPrefs(
-	) {
-		SharedPreferences.Editor editor = getBaseContext().getSharedPreferences("updates", MODE_PRIVATE).edit();
-		editor.remove("updates");
-		editor.commit();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
