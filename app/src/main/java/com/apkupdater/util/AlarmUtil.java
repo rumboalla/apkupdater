@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.apkupdater.R;
-import com.apkupdater.service.AlarmReceiver_;
+import com.apkupdater.receiver.AlarmReceiver_;
 import com.apkupdater.updater.UpdaterOptions;
 
 import org.androidannotations.annotations.EBean;
