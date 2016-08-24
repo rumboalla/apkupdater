@@ -135,14 +135,9 @@ public class UpdaterNotification
 
 	private PendingIntent createPendingIntent(
 	) {
-		Intent notificationIntent = new Intent(mContext, MainActivity_.class);
-		notificationIntent.setAction("android.intent.action.MAIN");
-		notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
-		//notificationIntent.setComponent(new ComponentName(mContext.getPackageName(), MainActivity_.class.getName()));
-		notificationIntent.putExtra("tab", 1);
-		return PendingIntent.getActivity(mContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		Intent intent = new Intent("com.apkupdater.notification");
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		return PendingIntent.getBroadcast(mContext, 0, intent, 0);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

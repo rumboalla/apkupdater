@@ -30,13 +30,19 @@
 
         <service android:name="com.apkupdater.service.UpdaterService_"/>
 
-        <receiver android:name=".service.AlarmReceiver_" android:exported="false">
+        <receiver android:name=".receiver.AlarmReceiver_" android:exported="false">
             <intent-filter>
                 <action android:name="com.apkupdater.alarm"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".service.BootReceiver_">
+        <receiver android:name=".receiver.NotificationClickReceiver_">
+            <intent-filter>
+                <action android:name="com.apkupdater.notification"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.BootReceiver_">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
