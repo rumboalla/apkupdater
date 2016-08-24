@@ -1,15 +1,14 @@
-package com.apkupdater.service;
+package com.apkupdater.receiver;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.apkupdater.R;
-import com.apkupdater.updater.UpdaterOptions;
-import com.apkupdater.util.AlarmUtil;
+import com.apkupdater.event.InstalledAppTitleChange;
+import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.util.MyBus;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EReceiver;
@@ -17,14 +16,9 @@ import org.androidannotations.annotations.EReceiver;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EReceiver
-public class BootReceiver
+public class AlarmReceiver
 	extends BroadcastReceiver
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Bean
-	AlarmUtil alarmUtil;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -32,7 +26,7 @@ public class BootReceiver
 		Context context,
 		Intent intent
 	) {
-		alarmUtil.setAlarmFromOptions();
+		UpdaterService_.intent(context).start();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

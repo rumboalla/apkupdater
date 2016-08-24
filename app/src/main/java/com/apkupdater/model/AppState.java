@@ -1,4 +1,4 @@
-package model;
+package com.apkupdater.model;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.apkupdater.R;
 import com.apkupdater.updater.Update;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -145,7 +144,7 @@ public class AppState
 		int theme
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().putInt(CURRENT_THEME_KEY, theme).apply();
+		sharedPref.edit().putInt(CURRENT_THEME_KEY, theme).commit();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +178,7 @@ public class AppState
 		List<Update> updates
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().putString(UPDATE_LIST_KEY, new Gson().toJson(updates)).apply();
+		sharedPref.edit().putString(UPDATE_LIST_KEY, new Gson().toJson(updates)).commit();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,7 +187,7 @@ public class AppState
 		Context context
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().remove("UPDATE_LIST_KEY").apply();
+		sharedPref.edit().remove("UPDATE_LIST_KEY").commit();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

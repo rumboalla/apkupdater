@@ -2,9 +2,7 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,8 +24,6 @@ import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
@@ -38,9 +34,9 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.apkupdater.model.AppState;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -70,6 +66,9 @@ public class UpdaterFragment
 
 	@Bean
 	MyBus mBus;
+
+	@Bean
+	AppState mAppState;
 
 	private Bundle mSavedInstance;
 
@@ -189,7 +188,7 @@ public class UpdaterFragment
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadDataFromSharedPrefs();
+		loadData();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,31 +200,21 @@ public class UpdaterFragment
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private boolean loadDataFromSharedPrefs(
+	private boolean loadData(
 	) {
 		mAdapter.clear();
-		SharedPreferences prefs = getContext().getSharedPreferences("updates", Context.MODE_PRIVATE);
-		String s = prefs.getString("updates", "");
-		if (!s.isEmpty()) {
-			Gson gson = new Gson();
-			Type type = new TypeToken<List<Update>>() {
-			}.getType();
 
-			List<Update> updates;
-			try {
-				updates = gson.fromJson(s, type);
-			} catch (Exception e) {
-				updates = new ArrayList<>();
-			}
-
+		// Get the updates and add them to the adapter
+		List<Update> updates = mAppState.getUpdates();
+		if (!updates.isEmpty()) {
 			for (Update i : updates) { // addAll needs API level 11+
 				mAdapter.add(i);
 			}
-
 			sendUpdateTitleEvent();
 			setProgressBarVisibility(INVISIBLE);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -237,8 +226,11 @@ public class UpdaterFragment
 		// Set the correct color for the ProgressBar
 		mProgressBar.setIndeterminate(true);
 		mProgressBar.getIndeterminateDrawable().setColorFilter(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
-		loadDataFromSharedPrefs();
 
+		// Load data
+		loadData();
+
+		// Change the visibility of the loader based on the service status
 		if (ServiceUtil.isServiceRunning(getContext(), UpdaterService_.class)) {
 			setProgressBarVisibility(VISIBLE);
 		} else {
