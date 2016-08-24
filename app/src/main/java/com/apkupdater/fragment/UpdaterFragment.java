@@ -25,6 +25,7 @@ import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.updater.Update;
 import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -194,21 +195,6 @@ public class UpdaterFragment
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private boolean isMyServiceRunning(
-		Class<?> serviceClass
-	) {
-		ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-		List<ActivityManager.RunningServiceInfo> t = manager.getRunningServices(Integer.MAX_VALUE);
-		for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (serviceClass.getName().equals(service.service.getClassName())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	private void sendUpdateTitleEvent(
 	) {
 		mBus.post(new UpdaterTitleChange(getString(R.string.tab_updates) + " (" + mAdapter.getCount() + ")"));
@@ -254,7 +240,7 @@ public class UpdaterFragment
 		mProgressBar.getIndeterminateDrawable().setColorFilter(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
 		loadDataFromSharedPrefs();
 
-		if (isMyServiceRunning(UpdaterService_.class)) {
+		if (ServiceUtil.isServiceRunning(getContext(), UpdaterService_.class)) {
 			setProgressBarVisibility(VISIBLE);
 		} else {
 			setProgressBarVisibility(INVISIBLE);

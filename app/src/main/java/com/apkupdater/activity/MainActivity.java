@@ -27,8 +27,6 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EActivity
@@ -209,7 +207,7 @@ public class MainActivity
 		UpdaterOptions options = new UpdaterOptions(this);
 		if (!mCurrentTheme.equals(options.getTheme())) {
 			finish();
-			MainActivity_.intent(this).flags(FLAG_ACTIVITY_CLEAR_TOP).extra("tab", mTabLayout.getSelectedTabPosition()).start();
+			MainActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TOP).extra("tab", mTabLayout.getSelectedTabPosition()).start();
 		}
 	}
 
