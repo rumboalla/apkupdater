@@ -13,7 +13,7 @@ import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.R;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
-import com.apkupdater.service.BootReceiver_;
+import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ThemeUtil;
@@ -26,7 +26,7 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
-import model.AppState;
+import com.apkupdater.model.AppState;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -52,8 +52,6 @@ public class MainActivity
 	@Bean
 	AppState mAppState;
 
-	private String mCurrentTheme;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -68,7 +66,9 @@ public class MainActivity
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		selectTab(intent.getIntExtra("tab", 0));
+
+		// Select tab
+		selectTab(mAppState.getSelectedTab());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,26 +76,18 @@ public class MainActivity
 	@AfterViews
 	void init(
 	) {
-		// Check the intent to see if we are starting from notification
-		Intent intent = getIntent();
-		int startTab = 0;
-		if (intent != null) {
-			startTab = intent.getIntExtra("tab", -1);
-			if (startTab == -1) {
-				startTab = 0;
-			} else {
-				mAppState.setmFirstStart(false);
-			}
-		}
-
 		checkFirstStart();
-
 		mBus.register(this);
 		setSupportActionBar(mToolbar);
 		mViewPager.setAdapter(new MainActivityPageAdapter(getBaseContext(), getSupportFragmentManager()));
 		mViewPager.setOffscreenPageLimit(2);
 		mTabLayout.setupWithViewPager(mViewPager);
-		selectTab(startTab);
+		mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override public void onTabSelected(TabLayout.Tab tab) { mAppState.setSelectedTab(tab.getPosition()); }
+			@Override public void onTabUnselected(TabLayout.Tab tab) {}
+			@Override public void onTabReselected(TabLayout.Tab tab) {}
+		});
+		selectTab(mAppState.getSelectedTab());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,10 +95,11 @@ public class MainActivity
 	private void checkFirstStart(
 	) {
 		if (mAppState.getFirstStart()) {
-			// Remove any stored updates we had
+			// Remove any stored updates we had and reset tab position
 			mAppState.clearUpdates();
+			mAppState.setSelectedTab(0);
 
-			// Simulate a boot receiver to set alarm
+			// Simulate a boot com.apkupdater.receiver to set alarm
 			new BootReceiver_().onReceive(getBaseContext(), null);
 
 			// Set the first start flag to false
@@ -193,9 +186,13 @@ public class MainActivity
 
 		// We are checking if the theme changed
 		if (mAppState.getCurrentTheme() != ThemeUtil.getActivityThemeFromOptions(getBaseContext())) {
+			mAppState.setSelectedTab(mTabLayout.getSelectedTabPosition());
 			finish();
-			MainActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TOP).extra("tab", mTabLayout.getSelectedTabPosition()).start();
+			MainActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TOP).start();
 		}
+
+		// Select tab
+		selectTab(mAppState.getSelectedTab());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
