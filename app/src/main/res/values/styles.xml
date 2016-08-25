@@ -10,9 +10,10 @@
         <item name="android:textColorSecondary">#99FFFFFF</item>
     </style>
 
-    <style name="PreferenceThemeBlue" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">#0D47A1</item>
-        <item name="colorPrimaryDark">#092b61</item>
+    <style name="PreferenceThemeBlue" parent="AppThemeBlue">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#99000000</item>
+        <item name="tabIndicatorColor">#FFFFFF</item>
     </style>
 
     <!-- Orange Theme -->
@@ -25,9 +26,10 @@
         <item name="android:textColorSecondary">#99FFFFFF</item>
     </style>
 
-    <style name="PreferenceThemeOrange" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">#FF9800</item>
-        <item name="colorPrimaryDark">#F57C00</item>
+    <style name="PreferenceThemeOrange" parent="AppThemeOrange">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#99000000</item>
+        <item name="tabIndicatorColor">#FFFFFF</item>
     </style>
 
     <!-- Pink Theme -->
@@ -38,9 +40,10 @@
         <item name="colorControlNormal">#f7ff00</item>
     </style>
 
-    <style name="PreferenceThemePink" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">#dc64d0</item>
-        <item name="colorPrimaryDark">#994691</item>
+    <style name="PreferenceThemePink" parent="AppThemePink">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#99FFFFFF</item>
+        <item name="tabIndicatorColor">#FFFFFF</item>
     </style>
 
     <!-- Dark Theme -->
@@ -48,6 +51,11 @@
         <item name="colorAccent">#16ac01</item>
         <item name="colorControlNormal">#16ac01</item>
     </style>
-    <style name="PreferenceThemeDark" parent="AppThemeDark"/>
+
+    <style name="PreferenceThemeDark" parent="AppThemeDark">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#99FFFFFF</item>
+        <item name="tabIndicatorColor">#FFFFFF</item>
+    </style>
 
 </resources>
