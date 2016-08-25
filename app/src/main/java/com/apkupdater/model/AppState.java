@@ -187,7 +187,7 @@ public class AppState
 		Context context
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().remove("UPDATE_LIST_KEY").commit();
+		sharedPref.edit().remove(UPDATE_LIST_KEY).commit();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
