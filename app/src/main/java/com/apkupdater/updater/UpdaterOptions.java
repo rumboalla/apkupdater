@@ -65,7 +65,7 @@ public class UpdaterOptions
 	public List<String> getIgnoreList(
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-		String s = sharedPref.getString(mContext.getString(R.string.preferences_general_ignorelist_key), null);
+		String s = sharedPref.getString(mContext.getString(R.string.preferences_general_ignorelist_key), mContext.getString(R.string.preferences_general_ignorelist_value));
 
 		// Fill the list if it's not empty
 		List<String> list = new ArrayList<>();
