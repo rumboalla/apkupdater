@@ -139,7 +139,8 @@ public class UpdaterService
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());
 
 			// Create the notification
-			mNotification = new UpdaterNotification(getBaseContext(), installedApps.size());
+			int multiplier = (options.useAPKMirror() ? 1 : 0) + (options.useAPKPure() ? 1 : 0)  + (options.useGooglePlay() ? 1 : 0) ;
+			mNotification = new UpdaterNotification(getBaseContext(), installedApps.size() * multiplier);
 
 			// Create an executor with 10 threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(10);
