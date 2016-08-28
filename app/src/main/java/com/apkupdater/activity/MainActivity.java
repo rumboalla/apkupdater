@@ -3,6 +3,7 @@ package com.apkupdater.activity;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ThemeUtil;
 import com.squareup.otto.Subscribe;
@@ -88,6 +90,12 @@ public class MainActivity
 			@Override public void onTabReselected(TabLayout.Tab tab) {}
 		});
 		selectTab(mAppState.getSelectedTab());
+
+		if (Build.VERSION.SDK_INT <= 11) { // Fix for 2.3 background not being set properly for some reason
+			getWindow().getDecorView().setBackgroundColor(
+				ColorUtitl.getColorFromTheme(getTheme(), android.R.attr.windowBackground)
+			);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
