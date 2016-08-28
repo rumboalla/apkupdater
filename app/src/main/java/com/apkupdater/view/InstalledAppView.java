@@ -59,10 +59,14 @@ public class InstalledAppView
 		if (options.getIgnoreList().contains(app.getPname())) {
 			if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
 				setAlpha(0.50f);
+			} else {
+				setBackgroundColor(0x77000000);
 			}
 		} else {
 			if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
 				setAlpha(1.0f);
+			} else {
+				setBackgroundColor(0x00FFFFFF);
 			}
 		}
 
