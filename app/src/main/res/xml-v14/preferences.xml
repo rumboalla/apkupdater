@@ -6,7 +6,7 @@
         android:title="@string/preferences_general_category"
         android:key="pref_key_general_settings"
     >
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/preferences_general_skip_experimental_key"
             android:summary="@string/preferences_general_skip_experimental_summary"
             android:title="@string/preferences_general_skip_experimental_title"
@@ -48,19 +48,19 @@
         android:title="@string/preferences_sources_category"
         android:key="pref_key_sources_settings"
     >
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/preferences_general_use_apkmirror_key"
             android:summary="@string/preferences_general_use_apkmirror_summary"
             android:title="@string/preferences_general_use_apkmirror_title"
             android:defaultValue="true"
         />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/preferences_general_use_googleplay_key"
             android:summary="@string/preferences_general_use_googleplay_summary"
             android:title="@string/preferences_general_use_googleplay_title"
             android:defaultValue="false"
         />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/preferences_general_use_apkpure_key"
             android:summary="@string/preferences_general_use_apkpure_summary"
             android:title="@string/preferences_general_use_apkpure_title"
