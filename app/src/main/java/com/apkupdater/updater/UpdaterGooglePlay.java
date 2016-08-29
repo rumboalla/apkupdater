@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.apkupdater.util.VersionUtil;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -65,6 +66,13 @@ public class UpdaterGooglePlay
 			}
 
 			return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
+		} catch (HttpStatusException status) {
+			if (status.getStatusCode() == 404) {
+				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
+			} else {
+				mError = status;
+				return UpdaterStatus.STATUS_ERROR;
+			}
 		} catch (Exception e) {
 			mError = e;
 			return UpdaterStatus.STATUS_ERROR;
