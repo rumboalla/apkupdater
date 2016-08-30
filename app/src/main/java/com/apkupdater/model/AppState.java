@@ -26,6 +26,7 @@ public class AppState
 	final static String SELECTED_TAB_KEY = "selected_tab_key";
 	final static String CURRENT_THEME_KEY = "current_theme_key";
 	final static String UPDATE_LIST_KEY = "update_list_key";
+	final static String SETTINGS_ACTIVE_KEY ="settings_active_key";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -47,6 +48,13 @@ public class AppState
 	public int getSelectedTab(
 	) {
 		return getSelectedTabFromSharedPrefs(mContext);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public boolean getSettingsActive(
+	) {
+		return getSettingsActiveFromSharedPrefs(mContext);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,6 +88,14 @@ public class AppState
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public void setSettingsActive(
+		boolean active
+	) {
+		setSettingsActiveToSharedPrefs(mContext, active);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public void setCurrentTheme(
 		int currentTheme
 	) {
@@ -103,7 +119,7 @@ public class AppState
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public void setmFirstStart(
+	public void setFirstStart(
 		boolean firstStart
 	) {
 		mFirstStart = firstStart;
@@ -126,6 +142,25 @@ public class AppState
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		sharedPref.edit().putInt(SELECTED_TAB_KEY, tab).apply();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private boolean getSettingsActiveFromSharedPrefs(
+		Context context
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		return sharedPref.getBoolean(SETTINGS_ACTIVE_KEY, false);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void setSettingsActiveToSharedPrefs(
+		Context context,
+		boolean active
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		sharedPref.edit().putBoolean(SETTINGS_ACTIVE_KEY, active).apply();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

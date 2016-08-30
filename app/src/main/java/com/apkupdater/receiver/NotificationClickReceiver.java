@@ -30,7 +30,7 @@ public class NotificationClickReceiver
 		Context context,
 		Intent intent
 	) {
-		mAppState.setmFirstStart(false);
+		mAppState.setFirstStart(false);
 		mAppState.setSelectedTab(1);
 		MainActivity_.intent(context).flags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP).start();
 	}

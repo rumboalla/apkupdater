@@ -5,9 +5,9 @@
         <item name="colorPrimary">#0D47A1</item>
         <item name="colorPrimaryDark">#092b61</item>
         <item name="colorAccent">#6dabf7</item>
-        <item name="colorControlNormal">#6dabf7</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#99FFFFFF</item>
+        <item name="preferenceTheme">@style/PreferenceThemeBlue</item>
     </style>
 
     <style name="PreferenceThemeBlue" parent="AppThemeBlue">
@@ -21,9 +21,9 @@
         <item name="colorPrimary">#FF9800</item>
         <item name="colorPrimaryDark">#F57C00</item>
         <item name="colorAccent">#FF5252</item>
-        <item name="colorControlNormal">#FF5252</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#99FFFFFF</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOrange</item>
     </style>
 
     <style name="PreferenceThemeOrange" parent="AppThemeOrange">
@@ -37,7 +37,7 @@
         <item name="colorPrimary">#dc64d0</item>
         <item name="colorPrimaryDark">#994691</item>
         <item name="colorAccent">#f7ff00</item>
-        <item name="colorControlNormal">#f7ff00</item>
+        <item name="preferenceTheme">@style/AppThemePink</item>
     </style>
 
     <style name="PreferenceThemePink" parent="AppThemePink">
@@ -49,7 +49,7 @@
     <!-- Dark Theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">#16ac01</item>
-        <item name="colorControlNormal">#16ac01</item>
+        <item name="preferenceTheme">@style/PreferenceThemeDark</item>
     </style>
 
     <style name="PreferenceThemeDark" parent="AppThemeDark">
