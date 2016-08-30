@@ -9,11 +9,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.R;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
+import com.apkupdater.fragment.SettingsFragment;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.ColorUtitl;
@@ -54,12 +57,17 @@ public class MainActivity
 	@Bean
 	AppState mAppState;
 
+	@ViewById(R.id.settings_container)
+	FrameLayout mSettingsLayout;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(
+		Bundle savedInstanceState
+	) {
 		setThemeFromOptions();
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	}
 
@@ -96,6 +104,32 @@ public class MainActivity
 				ColorUtitl.getColorFromTheme(getTheme(), android.R.attr.windowBackground)
 			);
 		}
+
+		// Add the settings fragment and configure the correct state
+		getSupportFragmentManager().beginTransaction().replace(R.id.settings_container, new SettingsFragment()).commit();
+		switchSettings(mAppState.getSettingsActive());
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void switchSettings(
+		boolean b
+	) {
+		if (b) {
+			mTabLayout.setVisibility(View.GONE);
+			mViewPager.setVisibility(View.GONE);
+			mSettingsLayout.setVisibility(View.VISIBLE);
+			getSupportActionBar().setTitle(getString(R.string.action_settings));
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		} else {
+			mTabLayout.setVisibility(View.VISIBLE);
+			mViewPager.setVisibility(View.VISIBLE);
+			mSettingsLayout.setVisibility(View.GONE);
+			getSupportActionBar().setTitle(getString(R.string.app_name));
+			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		}
+
+		mAppState.setSettingsActive(b);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +145,8 @@ public class MainActivity
 			new BootReceiver_().onReceive(getBaseContext(), null);
 
 			// Set the first start flag to false
-			mAppState.setmFirstStart(false);
+			mAppState.setFirstStart(false);
+			mAppState.setSettingsActive(false);
 		}
 	}
 
@@ -132,7 +167,7 @@ public class MainActivity
 	@OptionsItem(R.id.action_settings)
 	void onSettingsClick(
 	) {
-		SettingsActivity_.intent(this).start();
+		switchSettings(!mAppState.getSettingsActive());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,6 +176,14 @@ public class MainActivity
 	void onUpdateClick(
 	) {
 		UpdaterService_.intent(getApplication()).start();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@OptionsItem(android.R.id.home)
+	void onHomeClick(
+	) {
+		switchSettings(!mAppState.getSettingsActive());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

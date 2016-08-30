@@ -46,9 +46,12 @@ public class AboutFragment
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.setWebViewClient(new WebViewClient() {
 			public void onPageFinished(WebView view, String url) {
-				mWebView.loadUrl(
-					"javascript:document.body.style.setProperty(\"color\", \"" + color + "\");"
-				);
+				try {
+					mWebView.loadUrl(
+						"javascript:document.body.style.setProperty(\"color\", \"" + color + "\");"
+					);
+				} catch (Exception ignored) {
+				}
 			}
 		});
 	}
