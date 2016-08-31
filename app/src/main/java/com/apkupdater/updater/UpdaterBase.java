@@ -36,8 +36,8 @@ public class UpdaterBase
 		mCurrentVersion = cversion;
 		mResultUrl = "";
 		mPname = pname;
-		mResultStatus = parseUrl(getUrl(mPname));
 		mUpdaterType = type;
+		mResultStatus = parseUrl(getUrl(mPname));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,12 +74,12 @@ public class UpdaterBase
 	{
 		List<Integer> cvl = VersionUtil.getVersionFromString(cv);
 		if (cvl == null) {
-			throw new Exception("Unable to parse version: " + cv + ".");
+			throw new Exception("Unable to parse version: " + cv);
 		}
 
 		List<Integer> evl = VersionUtil.getVersionFromString(ev);
 		if (evl == null) {
-			throw new Exception("Unable to parse version: " + ev + ".");
+			throw new Exception("Unable to parse version: " + ev);
 		}
 
 		return VersionUtil.compareVersion(cvl, evl);
