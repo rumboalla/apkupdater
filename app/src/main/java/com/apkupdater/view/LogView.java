@@ -10,38 +10,41 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.model.Update;
-import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.LogMessage;
+import com.apkupdater.updater.UpdaterOptions;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EViewGroup(R.layout.updater_item)
-public class UpdaterView
+@EViewGroup(R.layout.log_item)
+public class LogView
 	extends LinearLayout
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@ViewById(R.id.installed_app_name)
-	TextView mName;
+	@ViewById(R.id.log_title)
+	TextView mTitle;
 
-	@ViewById(R.id.installed_app_pname)
-	TextView mPname;
+	@ViewById(R.id.log_time)
+	TextView mTime;
 
-	@ViewById(R.id.installed_app_version)
-	TextView mVersion;
+	@ViewById(R.id.log_message)
+	TextView mMessage;
 
-	@ViewById(R.id.installed_app_icon)
+	@ViewById(R.id.log_icon)
 	ImageView mIcon;
-
-	@ViewById(R.id.update_url)
-	TextView mUrl;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public UpdaterView(
+	public LogView(
 		Context context
 	) {
 		super(context);
@@ -50,18 +53,20 @@ public class UpdaterView
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void bind(
-		Update update
+		LogMessage message
 	) {
-		mName.setText(update.getName());
-		mPname.setText(update.getPname());
-		mVersion.setText(update.getVersion());
-		mUrl.setText(update.getUrl());
-		mUrl.setTextColor(ColorUtitl.getColorFromTheme(getContext().getTheme(), R.attr.colorAccent));
-		try {
-			Drawable icon = getContext().getPackageManager().getApplicationIcon(update.getPname());
-			mIcon.setImageDrawable(icon);
-		} catch (PackageManager.NameNotFoundException ignored) {
+		mTitle.setText(message.getTitle());
+		mMessage.setText(message.getMessage());
 
+		DateFormat df = SimpleDateFormat.getDateTimeInstance();
+		mTime.setText(df.format(new Date(message.getTime())));
+
+		if (message.getSeverity() == LogMessage.SEVERITY_INFO) {
+			mIcon.setContentDescription("Info");
+		} else if  (message.getSeverity() == LogMessage.SEVERITY_WARNING) {
+			mIcon.setContentDescription("Warning");
+		} else if  (message.getSeverity() == LogMessage.SEVERITY_ERROR) {
+			mIcon.setContentDescription("Error");
 		}
 	}
 

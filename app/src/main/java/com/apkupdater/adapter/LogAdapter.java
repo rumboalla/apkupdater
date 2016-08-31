@@ -8,18 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.apkupdater.model.InstalledApp;
-import com.apkupdater.view.InstalledAppView;
-import com.apkupdater.view.InstalledAppView_;
+import com.apkupdater.model.LogMessage;
+import com.apkupdater.view.LogView;
+import com.apkupdater.view.LogView_;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.UiThread;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EBean
-public class InstalledAppAdapter
-	extends ArrayAdapter<InstalledApp>
+@EBean(scope = EBean.Scope.Singleton)
+public class LogAdapter
+	extends ArrayAdapter<LogMessage>
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +29,7 @@ public class InstalledAppAdapter
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public InstalledAppAdapter(
+	public LogAdapter(
 		Context context
 	) {
 		super(context, 0);
@@ -43,17 +44,28 @@ public class InstalledAppAdapter
 		View convertView,
 		@NonNull ViewGroup parent
 	) {
-		InstalledAppView app;
+		LogView log;
 
 		if (convertView == null) {
-			app = InstalledAppView_.build(context);
+			log = LogView_.build(context);
 		} else {
-			app = (InstalledAppView) convertView;
+			log = (LogView) convertView;
 		}
 
-		app.bind(getItem(position));
+		log.bind(getItem(position));
 
-		return app;
+		return log;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@UiThread(propagation = UiThread.Propagation.REUSE)
+	public void log(
+		String title,
+		String message,
+		int severity
+	) {
+		add(new LogMessage(title, message, severity));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,9 +78,9 @@ public class InstalledAppAdapter
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public InstalledApp[] getValues(
+	public LogMessage[] getValues(
 	) {
-		InstalledApp [] values = new InstalledApp[getCount()];
+		LogMessage [] values = new LogMessage[getCount()];
 		for (int i = 0; i < getCount(); i++) {
 			values[i] = getItem(i);
 		}

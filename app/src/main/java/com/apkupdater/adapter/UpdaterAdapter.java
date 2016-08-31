@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.apkupdater.updater.Update;
+import com.apkupdater.model.Update;
 import com.apkupdater.view.UpdaterView;
 import com.apkupdater.view.UpdaterView_;
 

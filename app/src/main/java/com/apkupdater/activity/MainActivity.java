@@ -3,6 +3,7 @@ package com.apkupdater.activity;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Intent;
+import android.media.audiofx.BassBoost;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,8 @@ import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.R;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
+import com.apkupdater.fragment.LogFragment;
+import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.SettingsFragment;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
@@ -32,6 +35,8 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import com.apkupdater.model.AppState;
+
+import java.util.Set;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,6 +64,9 @@ public class MainActivity
 
 	@ViewById(R.id.settings_container)
 	FrameLayout mSettingsLayout;
+
+	SettingsFragment mSettingsFragment;
+	LogFragment_ mLogFragment;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,20 +114,22 @@ public class MainActivity
 		}
 
 		// Add the settings fragment and configure the correct state
-		getSupportFragmentManager().beginTransaction().replace(R.id.settings_container, new SettingsFragment()).commit();
+		mSettingsFragment = new SettingsFragment();
+		mLogFragment = new LogFragment_();
+
 		switchSettings(mAppState.getSettingsActive());
+		switchLog(mAppState.getLogActive());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void switchSettings(
+	private void switchTabToFragment(
 		boolean b
 	) {
 		if (b) {
 			mTabLayout.setVisibility(View.GONE);
 			mViewPager.setVisibility(View.GONE);
 			mSettingsLayout.setVisibility(View.VISIBLE);
-			getSupportActionBar().setTitle(getString(R.string.action_settings));
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		} else {
 			mTabLayout.setVisibility(View.VISIBLE);
@@ -128,8 +138,36 @@ public class MainActivity
 			getSupportActionBar().setTitle(getString(R.string.app_name));
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void switchSettings(
+		boolean b
+	) {
+		switchTabToFragment(b);
+
+		if (b) {
+			getSupportFragmentManager().beginTransaction().replace(R.id.settings_container, mSettingsFragment).commit();
+			getSupportActionBar().setTitle(getString(R.string.action_settings));
+		}
 
 		mAppState.setSettingsActive(b);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void switchLog(
+		boolean b
+	) {
+		switchTabToFragment(b);
+
+		if (b) {
+			getSupportFragmentManager().beginTransaction().replace(R.id.settings_container, mLogFragment).commit();
+			getSupportActionBar().setTitle(getString(R.string.action_log));
+		}
+
+		mAppState.setLogActive(b);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +221,19 @@ public class MainActivity
 	@OptionsItem(android.R.id.home)
 	void onHomeClick(
 	) {
-		switchSettings(!mAppState.getSettingsActive());
+		if (mAppState.getSettingsActive()) {
+			switchSettings(!mAppState.getSettingsActive());
+		} else if (mAppState.getLogActive()) {
+			switchLog(!mAppState.getLogActive());
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@OptionsItem(R.id.action_log)
+	void onLogClick(
+	) {
+		switchLog(!mAppState.getLogActive());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
