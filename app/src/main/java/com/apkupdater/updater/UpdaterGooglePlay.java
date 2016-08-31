@@ -28,7 +28,7 @@ public class UpdaterGooglePlay
 		String pname,
 		String cversion
 	) {
-		super(context, pname, cversion);
+		super(context, pname, cversion, "GooglePlay");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,12 +55,7 @@ public class UpdaterGooglePlay
 				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 			}
 
-			int r = VersionUtil.compareVersion(
-				VersionUtil.getVersionFromString(mCurrentVersion),
-				VersionUtil.getVersionFromString(elements.get(0).text())
-			);
-
-			if (r == -1) {
+			if (compareVersions(mCurrentVersion, elements.get(0).text()) == -1) {
 				mResultUrl = DownloadUrl + mPname;
 				return UpdaterStatus.STATUS_UPDATE_FOUND;
 			}
@@ -70,11 +65,11 @@ public class UpdaterGooglePlay
 			if (status.getStatusCode() == 404) {
 				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 			} else {
-				mError = status;
+				mError = addCommonInfoToError(status);
 				return UpdaterStatus.STATUS_ERROR;
 			}
 		} catch (Exception e) {
-			mError = e;
+			mError = addCommonInfoToError(e);
 			return UpdaterStatus.STATUS_ERROR;
 		}
 	}

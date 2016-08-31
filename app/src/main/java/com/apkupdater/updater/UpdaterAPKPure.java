@@ -18,6 +18,7 @@ public class UpdaterAPKPure
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	static final private String BaseUrl = "https://apkpure.com";
+	static final private String Type = "APKPure";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -26,7 +27,7 @@ public class UpdaterAPKPure
 		String pname,
 		String cversion
 	) {
-		super(context, pname, cversion);
+		super(context, pname, cversion, "APKPure");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,21 +64,15 @@ public class UpdaterAPKPure
 				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 			}
 
-			// Check the version
-			int r = VersionUtil.compareVersion(
-				VersionUtil.getVersionFromString(mCurrentVersion),
-				VersionUtil.getVersionFromString(elements.get(0).text())
-			);
-
 			// If version is old, report update
-			if (r == -1) {
+			if (compareVersions(mCurrentVersion, elements.get(0).text()) == -1) {
 				mResultUrl = url;
 				return UpdaterStatus.STATUS_UPDATE_FOUND;
 			}
 
 			return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 		} catch (Exception e) {
-			mError = e;
+			mError = addCommonInfoToError(e);
 			return UpdaterStatus.STATUS_ERROR;
 		}
 	}
