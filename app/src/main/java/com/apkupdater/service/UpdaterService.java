@@ -5,14 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.apkupdater.R;
+import com.apkupdater.adapter.LogAdapter;
 import com.apkupdater.event.UpdateFinalProgressEvent;
 import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
 import com.apkupdater.event.UpdateStopEvent;
-import com.apkupdater.installedapp.InstalledApp;
-import com.apkupdater.installedapp.InstalledAppUtil;
+import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.LogMessage;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.updater.IUpdater;
-import com.apkupdater.updater.Update;
+import com.apkupdater.model.Update;
 import com.apkupdater.updater.UpdaterAPKMirror;
 import com.apkupdater.updater.UpdaterAPKPure;
 import com.apkupdater.updater.UpdaterGooglePlay;
@@ -53,6 +55,9 @@ public class UpdaterService
 	@Bean
 	AppState mAppState;
 
+	@Bean
+	LogAdapter mLogger;
+
 	private final Lock mMutex = new ReentrantLock(true);
 	private List<Update> mUpdates = new ArrayList<>();
 	private UpdaterNotification mNotification;
@@ -90,7 +95,7 @@ public class UpdaterService
 		Executor executor,
 		final String type,
 		final InstalledApp app,
-		final Queue<Integer> errors
+		final Queue<Throwable> errors
 	) {
 		executor.execute(new Runnable() {
 			@Override
@@ -101,7 +106,7 @@ public class UpdaterService
 					mUpdates.add(u);
 					mBus.post(new UpdateProgressEvent(u));
 				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR){
-					errors.add(0);
+					errors.add(upd.getResultError());
 				}
 				mNotification.increaseProgress();
 			}
@@ -110,7 +115,6 @@ public class UpdaterService
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//@Background(id="cancellable_task")
 	public void checkForUpdates(
 	) {
 		String exit_message;
@@ -144,7 +148,7 @@ public class UpdaterService
 
 			// Create an executor with 10 threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(10);
-			final ConcurrentLinkedQueue<Integer> errors = new ConcurrentLinkedQueue<>();
+			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates
 			for (final InstalledApp app: installedApps) {
@@ -173,6 +177,11 @@ public class UpdaterService
 			if (errors.size() > 0) {
 				exit_message = getBaseContext().getString(R.string.update_finished_with_errors);
 				exit_message = exit_message.replace("$1", String.valueOf(errors.size()));
+
+				// Log the errors
+				for (Throwable t : errors) {
+					mLogger.log("UpdaterService", t.getMessage() == null ? "" : t.getMessage(), LogMessage.SEVERITY_ERROR);
+				}
 			} else {
 				exit_message = getBaseContext().getString(R.string.update_finished);
 			}
@@ -186,7 +195,9 @@ public class UpdaterService
 		} catch (Exception e) {
 			exit_message = getBaseContext().getString(R.string.update_failed).replace("$1", e.getClass().getSimpleName());
 			mBus.post(new UpdateStopEvent(exit_message));
-			mNotification.failNotification();
+			if (mNotification != null) {
+				mNotification.failNotification();
+			}
 			mMutex.unlock();
 		}
 	}
