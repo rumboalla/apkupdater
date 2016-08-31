@@ -4,6 +4,10 @@ package com.apkupdater.updater;
 
 import android.content.Context;
 
+import com.apkupdater.util.VersionUtil;
+
+import java.util.List;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 public class UpdaterBase
@@ -18,19 +22,22 @@ public class UpdaterBase
 	protected Throwable mError;
 	protected UpdaterStatus mResultStatus;
 	protected String mCurrentVersion;
+	protected String mUpdaterType;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	UpdaterBase(
 		Context context,
 		String pname,
-	    String cversion
+	    String cversion,
+		String type
 	) {
 		super(context);
 		mCurrentVersion = cversion;
 		mResultUrl = "";
 		mPname = pname;
 		mResultStatus = parseUrl(getUrl(mPname));
+		mUpdaterType = type;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +54,35 @@ public class UpdaterBase
 		String url
 	) {
 		return UpdaterStatus.STATUS_FATAL_ERROR;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	protected Throwable addCommonInfoToError(
+		Throwable error
+	) {
+		return new Exception(error.getMessage() == null ? "" : error.getMessage() + " | App: " + mPname + " | Source: " + mUpdaterType);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	protected int compareVersions(
+		String cv,
+		String ev
+	)
+		throws Exception
+	{
+		List<Integer> cvl = VersionUtil.getVersionFromString(cv);
+		if (cvl == null) {
+			throw new Exception("Unable to parse version: " + cv + ".");
+		}
+
+		List<Integer> evl = VersionUtil.getVersionFromString(ev);
+		if (evl == null) {
+			throw new Exception("Unable to parse version: " + ev + ".");
+		}
+
+		return VersionUtil.compareVersion(cvl, evl);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
