@@ -23,11 +23,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.apkupdater.activity.SettingsActivity_"
-            android:label="@string/app_name"
-        />
-
         <service android:name="com.apkupdater.service.UpdaterService_"/>
 
         <receiver android:name=".receiver.AlarmReceiver_" android:exported="false">

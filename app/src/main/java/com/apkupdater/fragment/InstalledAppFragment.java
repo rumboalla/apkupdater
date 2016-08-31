@@ -6,12 +6,12 @@ import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
 import com.apkupdater.event.InstalledAppTitleChange;
-import com.apkupdater.installedapp.InstalledApp;
+import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.R;
 import com.apkupdater.adapter.InstalledAppAdapter;
-import com.apkupdater.installedapp.InstalledAppUtil;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
 
 import org.androidannotations.annotations.AfterViews;

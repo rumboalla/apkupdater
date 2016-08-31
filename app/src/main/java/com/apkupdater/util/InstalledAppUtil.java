@@ -1,4 +1,4 @@
-package com.apkupdater.installedapp;
+package com.apkupdater.util;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -7,7 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.apkupdater.util.GenericCallback;
+import com.apkupdater.model.InstalledApp;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;

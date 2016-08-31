@@ -7,11 +7,10 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.installedapp.InstalledApp;
+import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
 
 import org.androidannotations.annotations.EViewGroup;

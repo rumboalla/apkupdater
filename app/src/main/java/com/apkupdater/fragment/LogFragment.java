@@ -1,41 +1,43 @@
-package com.apkupdater.service;
+package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.app.AlarmManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.widget.ListView;
 
 import com.apkupdater.R;
-import com.apkupdater.updater.UpdaterOptions;
-import com.apkupdater.util.AlarmUtil;
+import com.apkupdater.adapter.LogAdapter;
+import com.apkupdater.model.LogMessage;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EReceiver;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EReceiver
-public class BootReceiver
-	extends BroadcastReceiver
+@EFragment(R.layout.fragment_installed_apps)
+public class LogFragment
+	extends Fragment
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	@ViewById(R.id.list_view)
+	ListView mListView;
+
 	@Bean
-	AlarmUtil alarmUtil;
+	LogAdapter mAdapter;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public void onReceive(
-		Context context,
-		Intent intent
+	@AfterViews
+	void init(
 	) {
-		alarmUtil.setAlarmFromOptions();
+		mListView.setAdapter(mAdapter);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

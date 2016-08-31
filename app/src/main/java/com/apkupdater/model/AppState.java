@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.apkupdater.updater.Update;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,6 +26,7 @@ public class AppState
 	final static String CURRENT_THEME_KEY = "current_theme_key";
 	final static String UPDATE_LIST_KEY = "update_list_key";
 	final static String SETTINGS_ACTIVE_KEY ="settings_active_key";
+	final static String LOG_ACTIVE_KEY ="log_active_key";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,6 +66,13 @@ public class AppState
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public boolean getLogActive(
+	) {
+		return getLogActiveFromSharedPrefs(mContext);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public int getCurrentTheme(
 	) {
 		return getCurrentThemeFromSharedPrefs(mContext);
@@ -91,7 +98,21 @@ public class AppState
 	public void setSettingsActive(
 		boolean active
 	) {
+		if (active) {
+			setLogActive(false);
+		}
 		setSettingsActiveToSharedPrefs(mContext, active);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void setLogActive(
+		boolean active
+	) {
+		if (active) {
+			setSettingsActive(false);
+		}
+		setLogActiveToSharedPrefs(mContext, active);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,6 +182,25 @@ public class AppState
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		sharedPref.edit().putBoolean(SETTINGS_ACTIVE_KEY, active).apply();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private boolean getLogActiveFromSharedPrefs(
+		Context context
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		return sharedPref.getBoolean(LOG_ACTIVE_KEY, false);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void setLogActiveToSharedPrefs(
+		Context context,
+		boolean active
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		sharedPref.edit().putBoolean(LOG_ACTIVE_KEY, active).apply();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

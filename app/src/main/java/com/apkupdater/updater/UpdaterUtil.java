@@ -5,8 +5,9 @@ package com.apkupdater.updater;
 import android.content.Context;
 
 import com.apkupdater.R;
-import com.apkupdater.installedapp.InstalledApp;
-import com.apkupdater.installedapp.InstalledAppUtil;
+import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.Update;
+import com.apkupdater.util.InstalledAppUtil;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;

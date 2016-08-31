@@ -17,4 +17,10 @@
         android:icon="@drawable/ic_settings_white_24dp"
         app:showAsAction="ifRoom"
     />
+    <item
+        android:id="@+id/action_log"
+        android:orderInCategory="200"
+        android:title="@string/action_log"
+        app:showAsAction="never"
+    />
 </menu>
