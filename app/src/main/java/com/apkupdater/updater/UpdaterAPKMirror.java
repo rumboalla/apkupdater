@@ -21,6 +21,7 @@ public class UpdaterAPKMirror
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	static final private String BaseUrl = "http://www.apkmirror.com";
+	static final private String Type = "APKMirror";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +30,7 @@ public class UpdaterAPKMirror
 		String pname,
 	    String cversion
 	) {
-		super(context, pname, cversion);
+		super(context, pname, cversion, "APKMirror");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +58,6 @@ public class UpdaterAPKMirror
 			}
 
 			// Check all the approws with apps
-			List<Integer> cversion = VersionUtil.getVersionFromString(mCurrentVersion);
 			for (Element row: doc.getElementsByClass("listWidget").get(0).getElementsByClass("appRow")) {
 				try {
 					String app = row.getElementsByTag("h5").get(0).attr("title");
@@ -66,23 +66,18 @@ public class UpdaterAPKMirror
 						continue;
 					}
 
-					int r = VersionUtil.compareVersion(
-						cversion,
-						VersionUtil.getVersionFromString(app)
-					);
-
-					if (r == -1) {
+					if (compareVersions(mCurrentVersion, app) == -1) {
 						mResultUrl = BaseUrl + row.getElementsByTag("a").get(0).attr("href");
 						return UpdaterStatus.STATUS_UPDATE_FOUND;
 					}
 				} catch (Exception e) {
-					mError = e;
+					mError = addCommonInfoToError(e);
 					return UpdaterStatus.STATUS_ERROR;
 				}
 			}
 			return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 		} catch (Exception e) {
-			mError = e;
+			mError = addCommonInfoToError(e);
 			return UpdaterStatus.STATUS_ERROR;
 		}
 	}
