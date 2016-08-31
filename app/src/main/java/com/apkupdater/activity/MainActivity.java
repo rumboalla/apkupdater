@@ -117,8 +117,11 @@ public class MainActivity
 		mSettingsFragment = new SettingsFragment();
 		mLogFragment = new LogFragment_();
 
-		switchSettings(mAppState.getSettingsActive());
-		switchLog(mAppState.getLogActive());
+		if (mAppState.getSettingsActive()) {
+			switchSettings(true);
+		} else if (mAppState.getLogActive()) {
+			switchLog(true);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
