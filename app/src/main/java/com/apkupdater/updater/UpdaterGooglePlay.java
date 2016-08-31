@@ -62,7 +62,7 @@ public class UpdaterGooglePlay
 
 			return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 		} catch (HttpStatusException status) {
-			if (status.getStatusCode() == 404) {
+			if (status.getStatusCode() == 404 || status.getStatusCode() == 403) {
 				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 			} else {
 				mError = addCommonInfoToError(status);

@@ -66,7 +66,7 @@ public class LogView
 		} else if  (message.getSeverity() == LogMessage.SEVERITY_WARNING) {
 			mIcon.setContentDescription("Warning");
 		} else if  (message.getSeverity() == LogMessage.SEVERITY_ERROR) {
-			mIcon.setContentDescription("Error");
+			mIcon.setImageResource(R.drawable.ic_error);
 		}
 	}
 
