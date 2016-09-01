@@ -21,6 +21,7 @@ import com.apkupdater.updater.UpdaterGooglePlay;
 import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
+import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 
 import org.androidannotations.annotations.Bean;
@@ -56,7 +57,7 @@ public class UpdaterService
 	AppState mAppState;
 
 	@Bean
-	LogAdapter mLogger;
+	LogUtil mLogger;
 
 	private final Lock mMutex = new ReentrantLock(true);
 	private List<Update> mUpdates = new ArrayList<>();
