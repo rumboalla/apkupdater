@@ -46,7 +46,11 @@ public class LogAdapter
 	@AfterViews
 	public void init(
 	) {
-		mBus.register(this);
+		try {
+			mBus.register(this);
+		} catch (IllegalArgumentException ignored) {
+			// Already registered
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

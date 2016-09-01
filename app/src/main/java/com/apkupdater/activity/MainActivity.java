@@ -65,6 +65,9 @@ public class MainActivity
 	@ViewById(R.id.settings_container)
 	FrameLayout mSettingsLayout;
 
+	@ViewById(R.id.log_container)
+	FrameLayout mLogLayout;
+
 	SettingsFragment mSettingsFragment;
 	LogFragment_ mLogFragment;
 
@@ -115,7 +118,14 @@ public class MainActivity
 
 		// Add the settings fragment and configure the correct state
 		mSettingsFragment = new SettingsFragment();
+		if (!(getSupportFragmentManager().findFragmentById(R.id.settings_container) instanceof SettingsFragment)) {
+			getSupportFragmentManager().beginTransaction().add(R.id.settings_container, mSettingsFragment).commit();
+		}
+
 		mLogFragment = new LogFragment_();
+		if (!(getSupportFragmentManager().findFragmentById(R.id.log_container) instanceof LogFragment_)) {
+			getSupportFragmentManager().beginTransaction().add(R.id.log_container, mLogFragment).commit();
+		}
 
 		if (mAppState.getSettingsActive()) {
 			switchSettings(true);
@@ -126,35 +136,25 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void switchTabToFragment(
+	private void switchSettings(
 		boolean b
 	) {
 		if (b) {
 			mTabLayout.setVisibility(View.GONE);
 			mViewPager.setVisibility(View.GONE);
 			mSettingsLayout.setVisibility(View.VISIBLE);
+			mLogLayout.setVisibility(View.GONE);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		} else {
 			mTabLayout.setVisibility(View.VISIBLE);
 			mViewPager.setVisibility(View.VISIBLE);
 			mSettingsLayout.setVisibility(View.GONE);
+			mLogLayout.setVisibility(View.GONE);
 			getSupportActionBar().setTitle(getString(R.string.app_name));
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
-	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void switchSettings(
-		boolean b
-	) {
-		switchTabToFragment(b);
-
-		if (b) {
-			getSupportFragmentManager().beginTransaction().replace(R.id.settings_container, mSettingsFragment).commit();
-			getSupportActionBar().setTitle(getString(R.string.action_settings));
-		}
-
+		getSupportActionBar().setTitle(getString(R.string.action_settings));
 		mAppState.setSettingsActive(b);
 	}
 
@@ -163,13 +163,22 @@ public class MainActivity
 	private void switchLog(
 		boolean b
 	) {
-		switchTabToFragment(b);
-
 		if (b) {
-			getSupportFragmentManager().beginTransaction().replace(R.id.settings_container, mLogFragment).commit();
-			getSupportActionBar().setTitle(getString(R.string.action_log));
+			mTabLayout.setVisibility(View.GONE);
+			mViewPager.setVisibility(View.GONE);
+			mSettingsLayout.setVisibility(View.GONE);
+			mLogLayout.setVisibility(View.VISIBLE);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		} else {
+			mTabLayout.setVisibility(View.VISIBLE);
+			mViewPager.setVisibility(View.VISIBLE);
+			mSettingsLayout.setVisibility(View.GONE);
+			mLogLayout.setVisibility(View.GONE);
+			getSupportActionBar().setTitle(getString(R.string.app_name));
+			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
 
+		getSupportActionBar().setTitle(getString(R.string.action_log));
 		mAppState.setLogActive(b);
 	}
 
