@@ -2,6 +2,7 @@ package com.apkupdater.adapter;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -9,23 +10,30 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.apkupdater.model.LogMessage;
+import com.apkupdater.util.MyBus;
 import com.apkupdater.view.LogView;
 import com.apkupdater.view.LogView_;
+import com.squareup.otto.Subscribe;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.UiThread;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EBean(scope = EBean.Scope.Singleton)
+@EBean
 public class LogAdapter
 	extends ArrayAdapter<LogMessage>
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@RootContext
-	Context context;
+	Activity context;
+
+	@Bean
+	MyBus mBus;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,6 +41,21 @@ public class LogAdapter
 		Context context
 	) {
 		super(context, 0);
+	}
+
+	@AfterViews
+	public void init(
+	) {
+		mBus.register(this);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onLogMessage(
+		LogMessage m
+	) {
+		add(m);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

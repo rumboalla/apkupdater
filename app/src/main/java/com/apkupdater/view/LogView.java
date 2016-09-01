@@ -13,6 +13,7 @@ import com.apkupdater.R;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.ColorUtitl;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -55,11 +56,17 @@ public class LogView
 	public void bind(
 		LogMessage message
 	) {
+		int color = ColorUtitl.getColorFromContext(getContext(), android.R.attr.textColorTertiary);
+
 		mTitle.setText(message.getTitle());
+		//mTitle.setTextColor(color);
+
 		mMessage.setText(message.getMessage());
+		//mMessage.setTextColor(color);
 
 		DateFormat df = SimpleDateFormat.getDateTimeInstance();
 		mTime.setText(df.format(new Date(message.getTime())));
+		//mTime.setTextColor(color);
 
 		if (message.getSeverity() == LogMessage.SEVERITY_INFO) {
 			mIcon.setContentDescription("Info");
