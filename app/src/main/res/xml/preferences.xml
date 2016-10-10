@@ -36,12 +36,6 @@
             android:entryValues="@array/alarm_values"
             android:defaultValue="@string/alarm_daily"
         />
-        <EditTextPreference
-            android:key="@string/preferences_general_ignorelist_key"
-            android:title="@string/preferences_general_ignorelist_title"
-            android:summary="@string/preferences_general_ignorelist_summary"
-            android:defaultValue="@string/preferences_general_ignorelist_value"
-        />
     </PreferenceCategory>
 
     <PreferenceCategory
