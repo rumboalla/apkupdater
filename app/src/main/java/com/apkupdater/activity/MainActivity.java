@@ -145,6 +145,7 @@ public class MainActivity
 			mSettingsLayout.setVisibility(View.VISIBLE);
 			mLogLayout.setVisibility(View.GONE);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setTitle(getString(R.string.action_settings));
 		} else {
 			mTabLayout.setVisibility(View.VISIBLE);
 			mViewPager.setVisibility(View.VISIBLE);
@@ -154,7 +155,6 @@ public class MainActivity
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
 
-		getSupportActionBar().setTitle(getString(R.string.action_settings));
 		mAppState.setSettingsActive(b);
 	}
 
@@ -169,6 +169,7 @@ public class MainActivity
 			mSettingsLayout.setVisibility(View.GONE);
 			mLogLayout.setVisibility(View.VISIBLE);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setTitle(getString(R.string.action_log));
 		} else {
 			mTabLayout.setVisibility(View.VISIBLE);
 			mViewPager.setVisibility(View.VISIBLE);
@@ -178,7 +179,6 @@ public class MainActivity
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
 
-		getSupportActionBar().setTitle(getString(R.string.action_log));
 		mAppState.setLogActive(b);
 	}
 
@@ -306,6 +306,20 @@ public class MainActivity
 
 		// Select tab
 		selectTab(mAppState.getSelectedTab());
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onBackPressed() {
+		// Handle back press depending on app state
+		if (mAppState.getLogActive()) {
+			switchLog(false);
+		} else if (mAppState.getSettingsActive()){
+			switchSettings(false);
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
