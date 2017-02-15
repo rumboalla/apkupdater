@@ -18,7 +18,7 @@ Big thanks to the developers of these wonderful libraries:
 
 # Update sources
 At the moment three sources are supported:
-* [APKMirror](http://androidannotations.org)
+* [APKMirror](http://www.apkmirror.com/)
 * [APKPure](https://apkpure.com)
 * [Google Play](https://play.google.com) (Download from [Evozi](https://apps.evozi.com/apk-downloader/))
 
