@@ -6,11 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.service.UpdaterService_;
-import com.apkupdater.util.MyBus;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EReceiver;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,6 @@ package com.apkupdater.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.ListView;
 
 import com.apkupdater.R;

@@ -28,8 +28,8 @@ public class InstalledAppAdapter
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public InstalledAppAdapter(
-		Context context
+	InstalledAppAdapter(
+			Context context
 	) {
 		super(context, 0);
 	}
