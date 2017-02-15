@@ -18,5 +18,40 @@
     <!-- inverse text color: 87% black -->
     <color name="textColorPrimaryInverse">#00FF00</color>
     <color name="textColorSecondaryInverse">#00FFFF</color>
+    
+    <!-- General colors -->
+    <color name="tabIndicatorColor">#FFFFFF</color>
 
+    <!-- Blue theme -->
+    <color name="colorPrimaryBlue">#0D47A1</color>
+    <color name="colorPrimaryDarkBlue">#092b61</color>
+    <color name="colorAccentBlue">#6dabf7</color>
+    <color name="textColorPrimaryBlue">#FFFFFF</color>
+    <color name="textColorSecondaryBlue">#99FFFFFF</color>
+    <color name="textColorBlue">#000000</color>
+    <color name="textColorSecondaryInverseBlue">#99000000</color>
+
+    <!-- Orange theme -->
+    <color name="colorPrimaryOrange">#FF9800</color>
+    <color name="colorPrimaryDarkOrange">#F57C00</color>
+    <color name="colorAccentOrange">#FF5252</color>
+    <color name="textColorPrimaryOrange">#FFFFFF</color>
+    <color name="textColorSecondaryOrange">#99FFFFFF</color>
+    <color name="textColorOrange">#000000</color>
+    <color name="textColorSecondaryInverseOrange">#99000000</color>
+
+    <!-- Pink theme -->
+    <color name="colorPrimaryPink">#dc64d0</color>
+    <color name="colorPrimaryDarkPink">#994691</color>
+    <color name="colorAccentPink">#f7ff00</color>
+    <color name="textColorPrimaryPink">#FFFFFF</color>
+    <color name="textColorSecondaryPink">#99FFFFFF</color>
+    <color name="textColorPink">#FFFFFF</color>
+
+    <!-- Dark theme -->
+    <color name="colorAccentDark">#16ac01</color>
+    <color name="textColorPrimaryDark">#FFFFFF</color>
+    <color name="textColorSecondaryDark">#99FFFFFF</color>
+    <color name="textColorDark">#FFFFFF</color>
+    
 </resources>
