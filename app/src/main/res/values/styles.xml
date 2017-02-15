@@ -2,64 +2,64 @@
 
     <!-- Blue Theme -->
     <style name="AppThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#0D47A1</item>
-        <item name="colorPrimaryDark">#092b61</item>
-        <item name="colorAccent">#6dabf7</item>
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#99FFFFFF</item>
-        <item name="android:textColor">#000000</item>
+        <item name="colorPrimary">@color/colorPrimaryBlue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryBlue</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryBlue</item>
+        <item name="android:textColor">@color/textColorBlue</item>
         <item name="preferenceTheme">@style/PreferenceThemeBlue</item>
     </style>
 
     <style name="PreferenceThemeBlue" parent="AppThemeBlue">
-        <item name="android:textColorPrimary">#000000</item>
-        <item name="android:textColorSecondary">#99000000</item>
-        <item name="tabIndicatorColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/textColorBlue</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryInverseBlue</item>
+        <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
     </style>
 
     <!-- Orange Theme -->
     <style name="AppThemeOrange" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#FF9800</item>
-        <item name="colorPrimaryDark">#F57C00</item>
-        <item name="colorAccent">#FF5252</item>
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#99FFFFFF</item>
-        <item name="android:textColor">#000000</item>
+        <item name="colorPrimary">@color/colorPrimaryOrange</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOrange</item>
+        <item name="colorAccent">@color/colorAccentOrange</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryOrange</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryOrange</item>
+        <item name="android:textColor">@color/textColorOrange</item>
         <item name="preferenceTheme">@style/PreferenceThemeOrange</item>
     </style>
 
     <style name="PreferenceThemeOrange" parent="AppThemeOrange">
-        <item name="android:textColorPrimary">#000000</item>
-        <item name="android:textColorSecondary">#99000000</item>
-        <item name="tabIndicatorColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/textColorOrange</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryInverseOrange</item>
+        <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
     </style>
 
     <!-- Pink Theme -->
     <style name="AppThemePink" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">#dc64d0</item>
-        <item name="colorPrimaryDark">#994691</item>
-        <item name="colorAccent">#f7ff00</item>
+        <item name="colorPrimary">@color/colorPrimaryPink</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkPink</item>
+        <item name="colorAccent">@color/colorAccentPink</item>
         <item name="preferenceTheme">@style/AppThemePink</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/textColorPink</item>
     </style>
 
     <style name="PreferenceThemePink" parent="AppThemePink">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#99FFFFFF</item>
-        <item name="tabIndicatorColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryPink</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryPink</item>
+        <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
     </style>
 
     <!-- Dark Theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">#16ac01</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
         <item name="preferenceTheme">@style/PreferenceThemeDark</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
 
     <style name="PreferenceThemeDark" parent="AppThemeDark">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#99FFFFFF</item>
-        <item name="tabIndicatorColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryDark</item>
+        <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
     </style>
 
 </resources>
