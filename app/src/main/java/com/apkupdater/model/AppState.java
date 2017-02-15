@@ -22,11 +22,11 @@ public class AppState
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	final static String SELECTED_TAB_KEY = "selected_tab_key";
-	final static String CURRENT_THEME_KEY = "current_theme_key";
-	final static String UPDATE_LIST_KEY = "update_list_key";
-	final static String SETTINGS_ACTIVE_KEY ="settings_active_key";
-	final static String LOG_ACTIVE_KEY ="log_active_key";
+	private final static String SELECTED_TAB_KEY = "selected_tab_key";
+	private final static String CURRENT_THEME_KEY = "current_theme_key";
+	private final static String UPDATE_LIST_KEY = "update_list_key";
+	private final static String SETTINGS_ACTIVE_KEY ="settings_active_key";
+	private final static String LOG_ACTIVE_KEY ="log_active_key";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,7 @@ public class AppState
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public AppState(
+	AppState(
 		Context context
 	) {
 		mContext = context;
@@ -219,7 +219,7 @@ public class AppState
 		int theme
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().putInt(CURRENT_THEME_KEY, theme).commit();
+		sharedPref.edit().putInt(CURRENT_THEME_KEY, theme).apply();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ public class AppState
 		List<Update> updates
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().putString(UPDATE_LIST_KEY, new Gson().toJson(updates)).commit();
+		sharedPref.edit().putString(UPDATE_LIST_KEY, new Gson().toJson(updates)).apply();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ public class AppState
 		Context context
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		sharedPref.edit().remove(UPDATE_LIST_KEY).commit();
+		sharedPref.edit().remove(UPDATE_LIST_KEY).apply();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
