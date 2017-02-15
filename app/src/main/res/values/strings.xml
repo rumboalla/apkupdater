@@ -44,6 +44,7 @@
     <string name="notification_never">Never</string>
     <string name="notification_always">Always</string>
     <string name="notification_background">Background</string>
+    <string name="notification_if_at_least_1">If updates are available</string>
     <string name="alarm_never">Never</string>
     <string name="alarm_daily">Daily</string>
     <string name="alarm_weekly">Weekly</string>

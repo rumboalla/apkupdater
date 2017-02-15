@@ -5,22 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.apkupdater.R;
-import com.apkupdater.adapter.LogAdapter;
 import com.apkupdater.event.UpdateFinalProgressEvent;
 import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
 import com.apkupdater.event.UpdateStopEvent;
+import com.apkupdater.model.AppState;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.util.InstalledAppUtil;
-import com.apkupdater.updater.IUpdater;
 import com.apkupdater.model.Update;
+import com.apkupdater.updater.IUpdater;
 import com.apkupdater.updater.UpdaterAPKMirror;
 import com.apkupdater.updater.UpdaterAPKPure;
 import com.apkupdater.updater.UpdaterGooglePlay;
 import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 
@@ -36,8 +36,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-import com.apkupdater.model.AppState;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -109,7 +107,7 @@ public class UpdaterService
 				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR){
 					errors.add(upd.getResultError());
 				}
-				mNotification.increaseProgress();
+				mNotification.increaseProgress(mUpdates.size());
 			}
 		});
 	}
