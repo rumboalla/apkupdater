@@ -3,18 +3,11 @@ package com.apkupdater.util;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.Activity;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-
-import static java.security.AccessController.getContext;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
