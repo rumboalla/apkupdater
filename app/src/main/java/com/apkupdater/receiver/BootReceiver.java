@@ -2,13 +2,10 @@ package com.apkupdater.receiver;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.apkupdater.R;
-import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AlarmUtil;
 
 import org.androidannotations.annotations.Bean;

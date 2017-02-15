@@ -31,7 +31,9 @@ public class ColorUtitl {
 		int[] textSizeAttr = new int[] {color_id };
 		TypedValue typedValue = new TypedValue();
 		TypedArray a = context.obtainStyledAttributes(typedValue.data, textSizeAttr);
-		return a.getColor(0, 0);
+		int color = a.getColor(0, 0);
+		a.recycle();
+		return color;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

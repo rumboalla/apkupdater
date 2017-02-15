@@ -4,14 +4,12 @@ package com.apkupdater.updater;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.NotificationCompat;
 
 import com.apkupdater.R;
-import com.apkupdater.activity.MainActivity_;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,7 +38,7 @@ public class UpdaterNotification
 		mNumApps = new AtomicInteger(0);
 
 		// Check if we should do notifications
-		if (!doNotification()) {
+		if (!doNotification(1)) {
 			return;
 		}
 
@@ -50,9 +48,10 @@ public class UpdaterNotification
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void increaseProgress(
+			int numberOfUpdates
 	) {
 		// Check if we should do notifications
-		if (!doNotification()) {
+		if (!doNotification(numberOfUpdates)) {
 			return;
 		}
 
@@ -62,14 +61,15 @@ public class UpdaterNotification
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void finishNotification(
-		int found
+		int numberOfUpdates
 	) {
 		// Check if we should do notifications
-		if (!doNotification()) {
+		if (!doNotification(numberOfUpdates)) {
+			mNotificationManager.cancelAll();
 			return;
 		}
 
-		String s = mContext.getString(R.string.notification_update_content_finished).replace("$1", String.valueOf(found));
+		String s = mContext.getString(R.string.notification_update_content_finished).replace("$1", String.valueOf(numberOfUpdates));
 		mNotificationBuilder.setProgress(0, 0, false);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title_finished));
 		mNotificationBuilder.setContentText(s);
@@ -81,7 +81,7 @@ public class UpdaterNotification
 	public void failNotification(
 	) {
 		// Check if we should do notifications
-		if (!doNotification()) {
+		if (!doNotification(1)) {
 			return;
 		}
 
@@ -94,11 +94,14 @@ public class UpdaterNotification
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private boolean doNotification(
+			int numberOfUpdates
 	) {
 		if (mOptions.getNotificationOption().equals(mContext.getString(R.string.notification_always))) {
 			return true;
 		} else if (mOptions.getNotificationOption().equals(mContext.getString(R.string.notification_never))) {
 			return false;
+		} else if (mOptions.getNotificationOption().equals(mContext.getString(R.string.notification_if_at_least_1))){
+			return numberOfUpdates > 0;
 		} else {
 			// TODO: Check for background option
 			return false;

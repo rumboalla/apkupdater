@@ -4,8 +4,6 @@ package com.apkupdater.updater;
 
 import android.content.Context;
 
-import com.apkupdater.util.VersionUtil;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
