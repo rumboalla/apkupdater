@@ -21,6 +21,9 @@ import org.androidannotations.annotations.ItemLongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,6 +46,8 @@ public class InstalledAppFragment
 	@Bean
 	MyBus mBus;
 
+	List<InstalledApp> mItems;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@ItemLongClick(R.id.list_view)
@@ -63,8 +68,10 @@ public class InstalledAppFragment
 		// Update the list
 		options.setIgnoreList(ignore_list);
 
-		// Notify of changes
-		mAdapter.notifyDataSetChanged();
+		// Sort it
+		sort(mItems);
+
+		setListAdapter(mItems);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,9 +82,57 @@ public class InstalledAppFragment
 		mInstalledAppUtil.getInstalledAppsAsync(getContext(), new GenericCallback<List<InstalledApp>>() {
 			@Override
 			public void onResult(List<InstalledApp> items) {
+				mItems = items;
 				setListAdapter(items);
 			}
 		});
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private List<InstalledApp> sort(
+		List<InstalledApp> items
+	) {
+		// Lists to hold both types of apps
+		List<InstalledApp> normal = new ArrayList<>();
+		List<InstalledApp> ignored = new ArrayList<>();
+
+		// Get the ignore list
+		UpdaterOptions options = new UpdaterOptions(getContext());
+		List<String> ignore_list = options.getIgnoreList();
+
+		// Iterate and buld the temp lists
+		for (InstalledApp i : items) {
+			if (ignore_list.contains(i.getPname())) {
+				ignored.add(i);
+			} else {
+				normal.add(i);
+			}
+		}
+
+		// Build comparator
+		Comparator<InstalledApp> comparator = new Comparator<InstalledApp>() {
+			@Override
+			public int compare(InstalledApp o1, InstalledApp o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		};
+
+		// Sort them
+		Collections.sort(normal, comparator);
+		Collections.sort(ignored, comparator);
+
+		// Build final
+		List<InstalledApp> ordered = new ArrayList<>();
+		for (InstalledApp i : normal) {
+			ordered.add(i);
+		}
+
+		for (InstalledApp i : ignored) {
+			ordered.add(i);
+		}
+
+		return ordered;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +147,7 @@ public class InstalledAppFragment
 
 		mAdapter.clear();
 
-		for (InstalledApp i : items) { // addAll needs API level 11+
+		for (InstalledApp i : sort(items)) { // addAll needs API level 11+
 			mAdapter.add(i);
 		}
 
