@@ -26,7 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EBean(scope = EBean.Scope.Singleton)
-public class UpdaterUtil
+class UpdaterUtil
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,8 +37,6 @@ public class UpdaterUtil
 	InstalledAppUtil mInstalledAppUtil;
 
 	private final Lock mMutex = new ReentrantLock(true);
-
-	private UpdaterOptions mOptions;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,10 +51,12 @@ public class UpdaterUtil
 			@Override
 			public void run() {
 				IUpdater upd = createUpdater(type, context, app.getPname(), app.getVersion());
-				if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
-					callback.onUpdate(new Update(app, upd.getResultUrl()));
-				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR){
-					errors.add(0);
+				if (upd != null) {
+					if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
+						callback.onUpdate(new Update(app, upd.getResultUrl()));
+					} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
+						errors.add(0);
+					}
 				}
 			}
 		});
@@ -64,11 +64,11 @@ public class UpdaterUtil
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public IUpdater createUpdater(
-		String type,
-	    Context context,
-	    String s1,
-	    String s2
+	private IUpdater createUpdater(
+			String type,
+			Context context,
+			String s1,
+			String s2
 	) {
 		switch (type) {
 			case "APKMirror":
@@ -80,17 +80,6 @@ public class UpdaterUtil
 			default:
 				return null;
 		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public boolean isRunning(
-	) {
-		if (mMutex.tryLock()) {
-			mMutex.unlock();
-			return false;
-		}
-		return true;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,7 +101,7 @@ public class UpdaterUtil
 			callback.onStart();
 
 			// Check if we have at least one update source
-			mOptions = new UpdaterOptions(context);
+			UpdaterOptions mOptions = new UpdaterOptions(context);
 			if (!mOptions.useAPKMirror() && !mOptions.useGooglePlay() && !mOptions.useAPKPure()) {
 				exit_message = context.getString(R.string.update_no_sources);
 				callback.onFinish(exit_message);
