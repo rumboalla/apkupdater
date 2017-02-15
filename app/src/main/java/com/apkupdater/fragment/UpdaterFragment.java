@@ -17,10 +17,11 @@ import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
 import com.apkupdater.event.UpdateStopEvent;
 import com.apkupdater.event.UpdaterTitleChange;
-import com.apkupdater.util.InstalledAppUtil;
-import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.model.AppState;
 import com.apkupdater.model.Update;
+import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
@@ -35,8 +36,6 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 
 import java.util.List;
-
-import com.apkupdater.model.AppState;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -70,14 +69,11 @@ public class UpdaterFragment
 	@Bean
 	AppState mAppState;
 
-	private Bundle mSavedInstance;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void onCreate (
 		Bundle savedInstanceState
 	) {
-		mSavedInstance = savedInstanceState;
 		super.onCreate(savedInstanceState);
 	}
 

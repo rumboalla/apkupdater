@@ -3,16 +3,12 @@ package com.apkupdater.view;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.ColorUtitl;
 
 import org.androidannotations.annotations.EViewGroup;
@@ -20,7 +16,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

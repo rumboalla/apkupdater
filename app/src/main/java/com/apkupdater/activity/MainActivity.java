@@ -3,23 +3,23 @@ package com.apkupdater.activity;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Intent;
-import android.media.audiofx.BassBoost;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.R;
+import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
-import com.apkupdater.fragment.LogFragment;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.SettingsFragment;
+import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.ColorUtitl;
@@ -33,10 +33,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
-
-import com.apkupdater.model.AppState;
-
-import java.util.Set;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,7 +78,7 @@ public class MainActivity
 		setContentView(R.layout.activity_main);
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	protected void onNewIntent(Intent intent) {
@@ -139,20 +135,26 @@ public class MainActivity
 	private void switchSettings(
 		boolean b
 	) {
+        ActionBar bar = getSupportActionBar();
 		if (b) {
 			mTabLayout.setVisibility(View.GONE);
 			mViewPager.setVisibility(View.GONE);
 			mSettingsLayout.setVisibility(View.VISIBLE);
 			mLogLayout.setVisibility(View.GONE);
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			getSupportActionBar().setTitle(getString(R.string.action_settings));
+
+			if (bar != null) {
+                bar.setDisplayHomeAsUpEnabled(true);
+                bar.setTitle(getString(R.string.action_settings));
+            }
 		} else {
 			mTabLayout.setVisibility(View.VISIBLE);
 			mViewPager.setVisibility(View.VISIBLE);
 			mSettingsLayout.setVisibility(View.GONE);
 			mLogLayout.setVisibility(View.GONE);
-			getSupportActionBar().setTitle(getString(R.string.app_name));
-			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            if (bar != null) {
+                bar.setTitle(getString(R.string.app_name));
+                bar.setDisplayHomeAsUpEnabled(false);
+            }
 		}
 
 		mAppState.setSettingsActive(b);
@@ -163,20 +165,26 @@ public class MainActivity
 	private void switchLog(
 		boolean b
 	) {
+        ActionBar bar = getSupportActionBar();
 		if (b) {
 			mTabLayout.setVisibility(View.GONE);
 			mViewPager.setVisibility(View.GONE);
 			mSettingsLayout.setVisibility(View.GONE);
 			mLogLayout.setVisibility(View.VISIBLE);
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			getSupportActionBar().setTitle(getString(R.string.action_log));
+
+            if (bar != null) {
+                bar.setDisplayHomeAsUpEnabled(true);
+                bar.setTitle(getString(R.string.action_log));
+            }
 		} else {
 			mTabLayout.setVisibility(View.VISIBLE);
 			mViewPager.setVisibility(View.VISIBLE);
 			mSettingsLayout.setVisibility(View.GONE);
 			mLogLayout.setVisibility(View.GONE);
-			getSupportActionBar().setTitle(getString(R.string.app_name));
-			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            if (bar != null) {
+                bar.setTitle(getString(R.string.app_name));
+                bar.setDisplayHomeAsUpEnabled(false);
+            }
 		}
 
 		mAppState.setLogActive(b);
@@ -205,11 +213,10 @@ public class MainActivity
 	private void selectTab(
 		int tab
 	) {
-		try {
-			mTabLayout.getTabAt(tab).select();
-		} catch (Exception ignored) {
-
-		}
+        TabLayout.Tab selectedTab = mTabLayout.getTabAt(tab);
+        if (selectedTab != null) {
+            selectedTab.select();
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,11 +269,10 @@ public class MainActivity
 	public void onInstalledAppTitleChange(
 		InstalledAppTitleChange t
 	) {
-		try {
-			mTabLayout.getTabAt(0).setText(t.getTitle());
-		} catch (Exception ignored) {
-
-		}
+        TabLayout.Tab selectedTab = mTabLayout.getTabAt(0);
+        if (selectedTab != null){
+            selectedTab.setText(t.getTitle());
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,11 +281,10 @@ public class MainActivity
 	public void onUpdaterTitleChange(
 		UpdaterTitleChange t
 	) {
-		try {
-			mTabLayout.getTabAt(1).setText(t.getTitle());
-		} catch (Exception ignored) {
-
-		}
+        TabLayout.Tab selectedTab = mTabLayout.getTabAt(1);
+        if (selectedTab != null) {
+            selectedTab.setText(t.getTitle());
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

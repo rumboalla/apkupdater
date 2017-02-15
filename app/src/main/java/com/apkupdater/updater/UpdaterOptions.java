@@ -69,7 +69,8 @@ public class UpdaterOptions
 
 		// Fill the list if it's not empty
 		List<String> list = new ArrayList<>();
-		if (s != null && !s.isEmpty()) {
+		//noinspection ConstantConditions
+		if (s != null && !s.isEmpty()) { //s actually can be null, contrary to what AS says
 			String [] strings = s.split(",");
 			Collections.addAll(list, strings);
 		}

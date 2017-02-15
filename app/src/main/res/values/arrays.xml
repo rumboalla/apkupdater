@@ -4,6 +4,7 @@
         <item>@string/notification_always</item>
         <item>@string/notification_never</item>
         <item>@string/notification_background</item>
+        <item>@string/notification_if_at_least_1</item>
     </array>
     <array name="alarm_values">
         <item>@string/alarm_never</item>
