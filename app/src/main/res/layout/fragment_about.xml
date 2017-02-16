@@ -39,10 +39,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
         />
-        <WebView
-            android:id="@+id/web_view"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/text_container"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

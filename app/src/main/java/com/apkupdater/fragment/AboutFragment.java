@@ -2,9 +2,14 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
@@ -22,14 +27,58 @@ public class AboutFragment
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@ViewById(R.id.web_view)
-	protected WebView mWebView;
-
 	@ViewById(R.id.app_name_text)
 	protected TextView mAppNameText;
 
 	@ViewById(R.id.app_version_text)
 	protected TextView mAppVersionText;
+
+	@ViewById(R.id.text_container)
+	protected FrameLayout mTextContainer;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private WebView getWebView(
+	) {
+		final WebView webView = new WebView(getContext());
+
+		webView.loadData(getString(R.string.app_description_html), "text/html", "UTF-8");
+		webView.setBackgroundColor(0x00000000);
+		webView.getSettings().setDefaultFontSize(14);
+
+		// Change the webview font color
+		final String color = ColorUtitl.getHexStringFromInt( mAppVersionText.getTextColors().getDefaultColor());
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.setWebViewClient(new WebViewClient() {
+			public void onPageFinished(WebView view, String url) {
+				try {
+					webView.loadUrl(
+						"javascript:document.body.style.setProperty(\"color\", \"" + color + "\");"
+					);
+				} catch (Exception ignored) {
+				}
+			}
+		});
+
+		return webView;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private TextView getTextView(
+	) {
+		TextView textView = new TextView(getContext());
+		Spanned fromHtml;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			fromHtml = Html.fromHtml(getString(R.string.app_description_html), 0);
+		}else{
+			//noinspection deprecation
+			fromHtml = Html.fromHtml(getString(R.string.app_description_html));
+		}
+		textView.setText(fromHtml);
+		textView.setMovementMethod (LinkMovementMethod.getInstance());
+		return textView;
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,23 +86,16 @@ public class AboutFragment
 	protected void onInit(
 	) {
 		mAppNameText.setTextColor(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent));
-		mWebView.loadData(getString(R.string.app_description_html), "text/html", "UTF-8");
-		mWebView.setBackgroundColor(0x00000000);
-		mWebView.getSettings().setDefaultFontSize(14);
 
-		// Change the webview font color
-		final String color = ColorUtitl.getHexStringFromInt( mAppVersionText.getTextColors().getDefaultColor());
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.setWebViewClient(new WebViewClient() {
-			public void onPageFinished(WebView view, String url) {
-				try {
-					mWebView.loadUrl(
-						"javascript:document.body.style.setProperty(\"color\", \"" + color + "\");"
-					);
-				} catch (Exception ignored) {
-				}
+		try {
+			mTextContainer.addView(getWebView());
+		} catch (Exception e) {
+			try {
+				mTextContainer.addView(getTextView());
+			} catch (Exception ignored) {
+
 			}
-		});
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
