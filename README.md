@@ -1,6 +1,11 @@
 # APKUpdater
 APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.
 
+# Download
+[APK for latest version (1.3.3)](https://github.com/rumboalla/apkupdater/releases/download/1.3.3/app-release.apk)
+
+[Older releases](https://github.com/rumboalla/apkupdater/releases)
+
 # Features
 * Get updates from multiple sources.
 * Schedule background update checks.
@@ -35,4 +40,5 @@ At the moment three sources are supported:
 
 # License
 Copyright &copy; 2016 Rumboalla.
+
 Licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
