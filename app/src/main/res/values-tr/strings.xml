@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">APKUpdater</string>
-    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater, yüklü uygulamalarınız için güncelleme bulma işlemini basitleştiren bir araçtır. Onunla birlikte gelen ilişkili casus yazılımları yüklemek zorunda kalmadan bir uygulama mağazasına benzer bir işlevsellik sağlayacaktır. Bu, Android\'i bir uygulama mağazası olmadan çalıştırmak isteyenler için çok yararlı bir uygulamadır.</p><p>Özellikler:</p><ul><li>Birden fazla kaynaktan güncelleme alın</li><li>Arka plan kontrollerini planlayın</li><li>Android 2.3 ile 7.0 arasında destekleniyor</li><li>Güncellemeleri kontrol etmemek için yoksayılan uygulamalar listesi</li><li>Çoklu tema destekli modern malzeme tasarımı</li><li>Güncellemeler bulunduğunda bildirim görüntüler</li></ul><p>Kullanılmış kütüphaneler:</p><ul><li><a href="http://androidannotations.org">AndroidAnnotations</a></li><li><a href="http://jsoup.org">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li></ul><p>Update sources:</p><ul><li><a href="http://apkmirror.org">APKMirror</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="https://play.google.com">Google Play</a> (Buradan indirin: <a href="https://apps.evozi.com/apk-downloader/">Evozi</a>)</li></ul><p>Telif Hakkı &copy; 2016 Rumboalla. <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3 Altında lisanslanmıştır.</a>.</p></body></html>]]></string>
+    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater, yüklü uygulamalarınız için güncelleme bulma işlemini basitleştiren bir araçtır. Onunla birlikte gelen ilişkili casus yazılımları yüklemek zorunda kalmadan bir uygulama mağazasına benzer bir işlevsellik sağlayacaktır. Bu, Android\'i bir uygulama mağazası olmadan çalıştırmak isteyenler için çok yararlı bir uygulamadır.</p><p>Özellikler:</p><ul><li>Birden fazla kaynaktan güncelleme alın</li><li>Arka plan kontrollerini planlayın</li><li>Android 2.3 ile 7.1 arasında destekleniyor</li><li>Güncellemeleri kontrol etmemek için yoksayılan uygulamalar listesi</li><li>Çoklu tema destekli modern malzeme tasarımı</li><li>Güncellemeler bulunduğunda bildirim görüntüler</li></ul><p>Kullanılan kütüphaneler:</p><ul><li><a href="http://androidannotations.org">AndroidAnnotations</a></li><li><a href="http://jsoup.org">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li></ul><p>Güncelleme kaynakları:</p><ul><li><a href="http://apkmirror.org">APKMirror</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="https://play.google.com">Google Play</a> (Buradan indirin: <a href="https://apps.evozi.com/apk-downloader/">Evozi</a>)</li></ul><p>Telif Hakkı &copy; 2016 Rumboalla. <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3 Altında lisanslanmıştır.</a>.</p></body></html>]]></string>
     <string name="action_settings">Ayarlar</string>
-    <string name="action_log">Log</string>
+    <string name="action_log">Hata kaydı</string>
     <string name="action_check_for_updates">Güncellemeleri kontrol et</string>
-    <string name="tab_installed">Installed</string>
+    <string name="tab_installed">Yüklenenler</string>
     <string name="tab_updates">Güncellemeler</string>
     <string name="tab_about">Hakkında</string>
-    <string name="notification_update_title">Güncellemeleri kontrol et</string>
+    <string name="notification_update_title">Güncellemeler kontrol ediliyor</string>
     <string name="notification_update_content">$1/$2</string>
     <string name="notification_update_title_finished">Güncellemeleri kontrol etme tamamlandı</string>
     <string name="notification_update_content_finished">$1 güncelleme bulundu</string>
@@ -20,7 +20,7 @@
     <string name="preferences_general_category">Genel Ayarlar</string>
     <string name="preferences_sources_category">Kaynakları güncelleyin</string>
     <string name="preferences_general_skip_experimental_title">Deneysel yapıları atla</string>
-    <string name="preferences_general_skip_experimental_summary">Bu, deneysel yapıları (alfa, beta) güncellemelerden hariç tutmaya çalışacaktır.</string>
+    <string name="preferences_general_skip_experimental_summary">Deneysel yapıları (alfa, beta) güncellemelerden hariç tutmaya çalışacaktır.</string>
     <string name="preferences_general_skip_experimental_key">preferences_general_skip_experimental_key</string>
     <string name="preferences_general_ignorelist_title">Yoksayılan uygulamalar listesi</string>
     <string name="preferences_general_ignorelist_summary">Bu uygulamalar güncelleme kontrolünde hariç tutacaktır.</string>
@@ -33,17 +33,18 @@
     <string name="preferences_general_alarm_title">Güncellemeleri kontrol et</string>
     <string name="preferences_general_alarm_key">preferences_general_alarm_key</string>
     <string name="preferences_general_use_apkmirror_title">APKMirror\'daki güncellemeler</string>
-    <string name="preferences_general_use_apkmirror_summary">Bu APKMirror\'daki güncellemeleri kontrol edecek.</string>
+    <string name="preferences_general_use_apkmirror_summary">APKMirror\'daki güncellemeler kontrol edilecek.</string>
     <string name="preferences_general_use_apkmirror_key">preferences_general_use_apkmirror_key</string>
     <string name="preferences_general_use_googleplay_title">Google Play\'deki güncellemeler</string>
-    <string name="preferences_general_use_googleplay_summary">Bu, Google Play\'deki güncellemeleri kontrol edecektir. Birden fazla sürüm içeren uygulamalar, bir sürüm numarası görüntülemediğinden çalışmaz. Uygulamanın indirilmesi Evozi\'den bir Google hesabı olmadan yapılabilir.</string>
+    <string name="preferences_general_use_googleplay_summary">Google Play\'deki güncellemeler kontrol edilecek. Birden fazla sürüm içeren uygulamalar, bir sürüm numarası görüntülemediğinden çalışmaz. Uygulamanın indirilmesi Evozi\'den bir Google hesabı olmadan yapılabilir.</string>
     <string name="preferences_general_use_googleplay_key">preferences_general_use_googleplay_key</string>
     <string name="preferences_general_use_apkpure_title">APKPure\'den güncellemeler</string>
-    <string name="preferences_general_use_apkpure_summary">Bu, APKPure.com\'daki güncellemeleri kontrol edecektir. Her uygulama için 2 istek var, bu nedenle daha yavaş.</string>
+    <string name="preferences_general_use_apkpure_summary">APKPure.com\'daki güncellemeleri kontrol edilecek. Her uygulama için 2 istek var, bu nedenle daha yavaş.</string>
     <string name="preferences_general_use_apkpure_key">preferences_general_use_apkpure_key</string>
     <string name="notification_never">Asla</string>
     <string name="notification_always">Herzaman</string>
     <string name="notification_background">Arkaplan</string>
+    <string name="notification_if_at_least_1">Güncellemeler mevcutsa</string>
     <string name="alarm_never">Asla</string>
     <string name="alarm_daily">Günlük</string>
     <string name="alarm_weekly">Haftalık</string>
