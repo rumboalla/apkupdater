@@ -47,7 +47,7 @@ public class UpdaterAPKMirror
 		String url
 	) {
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).userAgent(VersionUtil.getUserAgent(mContext)).get();
 
 			// Check if no results
 			Elements elements = doc.getElementsByClass("addpadding");
