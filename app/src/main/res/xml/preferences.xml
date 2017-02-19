@@ -59,6 +59,7 @@
             android:summary="@string/preferences_general_use_googleplay_summary"
             android:title="@string/preferences_general_use_googleplay_title"
             android:defaultValue="false"
+            android:enabled="false"
         />
         <CheckBoxPreference
             android:key="@string/preferences_general_use_apkpure_key"

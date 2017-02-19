@@ -57,14 +57,16 @@ public class UpdaterAPKPure
 			doc = Jsoup.connect(url).get();
 
 			// Try to get the version
-			elements = doc.getElementsByAttributeValue("itemprop", "softwareVersion");
+			//elements = doc.getElementsByAttributeValue("itemprop", "softwareVersion");
+			elements = doc.getElementsByClass("version-ul").get(0).getElementsByTag("p");
 			if(elements == null || elements.size() == 0) {
 				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
 			}
 
 			// If version is old, report update
-			if (compareVersions(mCurrentVersion, elements.get(0).text()) == -1) {
+			if (compareVersions(mCurrentVersion, elements.get(3).text()) == -1) {
 				mResultUrl = url;
+				mResultVersion = elements.get(3).text();
 				return UpdaterStatus.STATUS_UPDATE_FOUND;
 			}
 

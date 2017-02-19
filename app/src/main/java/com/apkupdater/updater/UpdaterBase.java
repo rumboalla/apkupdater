@@ -19,6 +19,7 @@ public class UpdaterBase
 	protected String mPname;
 	protected String mUrl;
 	protected String mResultUrl;
+	protected String mResultVersion;
 	protected Throwable mError;
 	protected UpdaterStatus mResultStatus;
 	protected String mCurrentVersion;
@@ -107,6 +108,14 @@ public class UpdaterBase
 	public UpdaterStatus getResultStatus(
 	) {
 		return mResultStatus;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public String getResultVersion(
+	) {
+		return mResultVersion;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

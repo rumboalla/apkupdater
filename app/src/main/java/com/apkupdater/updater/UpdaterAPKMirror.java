@@ -66,6 +66,7 @@ public class UpdaterAPKMirror
 
 					if (compareVersions(mCurrentVersion, app) == -1) {
 						mResultUrl = BaseUrl + row.getElementsByTag("a").get(0).attr("href");
+						mResultVersion = VersionUtil.getStringVersionFromString(app);
 						return UpdaterStatus.STATUS_UPDATE_FOUND;
 					}
 				} catch (Exception e) {

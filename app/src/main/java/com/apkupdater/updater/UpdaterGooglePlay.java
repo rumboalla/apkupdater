@@ -55,6 +55,7 @@ public class UpdaterGooglePlay
 
 			if (compareVersions(mCurrentVersion, elements.get(0).text()) == -1) {
 				mResultUrl = DownloadUrl + mPname;
+				mResultVersion = elements.get(0).text();
 				return UpdaterStatus.STATUS_UPDATE_FOUND;
 			}
 

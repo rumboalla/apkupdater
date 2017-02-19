@@ -16,6 +16,19 @@ public class VersionUtil {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	static public String getStringVersionFromString(
+		String full_string
+	) {
+		List<Integer> v = getVersionFromString(full_string);
+		String version = "";
+		for (Integer i : v) {
+			version += i + ".";
+		}
+		return version.substring(0, version.length() - 1);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	static public List<Integer> getVersionFromString(
 		String full_string
 	) {
