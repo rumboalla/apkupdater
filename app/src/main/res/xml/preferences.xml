@@ -36,6 +36,12 @@
             android:entryValues="@array/alarm_values"
             android:defaultValue="@string/alarm_daily"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_exclude_system_apps_key"
+            android:summary="@string/preferences_general_exclude_system_apps_summary"
+            android:title="@string/preferences_general_exclude_system_apps_title"
+            android:defaultValue="true"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory
