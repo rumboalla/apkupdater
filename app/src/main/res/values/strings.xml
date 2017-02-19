@@ -22,6 +22,9 @@
     <string name="preferences_general_skip_experimental_title">Skip experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
     <string name="preferences_general_skip_experimental_key">preferences_general_skip_experimental_key</string>
+    <string name="preferences_general_exclude_system_apps_title">Exclude system apps</string>
+    <string name="preferences_general_exclude_system_apps_summary">This will exclude system apps from the updates.</string>
+    <string name="preferences_general_exclude_system_apps_key">preferences_general_exclude_system_apps_key</string>
     <string name="preferences_general_ignorelist_title">App ignore list</string>
     <string name="preferences_general_ignorelist_summary">This will exclude apps from the update check.</string>
     <string name="preferences_general_ignorelist_value">com.google.android.gms,com.google.android.gsf,com.android.vending</string>

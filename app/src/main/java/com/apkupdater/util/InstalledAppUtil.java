@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.updater.UpdaterOptions;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
@@ -18,20 +19,21 @@ import java.util.List;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EBean(scope = EBean.Scope.Singleton)
-public class InstalledAppUtil {
-
+public class InstalledAppUtil
+{
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public List<InstalledApp> getInstalledApps(
 		Context context
 	) {
+		UpdaterOptions options = new UpdaterOptions(context);
 		PackageManager pm = context.getPackageManager();
 		ArrayList<InstalledApp> items = new ArrayList<>();
 		List<PackageInfo> apps = pm.getInstalledPackages(0);
 
 		for (PackageInfo i : apps) {
 			// Check it it's a system app
-			if ((i.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0) {
+			if (options.getExcludeSystemApps() && (i.applicationInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0) {
 				continue;
 			}
 
