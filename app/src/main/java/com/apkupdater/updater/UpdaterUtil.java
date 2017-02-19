@@ -53,7 +53,7 @@ class UpdaterUtil
 				IUpdater upd = createUpdater(type, context, app.getPname(), app.getVersion());
 				if (upd != null) {
 					if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
-						callback.onUpdate(new Update(app, upd.getResultUrl()));
+						callback.onUpdate(new Update(app, upd.getResultUrl(), upd.getResultVersion()));
 					} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
 						errors.add(0);
 					}

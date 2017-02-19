@@ -54,7 +54,14 @@ public class UpdaterView
 	) {
 		mName.setText(update.getName());
 		mPname.setText(update.getPname());
-		mVersion.setText(update.getVersion());
+
+		// Build version string with both old and new version
+		String version = update.getVersion();
+		if (update.getNewVersion() != null && !update.getNewVersion().isEmpty()) {
+			version += " -> " + update.getNewVersion();
+		}
+
+		mVersion.setText(version);
 		mUrl.setText(update.getUrl());
 		mUrl.setTextColor(ColorUtitl.getColorFromTheme(getContext().getTheme(), R.attr.colorAccent));
 		try {
