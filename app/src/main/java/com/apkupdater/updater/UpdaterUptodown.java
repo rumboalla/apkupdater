@@ -7,26 +7,26 @@ import android.content.Context;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-public class UpdaterGooglePlay
+public class UpdaterUptodown
 	extends UpdaterBase
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	static final private String BaseUrl = "https://play.google.com/store/apps/details?id=";
-	static final private String DownloadUrl = "https://apps.evozi.com/apk-downloader/?id=";
+	static final private String BaseUrl = "http://en.uptodown.com/android/";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public UpdaterGooglePlay(
+	public UpdaterUptodown(
 		Context context,
 		String pname,
 		String cversion
 	) {
-		super(context, pname, cversion, "GooglePlay");
+		super(context, pname, cversion, "Uptodown");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +35,7 @@ public class UpdaterGooglePlay
 	protected String getUrl(
 		String pname
 	) {
-		return BaseUrl + pname;
+		return BaseUrl + "search/" + pname.replace(".", "-");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,16 +47,36 @@ public class UpdaterGooglePlay
 		try {
 			Document doc = Jsoup.connect(url).get();
 
-			// Check if no results
-			Elements elements = doc.getElementsByAttributeValue("itemprop", "softwareVersion");
-			if(elements == null || elements.size() == 0) {
-				return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
-			}
+			for (int i = 0; i < 20; i++) {
+				// Get the url for the first app returned
+				Elements elements =  doc.getElementsByClass("cardlink_1_" + i);
+				if (elements.size() < 1) {
+					return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
+				}
+				String app_url = elements.get(0).attr("href");
 
-			if (compareVersions(mCurrentVersion, elements.get(0).text()) == -1) {
-				mResultUrl = DownloadUrl + mPname;
-				mResultVersion = elements.get(0).text();
-				return UpdaterStatus.STATUS_UPDATE_FOUND;
+				// Get package name from app url
+				Document doc2 = Jsoup.connect(app_url).get();
+				elements = doc2.getElementsByClass("packagename");
+				if (elements.size() < 1) {
+					return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
+				}
+				String pname = elements.get(0).getElementsByClass("right").get(0).html();
+
+				// Check if it's the same app
+				if (!pname.equals(mPname)) {
+					continue;
+				}
+
+				// Get version
+				String version = doc2.getElementsByClass("app_card_version").get(0).html();
+
+				// Compare versions
+				if (compareVersions(mCurrentVersion, version) == -1) {
+					mResultUrl = app_url;
+					mResultVersion = version;
+					return UpdaterStatus.STATUS_UPDATE_FOUND;
+				}
 			}
 
 			return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
