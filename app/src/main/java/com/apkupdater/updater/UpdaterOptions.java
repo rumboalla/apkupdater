@@ -46,11 +46,10 @@ public class UpdaterOptions
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public boolean useGooglePlay(
+	public boolean useUptodown(
 	) {
-		return false;
-		//SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-		//return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_use_googleplay_key), false);
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_use_uptodown_key), false);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

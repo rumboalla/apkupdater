@@ -38,9 +38,9 @@
     <string name="preferences_general_use_apkmirror_title">APKMirror\'daki güncellemeler</string>
     <string name="preferences_general_use_apkmirror_summary">APKMirror\'daki güncellemeler kontrol edilecek.</string>
     <string name="preferences_general_use_apkmirror_key">preferences_general_use_apkmirror_key</string>
-    <string name="preferences_general_use_googleplay_title">Google Play\'deki güncellemeler</string>
-    <string name="preferences_general_use_googleplay_summary">Google Play\'deki güncellemeler kontrol edilecek. Birden fazla sürüm içeren uygulamalar, bir sürüm numarası görüntülemediğinden çalışmaz. Uygulamanın indirilmesi Evozi\'den bir Google hesabı olmadan yapılabilir.</string>
-    <string name="preferences_general_use_googleplay_key">preferences_general_use_googleplay_key</string>
+    <string name="preferences_general_use_uptodown_title">Google Play\'deki güncellemeler</string>
+    <string name="preferences_general_use_uptodown_summary">Google Play\'deki güncellemeler kontrol edilecek. Birden fazla sürüm içeren uygulamalar, bir sürüm numarası görüntülemediğinden çalışmaz. Uygulamanın indirilmesi Evozi\'den bir Google hesabı olmadan yapılabilir.</string>
+    <string name="preferences_general_use_uptodown_key">preferences_general_use_uptodown_key</string>
     <string name="preferences_general_use_apkpure_title">APKPure\'den güncellemeler</string>
     <string name="preferences_general_use_apkpure_summary">APKPure.com\'daki güncellemeleri kontrol edilecek. Her uygulama için 2 istek var, bu nedenle daha yavaş.</string>
     <string name="preferences_general_use_apkpure_key">preferences_general_use_apkpure_key</string>

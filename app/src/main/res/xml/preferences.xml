@@ -55,16 +55,15 @@
             android:defaultValue="true"
         />
         <CheckBoxPreference
-            android:key="@string/preferences_general_use_googleplay_key"
-            android:summary="@string/preferences_general_use_googleplay_summary"
-            android:title="@string/preferences_general_use_googleplay_title"
-            android:defaultValue="false"
-            android:enabled="false"
-        />
-        <CheckBoxPreference
             android:key="@string/preferences_general_use_apkpure_key"
             android:summary="@string/preferences_general_use_apkpure_summary"
             android:title="@string/preferences_general_use_apkpure_title"
+            android:defaultValue="false"
+        />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_use_uptodown_key"
+            android:summary="@string/preferences_general_use_uptodown_summary"
+            android:title="@string/preferences_general_use_uptodown_title"
             android:defaultValue="false"
         />
     </PreferenceCategory>

@@ -75,8 +75,8 @@ class UpdaterUtil
 				return new UpdaterAPKMirror(context, s1, s2);
 			case "APKPure":
 				return new UpdaterAPKPure(context, s1, s2);
-			case "GooglePlay":
-				return new UpdaterGooglePlay(context, s1, s2);
+			case "Uptodown":
+				return new UpdaterUptodown(context, s1, s2);
 			default:
 				return null;
 		}
@@ -102,7 +102,7 @@ class UpdaterUtil
 
 			// Check if we have at least one update source
 			UpdaterOptions mOptions = new UpdaterOptions(context);
-			if (!mOptions.useAPKMirror() && !mOptions.useGooglePlay() && !mOptions.useAPKPure()) {
+			if (!mOptions.useAPKMirror() && !mOptions.useUptodown() && !mOptions.useAPKPure()) {
 				exit_message = context.getString(R.string.update_no_sources);
 				callback.onFinish(exit_message);
 				mMutex.unlock();
@@ -125,8 +125,8 @@ class UpdaterUtil
 				if (mOptions.useAPKMirror()) {
 					updateSource(executor, "APKMirror", app, callback, errors);
 				}
-				if (mOptions.useGooglePlay()) {
-					updateSource(executor, "GooglePlay", app, callback, errors);
+				if (mOptions.useUptodown()) {
+					updateSource(executor, "Uptodown", app, callback, errors);
 				}
 				if (mOptions.useAPKPure()) {
 					updateSource(executor, "APKPure", app, callback, errors);

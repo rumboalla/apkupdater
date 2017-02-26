@@ -16,7 +16,7 @@ import com.apkupdater.model.Update;
 import com.apkupdater.updater.IUpdater;
 import com.apkupdater.updater.UpdaterAPKMirror;
 import com.apkupdater.updater.UpdaterAPKPure;
-import com.apkupdater.updater.UpdaterGooglePlay;
+import com.apkupdater.updater.UpdaterUptodown;
 import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
@@ -81,8 +81,8 @@ public class UpdaterService
 				return new UpdaterAPKMirror(context, s1, s2);
 			case "APKPure":
 				return new UpdaterAPKPure(context, s1, s2);
-			case "GooglePlay":
-				return new UpdaterGooglePlay(context, s1, s2);
+			case "Uptodown":
+				return new UpdaterUptodown(context, s1, s2);
 			default:
 				return null;
 		}
@@ -127,7 +127,7 @@ public class UpdaterService
 
 			// Check if we have at least one update source
 			UpdaterOptions options = new UpdaterOptions(getBaseContext());
-			if (!options.useAPKMirror() && !options.useGooglePlay() && !options.useAPKPure()) {
+			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure()) {
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_no_sources)));
 				mMutex.unlock();
 				return;
@@ -142,7 +142,7 @@ public class UpdaterService
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());
 
 			// Create the notification
-			int multiplier = (options.useAPKMirror() ? 1 : 0) + (options.useAPKPure() ? 1 : 0)  + (options.useGooglePlay() ? 1 : 0) ;
+			int multiplier = (options.useAPKMirror() ? 1 : 0) + (options.useAPKPure() ? 1 : 0)  + (options.useUptodown() ? 1 : 0) ;
 			mNotification = new UpdaterNotification(getBaseContext(), installedApps.size() * multiplier);
 
 			// Create an executor with 10 threads to perform the requests
@@ -158,8 +158,8 @@ public class UpdaterService
 				if (options.useAPKMirror()) {
 					updateSource(executor, "APKMirror", app, errors);
 				}
-				if (options.useGooglePlay()) {
-					updateSource(executor, "GooglePlay", app, errors);
+				if (options.useUptodown()) {
+					updateSource(executor, "Uptodown", app, errors);
 				}
 				if (options.useAPKPure()) {
 					updateSource(executor, "APKPure", app, errors);
