@@ -69,7 +69,7 @@ public class UpdaterUptodown
 				}
 
 				// Get version
-				String version = doc2.getElementsByClass("app_card_version").get(0).html();
+				String version = doc2.getElementsByAttributeValue("itemprop", "softwareVersion").get(0).html();
 
 				// Compare versions
 				if (compareVersions(mCurrentVersion, version) == -1) {
