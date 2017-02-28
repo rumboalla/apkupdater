@@ -5,7 +5,7 @@ More information can be found in this [XDA thread](https://forum.xda-developers.
 ).
 
 # Download
-* [APK for latest version (1.3.7)](https://github.com/rumboalla/apkupdater/releases/download/1.3.7/app-release.apk)
+* [APK for latest version (1.3.8)](https://github.com/rumboalla/apkupdater/releases/download/1.3.8/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Features
