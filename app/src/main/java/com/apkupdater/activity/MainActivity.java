@@ -19,6 +19,7 @@ import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.SettingsFragment;
+import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
@@ -64,7 +65,7 @@ public class MainActivity
 	@ViewById(R.id.log_container)
 	FrameLayout mLogLayout;
 
-	SettingsFragment mSettingsFragment;
+	SettingsFragment_ mSettingsFragment;
 	LogFragment_ mLogFragment;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +114,7 @@ public class MainActivity
 		}
 
 		// Add the settings fragment and configure the correct state
-		mSettingsFragment = new SettingsFragment();
+		mSettingsFragment = new SettingsFragment_();
 		if (!(getSupportFragmentManager().findFragmentById(R.id.settings_container) instanceof SettingsFragment)) {
 			getSupportFragmentManager().beginTransaction().add(R.id.settings_container, mSettingsFragment).commit();
 		}
