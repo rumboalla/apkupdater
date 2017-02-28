@@ -1,6 +1,9 @@
 # APKUpdater
 APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.
 
+More information can be found in this [XDA thread](https://forum.xda-developers.com/android/apps-games/app-apkupdater-t3444517
+).
+
 # Download
 * [APK for latest version (1.3.7)](https://github.com/rumboalla/apkupdater/releases/download/1.3.7/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
