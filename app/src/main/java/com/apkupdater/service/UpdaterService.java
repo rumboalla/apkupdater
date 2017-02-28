@@ -193,6 +193,7 @@ public class UpdaterService
 			mMutex.unlock();
 		} catch (Exception e) {
 			exit_message = getBaseContext().getString(R.string.update_failed).replace("$1", e.getClass().getSimpleName());
+			mLogger.log("UpdaterService", e.getMessage() == null ? "" : e.getMessage(), LogMessage.SEVERITY_ERROR);
 			mBus.post(new UpdateStopEvent(exit_message));
 			if (mNotification != null) {
 				mNotification.failNotification();
