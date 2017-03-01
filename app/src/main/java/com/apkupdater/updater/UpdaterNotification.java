@@ -63,6 +63,11 @@ public class UpdaterNotification
 	public void finishNotification(
 		int numberOfUpdates
 	) {
+		// Prevent NPE
+		if (mNotificationManager == null) {
+			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		}
+		
 		// Check if we should do notifications
 		if (!doNotification(numberOfUpdates)) {
 			mNotificationManager.cancelAll();
@@ -88,13 +93,19 @@ public class UpdaterNotification
 		mNotificationBuilder.setProgress(0, 0, false);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title_failed));
 		mNotificationBuilder.setContentText(null);
+		
+		// Prevent NPE
+		if (mNotificationManager == null) {
+			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		}
+		
 		mNotificationManager.notify(42, mNotificationBuilder.build());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private boolean doNotification(
-			int numberOfUpdates
+		int numberOfUpdates
 	) {
 		if (mOptions.getNotificationOption().equals(mContext.getString(R.string.notification_always))) {
 			return true;
@@ -112,13 +123,18 @@ public class UpdaterNotification
 
 	private void createNotification(
 	) {
-		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationBuilder = new NotificationCompat.Builder(mContext);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title));
 		mNotificationBuilder.setSmallIcon(R.drawable.ic_update_white_24dp);
 		mNotificationBuilder.setContentIntent(createPendingIntent());
 		mNotificationBuilder.setAutoCancel(true);
 		mNotificationBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
+		
+		// Prevent NPE
+		if (mNotificationManager == null) {
+			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		}
+		
 		mNotificationManager.notify(42, mNotificationBuilder.build());
 		updateNotification(mMaxApps, 0);
 	}
@@ -131,6 +147,12 @@ public class UpdaterNotification
 	) {
 		mNotificationBuilder.setContentText(getNotificationProgressString(max, progress));
 		mNotificationBuilder.setProgress(max, progress, false);
+		
+		// Prevent NPE
+		if (mNotificationManager == null) {
+			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		}
+		
 		mNotificationManager.notify(42, mNotificationBuilder.build());
 	}
 
