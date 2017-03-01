@@ -46,7 +46,7 @@ public class VersionUtil {
 			List<Integer> version = new ArrayList<>();
 			for (String j : dot_string) {
 				try {
-					int c = Integer.parseInt(j.replace("v", "").replace("V", "").replace("b", "").replace("B", "")); // Remove v to properly read versions like v0.0.1
+					int c = Integer.parseInt(j.replace("v", "").replace("V", "").replace("b", "").replace("B", "").replace("u", "").replace("U", "")); // Remove v to properly read versions like v0.0.1
 					version.add(c);
 				} catch (NumberFormatException e) {
 					break;
