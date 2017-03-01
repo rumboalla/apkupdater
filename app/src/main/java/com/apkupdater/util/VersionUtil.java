@@ -46,7 +46,7 @@ public class VersionUtil {
 			List<Integer> version = new ArrayList<>();
 			for (String j : dot_string) {
 				try {
-					int c = Integer.parseInt(j.replace("v", "")); // Remove v to properly read versions like v0.0.1
+					int c = Integer.parseInt(j.replace("v", "").replace("V", "").replace("b", "").replace("B", "")); // Remove v to properly read versions like v0.0.1
 					version.add(c);
 				} catch (NumberFormatException e) {
 					break;
@@ -59,6 +59,16 @@ public class VersionUtil {
 			}
 		}
 
+		// If that failed, try making a version from all numbers on the string
+		String [] split = full_string.replaceAll("[^0-9]+", " ").trim().split(" ");
+		List<Integer> version = new ArrayList<>();
+		for (String i : split) {
+			version.add(Integer.valueOf(i));
+		}
+		if (version.size() > 0) {
+			return version;
+		}
+		
 		return null;
 	}
 
