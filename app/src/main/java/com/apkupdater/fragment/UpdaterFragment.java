@@ -31,6 +31,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.ItemLongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
@@ -107,8 +108,20 @@ public class UpdaterFragment
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@ItemClick(R.id.list_view)
-	void onUpdateClicked(Update u) {
+	void onUpdateClicked(
+		Update u
+	) {
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(u.getUrl()));
+		startActivity(browserIntent);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@ItemLongClick(R.id.list_view)
+	void onUpdateLongClicked(
+		Update u
+	) {
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps.evozi.com/apk-downloader/?id=" + u.getPname()));
 		startActivity(browserIntent);
 	}
 

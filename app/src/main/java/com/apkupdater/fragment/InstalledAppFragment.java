@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
 import com.apkupdater.event.InstalledAppTitleChange;
+import com.apkupdater.event.UpdateInstalledAppsEvent;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.GenericCallback;
@@ -13,6 +14,7 @@ import com.apkupdater.R;
 import com.apkupdater.adapter.InstalledAppAdapter;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
+import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -78,6 +80,24 @@ public class InstalledAppFragment
 
 	@AfterViews
 	void init(
+	) {
+		mBus.register(this);
+		updateInstalledApps(new UpdateInstalledAppsEvent());
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onDestroy() {
+		mBus.unregister(this);
+		super.onDestroy();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void updateInstalledApps(
+		UpdateInstalledAppsEvent ev
 	) {
 		mInstalledAppUtil.getInstalledAppsAsync(getContext(), new GenericCallback<List<InstalledApp>>() {
 			@Override
