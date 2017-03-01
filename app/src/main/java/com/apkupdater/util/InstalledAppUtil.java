@@ -37,6 +37,17 @@ public class InstalledAppUtil
 				continue;
 			}
 
+			if (options.getExcludeDisabledApps()){
+				try {
+					ApplicationInfo ai = pm.getApplicationInfo(i.packageName, 0);
+					if (!ai.enabled){
+						continue;
+					}
+				} catch (PackageManager.NameNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+
 			// Check if the app was installed by something (Google Play, Amazon, etc)
 			String installer = pm.getInstallerPackageName(i.packageName);
 			if (installer != null && !installer.isEmpty()) {
