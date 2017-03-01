@@ -55,7 +55,8 @@ public class SettingsFragment
 					alarmUtil.setAlarmFromOptions();
 				} else if (key.equals(getString(R.string.preferences_general_theme_key))) {
 					MainActivity_.intent(getContext()).flags(FLAG_ACTIVITY_CLEAR_TOP).start();
-				} else if (key.equals(getString(R.string.preferences_general_exclude_system_apps_key))) {
+				} else if (key.equals(getString(R.string.preferences_general_exclude_system_apps_key)) ||
+						key.equals(getString(R.string.preferences_general_exclude_disabled_apps_key))) {
 					mBus.post(new UpdateInstalledAppsEvent());
 				}
 			} catch (IllegalStateException ignored) {
