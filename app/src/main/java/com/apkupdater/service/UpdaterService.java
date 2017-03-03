@@ -3,6 +3,8 @@ package com.apkupdater.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.apkupdater.R;
 import com.apkupdater.event.UpdateFinalProgressEvent;
@@ -16,10 +18,10 @@ import com.apkupdater.model.Update;
 import com.apkupdater.updater.IUpdater;
 import com.apkupdater.updater.UpdaterAPKMirror;
 import com.apkupdater.updater.UpdaterAPKPure;
-import com.apkupdater.updater.UpdaterUptodown;
 import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
+import com.apkupdater.updater.UpdaterUptodown;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
@@ -124,6 +126,18 @@ public class UpdaterService
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.already_updating)));
 				return;
 			}
+
+			ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+			boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+			if (!isConnected){
+				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_check_failed_no_internet)));
+				return;
+				//Ideally, if the screen is off (ie. the check was automatic) this should reschedule the update,
+				//or wait for the internet connectivity to change (via broadcast receiver)
+			}
+
 
 			// Check if we have at least one update source
 			UpdaterOptions options = new UpdaterOptions(getBaseContext());
