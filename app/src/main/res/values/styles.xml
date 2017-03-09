@@ -9,12 +9,14 @@
         <item name="android:textColorSecondary">@color/textColorSecondaryBlue</item>
         <item name="android:textColor">@color/textColorBlue</item>
         <item name="preferenceTheme">@style/PreferenceThemeBlue</item>
+        <item name="alertDialogTheme">@style/PreferenceThemeBlue</item>
     </style>
 
     <style name="PreferenceThemeBlue" parent="AppThemeBlue">
         <item name="android:textColorPrimary">@color/textColorBlue</item>
         <item name="android:textColorSecondary">@color/textColorSecondaryInverseBlue</item>
         <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
     <!-- Orange Theme -->
@@ -26,12 +28,14 @@
         <item name="android:textColorSecondary">@color/textColorSecondaryOrange</item>
         <item name="android:textColor">@color/textColorOrange</item>
         <item name="preferenceTheme">@style/PreferenceThemeOrange</item>
+        <item name="alertDialogTheme">@style/PreferenceThemeOrange</item>
     </style>
 
     <style name="PreferenceThemeOrange" parent="AppThemeOrange">
         <item name="android:textColorPrimary">@color/textColorOrange</item>
         <item name="android:textColorSecondary">@color/textColorSecondaryInverseOrange</item>
         <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
     <!-- Pink Theme -->
@@ -39,27 +43,31 @@
         <item name="colorPrimary">@color/colorPrimaryPink</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkPink</item>
         <item name="colorAccent">@color/colorAccentPink</item>
-        <item name="preferenceTheme">@style/AppThemePink</item>
         <item name="android:textColor">@color/textColorPink</item>
+        <item name="preferenceTheme">@style/PreferenceThemePink</item>
+        <item name="alertDialogTheme">@style/PreferenceThemePink</item>
     </style>
 
     <style name="PreferenceThemePink" parent="AppThemePink">
         <item name="android:textColorPrimary">@color/textColorPrimaryPink</item>
         <item name="android:textColorSecondary">@color/textColorSecondaryPink</item>
         <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
     <!-- Dark Theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/colorAccentDark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeDark</item>
         <item name="android:textColor">@color/textColorDark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeDark</item>
+        <item name="alertDialogTheme">@style/PreferenceThemeDark</item>
     </style>
 
     <style name="PreferenceThemeDark" parent="AppThemeDark">
         <item name="android:textColorPrimary">@color/textColorPrimaryDark</item>
         <item name="android:textColorSecondary">@color/textColorSecondaryDark</item>
         <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
 </resources>
