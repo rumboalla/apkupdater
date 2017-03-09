@@ -4,6 +4,8 @@ package com.apkupdater.util;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.util.List;
 
@@ -25,6 +27,16 @@ public class ServiceUtil
 			}
 		}
 		return false;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static boolean isConnected(
+		Context context
+	) {
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+		return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

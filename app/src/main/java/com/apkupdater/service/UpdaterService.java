@@ -3,8 +3,6 @@ package com.apkupdater.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 import com.apkupdater.R;
 import com.apkupdater.event.UpdateFinalProgressEvent;
@@ -22,9 +20,11 @@ import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
 import com.apkupdater.updater.UpdaterUptodown;
+import com.apkupdater.util.AlarmUtil;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.ServiceUtil;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -57,11 +57,16 @@ public class UpdaterService
 	AppState mAppState;
 
 	@Bean
+	AlarmUtil mAlarmUtil;
+
+	@Bean
 	LogUtil mLogger;
 
 	private final Lock mMutex = new ReentrantLock(true);
 	private List<Update> mUpdates = new ArrayList<>();
 	private UpdaterNotification mNotification;
+	private boolean mIsFromAlarm = false;
+	static public final String isFromAlarmExtra = "isFromAlarm";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -127,15 +132,16 @@ public class UpdaterService
 				return;
 			}
 
-			ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-			boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-
-			if (!isConnected){
+			if (!ServiceUtil.isConnected(getBaseContext())) {
+				// Post error
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_check_failed_no_internet)));
+
+				// Reschedule for 15 min if this was alarm scheduled
+				if (mIsFromAlarm) {
+					mAlarmUtil.rescheduleAlarm();
+				}
+
 				return;
-				//Ideally, if the screen is off (ie. the check was automatic) this should reschedule the update,
-				//or wait for the internet connectivity to change (via broadcast receiver)
 			}
 
 
@@ -222,6 +228,10 @@ public class UpdaterService
 	protected void onHandleIntent(
 		Intent intent
 	) {
+		try {
+			mIsFromAlarm = intent.getExtras().getBoolean(isFromAlarmExtra);
+		} catch (Exception ignored) {}
+
 		checkForUpdates();
 	}
 
