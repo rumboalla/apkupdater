@@ -59,4 +59,5 @@
     <string name="theme_dark">Koyu</string>
     <string name="theme_orange">Turuncu</string>
     <string name="content_description_app_icon">Uygulama simgesi</string>
+    <string name="update_check_failed_no_internet">*Update check failed - No internet connection*</string>
 </resources>
