@@ -29,7 +29,7 @@ apt {
     }
 }
 
-def AAVersion = '4.1.0'
+def AAVersion = '4.2.0'
 
 dependencies {
     apt "org.androidannotations:androidannotations:$AAVersion"

@@ -25,6 +25,7 @@ public class AlarmUtil
 	AlarmManager alarmManager;
 	PendingIntent alarmIntent;
 	Context mContext;
+	Long mRescheduleTimeInMilis = 900000L;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -75,6 +76,13 @@ public class AlarmUtil
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, alarmIntent);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void rescheduleAlarm(
+	) {
+		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + mRescheduleTimeInMilis, alarmIntent);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.apkupdater.service.UpdaterService;
 import com.apkupdater.service.UpdaterService_;
 
 import org.androidannotations.annotations.EReceiver;
@@ -23,7 +24,7 @@ public class AlarmReceiver
 		Context context,
 		Intent intent
 	) {
-		UpdaterService_.intent(context).start();
+		UpdaterService_.intent(context).extra(UpdaterService.isFromAlarmExtra, true).start();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
