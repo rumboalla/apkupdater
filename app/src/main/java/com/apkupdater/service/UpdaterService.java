@@ -132,6 +132,7 @@ public class UpdaterService
 				return;
 			}
 
+			// Check for connectivity
 			if (!ServiceUtil.isConnected(getBaseContext())) {
 				// Post error
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_check_failed_no_internet)));
@@ -144,8 +145,19 @@ public class UpdaterService
 				return;
 			}
 
-			// Check if we have at least one update source
+			// Get the options
 			UpdaterOptions options = new UpdaterOptions(getBaseContext());
+
+			// Check if wifi only option
+			if (options.getWifiOnly()) {
+				if (!ServiceUtil.isWifi(getBaseContext())) {
+					// Post error
+					mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_check_failed_no_wifi)));
+					return;
+				}
+			}
+
+			// Check if we have at least one update source
 			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure()) {
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_no_sources)));
 				mMutex.unlock();

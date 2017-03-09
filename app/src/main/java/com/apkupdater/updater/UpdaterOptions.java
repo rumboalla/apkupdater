@@ -116,6 +116,14 @@ public class UpdaterOptions
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public boolean getWifiOnly(
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_wifi_only_key), false);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public int getNumThreads(
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
