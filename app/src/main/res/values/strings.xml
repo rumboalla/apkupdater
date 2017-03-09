@@ -59,5 +59,6 @@
     <string name="theme_dark">Dark Droid</string>
     <string name="theme_orange">Orange Juice</string>
     <string name="content_description_app_icon">App Icon</string>
+    <string name="update_check_failed_no_internet">Update check failed - No internet connection</string>
 </resources>
 
