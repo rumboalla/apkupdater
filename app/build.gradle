@@ -8,8 +8,8 @@ android {
         applicationId "com.apkupdater"
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 9
-        versionName "1.3.9"
+        versionCode 10
+        versionName "1.3.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all {
