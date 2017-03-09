@@ -49,14 +49,17 @@ public class SettingsFragment
 			String key
 		) {
 			try {
-				// Change alarm
 				if (key.equals(getString(R.string.preferences_general_alarm_key))) {
+					// Change alarm
 					AlarmUtil alarmUtil = new AlarmUtil(getContext());
 					alarmUtil.setAlarmFromOptions();
 				} else if (key.equals(getString(R.string.preferences_general_theme_key))) {
+					// Change theme
 					MainActivity_.intent(getContext()).flags(FLAG_ACTIVITY_CLEAR_TOP).start();
 				} else if (key.equals(getString(R.string.preferences_general_exclude_system_apps_key)) ||
-						key.equals(getString(R.string.preferences_general_exclude_disabled_apps_key))) {
+					key.equals(getString(R.string.preferences_general_exclude_disabled_apps_key))
+				) {
+					// Update list of apps
 					mBus.post(new UpdateInstalledAppsEvent());
 				}
 			} catch (IllegalStateException ignored) {

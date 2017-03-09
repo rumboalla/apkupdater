@@ -116,6 +116,15 @@ public class UpdaterOptions
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	public int getNumThreads(
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		String v = sharedPref.getString(mContext.getString(R.string.preferences_general_num_threads_key), mContext.getString(R.string.num_threads_five));
+		return Integer.valueOf(v);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public String getTheme(
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);

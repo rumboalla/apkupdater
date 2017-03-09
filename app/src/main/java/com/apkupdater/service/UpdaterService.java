@@ -144,7 +144,6 @@ public class UpdaterService
 				return;
 			}
 
-
 			// Check if we have at least one update source
 			UpdaterOptions options = new UpdaterOptions(getBaseContext());
 			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure()) {
@@ -165,8 +164,8 @@ public class UpdaterService
 			int multiplier = (options.useAPKMirror() ? 1 : 0) + (options.useAPKPure() ? 1 : 0)  + (options.useUptodown() ? 1 : 0) ;
 			mNotification = new UpdaterNotification(getBaseContext(), installedApps.size() * multiplier);
 
-			// Create an executor with 10 threads to perform the requests
-			ExecutorService executor = Executors.newFixedThreadPool(10);
+			// Create an executor with N threads to perform the requests
+			ExecutorService executor = Executors.newFixedThreadPool(options.getNumThreads());
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates

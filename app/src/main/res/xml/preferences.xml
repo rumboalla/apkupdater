@@ -6,12 +6,6 @@
         android:title="@string/preferences_general_category"
         android:key="pref_key_general_settings"
     >
-        <CheckBoxPreference
-            android:key="@string/preferences_general_skip_experimental_key"
-            android:summary="@string/preferences_general_skip_experimental_summary"
-            android:title="@string/preferences_general_skip_experimental_title"
-            android:defaultValue="false"
-        />
         <ListPreference
             android:key="@string/preferences_general_theme_key"
             android:title="@string/preferences_general_theme_title"
@@ -36,6 +30,26 @@
             android:entryValues="@array/alarm_values"
             android:defaultValue="@string/alarm_daily"
         />
+        <ListPreference
+            android:key="@string/preferences_general_num_threads_key"
+            android:title="@string/preferences_general_num_threads_title"
+            android:summary="%s"
+            android:entries="@array/num_threads_values"
+            android:entryValues="@array/num_threads_values"
+            android:defaultValue="@string/num_threads_five"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preferences_filter_category"
+        android:key="pref_key_general_settings"
+    >
+        <CheckBoxPreference
+            android:key="@string/preferences_general_skip_experimental_key"
+            android:summary="@string/preferences_general_skip_experimental_summary"
+            android:title="@string/preferences_general_skip_experimental_title"
+            android:defaultValue="false"
+        />
         <CheckBoxPreference
             android:key="@string/preferences_general_exclude_system_apps_key"
             android:summary="@string/preferences_general_exclude_system_apps_summary"
@@ -47,7 +61,7 @@
             android:summary="@string/preferences_general_exclude_disabled_apps_summary"
             android:title="@string/preferences_general_exclude_disabled_apps_title"
             android:defaultValue="true"
-            />
+        />
     </PreferenceCategory>
 
     <PreferenceCategory

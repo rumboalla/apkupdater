@@ -17,4 +17,10 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_orange</item>
     </array>
+    <array name="num_threads_values">
+        <item>@string/num_threads_one</item>
+        <item>@string/num_threads_three</item>
+        <item>@string/num_threads_five</item>
+        <item>@string/num_threads_ten</item>
+    </array>
 </resources>
