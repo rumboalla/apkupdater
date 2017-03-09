@@ -22,34 +22,37 @@
     <string name="preferences_sources_category">Update sources</string>
     <string name="preferences_general_skip_experimental_title">Exclude experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
-    <string name="preferences_general_skip_experimental_key">preferences_general_skip_experimental_key</string>
+    <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
     <string name="preferences_general_exclude_system_apps_title">Exclude system apps</string>
     <string name="preferences_general_exclude_system_apps_summary">This will exclude system apps from the updates.</string>
-    <string name="preferences_general_exclude_system_apps_key">preferences_general_exclude_system_apps_key</string>
+    <string name="preferences_general_exclude_system_apps_key" translatable="false">preferences_general_exclude_system_apps_key</string>
     <string name="preferences_general_exclude_disabled_apps_title">Exclude disabled apps</string>
     <string name="preferences_general_exclude_disabled_apps_summary">This will exclude disabled apps from the updates.</string>
-    <string name="preferences_general_exclude_disabled_apps_key">preferences_general_exclude_disabled_apps_key</string>
+    <string name="preferences_general_exclude_disabled_apps_key" translatable="false">preferences_general_exclude_disabled_apps_key</string>
     <string name="preferences_general_ignorelist_title">App ignore list</string>
     <string name="preferences_general_ignorelist_summary">This will exclude apps from the update check.</string>
     <string name="preferences_general_ignorelist_value">com.google.android.gms,com.google.android.gsf,com.android.vending</string>
-    <string name="preferences_general_ignorelist_key">preferences_general_ignorelist_key</string>
+    <string name="preferences_general_ignorelist_key" translatable="false">preferences_general_ignorelist_key</string>
     <string name="preferences_general_notification_title">Notifications</string>
-    <string name="preferences_general_notification_key">preferences_general_notification_key</string>
+    <string name="preferences_general_notification_key" translatable="false">preferences_general_notification_key</string>
     <string name="preferences_general_theme_title">Theme</string>
-    <string name="preferences_general_theme_key">preferences_general_theme_key</string>
+    <string name="preferences_general_theme_key" translatable="false">preferences_general_theme_key</string>
     <string name="preferences_general_alarm_title">Check for updates</string>
-    <string name="preferences_general_alarm_key">preferences_general_alarm_key</string>
+    <string name="preferences_general_alarm_key" translatable="false">preferences_general_alarm_key</string>
     <string name="preferences_general_num_threads_title">Number of threads</string>
-    <string name="preferences_general_num_threads_key">preferences_general_num_threads_key</string>
+    <string name="preferences_general_num_threads_key" translatable="false">preferences_general_num_threads_key</string>
     <string name="preferences_general_use_apkmirror_title">Updates from APKMirror</string>
     <string name="preferences_general_use_apkmirror_summary">This will check for updates on APKMirror.</string>
-    <string name="preferences_general_use_apkmirror_key">preferences_general_use_apkmirror_key</string>
+    <string name="preferences_general_use_apkmirror_key" translatable="false">preferences_general_use_apkmirror_key</string>
     <string name="preferences_general_use_uptodown_title">Updates from Uptodown</string>
     <string name="preferences_general_use_uptodown_summary">This will check for updates on Uptodown. Slow, needs many requests.</string>
-    <string name="preferences_general_use_uptodown_key">preferences_general_use_uptodown_key</string>
+    <string name="preferences_general_use_uptodown_key" translatable="false">preferences_general_use_uptodown_key</string>
     <string name="preferences_general_use_apkpure_title">Updates from APKPure</string>
     <string name="preferences_general_use_apkpure_summary">This will check for updates on APKPure.com. Needs 2 requests per app, so it\'s slower.</string>
-    <string name="preferences_general_use_apkpure_key">preferences_general_use_apkpure_key</string>
+    <string name="preferences_general_use_apkpure_key" translatable="false">preferences_general_use_apkpure_key</string>
+    <string name="preferences_general_wifi_only_title">Wi-Fi only</string>
+    <string name="preferences_general_wifi_only_summary">Only check for updates when connected to a Wi-Fi network.</string>
+    <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
     <string name="notification_never">Never</string>
     <string name="notification_always">Always</string>
     <string name="notification_background">Background</string>
@@ -62,10 +65,11 @@
     <string name="theme_dark">Dark Droid</string>
     <string name="theme_orange">Orange Juice</string>
     <string name="content_description_app_icon">App Icon</string>
-    <string name="update_check_failed_no_internet">Checking for updates faild: No internet connection.</string>
-    <string name="num_threads_one">1</string>
-    <string name="num_threads_three">3</string>
-    <string name="num_threads_five">5</string>
-    <string name="num_threads_ten">10</string>
+    <string name="update_check_failed_no_internet">Checking for updates failed: No internet connection.</string>
+    <string name="update_check_failed_no_wifi">Checking for updates failed: No Wi-Fi.</string>
+    <string name="num_threads_one" translatable="false">1</string>
+    <string name="num_threads_three" translatable="false">3</string>
+    <string name="num_threads_five" translatable="false">5</string>
+    <string name="num_threads_ten" translatable="false">10</string>
 </resources>
 

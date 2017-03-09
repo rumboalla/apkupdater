@@ -38,6 +38,12 @@
             android:entryValues="@array/num_threads_values"
             android:defaultValue="@string/num_threads_five"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_wifi_only_key"
+            android:summary="@string/preferences_general_wifi_only_summary"
+            android:title="@string/preferences_general_wifi_only_title"
+            android:defaultValue="false"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory
