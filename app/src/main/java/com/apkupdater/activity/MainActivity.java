@@ -5,12 +5,14 @@ package com.apkupdater.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.transition.AutoTransition;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.fragment.LogFragment_;
@@ -150,21 +152,21 @@ public class MainActivity
 		String title,
 		boolean arrow
 	) {
+		try {
 		ActionBar bar = getSupportActionBar();
-		if (bar != null) {
-			try {
+			if (bar != null) {
 				if (Build.VERSION.SDK_INT > 13) {
-					TransitionManager.beginDelayedTransition(mToolbar);
+					TransitionManager.beginDelayedTransition(mToolbar, new AutoTransition().setDuration(250));
 				}
-			} catch (Exception e) {}
-			bar.setDisplayHomeAsUpEnabled(arrow);
 
-			while (title.length() < "APKUpdater        ".length()) { // Probably not the best way to do this
-				title += " ";
+				// This is to try to avoid the text to be cut during animation. TODO: Find a better way.
+				TextView t = (TextView) mToolbar.getChildAt(0);
+				t.getLayoutParams().width = 2000;
+
+				bar.setTitle(title);
+				bar.setDisplayHomeAsUpEnabled(arrow);
 			}
-
-			bar.setTitle(title );
-		}
+		} catch (Exception e) {}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
