@@ -5,28 +5,23 @@ package com.apkupdater.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.transition.TransitionManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.apkupdater.R;
-import com.apkupdater.adapter.MainActivityPageAdapter;
-import com.apkupdater.event.InstalledAppTitleChange;
-import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.fragment.LogFragment_;
-import com.apkupdater.fragment.SettingsFragment;
+import com.apkupdater.fragment.MainFragment;
+import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
-import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ThemeUtil;
-import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -44,14 +39,8 @@ public class MainActivity
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@ViewById(R.id.container)
-	ViewPager mViewPager;
-
 	@ViewById(R.id.toolbar)
 	Toolbar mToolbar;
-
-	@ViewById(R.id.tabs)
-	TabLayout mTabLayout;
 
 	@Bean
 	MyBus mBus;
@@ -59,14 +48,12 @@ public class MainActivity
 	@Bean
 	AppState mAppState;
 
-	@ViewById(R.id.settings_container)
-	FrameLayout mSettingsLayout;
-
-	@ViewById(R.id.log_container)
-	FrameLayout mLogLayout;
+	@ViewById(R.id.container)
+	FrameLayout mContainer;
 
 	SettingsFragment_ mSettingsFragment;
 	LogFragment_ mLogFragment;
+	MainFragment_ mMainFragment;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,16 +66,6 @@ public class MainActivity
 		setContentView(R.layout.activity_main);
 	}
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-
-		// Select tab
-		selectTab(mAppState.getSelectedTab());
-	}
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@AfterViews
@@ -97,33 +74,18 @@ public class MainActivity
 		checkFirstStart();
 		mBus.register(this);
 		setSupportActionBar(mToolbar);
-		mViewPager.setAdapter(new MainActivityPageAdapter(getBaseContext(), getSupportFragmentManager()));
-		mViewPager.setOffscreenPageLimit(2);
-		mTabLayout.setupWithViewPager(mViewPager);
-		mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-			@Override public void onTabSelected(TabLayout.Tab tab) { mAppState.setSelectedTab(tab.getPosition()); }
-			@Override public void onTabUnselected(TabLayout.Tab tab) {}
-			@Override public void onTabReselected(TabLayout.Tab tab) {}
-		});
-		selectTab(mAppState.getSelectedTab());
 
-		if (Build.VERSION.SDK_INT <= 11) { // Fix for 2.3 background not being set properly for some reason
-			getWindow().getDecorView().setBackgroundColor(
-				ColorUtitl.getColorFromTheme(getTheme(), android.R.attr.windowBackground)
-			);
-		}
-
-		// Add the settings fragment and configure the correct state
+		// Create fragments
+		mMainFragment = new MainFragment_();
 		mSettingsFragment = new SettingsFragment_();
-		if (!(getSupportFragmentManager().findFragmentById(R.id.settings_container) instanceof SettingsFragment)) {
-			getSupportFragmentManager().beginTransaction().add(R.id.settings_container, mSettingsFragment).commit();
-		}
-
 		mLogFragment = new LogFragment_();
-		if (!(getSupportFragmentManager().findFragmentById(R.id.log_container) instanceof LogFragment_)) {
-			getSupportFragmentManager().beginTransaction().add(R.id.log_container, mLogFragment).commit();
+
+		// Add the main fragment and configure the correct state
+		if (!(getSupportFragmentManager().findFragmentById(R.id.container) instanceof MainFragment)) {
+			getSupportFragmentManager().beginTransaction().add(R.id.container, mMainFragment).commit();
 		}
 
+		// Switch to the correct fragment
 		if (mAppState.getSettingsActive()) {
 			switchSettings(true);
 		} else if (mAppState.getLogActive()) {
@@ -136,26 +98,12 @@ public class MainActivity
 	private void switchSettings(
 		boolean b
 	) {
-        ActionBar bar = getSupportActionBar();
 		if (b) {
-			mTabLayout.setVisibility(View.GONE);
-			mViewPager.setVisibility(View.GONE);
-			mSettingsLayout.setVisibility(View.VISIBLE);
-			mLogLayout.setVisibility(View.GONE);
-
-			if (bar != null) {
-                bar.setDisplayHomeAsUpEnabled(true);
-                bar.setTitle(getString(R.string.action_settings));
-            }
+			replaceFragment(mSettingsFragment, true);
+			changeToolbar(getString(R.string.action_settings), true);
 		} else {
-			mTabLayout.setVisibility(View.VISIBLE);
-			mViewPager.setVisibility(View.VISIBLE);
-			mSettingsLayout.setVisibility(View.GONE);
-			mLogLayout.setVisibility(View.GONE);
-            if (bar != null) {
-                bar.setTitle(getString(R.string.app_name));
-                bar.setDisplayHomeAsUpEnabled(false);
-            }
+			replaceFragment(mMainFragment, false);
+			changeToolbar(getString(R.string.app_name), false);
 		}
 
 		mAppState.setSettingsActive(b);
@@ -166,29 +114,57 @@ public class MainActivity
 	private void switchLog(
 		boolean b
 	) {
-        ActionBar bar = getSupportActionBar();
 		if (b) {
-			mTabLayout.setVisibility(View.GONE);
-			mViewPager.setVisibility(View.GONE);
-			mSettingsLayout.setVisibility(View.GONE);
-			mLogLayout.setVisibility(View.VISIBLE);
-
-            if (bar != null) {
-                bar.setDisplayHomeAsUpEnabled(true);
-                bar.setTitle(getString(R.string.action_log));
-            }
+			replaceFragment(mLogFragment, true);
+			changeToolbar(getString(R.string.action_log), true);
 		} else {
-			mTabLayout.setVisibility(View.VISIBLE);
-			mViewPager.setVisibility(View.VISIBLE);
-			mSettingsLayout.setVisibility(View.GONE);
-			mLogLayout.setVisibility(View.GONE);
-            if (bar != null) {
-                bar.setTitle(getString(R.string.app_name));
-                bar.setDisplayHomeAsUpEnabled(false);
-            }
+			replaceFragment(mMainFragment, false);
+			changeToolbar(getString(R.string.app_name), false);
 		}
 
 		mAppState.setLogActive(b);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void replaceFragment(
+		Fragment f,
+		boolean in
+	) {
+		if (in) {
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+				.replace(R.id.container, f)
+			.commit();
+		} else {
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+				.replace(R.id.container, f)
+			.commit();
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void changeToolbar(
+		String title,
+		boolean arrow
+	) {
+		ActionBar bar = getSupportActionBar();
+		if (bar != null) {
+			try {
+				if (Build.VERSION.SDK_INT > 13) {
+					TransitionManager.beginDelayedTransition(mToolbar);
+				}
+			} catch (Exception e) {}
+			bar.setDisplayHomeAsUpEnabled(arrow);
+
+			while (title.length() < "APKUpdater        ".length()) { // Probably not the best way to do this
+				title += " ";
+			}
+
+			bar.setTitle(title );
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,16 +185,6 @@ public class MainActivity
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void selectTab(
-		int tab
-	) {
-        TabLayout.Tab selectedTab = mTabLayout.getTabAt(tab);
-        if (selectedTab != null) {
-            selectedTab.select();
-        }
-	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -266,30 +232,6 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Subscribe
-	public void onInstalledAppTitleChange(
-		InstalledAppTitleChange t
-	) {
-        TabLayout.Tab selectedTab = mTabLayout.getTabAt(0);
-        if (selectedTab != null){
-            selectedTab.setText(t.getTitle());
-        }
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Subscribe
-	public void onUpdaterTitleChange(
-		UpdaterTitleChange t
-	) {
-        TabLayout.Tab selectedTab = mTabLayout.getTabAt(1);
-        if (selectedTab != null) {
-            selectedTab.setText(t.getTitle());
-        }
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	private void setThemeFromOptions(
 	) {
 		int theme = ThemeUtil.getActivityThemeFromOptions(getBaseContext());
@@ -305,13 +247,9 @@ public class MainActivity
 
 		// We are checking if the theme changed
 		if (mAppState.getCurrentTheme() != ThemeUtil.getActivityThemeFromOptions(getBaseContext())) {
-			mAppState.setSelectedTab(mTabLayout.getSelectedTabPosition());
 			finish();
 			MainActivity_.intent(this).flags(Intent.FLAG_ACTIVITY_CLEAR_TOP).start();
 		}
-
-		// Select tab
-		selectTab(mAppState.getSelectedTab());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
