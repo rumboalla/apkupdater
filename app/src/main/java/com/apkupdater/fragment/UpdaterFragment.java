@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -232,6 +233,8 @@ public class UpdaterFragment
 	@AfterViews
 	void init(
 	) {
+		ViewCompat.setNestedScrollingEnabled(mListView, true);
+
 		// Set the correct color for the ProgressBar
 		mProgressBar.setIndeterminate(true);
 		mProgressBar.getIndeterminateDrawable().setColorFilter(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
