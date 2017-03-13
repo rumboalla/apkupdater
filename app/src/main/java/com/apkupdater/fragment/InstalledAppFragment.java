@@ -2,17 +2,15 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
-import android.transition.Slide;
-import android.transition.TransitionManager;
 import android.widget.ListView;
 
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdateInstalledAppsEvent;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.R;
 import com.apkupdater.adapter.InstalledAppAdapter;
@@ -173,12 +171,7 @@ public class InstalledAppFragment
 		mAdapter.clear();
 		mListView.setAdapter(mAdapter);
 
-		// Animation
-		if (Build.VERSION.SDK_INT >= 21) {
-			TransitionManager.beginDelayedTransition(mListView, new Slide());
-		} else {
-			android.support.transition.TransitionManager.beginDelayedTransition(mListView);
-		}
+		AnimationUtil.startListAnimation(mListView);
 
 		for (InstalledApp i : sort(items)) { // addAll needs API level 11+
 			mAdapter.add(i);
