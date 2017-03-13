@@ -5,6 +5,9 @@ import com.apkupdater.model.LogMessage;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EBean(scope = EBean.Scope.Singleton)
@@ -15,6 +18,8 @@ public class LogUtil
 	@Bean
 	MyBus mBus;
 
+	List<LogMessage> mMessages = new ArrayList<>();
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void log(
@@ -22,7 +27,15 @@ public class LogUtil
 		String message,
 		int severity
 	) {
-		mBus.post(new LogMessage(title, message, severity));
+		mMessages.add(new LogMessage(title, message, severity));
+		//mBus.post(new LogMessage(title, message, severity));
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public List<LogMessage> getMessages(
+	) {
+		return mMessages;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
