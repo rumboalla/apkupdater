@@ -2,8 +2,11 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.transition.Slide;
+import android.transition.TransitionManager;
 import android.widget.ListView;
 
 import com.apkupdater.event.InstalledAppTitleChange;
@@ -168,12 +171,20 @@ public class InstalledAppFragment
 		}
 
 		mAdapter.clear();
+		mListView.setAdapter(mAdapter);
+
+		// Animation
+		if (Build.VERSION.SDK_INT >= 21) {
+			TransitionManager.beginDelayedTransition(mListView, new Slide());
+		} else {
+			android.support.transition.TransitionManager.beginDelayedTransition(mListView);
+		}
 
 		for (InstalledApp i : sort(items)) { // addAll needs API level 11+
 			mAdapter.add(i);
 		}
 
-		mListView.setAdapter(mAdapter);
+
 		mBus.post(new InstalledAppTitleChange(getString(R.string.tab_installed) + " (" + items.size() + ")"));
 	}
 
