@@ -28,7 +28,6 @@ public class LogUtil
 		int severity
 	) {
 		mMessages.add(new LogMessage(title, message, severity));
-		//mBus.post(new LogMessage(title, message, severity));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
