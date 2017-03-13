@@ -21,6 +21,7 @@ import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.Update;
 import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
@@ -86,6 +87,7 @@ public class UpdaterFragment
 		Update update
 	) {
 		try {
+			AnimationUtil.startListAnimation(mListView);
 			mAdapter.add(update);
 			sendUpdateTitleEvent();
 		} catch (IllegalStateException e) {
@@ -153,12 +155,14 @@ public class UpdaterFragment
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Subscribe
-	public void onUpdateFinalProgresEvent(
+	public void onUpdateFinalProgressEvent(
 		UpdateFinalProgressEvent ev
 	) {
 		List<Update> updates = ev.getUpdates();
 		if (mAdapter.getValues().length < updates.size()) {
 			mAdapter.clear();
+
+			AnimationUtil.startListAnimation(mListView);
 
 			for (Update i : updates) { // addAll needs API level 11+
 				mAdapter.add(i);
