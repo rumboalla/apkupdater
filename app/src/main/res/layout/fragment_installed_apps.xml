@@ -12,5 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:dividerHeight="0dp"
+        android:divider="@null"
     />
 </android.support.v4.widget.NestedScrollView>
