@@ -3,6 +3,7 @@ package com.apkupdater.fragment;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.widget.ListView;
 
 import com.apkupdater.event.InstalledAppTitleChange;
@@ -82,6 +83,7 @@ public class InstalledAppFragment
 	void init(
 	) {
 		mBus.register(this);
+		ViewCompat.setNestedScrollingEnabled(mListView, true);
 		updateInstalledApps(new UpdateInstalledAppsEvent());
 	}
 
