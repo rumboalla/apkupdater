@@ -22,6 +22,7 @@ import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ThemeUtil;
 
@@ -155,9 +156,7 @@ public class MainActivity
 		try {
 		ActionBar bar = getSupportActionBar();
 			if (bar != null) {
-				if (Build.VERSION.SDK_INT > 13) {
-					TransitionManager.beginDelayedTransition(mToolbar, new AutoTransition().setDuration(250));
-				}
+				AnimationUtil.startToolbarAnimation(mToolbar);
 
 				// This is to try to avoid the text to be cut during animation. TODO: Find a better way.
 				TextView t = (TextView) mToolbar.getChildAt(0);
