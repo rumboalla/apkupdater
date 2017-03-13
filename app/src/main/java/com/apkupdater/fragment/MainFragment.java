@@ -135,9 +135,11 @@ public class MainFragment
 	public void selectTab(
 		int tab
 	) {
-		final TabLayout.Tab selectedTab = mTabLayout.getTabAt(tab);
-		if (selectedTab != null) {
-			selectedTab.select();
+		if (mTabLayout != null) {
+			TabLayout.Tab selectedTab = mTabLayout.getTabAt(tab);
+			if (selectedTab != null) {
+				selectedTab.select();
+			}
 		}
 	}
 
