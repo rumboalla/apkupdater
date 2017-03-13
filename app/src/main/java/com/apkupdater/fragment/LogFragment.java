@@ -11,7 +11,6 @@ import com.apkupdater.R;
 import com.apkupdater.adapter.LogAdapter;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.util.LogUtil;
-import com.google.gson.Gson;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -52,7 +51,6 @@ public class LogFragment
 	@AfterViews
 	void init(
 	) {
-		mLog.log("test", "Test", LogMessage.SEVERITY_ERROR);
 		mAdapter.clear();
 		for (LogMessage m : mLog.getMessages()) {
 			mAdapter.add(m);
