@@ -96,7 +96,9 @@ public class UpdaterAdapter
 		View view
 	) {
 		Update update = mUpdates.get(mView.getChildLayoutPosition(view));
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps.evozi.com/apk-downloader/?id=" + update.getPname()));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+			"https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
+		));
 		mContext.startActivity(browserIntent);
 		return true;
 	}
