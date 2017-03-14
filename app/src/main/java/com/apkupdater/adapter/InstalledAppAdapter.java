@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.view.InstalledAppView;
 import com.apkupdater.view.InstalledAppView_;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +65,7 @@ public class InstalledAppAdapter
 	) {
 		mContext = context;
 		mView = view;
-		mApps = sort(apps);
+		mApps = InstalledAppUtil.sort(mContext, apps);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,53 +82,6 @@ public class InstalledAppAdapter
 		));
 		v.setOnLongClickListener(this);
 		return new InstalledAppViewHolder(v);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private List<InstalledApp> sort(
-		List<InstalledApp> items
-	) {
-		// Lists to hold both types of apps
-		List<InstalledApp> normal = new ArrayList<>();
-		List<InstalledApp> ignored = new ArrayList<>();
-
-		// Get the ignore list
-		UpdaterOptions options = new UpdaterOptions(mContext);
-		List<String> ignore_list = options.getIgnoreList();
-
-		// Iterate and buld the temp lists
-		for (InstalledApp i : items) {
-			if (ignore_list.contains(i.getPname())) {
-				ignored.add(i);
-			} else {
-				normal.add(i);
-			}
-		}
-
-		// Build comparator
-		Comparator<InstalledApp> comparator = new Comparator<InstalledApp>() {
-			@Override
-			public int compare(InstalledApp o1, InstalledApp o2) {
-				return o1.getName().compareToIgnoreCase(o2.getName());
-			}
-		};
-
-		// Sort them
-		Collections.sort(normal, comparator);
-		Collections.sort(ignored, comparator);
-
-		// Build final
-		List<InstalledApp> ordered = new ArrayList<>();
-		for (InstalledApp i : normal) {
-			ordered.add(i);
-		}
-
-		for (InstalledApp i : ignored) {
-			ordered.add(i);
-		}
-
-		return ordered;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +107,7 @@ public class InstalledAppAdapter
 		options.setIgnoreList(ignore_list);
 
 		// Sort it
-		mApps = sort(mApps);
+		mApps = InstalledAppUtil.sort(mContext, mApps);
 
 		notifyDataSetChanged();
 

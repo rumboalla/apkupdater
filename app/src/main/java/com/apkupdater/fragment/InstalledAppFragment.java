@@ -43,8 +43,6 @@ public class InstalledAppFragment
 	@Bean
 	MyBus mBus;
 
-	List<InstalledApp> mItems;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@AfterViews
@@ -72,7 +70,6 @@ public class InstalledAppFragment
 		mInstalledAppUtil.getInstalledAppsAsync(getContext(), new GenericCallback<List<InstalledApp>>() {
 			@Override
 			public void onResult(List<InstalledApp> items) {
-				mItems = items;
 				setListAdapter(items);
 			}
 		});
