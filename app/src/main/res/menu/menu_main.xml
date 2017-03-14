@@ -5,22 +5,23 @@
 >
     <item
         android:id="@+id/action_update"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="@string/action_check_for_updates"
         android:icon="@drawable/ic_update_white_24dp"
         app:showAsAction="ifRoom"
     />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="200"
+        android:orderInCategory="3"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_settings_white_24dp"
         app:showAsAction="ifRoom"
     />
     <item
         android:id="@+id/action_log"
-        android:orderInCategory="200"
+        android:orderInCategory="2"
         android:title="@string/action_log"
-        app:showAsAction="never"
+        android:icon="@drawable/ic_log"
+        app:showAsAction="ifRoom"
     />
 </menu>

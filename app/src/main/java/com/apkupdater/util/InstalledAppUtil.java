@@ -14,6 +14,8 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +76,58 @@ public class InstalledAppUtil
 	) {
 		List<InstalledApp> items = getInstalledApps(context);
 		callback.onResult(items);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	static public List<InstalledApp> sort(
+		Context context,
+		List<InstalledApp> items
+	) {
+		if (items == null) {
+			return null;
+		}
+
+		// Lists to hold both types of apps
+		List<InstalledApp> normal = new ArrayList<>();
+		List<InstalledApp> ignored = new ArrayList<>();
+
+		// Get the ignore list
+		UpdaterOptions options = new UpdaterOptions(context);
+		List<String> ignore_list = options.getIgnoreList();
+
+		// Iterate and buld the temp lists
+		for (InstalledApp i : items) {
+			if (ignore_list.contains(i.getPname())) {
+				ignored.add(i);
+			} else {
+				normal.add(i);
+			}
+		}
+
+		// Build comparator
+		Comparator<InstalledApp> comparator = new Comparator<InstalledApp>() {
+			@Override
+			public int compare(InstalledApp o1, InstalledApp o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		};
+
+		// Sort them
+		Collections.sort(normal, comparator);
+		Collections.sort(ignored, comparator);
+
+		// Build final
+		List<InstalledApp> ordered = new ArrayList<>();
+		for (InstalledApp i : normal) {
+			ordered.add(i);
+		}
+
+		for (InstalledApp i : ignored) {
+			ordered.add(i);
+		}
+
+		return ordered;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
