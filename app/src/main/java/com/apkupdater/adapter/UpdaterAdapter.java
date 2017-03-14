@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.apkupdater.model.Update;
+import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.view.UpdaterView;
 import com.apkupdater.view.UpdaterView_;
 
@@ -137,6 +138,7 @@ public class UpdaterAdapter
 	public void addUpdate(
 		Update update
 	) {
+		AnimationUtil.startListAnimation(mView);
 		mUpdates.add(update);
 		sort();
 		notifyDataSetChanged();
@@ -147,6 +149,7 @@ public class UpdaterAdapter
 	public void setUpdates(
 		List<Update> updates
 	) {
+		AnimationUtil.startListAnimation(mView);
 		mUpdates.clear();
 		mUpdates.addAll(updates);
 		sort();
