@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.view.InstalledAppView;
 import com.apkupdater.view.InstalledAppView_;
@@ -65,6 +66,7 @@ public class InstalledAppAdapter
 	) {
 		mContext = context;
 		mView = view;
+		AnimationUtil.startListAnimation(mView);
 		mApps = InstalledAppUtil.sort(mContext, apps);
 	}
 
@@ -107,8 +109,8 @@ public class InstalledAppAdapter
 		options.setIgnoreList(ignore_list);
 
 		// Sort it
+		AnimationUtil.startListAnimation(mView);
 		mApps = InstalledAppUtil.sort(mContext, mApps);
-
 		notifyDataSetChanged();
 
 		return true;

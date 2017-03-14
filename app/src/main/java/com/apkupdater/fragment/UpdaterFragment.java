@@ -4,7 +4,6 @@ package com.apkupdater.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -203,7 +202,6 @@ public class UpdaterFragment
 
 		mAdapter = new UpdaterAdapter(getContext(), mRecyclerView, new ArrayList<Update>());
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		mRecyclerView.setAdapter(mAdapter);
 
 		// Load data
