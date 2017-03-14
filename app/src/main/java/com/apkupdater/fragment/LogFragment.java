@@ -19,7 +19,7 @@ import org.androidannotations.annotations.ViewById;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EFragment(R.layout.fragment_installed_apps)
+@EFragment(R.layout.fragment_log)
 public class LogFragment
 	extends Fragment
 {
