@@ -3,7 +3,6 @@ package com.apkupdater.fragment;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +48,6 @@ public class InstalledAppFragment
 	void init(
 	) {
 		mBus.register(this);
-		ViewCompat.setNestedScrollingEnabled(mRecyclerView, true);
 		updateInstalledApps(new UpdateInstalledAppsEvent());
 	}
 
