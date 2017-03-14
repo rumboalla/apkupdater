@@ -88,7 +88,10 @@ public class UpdaterOptions
 		for(String i : l) {
 			s += i + ",";
 		}
-		s = s.substring(0, s.length() - 1);
+
+		if (s.length() >= 2) {
+			s = s.substring(0, s.length() - 1);
+		}
 
 		// Add it to shared prefs
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
