@@ -3,72 +3,174 @@ package com.apkupdater.adapter;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.apkupdater.model.Update;
 import com.apkupdater.view.UpdaterView;
 import com.apkupdater.view.UpdaterView_;
 
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EBean
 public class UpdaterAdapter
-	extends ArrayAdapter<Update>
+	extends RecyclerView.Adapter<UpdaterAdapter.UpdateViewHolder>
+	implements View.OnLongClickListener, View.OnClickListener
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@RootContext
-	Context context;
+	private List<Update> mUpdates;
+	private Context mContext;
+	private RecyclerView mView;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	UpdaterAdapter(
-		Context context
+	public class UpdateViewHolder
+		extends RecyclerView.ViewHolder
+	{
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		private UpdaterView mView;
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		UpdateViewHolder(
+			UpdaterView view
+		) {
+			super(view);
+			mView = view;
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		public void bind(
+			Update app
+		) {
+			mView.bind(app);
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public UpdaterAdapter(
+		Context context,
+		RecyclerView view,
+		List<Update> apps
 	) {
-		super(context, 0);
+		mContext = context;
+		mView = view;
+
+		mUpdates = apps;
+		sort();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	@NonNull
-	public View getView(
-		int position,
-		View convertView,
-		@NonNull ViewGroup parent
+	public UpdateViewHolder onCreateViewHolder(
+		ViewGroup parent,
+		int viewType
 	) {
-		UpdaterView update;
-
-		if (convertView == null) {
-			update = UpdaterView_.build(context);
-		} else {
-			update = (UpdaterView) convertView;
-		}
-
-		update.bind(getItem(position));
-
-		return update;
+		UpdaterView v = UpdaterView_.build(mContext);
+		v.setLayoutParams(new RecyclerView.LayoutParams(
+			ViewGroup.LayoutParams.MATCH_PARENT,
+			ViewGroup.LayoutParams.WRAP_CONTENT
+		));
+		v.setOnLongClickListener(this);
+		v.setOnClickListener(this);
+		return new UpdateViewHolder(v);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public Update[] getValues(
+	@Override
+	public boolean onLongClick(
+		View view
 	) {
-		Update [] values = new Update[getCount()];
-		for (int i = 0; i < getCount(); i++) {
-			values[i] = getItem(i);
-		}
-		return values;
+		Update update = mUpdates.get(mView.getChildLayoutPosition(view));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps.evozi.com/apk-downloader/?id=" + update.getPname()));
+		mContext.startActivity(browserIntent);
+		return true;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onClick(
+		View view
+	) {
+		Update update = mUpdates.get(mView.getChildLayoutPosition(view));
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
+		mContext.startActivity(browserIntent);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onBindViewHolder(
+		UpdateViewHolder holder,
+		int position
+	) {
+		holder.bind(mUpdates.get(position));
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public int getItemCount(
+	) {
+		return mUpdates.size();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void addUpdate(
+		Update update
+	) {
+		mUpdates.add(update);
+		sort();
+		notifyDataSetChanged();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void setUpdates(
+		List<Update> updates
+	) {
+		mUpdates.clear();
+		mUpdates.addAll(updates);
+		sort();
+		notifyDataSetChanged();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public int getCount(
+	) {
+		return mUpdates.size();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void sort(
+	) {
+		Collections.sort(mUpdates, new Comparator<Update>() {
+			@Override
+			public int compare(Update u1, Update u2) {
+				return u1.getName().compareToIgnoreCase(u2.getName());
+			}
+		});
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
