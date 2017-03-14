@@ -2,12 +2,11 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.apkupdater.R;
@@ -30,12 +29,11 @@ import com.squareup.otto.Subscribe;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.ItemLongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
@@ -50,9 +48,8 @@ public class UpdaterFragment
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@ViewById(R.id.list_view)
-	ListView mListView;
+	RecyclerView mRecyclerView;
 
-	@Bean
 	UpdaterAdapter mAdapter;
 
 	@Bean
@@ -81,20 +78,6 @@ public class UpdaterFragment
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@UiThread(propagation = UiThread.Propagation.REUSE)
-	void addUpdateToList(
-		Update update
-	) {
-		try {
-			mAdapter.add(update);
-			sendUpdateTitleEvent();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@UiThread(propagation = UiThread.Propagation.REUSE)
 	void setProgressBarVisibility(
 		int v
 	) {
@@ -107,31 +90,11 @@ public class UpdaterFragment
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@ItemClick(R.id.list_view)
-	void onUpdateClicked(
-		Update u
-	) {
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(u.getUrl()));
-		startActivity(browserIntent);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@ItemLongClick(R.id.list_view)
-	void onUpdateLongClicked(
-		Update u
-	) {
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps.evozi.com/apk-downloader/?id=" + u.getPname()));
-		startActivity(browserIntent);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	@Subscribe
 	public void onUpdateStartEvent(
 		UpdateStartEvent ev
 	) {
-		mAdapter.clear();
+		mAdapter.setUpdates(new ArrayList<Update>());
 		sendUpdateTitleEvent();
 		setProgressBarVisibility(View.VISIBLE);
 	}
@@ -152,19 +115,16 @@ public class UpdaterFragment
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Subscribe
-	public void onUpdateFinalProgresEvent(
+	public void onUpdateFinalProgressEvent(
 		UpdateFinalProgressEvent ev
 	) {
 		List<Update> updates = ev.getUpdates();
-		if (mAdapter.getValues().length < updates.size()) {
-			mAdapter.clear();
 
-			for (Update i : updates) { // addAll needs API level 11+
-				mAdapter.add(i);
-			}
-
-			sendUpdateTitleEvent();
+		if (mAdapter.getCount() < updates.size()) {
+			mAdapter.setUpdates(updates);
 		}
+
+		sendUpdateTitleEvent();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +133,8 @@ public class UpdaterFragment
 	public void onUpdateProgressEvent(
 		UpdateProgressEvent ev
 	) {
-		addUpdateToList(ev.getUpdate());
+		mAdapter.addUpdate(ev.getUpdate());
+		sendUpdateTitleEvent();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,14 +172,10 @@ public class UpdaterFragment
 
 	private boolean loadData(
 	) {
-		mAdapter.clear();
-
 		// Get the updates and add them to the adapter
 		List<Update> updates = mAppState.getUpdates();
 		if (!updates.isEmpty()) {
-			for (Update i : updates) { // addAll needs API level 11+
-				mAdapter.add(i);
-			}
+			mAdapter.setUpdates(updates);
 			sendUpdateTitleEvent();
 			setProgressBarVisibility(INVISIBLE);
 			return true;
@@ -236,9 +193,6 @@ public class UpdaterFragment
 		mProgressBar.setIndeterminate(true);
 		mProgressBar.getIndeterminateDrawable().setColorFilter(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
 
-		// Load data
-		loadData();
-
 		// Change the visibility of the loader based on the service status
 		if (ServiceUtil.isServiceRunning(getContext(), UpdaterService_.class)) {
 			setProgressBarVisibility(VISIBLE);
@@ -246,7 +200,12 @@ public class UpdaterFragment
 			setProgressBarVisibility(INVISIBLE);
 		}
 
-		mListView.setAdapter(mAdapter);
+		mAdapter = new UpdaterAdapter(getContext(), mRecyclerView, new ArrayList<Update>());
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+		mRecyclerView.setAdapter(mAdapter);
+
+		// Load data
+		loadData();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

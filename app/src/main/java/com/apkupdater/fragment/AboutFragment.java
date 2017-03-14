@@ -4,6 +4,7 @@ package com.apkupdater.fragment;
 
 import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -88,10 +89,14 @@ public class AboutFragment
 		mAppNameText.setTextColor(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent));
 
 		try {
-			mTextContainer.addView(getWebView());
+			WebView v = getWebView();
+			ViewCompat.setNestedScrollingEnabled(v, true);
+			mTextContainer.addView(v);
 		} catch (Exception e) {
 			try {
-				mTextContainer.addView(getTextView());
+				TextView v = getTextView();
+				ViewCompat.setNestedScrollingEnabled(v, true);
+				mTextContainer.addView(v);
 			} catch (Exception ignored) {
 
 			}

@@ -1,78 +1,137 @@
 package com.apkupdater.adapter;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.AnimationUtil;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.view.InstalledAppView;
 import com.apkupdater.view.InstalledAppView_;
 
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
+import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@EBean
 public class InstalledAppAdapter
-	extends ArrayAdapter<InstalledApp>
+	extends RecyclerView.Adapter<InstalledAppAdapter.InstalledAppViewHolder>
+	implements View.OnLongClickListener
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@RootContext
-	Context context;
+	private List<InstalledApp> mApps;
+	private Context mContext;
+	private RecyclerView mView;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	InstalledAppAdapter(
-			Context context
+	public class InstalledAppViewHolder
+		extends RecyclerView.ViewHolder
+	{
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		private InstalledAppView mView;
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		InstalledAppViewHolder(
+			InstalledAppView view
+		) {
+			super(view);
+			mView = view;
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		public void bind(
+			InstalledApp app
+		) {
+			mView.bind(app);
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public InstalledAppAdapter(
+		Context context,
+		RecyclerView view,
+		List<InstalledApp> apps
 	) {
-		super(context, 0);
+		mContext = context;
+		mView = view;
+		AnimationUtil.startListAnimation(mView);
+		mApps = InstalledAppUtil.sort(mContext, apps);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	@NonNull
-	public View getView(
-		int position,
-		View convertView,
-		@NonNull ViewGroup parent
+	public InstalledAppViewHolder onCreateViewHolder(
+		ViewGroup parent,
+		int viewType
 	) {
-		InstalledAppView app;
+		InstalledAppView v = InstalledAppView_.build(mContext);
+		v.setLayoutParams(new RecyclerView.LayoutParams(
+			ViewGroup.LayoutParams.MATCH_PARENT,
+			ViewGroup.LayoutParams.WRAP_CONTENT
+		));
+		v.setOnLongClickListener(this);
+		return new InstalledAppViewHolder(v);
+	}
 
-		if (convertView == null) {
-			app = InstalledAppView_.build(context);
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public boolean onLongClick(
+		View view
+	) {
+		// Get the ignore list from the options
+		UpdaterOptions options = new UpdaterOptions(mContext);
+		List<String> ignore_list = options.getIgnoreList();
+
+		InstalledApp app = mApps.get(mView.getChildLayoutPosition(view));
+
+		// If it's on the ignore remove, otherwise add it
+		if (ignore_list.contains(app.getPname())) {
+			ignore_list.remove(app.getPname());
 		} else {
-			app = (InstalledAppView) convertView;
+			ignore_list.add(app.getPname());
 		}
 
-		app.bind(getItem(position));
+		// Update the list
+		options.setIgnoreList(ignore_list);
 
-		return app;
+		// Sort it
+		AnimationUtil.startListAnimation(mView);
+		mApps = InstalledAppUtil.sort(mContext, mApps);
+		notifyDataSetChanged();
+
+		return true;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void notifyDataSetChanged(
+	public void onBindViewHolder(
+		InstalledAppViewHolder holder,
+		int position
 	) {
-		super.notifyDataSetChanged();
+		holder.bind(mApps.get(position));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public InstalledApp[] getValues(
+	@Override
+	public int getItemCount(
 	) {
-		InstalledApp [] values = new InstalledApp[getCount()];
-		for (int i = 0; i < getCount(); i++) {
-			values[i] = getItem(i);
-		}
-		return values;
+		return mApps.size();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,4 +139,3 @@ public class InstalledAppAdapter
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
