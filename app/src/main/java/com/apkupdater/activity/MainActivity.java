@@ -4,6 +4,7 @@ package com.apkupdater.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -81,22 +82,31 @@ public class MainActivity
 
 		// Add the main fragment
 		if (!(getSupportFragmentManager().findFragmentById(R.id.container) instanceof MainFragment)) {
-			getSupportFragmentManager().beginTransaction().add(R.id.container, mMainFragment).commit();
-			getSupportFragmentManager().beginTransaction().add(R.id.container, mSettingsFragment).commit();
-			getSupportFragmentManager().beginTransaction().add(R.id.container, mLogFragment).commit();
+			getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, mMainFragment)
+				.add(R.id.container, mSettingsFragment)
+				.add(R.id.container, mLogFragment)
+				.show(mMainFragment)
+				.hide(mSettingsFragment)
+				.hide(mLogFragment)
+			.commit();
 		}
 
 		// Switch to the correct fragment
 		if (mAppState.getSettingsActive()) {
-			switchSettings(true);
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					switchSettings(true);
+				}
+			}, 1);
 		} else if (mAppState.getLogActive()) {
-			switchLog(true);
-		} else {
-			getSupportFragmentManager().beginTransaction()
-				.show(mMainFragment)
-				.hide(mSettingsFragment)
-				.hide(mLogFragment)
-				.commit();
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					switchLog(true);
+				}
+			}, 1);
 		}
 	}
 
