@@ -2,15 +2,15 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
 import com.apkupdater.R;
 import com.apkupdater.adapter.LogAdapter;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.util.LogUtil;
+import com.apkupdater.util.AnimationUtil;
+import com.apkupdater.util.MyBus;
+import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -32,30 +32,35 @@ public class LogFragment
 	LogAdapter mAdapter;
 
 	@Bean
-	LogUtil mLog;
-
-	Bundle mSavedInstance;
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public void onCreate(
-		@Nullable Bundle savedInstanceState
-	) {
-		mSavedInstance = savedInstanceState;
-		super.onCreate(savedInstanceState);
-	}
+	MyBus mBus;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@AfterViews
-	void init(
+	public void init(
 	) {
-		mAdapter.clear();
-		for (LogMessage m : mLog.getMessages()) {
-			mAdapter.add(m);
-		}
 		mListView.setAdapter(mAdapter);
+		mBus.register(this);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onDestroy(
+	) {
+		super.onDestroy();
+		mBus.unregister(this);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onMessage(
+		LogMessage message
+	) {
+		AnimationUtil.startListAnimation(mListView);
+		mAdapter.add(message);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
