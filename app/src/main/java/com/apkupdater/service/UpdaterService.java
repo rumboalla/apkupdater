@@ -111,9 +111,13 @@ public class UpdaterService
 					Update u = new Update(app, upd.getResultUrl(), upd.getResultVersion());
 					mUpdates.add(u);
 					mBus.post(new UpdateProgressEvent(u));
-				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR){
+				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
 					errors.add(upd.getResultError());
+					mBus.post(new UpdateProgressEvent(null));
+				} else {
+					mBus.post(new UpdateProgressEvent(null));
 				}
+
 				mNotification.increaseProgress(mUpdates.size());
 			}
 		});
@@ -166,36 +170,39 @@ public class UpdaterService
 
 			mAppState.clearUpdates();
 
-			// Send start event
-			mBus.post(new UpdateStartEvent());
-
 			// Retrieve installed apps
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());
-
-			// Create the notification
-			int multiplier = (options.useAPKMirror() ? 1 : 0) + (options.useAPKPure() ? 1 : 0)  + (options.useUptodown() ? 1 : 0) ;
-			mNotification = new UpdaterNotification(getBaseContext(), installedApps.size() * multiplier);
 
 			// Create an executor with N threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(options.getNumThreads());
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates
+			int appCount = 0;
 			for (final InstalledApp app: installedApps) {
 				// Check if this app is on the ignore list
 				if (options.getIgnoreList().contains(app.getPname())) {
 					continue;
 				}
 				if (options.useAPKMirror()) {
+					appCount++;
 					updateSource(executor, "APKMirror", app, errors);
 				}
 				if (options.useUptodown()) {
+					appCount++;
 					updateSource(executor, "Uptodown", app, errors);
 				}
 				if (options.useAPKPure()) {
+					appCount++;
 					updateSource(executor, "APKPure", app, errors);
 				}
 			}
+
+			// Send start event
+			mBus.post(new UpdateStartEvent(appCount));
+
+			// Build notification
+			mNotification = new UpdaterNotification(getBaseContext(), appCount);
 
 			// Wait until all threads are done
 			executor.shutdown();

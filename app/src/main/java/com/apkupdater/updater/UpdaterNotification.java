@@ -48,7 +48,7 @@ public class UpdaterNotification
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void increaseProgress(
-			int numberOfUpdates
+		int numberOfUpdates
 	) {
 		// Check if we should do notifications
 		if (!doNotification(numberOfUpdates)) {

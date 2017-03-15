@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:fillViewport="true"
 >
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/loader"
+        android:visibility="gone"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+    />
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list_view"
     />
-    <ProgressBar
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:id="@+id/loader"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-    />
-</RelativeLayout>
+
+</LinearLayout>
