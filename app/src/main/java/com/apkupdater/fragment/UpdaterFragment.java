@@ -233,7 +233,7 @@ public class UpdaterFragment
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private boolean loadData(
+	private void loadData(
 	) {
 		// Check if we are updating
 		mProgressCount = mAppState.getUpdateProgress();
@@ -245,12 +245,8 @@ public class UpdaterFragment
 			if (!updates.isEmpty()) {
 				mAdapter.setUpdates(updates);
 				sendUpdateTitleEvent();
-				setProgressBarVisibility(GONE);
-				return true;
 			}
 		}
-
-		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

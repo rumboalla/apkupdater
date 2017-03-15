@@ -24,6 +24,7 @@ import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.ThemeUtil;
 
 import org.androidannotations.annotations.AfterViews;
@@ -200,7 +201,9 @@ public class MainActivity
 	@OptionsItem(R.id.action_update)
 	void onUpdateClick(
 	) {
-		UpdaterService_.intent(getApplication()).start();
+		if (!ServiceUtil.isServiceRunning(getBaseContext(), UpdaterService_.class)) {
+			UpdaterService_.intent(getApplication()).start();
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
