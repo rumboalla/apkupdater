@@ -111,9 +111,14 @@ public class UpdaterService
 					Update u = new Update(app, upd.getResultUrl(), upd.getResultVersion());
 					mUpdates.add(u);
 					mBus.post(new UpdateProgressEvent(u));
-				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR){
+				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
 					errors.add(upd.getResultError());
+					mBus.post(new UpdateProgressEvent(null));
+				} else {
+					mBus.post(new UpdateProgressEvent(null));
 				}
+
+				mAppState.increaseUpdateProgress();
 				mNotification.increaseProgress(mUpdates.size());
 			}
 		});
@@ -165,37 +170,44 @@ public class UpdaterService
 			}
 
 			mAppState.clearUpdates();
-
-			// Send start event
-			mBus.post(new UpdateStartEvent());
+			mAppState.setUpdateProgress(0);
+			mNotification = new UpdaterNotification(getBaseContext(), 0);
 
 			// Retrieve installed apps
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());
-
-			// Create the notification
-			int multiplier = (options.useAPKMirror() ? 1 : 0) + (options.useAPKPure() ? 1 : 0)  + (options.useUptodown() ? 1 : 0) ;
-			mNotification = new UpdaterNotification(getBaseContext(), installedApps.size() * multiplier);
 
 			// Create an executor with N threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(options.getNumThreads());
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates
+			int appCount = 0;
 			for (final InstalledApp app: installedApps) {
 				// Check if this app is on the ignore list
 				if (options.getIgnoreList().contains(app.getPname())) {
 					continue;
 				}
 				if (options.useAPKMirror()) {
+					appCount++;
 					updateSource(executor, "APKMirror", app, errors);
 				}
 				if (options.useUptodown()) {
+					appCount++;
 					updateSource(executor, "Uptodown", app, errors);
 				}
 				if (options.useAPKPure()) {
+					appCount++;
 					updateSource(executor, "APKPure", app, errors);
 				}
 			}
+
+			// Save number to state
+			mAppState.setUpdateMax(appCount);
+			mNotification.setMaxApps(appCount);
+
+			// Send start event
+			mLogger.log("test", "test", LogMessage.SEVERITY_ERROR);
+			mBus.post(new UpdateStartEvent(appCount));
 
 			// Wait until all threads are done
 			executor.shutdown();
@@ -215,6 +227,10 @@ public class UpdaterService
 			} else {
 				exit_message = getBaseContext().getString(R.string.update_finished);
 			}
+
+			// Clear update progress
+			mAppState.setUpdateMax(0);
+			mAppState.setUpdateProgress(0);
 
 			// Notify that the update check is over
 			mAppState.setUpdates(mUpdates);

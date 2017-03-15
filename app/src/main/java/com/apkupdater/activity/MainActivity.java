@@ -3,10 +3,8 @@ package com.apkupdater.activity;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.transition.AutoTransition;
-import android.support.transition.TransitionManager;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,9 +22,9 @@ import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.ThemeUtil;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
@@ -64,35 +62,51 @@ public class MainActivity
 	public void onCreate(
 		Bundle savedInstanceState
 	) {
-		setThemeFromOptions();
 		super.onCreate(savedInstanceState);
+
+		// Set theme and set activity content and toolbar
+		setThemeFromOptions();
 		setContentView(R.layout.activity_main);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@AfterViews
-	void init(
-	) {
-		checkFirstStart();
-		mBus.register(this);
 		setSupportActionBar(mToolbar);
+
+		mBus.register(this);
+		mAppState.clearUpdates();
+
+		// Simulate a boot com.apkupdater.receiver to set alarm
+		new BootReceiver_().onReceive(getBaseContext(), null);
 
 		// Create fragments
 		mMainFragment = new MainFragment_();
 		mSettingsFragment = new SettingsFragment_();
 		mLogFragment = new LogFragment_();
 
-		// Add the main fragment and configure the correct state
+		// Add the main fragment
 		if (!(getSupportFragmentManager().findFragmentById(R.id.container) instanceof MainFragment)) {
-			getSupportFragmentManager().beginTransaction().add(R.id.container, mMainFragment).commit();
+			getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, mMainFragment)
+				.add(R.id.container, mSettingsFragment)
+				.add(R.id.container, mLogFragment)
+				.show(mMainFragment)
+				.hide(mSettingsFragment)
+				.hide(mLogFragment)
+			.commit();
 		}
 
 		// Switch to the correct fragment
 		if (mAppState.getSettingsActive()) {
-			switchSettings(true);
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					switchSettings(true);
+				}
+			}, 1);
 		} else if (mAppState.getLogActive()) {
-			switchLog(true);
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					switchLog(true);
+				}
+			}, 1);
 		}
 	}
 
@@ -102,10 +116,26 @@ public class MainActivity
 		boolean b
 	) {
 		if (b) {
-			replaceFragment(mSettingsFragment, true);
+			//replaceFragment(mSettingsFragment, true);
+
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+				.show(mSettingsFragment)
+				.hide(mMainFragment)
+				.hide(mLogFragment)
+			.commit();
+
 			changeToolbar(getString(R.string.action_settings), true);
 		} else {
-			replaceFragment(mMainFragment, false);
+			//replaceFragment(mMainFragment, false);
+
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+				.show(mMainFragment)
+				.hide(mSettingsFragment)
+				.hide(mLogFragment)
+			.commit();
+
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -118,33 +148,26 @@ public class MainActivity
 		boolean b
 	) {
 		if (b) {
-			replaceFragment(mLogFragment, true);
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+				.show(mLogFragment)
+				.hide(mMainFragment)
+				.hide(mSettingsFragment)
+				.commit();
+
 			changeToolbar(getString(R.string.action_log), true);
 		} else {
-			replaceFragment(mMainFragment, false);
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+				.show(mMainFragment)
+				.hide(mSettingsFragment)
+				.hide(mLogFragment)
+				.commit();
+
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
 		mAppState.setLogActive(b);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void replaceFragment(
-		Fragment f,
-		boolean in
-	) {
-		if (in) {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
-				.replace(R.id.container, f)
-			.commit();
-		} else {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-				.replace(R.id.container, f)
-			.commit();
-		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,25 +193,6 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void checkFirstStart(
-	) {
-		if (mAppState.getFirstStart()) {
-			// Remove any stored updates we had and reset tab position
-			mAppState.clearUpdates();
-			mAppState.setSelectedTab(0);
-
-			// Simulate a boot com.apkupdater.receiver to set alarm
-			new BootReceiver_().onReceive(getBaseContext(), null);
-
-			// Set the first start flag to false
-			mAppState.setFirstStart(false);
-			mAppState.setSettingsActive(false);
-		}
-	}
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	@OptionsItem(R.id.action_settings)
 	void onSettingsClick(
 	) {
@@ -200,7 +204,9 @@ public class MainActivity
 	@OptionsItem(R.id.action_update)
 	void onUpdateClick(
 	) {
-		UpdaterService_.intent(getApplication()).start();
+		if (!ServiceUtil.isServiceRunning(getBaseContext(), UpdaterService_.class)) {
+			UpdaterService_.intent(getApplication()).start();
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
