@@ -206,6 +206,7 @@ public class UpdaterService
 			mNotification.setMaxApps(appCount);
 
 			// Send start event
+			mLogger.log("test", "test", LogMessage.SEVERITY_ERROR);
 			mBus.post(new UpdateStartEvent(appCount));
 
 			// Wait until all threads are done

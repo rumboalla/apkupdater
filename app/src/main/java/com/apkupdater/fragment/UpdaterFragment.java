@@ -3,13 +3,14 @@ package com.apkupdater.fragment;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.os.Bundle;
-import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.adapter.UpdaterAdapter;
@@ -20,12 +21,10 @@ import com.apkupdater.event.UpdateStopEvent;
 import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.Update;
-import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
-import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
 import com.squareup.otto.Subscribe;
 
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;
-import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,13 +55,19 @@ public class UpdaterFragment
 	@ViewById(R.id.container)
 	LinearLayout mContainer;
 
+	@ViewById(R.id.loader_container)
+	CardView mLoaderContainer;
+
+	@ViewById(R.id.loader_text)
+	TextView mLoaderText;
+
+	@ViewById(R.id.loader)
+	ProgressBar mLoader;
+
 	UpdaterAdapter mAdapter;
 
 	@Bean
 	InstalledAppUtil mInstalledAppUtil;
-
-	@ViewById(R.id.loader)
-	ProgressBar mProgressBar;
 
 	@ColorRes(R.color.colorPrimary)
 	int mPrimaryColor;
@@ -91,7 +95,7 @@ public class UpdaterFragment
 	void initProgressBar(
 	) {
 		try {
-			mProgressBar.getIndeterminateDrawable().setColorFilter(
+			mLoader.getIndeterminateDrawable().setColorFilter(
 				ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			);
@@ -114,7 +118,7 @@ public class UpdaterFragment
 	) {
 		try {
 			AnimationUtil.startListAnimation(mContainer);
-			mProgressBar.setVisibility(v);
+			mLoaderContainer.setVisibility(v);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,13 +133,18 @@ public class UpdaterFragment
 	) {
 		try {
 			AnimationUtil.startListAnimation(mContainer);
-			mProgressBar.setMax(max);
-			mProgressBar.setProgress(progress);
+
+			// Change progress bar
+			mLoader.setMax(max);
+			mLoader.setProgress(progress);
 			if (progress == 0 && max == 0) {
-				mProgressBar.setIndeterminate(true);
+				mLoader.setIndeterminate(true);
 			} else {
-				mProgressBar.setIndeterminate(false);
+				mLoader.setIndeterminate(false);
 			}
+
+			// Change text
+			mLoaderText.setText(progress + "/" + max);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
