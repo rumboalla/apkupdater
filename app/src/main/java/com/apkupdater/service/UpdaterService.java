@@ -170,6 +170,8 @@ public class UpdaterService
 			}
 
 			mAppState.clearUpdates();
+			mAppState.setUpdateProgress(0);
+			mNotification = new UpdaterNotification(getBaseContext(), 0);
 
 			// Retrieve installed apps
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());
@@ -201,13 +203,10 @@ public class UpdaterService
 
 			// Save number to state
 			mAppState.setUpdateMax(appCount);
-			mAppState.setUpdateProgress(0);
+			mNotification.setMaxApps(appCount);
 
 			// Send start event
 			mBus.post(new UpdateStartEvent(appCount));
-
-			// Build notification
-			mNotification = new UpdaterNotification(getBaseContext(), appCount);
 
 			// Wait until all threads are done
 			executor.shutdown();
