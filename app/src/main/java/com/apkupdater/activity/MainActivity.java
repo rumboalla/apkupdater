@@ -162,25 +162,6 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void replaceFragment(
-		Fragment f,
-		boolean in
-	) {
-		if (in) {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
-				.replace(R.id.container, f)
-			.commit();
-		} else {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-				.replace(R.id.container, f)
-			.commit();
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	private void changeToolbar(
 		String title,
 		boolean arrow
