@@ -235,13 +235,19 @@ public class UpdaterFragment
 
 	private boolean loadData(
 	) {
-		// Get the updates and add them to the adapter
-		List<Update> updates = mAppState.getUpdates();
-		if (!updates.isEmpty()) {
-			mAdapter.setUpdates(updates);
-			sendUpdateTitleEvent();
-			setProgressBarVisibility(GONE);
-			return true;
+		// Check if we are updating
+		mProgressCount = mAppState.getUpdateProgress();
+		mProgressMax = mAppState.getUpdateMax();
+
+		if (mProgressCount == 0 && mProgressMax == 0) {
+			// Get the updates and add them to the adapter
+			List<Update> updates = mAppState.getUpdates();
+			if (!updates.isEmpty()) {
+				mAdapter.setUpdates(updates);
+				sendUpdateTitleEvent();
+				setProgressBarVisibility(GONE);
+				return true;
+			}
 		}
 
 		return false;
@@ -252,14 +258,14 @@ public class UpdaterFragment
 	@AfterViews
 	void init(
 	) {
-		initProgressBar();
-
 		mAdapter = new UpdaterAdapter(getContext(), mRecyclerView, new ArrayList<Update>());
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		mRecyclerView.setAdapter(mAdapter);
 
 		// Load data
 		loadData();
+
+		initProgressBar();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

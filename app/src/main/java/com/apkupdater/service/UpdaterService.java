@@ -118,6 +118,7 @@ public class UpdaterService
 					mBus.post(new UpdateProgressEvent(null));
 				}
 
+				mAppState.increaseUpdateProgress();
 				mNotification.increaseProgress(mUpdates.size());
 			}
 		});
@@ -198,6 +199,10 @@ public class UpdaterService
 				}
 			}
 
+			// Save number to state
+			mAppState.setUpdateMax(appCount);
+			mAppState.setUpdateProgress(0);
+
 			// Send start event
 			mBus.post(new UpdateStartEvent(appCount));
 
@@ -222,6 +227,10 @@ public class UpdaterService
 			} else {
 				exit_message = getBaseContext().getString(R.string.update_finished);
 			}
+
+			// Clear update progress
+			mAppState.setUpdateMax(0);
+			mAppState.setUpdateProgress(0);
 
 			// Notify that the update check is over
 			mAppState.setUpdates(mUpdates);
