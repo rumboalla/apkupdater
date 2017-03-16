@@ -5,6 +5,8 @@ package com.apkupdater.view;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +38,9 @@ public class InstalledAppView
 	@ViewById(R.id.installed_app_icon)
 	ImageView mIcon;
 
+	@ViewById(R.id.action_one_button)
+	Button mActionOneButton;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public InstalledAppView(
@@ -61,12 +66,14 @@ public class InstalledAppView
 			} else {
 				setBackgroundColor(0x55000000);
 			}
+			mActionOneButton.setText(R.string.action_unignore_app);
 		} else {
 			if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
 				setAlpha(1.0f);
 			} else {
 				setBackgroundColor(0x00FFFFFF);
 			}
+			mActionOneButton.setText(R.string.action_ignore_app);
 		}
 
 		try {
@@ -75,6 +82,14 @@ public class InstalledAppView
 		} catch (PackageManager.NameNotFoundException ignored) {
 
 		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void setActionOneButtonListener(
+		View.OnClickListener listener
+	) {
+		mActionOneButton.setOnClickListener(listener);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

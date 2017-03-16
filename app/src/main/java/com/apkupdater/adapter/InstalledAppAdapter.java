@@ -20,7 +20,7 @@ import java.util.List;
 
 public class InstalledAppAdapter
 	extends RecyclerView.Adapter<InstalledAppAdapter.InstalledAppViewHolder>
-	implements View.OnLongClickListener
+	implements View.OnClickListener
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,21 +82,42 @@ public class InstalledAppAdapter
 			ViewGroup.LayoutParams.MATCH_PARENT,
 			ViewGroup.LayoutParams.WRAP_CONTENT
 		));
-		v.setOnLongClickListener(this);
+		v.setActionOneButtonListener(this);
+		//v.setOnLongClickListener(this);
 		return new InstalledAppViewHolder(v);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	private InstalledAppView getInstalledAppViewParent(
+		View v
+	) {
+		while (v != null) {
+			v = (View) v.getParent();
+			if (v instanceof InstalledAppView) {
+				return (InstalledAppView) v;
+			}
+		}
+		return null;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
-	public boolean onLongClick(
+	public void onClick(
 		View view
 	) {
 		// Get the ignore list from the options
 		UpdaterOptions options = new UpdaterOptions(mContext);
 		List<String> ignore_list = options.getIgnoreList();
 
-		InstalledApp app = mApps.get(mView.getChildLayoutPosition(view));
+		// Get the InstalledAppView parent
+		InstalledAppView parent = getInstalledAppViewParent(view);
+		if (parent == null) {
+			return;
+		}
+
+		InstalledApp app = mApps.get(mView.getChildLayoutPosition(parent));
 
 		// If it's on the ignore remove, otherwise add it
 		if (ignore_list.contains(app.getPname())) {
@@ -112,8 +133,6 @@ public class InstalledAppAdapter
 		AnimationUtil.startListAnimation(mView);
 		mApps = InstalledAppUtil.sort(mContext, mApps);
 		notifyDataSetChanged();
-
-		return true;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
