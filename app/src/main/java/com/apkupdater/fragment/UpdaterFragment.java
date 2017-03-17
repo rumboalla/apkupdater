@@ -248,13 +248,11 @@ public class UpdaterFragment
 		mProgressCount = mAppState.getUpdateProgress();
 		mProgressMax = mAppState.getUpdateMax();
 
-		if (mProgressCount == 0 && mProgressMax == 0) {
-			// Get the updates and add them to the adapter
-			List<Update> updates = mAppState.getUpdates();
-			if (!updates.isEmpty()) {
-				mAdapter.setUpdates(updates);
-				sendUpdateTitleEvent();
-			}
+		// Get the updates and add them to the adapter
+		List<Update> updates = mAppState.getUpdates();
+		if (!updates.isEmpty()) {
+			mAdapter.setUpdates(updates);
+			sendUpdateTitleEvent();
 		}
 	}
 
