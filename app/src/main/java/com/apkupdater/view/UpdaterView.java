@@ -5,13 +5,14 @@ package com.apkupdater.view;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.model.Update;
-import com.apkupdater.util.ColorUtitl;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -39,12 +40,21 @@ public class UpdaterView
 	@ViewById(R.id.update_url)
 	TextView mUrl;
 
+	@ViewById(R.id.action_one_button)
+	Button mActionOneButton;
+
+	@ViewById(R.id.action_two_button)
+	Button mActionTwoButton;
+
+	Context mContext;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public UpdaterView(
 		Context context
 	) {
 		super(context);
+		mContext = context;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,14 +72,38 @@ public class UpdaterView
 		}
 
 		mVersion.setText(version);
-		mUrl.setText(update.getUrl());
-		mUrl.setTextColor(ColorUtitl.getColorFromTheme(getContext().getTheme(), R.attr.colorAccent));
+
+		// Build string for first action
+		String action = "";
+		if (update.getUrl().contains("apkmirror.com")) {
+			action = mContext.getString(R.string.action_apkmirror);
+		} else if (update.getUrl().contains("uptodown.com")) {
+			action = mContext.getString(R.string.action_uptodown);
+		} else if (update.getUrl().contains("apkpure.com")) {
+			action = mContext.getString(R.string.action_apkpure);
+		}
+		mActionOneButton.setText(action);
+
 		try {
 			Drawable icon = getContext().getPackageManager().getApplicationIcon(update.getPname());
 			mIcon.setImageDrawable(icon);
-		} catch (PackageManager.NameNotFoundException ignored) {
+		} catch (PackageManager.NameNotFoundException ignored) {}
+	}
 
-		}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void setActionOneButtonListener(
+		View.OnClickListener listener
+	) {
+		mActionOneButton.setOnClickListener(listener);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void setActionTwoButtonListener(
+		View.OnClickListener listener
+	) {
+		mActionTwoButton.setOnClickListener(listener);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

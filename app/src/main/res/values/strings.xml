@@ -71,5 +71,11 @@
     <string name="num_threads_three" translatable="false">3</string>
     <string name="num_threads_five" translatable="false">5</string>
     <string name="num_threads_ten" translatable="false">10</string>
+    <string name="action_ignore_app">IGNORE</string>
+    <string name="action_unignore_app">UNIGNORE</string>
+    <string name="action_apkmirror">APKMIRROR</string>
+    <string name="action_apkpure">APKPURE</string>
+    <string name="action_uptodown">UPTODOWN</string>
+    <string name="action_evozi">EVOZI</string>
 </resources>
 
