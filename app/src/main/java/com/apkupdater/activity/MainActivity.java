@@ -69,7 +69,16 @@ public class MainActivity
 		setSupportActionBar(mToolbar);
 
 		mBus.register(this);
-		mAppState.clearUpdates();
+
+		// Clear updates unless we are coming from a notification
+		boolean isFromNotification = false;
+		try {
+			isFromNotification = getIntent().getExtras().getBoolean("isFromNotification");
+		} catch (Exception ignored) {}
+
+		if (!isFromNotification) {
+			mAppState.clearUpdates();
+		}
 
 		// Simulate a boot com.apkupdater.receiver to set alarm
 		new BootReceiver_().onReceive(getBaseContext(), null);
