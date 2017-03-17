@@ -5,7 +5,7 @@ More information can be found in this [XDA thread](https://forum.xda-developers.
 ).
 
 # Download
-* [APK for latest version (1.4.2)](https://github.com/rumboalla/apkupdater/releases/download/1.4.2/app-release.apk)
+* [APK for latest version (1.4.3)](https://github.com/rumboalla/apkupdater/releases/download/1.4.3/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Features
