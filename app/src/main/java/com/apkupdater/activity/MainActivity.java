@@ -5,7 +5,6 @@ package com.apkupdater.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -70,7 +69,16 @@ public class MainActivity
 		setSupportActionBar(mToolbar);
 
 		mBus.register(this);
-		mAppState.clearUpdates();
+
+		// Clear updates unless we are coming from a notification
+		boolean isFromNotification = false;
+		try {
+			isFromNotification = getIntent().getExtras().getBoolean("isFromNotification");
+		} catch (Exception ignored) {}
+
+		if (!isFromNotification) {
+			mAppState.clearUpdates();
+		}
 
 		// Simulate a boot com.apkupdater.receiver to set alarm
 		new BootReceiver_().onReceive(getBaseContext(), null);
@@ -83,7 +91,7 @@ public class MainActivity
 		// Add the main fragment
 		if (!(getSupportFragmentManager().findFragmentById(R.id.container) instanceof MainFragment)) {
 			getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, mMainFragment)
+				.replace(R.id.container, mMainFragment)
 				.add(R.id.container, mSettingsFragment)
 				.add(R.id.container, mLogFragment)
 				.show(mMainFragment)
