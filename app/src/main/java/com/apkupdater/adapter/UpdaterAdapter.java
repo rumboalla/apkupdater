@@ -22,7 +22,6 @@ import java.util.List;
 
 public class UpdaterAdapter
 	extends RecyclerView.Adapter<UpdaterAdapter.UpdateViewHolder>
-	implements View.OnLongClickListener, View.OnClickListener
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,40 +79,54 @@ public class UpdaterAdapter
 		ViewGroup parent,
 		int viewType
 	) {
-		UpdaterView v = UpdaterView_.build(mContext);
+		UpdaterView v = UpdaterView_.build(parent.getContext());
 		v.setLayoutParams(new RecyclerView.LayoutParams(
 			ViewGroup.LayoutParams.MATCH_PARENT,
 			ViewGroup.LayoutParams.WRAP_CONTENT
 		));
-		v.setOnLongClickListener(this);
-		v.setOnClickListener(this);
+
+		v.setActionOneButtonListener(onActionOneClick);
+		v.setActionTwoButtonListener(onActionTwoClick);
 		return new UpdateViewHolder(v);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public boolean onLongClick(
-		View view
+	private UpdaterView getUpdaterViewParent(
+		View v
 	) {
-		Update update = mUpdates.get(mView.getChildLayoutPosition(view));
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-			"https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
-		));
-		mContext.startActivity(browserIntent);
-		return true;
+		while (v != null) {
+			v = (View) v.getParent();
+			if (v instanceof UpdaterView) {
+				return (UpdaterView) v;
+			}
+		}
+		return null;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public void onClick(
-		View view
-	) {
-		Update update = mUpdates.get(mView.getChildLayoutPosition(view));
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
-		mContext.startActivity(browserIntent);
-	}
+	private View.OnClickListener onActionTwoClick = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Update update = mUpdates.get(mView.getChildLayoutPosition(getUpdaterViewParent(v)));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+				"https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
+			));
+			mContext.startActivity(browserIntent);
+		}
+	};
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private View.OnClickListener onActionOneClick = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Update update = mUpdates.get(mView.getChildLayoutPosition(getUpdaterViewParent(v)));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
+			mContext.startActivity(browserIntent);
+		}
+	};
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
