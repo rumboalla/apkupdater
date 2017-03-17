@@ -171,7 +171,7 @@ public class UpdaterNotification
 	private PendingIntent createPendingIntent(
 	) {
 		Intent intent = new Intent("com.apkupdater.notification");
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		intent.setFlags(0);
 		return PendingIntent.getBroadcast(mContext, 0, intent, 0);
 	}
 
