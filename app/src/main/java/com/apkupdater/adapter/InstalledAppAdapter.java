@@ -77,7 +77,7 @@ public class InstalledAppAdapter
 		ViewGroup parent,
 		int viewType
 	) {
-		InstalledAppView v = InstalledAppView_.build(mContext);
+		InstalledAppView v = InstalledAppView_.build(parent.getContext());
 		v.setLayoutParams(new RecyclerView.LayoutParams(
 			ViewGroup.LayoutParams.MATCH_PARENT,
 			ViewGroup.LayoutParams.WRAP_CONTENT
