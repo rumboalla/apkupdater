@@ -49,7 +49,7 @@ public class SettingsFragment
 			String key
 		) {
 			try {
-				if (key.equals(getString(R.string.preferences_general_alarm_key))) {
+				if (key.equals(getString(R.string.preferences_general_alarm_key)) || key.equals(getString(R.string.preferences_general_update_hour_key))) {
 					// Change alarm
 					AlarmUtil alarmUtil = new AlarmUtil(getContext());
 					alarmUtil.setAlarmFromOptions();
