@@ -53,6 +53,8 @@
     <string name="preferences_general_wifi_only_title">Wi-Fi only</string>
     <string name="preferences_general_wifi_only_summary">Only check for updates when connected to a Wi-Fi network.</string>
     <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
+    <string name="preferences_general_update_hour_title">Update hour</string>
+    <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
     <string name="notification_never">Never</string>
     <string name="notification_always">Always</string>
     <string name="notification_background">Background</string>
@@ -77,5 +79,29 @@
     <string name="action_apkpure" translatable="false">APKPURE</string>
     <string name="action_uptodown" translatable="false">UPTODOWN</string>
     <string name="action_evozi" translatable="false">EVOZI</string>
+    <string name="update_hour_zero" translatable="false">00:00</string>
+    <string name="update_hour_one" translatable="false">01:00</string>
+    <string name="update_hour_two" translatable="false">02:00</string>
+    <string name="update_hour_three" translatable="false">03:00</string>
+    <string name="update_hour_four" translatable="false">04:00</string>
+    <string name="update_hour_five" translatable="false">05:00</string>
+    <string name="update_hour_six" translatable="false">06:00</string>
+    <string name="update_hour_seven" translatable="false">07:00</string>
+    <string name="update_hour_eight" translatable="false">08:00</string>
+    <string name="update_hour_nine" translatable="false">09:00</string>
+    <string name="update_hour_ten" translatable="false">10:00</string>
+    <string name="update_hour_eleven" translatable="false">11:00</string>
+    <string name="update_hour_twelve" translatable="false">12:00</string>
+    <string name="update_hour_thirteen" translatable="false">13:00</string>
+    <string name="update_hour_fourteen" translatable="false">14:00</string>
+    <string name="update_hour_fifteen" translatable="false">15:00</string>
+    <string name="update_hour_sixteen" translatable="false">16:00</string>
+    <string name="update_hour_seventeen" translatable="false">17:00</string>
+    <string name="update_hour_eighteen" translatable="false">18:00</string>
+    <string name="update_hour_nineteen" translatable="false">19:00</string>
+    <string name="update_hour_twenty" translatable="false">20:00</string>
+    <string name="update_hour_twenty_one" translatable="false">21:00</string>
+    <string name="update_hour_twenty_two" translatable="false">22:00</string>
+    <string name="update_hour_twenty_three" translatable="false">23:00</string>
 </resources>
 
