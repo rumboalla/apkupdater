@@ -180,10 +180,9 @@ public class UpdaterAdapter
 	public void addUpdate(
 		Update update
 	) {
-		AnimationUtil.startListAnimation(mView);
 		mUpdates.add(update);
 		sort();
-		notifyDataSetChanged();
+		notifyItemInserted(mUpdates.indexOf(update));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +190,6 @@ public class UpdaterAdapter
 	public void setUpdates(
 		List<Update> updates
 	) {
-		AnimationUtil.startListAnimation(mView);
 		mUpdates.clear();
 		mUpdates.addAll(updates);
 		sort();
