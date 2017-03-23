@@ -77,7 +77,7 @@ public class MainActivity
 		} catch (Exception ignored) {}
 
 		if (!isFromNotification) {
-			mAppState.clearUpdates();
+			//mAppState.clearUpdates();
 		}
 
 		// Simulate a boot com.apkupdater.receiver to set alarm
@@ -124,8 +124,6 @@ public class MainActivity
 		boolean b
 	) {
 		if (b) {
-			//replaceFragment(mSettingsFragment, true);
-
 			getSupportFragmentManager().beginTransaction()
 				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
 				.show(mSettingsFragment)
@@ -135,8 +133,6 @@ public class MainActivity
 
 			changeToolbar(getString(R.string.action_settings), true);
 		} else {
-			//replaceFragment(mMainFragment, false);
-
 			getSupportFragmentManager().beginTransaction()
 				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
 				.show(mMainFragment)
@@ -161,7 +157,7 @@ public class MainActivity
 				.show(mLogFragment)
 				.hide(mMainFragment)
 				.hide(mSettingsFragment)
-				.commit();
+			.commit();
 
 			changeToolbar(getString(R.string.action_log), true);
 		} else {
@@ -170,7 +166,7 @@ public class MainActivity
 				.show(mMainFragment)
 				.hide(mSettingsFragment)
 				.hide(mLogFragment)
-				.commit();
+			.commit();
 
 			changeToolbar(getString(R.string.app_name), false);
 		}
