@@ -30,6 +30,7 @@
             android:entryValues="@array/alarm_values"
             android:defaultValue="@string/alarm_daily"
         />
+
         <ListPreference
             android:key="@string/preferences_general_num_threads_key"
             android:title="@string/preferences_general_num_threads_title"
@@ -37,6 +38,14 @@
             android:entries="@array/num_threads_values"
             android:entryValues="@array/num_threads_values"
             android:defaultValue="@string/num_threads_five"
+        />
+        <ListPreference
+            android:key="@string/preferences_general_update_hour_key"
+            android:title="@string/preferences_general_update_hour_title"
+            android:summary="%s"
+            android:entries="@array/update_hour_values"
+            android:entryValues="@array/update_hour_values"
+            android:defaultValue="@string/update_hour_twelve"
         />
         <CheckBoxPreference
             android:key="@string/preferences_general_wifi_only_key"

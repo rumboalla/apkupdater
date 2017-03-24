@@ -68,10 +68,21 @@ public class AlarmUtil
 	public void setAlarm(
 	    long interval
 	) {
+		// Get update hour from options
+		int hour = 12;
+		try {
+			UpdaterOptions options = new UpdaterOptions(mContext);
+			String time = options.getUpdateHour();
+			String [] split = time.split(":");
+			hour = Integer.valueOf(split[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// Configure the alarm
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
-		calendar.set(Calendar.HOUR_OF_DAY, 12);
+		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
