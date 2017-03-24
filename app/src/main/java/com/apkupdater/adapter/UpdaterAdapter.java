@@ -4,15 +4,21 @@ package com.apkupdater.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.apkupdater.R;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.view.UpdaterView;
-import com.apkupdater.view.UpdaterView_;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,12 +42,19 @@ public class UpdaterAdapter
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		private UpdaterView mView;
+		private View mView;
+		private TextView mName;
+		private TextView mPname;
+		private TextView mVersion;
+		private TextView mUrl;
+		private ImageView mIcon;
+		private Button mActionOneButton;
+		private Button mActionTwoButton;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		UpdateViewHolder(
-			UpdaterView view
+			View view
 		) {
 			super(view);
 			mView = view;
@@ -50,9 +63,64 @@ public class UpdaterAdapter
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		public void bind(
-			Update app
+			final Update update
 		) {
-			mView.bind(app);
+			// Get views
+			mName = ((TextView) mView.findViewById(R.id.installed_app_name));
+			mPname = ((TextView) mView.findViewById(R.id.installed_app_pname));
+			mVersion = ((TextView) mView.findViewById(R.id.installed_app_version));
+			mIcon = ((ImageView) mView.findViewById(R.id.installed_app_icon));
+			mUrl = ((TextView) mView.findViewById(R.id.update_url));
+			mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
+			mActionTwoButton = ((Button) mView.findViewById(R.id.action_two_button));
+
+			// Set values
+			mName.setText(update.getName());
+			mPname.setText(update.getPname());
+
+			// Build version string with both old and new version
+			String version = update.getVersion();
+			if (update.getNewVersion() != null && !update.getNewVersion().isEmpty()) {
+				version += " -> " + update.getNewVersion();
+			}
+
+			mVersion.setText(version);
+
+			// Build string for first action
+			String action = "";
+			if (update.getUrl().contains("apkmirror.com")) {
+				action = mContext.getString(R.string.action_apkmirror);
+			} else if (update.getUrl().contains("uptodown.com")) {
+				action = mContext.getString(R.string.action_uptodown);
+			} else if (update.getUrl().contains("apkpure.com")) {
+				action = mContext.getString(R.string.action_apkpure);
+			}
+			mActionOneButton.setText(action);
+
+			// Action 1 listener
+			mActionOneButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
+					mContext.startActivity(browserIntent);
+				}
+			});
+
+			// Action2 evozi listener
+			mActionTwoButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+						"https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
+					));
+					mContext.startActivity(browserIntent);
+				}
+			});
+
+			try {
+				Drawable icon = mView.getContext().getPackageManager().getApplicationIcon(update.getPname());
+				mIcon.setImageDrawable(icon);
+			} catch (PackageManager.NameNotFoundException ignored) {}
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,54 +147,15 @@ public class UpdaterAdapter
 		ViewGroup parent,
 		int viewType
 	) {
-		UpdaterView v = UpdaterView_.build(parent.getContext());
+		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.updater_item, parent, false);
+		/*
 		v.setLayoutParams(new RecyclerView.LayoutParams(
 			ViewGroup.LayoutParams.MATCH_PARENT,
 			ViewGroup.LayoutParams.WRAP_CONTENT
 		));
-
-		v.setActionOneButtonListener(onActionOneClick);
-		v.setActionTwoButtonListener(onActionTwoClick);
+		*/
 		return new UpdateViewHolder(v);
 	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private UpdaterView getUpdaterViewParent(
-		View v
-	) {
-		while (v != null) {
-			v = (View) v.getParent();
-			if (v instanceof UpdaterView) {
-				return (UpdaterView) v;
-			}
-		}
-		return null;
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private View.OnClickListener onActionTwoClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Update update = mUpdates.get(mView.getChildLayoutPosition(getUpdaterViewParent(v)));
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-				"https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
-			));
-			mContext.startActivity(browserIntent);
-		}
-	};
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private View.OnClickListener onActionOneClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Update update = mUpdates.get(mView.getChildLayoutPosition(getUpdaterViewParent(v)));
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
-			mContext.startActivity(browserIntent);
-		}
-	};
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,10 +180,9 @@ public class UpdaterAdapter
 	public void addUpdate(
 		Update update
 	) {
-		AnimationUtil.startListAnimation(mView);
 		mUpdates.add(update);
 		sort();
-		notifyDataSetChanged();
+		notifyItemInserted(mUpdates.indexOf(update));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +190,6 @@ public class UpdaterAdapter
 	public void setUpdates(
 		List<Update> updates
 	) {
-		AnimationUtil.startListAnimation(mView);
 		mUpdates.clear();
 		mUpdates.addAll(updates);
 		sort();

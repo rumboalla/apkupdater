@@ -23,4 +23,30 @@
         <item>@string/num_threads_five</item>
         <item>@string/num_threads_ten</item>
     </array>
+    <array name="update_hour_values">
+        <item>@string/update_hour_zero</item>
+        <item>@string/update_hour_one</item>
+        <item>@string/update_hour_two</item>
+        <item>@string/update_hour_three</item>
+        <item>@string/update_hour_four</item>
+        <item>@string/update_hour_five</item>
+        <item>@string/update_hour_six</item>
+        <item>@string/update_hour_seven</item>
+        <item>@string/update_hour_eight</item>
+        <item>@string/update_hour_nine</item>
+        <item>@string/update_hour_ten</item>
+        <item>@string/update_hour_eleven</item>
+        <item>@string/update_hour_twelve</item>
+        <item>@string/update_hour_thirteen</item>
+        <item>@string/update_hour_fourteen</item>
+        <item>@string/update_hour_fifteen</item>
+        <item>@string/update_hour_sixteen</item>
+        <item>@string/update_hour_seventeen</item>
+        <item>@string/update_hour_eighteen</item>
+        <item>@string/update_hour_nineteen</item>
+        <item>@string/update_hour_twenty</item>
+        <item>@string/update_hour_twenty_one</item>
+        <item>@string/update_hour_twenty_two</item>
+        <item>@string/update_hour_twenty_three</item>
+    </array>
 </resources>
