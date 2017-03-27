@@ -32,16 +32,31 @@
                 android:paddingTop="22dp"
                 android:paddingLeft="16dp"
             >
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/installed_app_name"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    tools:text="Title here"
-                />
+                >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/installed_app_name"
+                        android:textStyle="bold"
+                        android:textSize="22sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        tools:text="Title here"
+                    />
+                    <ImageView
+                        android:id="@+id/isbeta_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_beta"
+                        android:layout_toRightOf="@id/installed_app_name"
+                        android:layout_alignBottom="@id/installed_app_name"
+                        android:visibility="visible"
+                    />
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

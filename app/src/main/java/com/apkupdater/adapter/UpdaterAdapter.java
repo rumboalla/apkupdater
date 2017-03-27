@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.AnimationUtil;
+import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.view.UpdaterView;
 
 import java.util.Collections;
@@ -50,6 +51,7 @@ public class UpdaterAdapter
 		private ImageView mIcon;
 		private Button mActionOneButton;
 		private Button mActionTwoButton;
+		private ImageView mIsBetaIcon;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,6 +72,7 @@ public class UpdaterAdapter
 			mPname = ((TextView) mView.findViewById(R.id.installed_app_pname));
 			mVersion = ((TextView) mView.findViewById(R.id.installed_app_version));
 			mIcon = ((ImageView) mView.findViewById(R.id.installed_app_icon));
+			mIsBetaIcon = ((ImageView) mView.findViewById(R.id.isbeta_icon));
 			mUrl = ((TextView) mView.findViewById(R.id.update_url));
 			mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
 			mActionTwoButton = ((Button) mView.findViewById(R.id.action_two_button));
@@ -117,10 +120,18 @@ public class UpdaterAdapter
 				}
 			});
 
+			// Icon
 			try {
 				Drawable icon = mView.getContext().getPackageManager().getApplicationIcon(update.getPname());
 				mIcon.setImageDrawable(icon);
 			} catch (PackageManager.NameNotFoundException ignored) {}
+
+			// Beta icon
+			mIsBetaIcon.setVisibility(update.isBeta() ? View.VISIBLE : View.GONE);
+			mIsBetaIcon.getBackground().setColorFilter(
+				ColorUtitl.getColorFromTheme(mContext.getTheme(), R.attr.colorAccent),
+				android.graphics.PorterDuff.Mode.MULTIPLY
+			);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,10 +218,11 @@ public class UpdaterAdapter
 
 	private void sort(
 	) {
+		// Sorting non beta first, then alphabetically
 		Collections.sort(mUpdates, new Comparator<Update>() {
 			@Override
 			public int compare(Update u1, Update u2) {
-				return u1.getName().compareToIgnoreCase(u2.getName());
+				return u1.isBeta() == u2.isBeta() ? u1.getName().compareToIgnoreCase(u2.getName()) : u1.isBeta() ? 1 : -1;
 			}
 		});
 	}

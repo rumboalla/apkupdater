@@ -108,7 +108,7 @@ public class UpdaterService
 			public void run() {
 				IUpdater upd = createUpdater(type, getBaseContext(), app.getPname(), app.getVersion());
 				if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
-					Update u = new Update(app, upd.getResultUrl(), upd.getResultVersion());
+					Update u = new Update(app, upd.getResultUrl(), upd.getResultVersion(), upd.isBeta());
 					mUpdates.add(u);
 					mBus.post(new UpdateProgressEvent(u));
 				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
