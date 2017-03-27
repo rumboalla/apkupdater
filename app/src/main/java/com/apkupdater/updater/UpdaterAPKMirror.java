@@ -60,7 +60,8 @@ public class UpdaterAPKMirror
 				try {
 					String app = row.getElementsByTag("h5").get(0).attr("title");
 
-					if (VersionUtil.isExperimental(app) && skipExperimental()) {
+					mIsBeta = VersionUtil.isExperimental(app);
+					if (mIsBeta && skipExperimental()) {
 						continue;
 					}
 
