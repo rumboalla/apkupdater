@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">APKUpdater</string>
+    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater es una herramienta que simplifica el proceso de encontrar actualizaciones para tus aplicaciones instaladas. Te proporcionará funcionalidad similar a una tienda de aplicaciones sin tener que instalar el spyware asociado que viene con ella. Esta es una aplicación muy útil para aquellos que quieren ejecutar Android sin una tienda de aplicaciones.</p><p>Características:</p><ul><li>Consigue actualizaciones desde múltiples origenes</li><li>Programa comprobaciones dn segundo plano</li><li>Soporta Android 2.3 a 7.1</li><li>Lista de aplicaciones ignoradas para no comprobar actualizaciones</li><li>Material design moderno  con soporte multi-tema</li><li>Mostrar notificaciones cuando se dncuentran actualizaciones</li></ul><p>Librerias usadas:</p><ul><li><a href="http://androidannotations.org">AndroidAnnotations</a></li><li><a href="http://jsoup.org">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li></ul><p>Origen de actualizaciones:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licenciado bajo la <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_log">Registro</string>
+    <string name="action_check_for_updates">Comprobar actualizaciones</string>
+    <string name="tab_installed">Instaladas</string>
+    <string name="tab_updates">Actualizaciones</string>
+    <string name="tab_about">Acerca de</string>
+    <string name="notification_update_title">Comprobando actualizaciones</string>
+    <string name="notification_update_content">$1/$2</string>
+    <string name="notification_update_title_finished">Comprobación de actualizaciones finalizada</string>
+    <string name="notification_update_content_finished">Encontrada $1 actualización(es)</string>
+    <string name="notification_update_title_failed">Error al comprobar actualizaciones</string>
+    <string name="already_updating">Ya se está comprobando actualizaciones.</string>
+    <string name="update_finished">Comprobación de actualizaciones finalizada.</string>
+    <string name="update_finished_with_errors">La comprobación de actualizaciones finalizó con $1 error(es).</string>
+    <string name="update_failed">Error al comprobar actualizaciones con excepción $1.</string>
+    <string name="update_no_sources">Al menos un origen debería ser seleccionado.</string>
+    <string name="preferences_general_category">Ajustes generales</string>
+    <string name="preferences_filter_category">Ajustes de filtrado</string>
+    <string name="preferences_sources_category">Origen de actualización</string>
+    <string name="preferences_general_skip_experimental_title">Excluir versiones experimentales</string>
+    <string name="preferences_general_skip_experimental_summary">Esto intentara excluir versiones experimentales (alpha, beta) de las actualizaciones.</string>
+    <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
+    <string name="preferences_general_exclude_system_apps_title">Excluir aplicaciones del sistema</string>
+    <string name="preferences_general_exclude_system_apps_summary">Esto excluirá actualizaciones de aplicaciones del sistema.</string>
+    <string name="preferences_general_exclude_system_apps_key" translatable="false">preferences_general_exclude_system_apps_key</string>
+    <string name="preferences_general_exclude_disabled_apps_title">Excluir aplicaciones deshabilitadas</string>
+    <string name="preferences_general_exclude_disabled_apps_summary">Esto excluirá actualizaciones de aplicaciones deshabilitadas.</string>
+    <string name="preferences_general_exclude_disabled_apps_key" translatable="false">preferences_general_exclude_disabled_apps_key</string>
+    <string name="preferences_general_ignorelist_title">Lista de aplicaciones ignoradas</string>
+    <string name="preferences_general_ignorelist_summary">Esto excluirá actualizaciones de las aplicaciones.</string>
+    <string name="preferences_general_ignorelist_value">com.google.android.gms,com.google.android.gsf,com.android.vending</string>
+    <string name="preferences_general_ignorelist_key" translatable="false">preferences_general_ignorelist_key</string>
+    <string name="preferences_general_notification_title">Notificaciones</string>
+    <string name="preferences_general_notification_key" translatable="false">preferences_general_notification_key</string>
+    <string name="preferences_general_theme_title">Tema</string>
+    <string name="preferences_general_theme_key" translatable="false">preferences_general_theme_key</string>
+    <string name="preferences_general_alarm_title">Comprobar actualizaciones</string>
+    <string name="preferences_general_alarm_key" translatable="false">preferences_general_alarm_key</string>
+    <string name="preferences_general_num_threads_title">Número de hilos</string>
+    <string name="preferences_general_num_threads_key" translatable="false">preferences_general_num_threads_key</string>
+    <string name="preferences_general_use_apkmirror_title">Actualizaciones desde APKMirror</string>
+    <string name="preferences_general_use_apkmirror_summary">Esto comprobará actualizaciones en APKMirror.</string>
+    <string name="preferences_general_use_apkmirror_key" translatable="false">preferences_general_use_apkmirror_key</string>
+    <string name="preferences_general_use_uptodown_title">Actualizaciones desde Uptodown</string>
+    <string name="preferences_general_use_uptodown_summary">Esto comprobará actualizaciones en Uptodown. Lento, necesita varias solicitudes.</string>
+    <string name="preferences_general_use_uptodown_key" translatable="false">preferences_general_use_uptodown_key</string>
+    <string name="preferences_general_use_apkpure_title">Actualizaciones desde APKPure</string>
+    <string name="preferences_general_use_apkpure_summary">Esto comprobará actualizaciones en APKPure.com. Necesita 2 solicitudes por aplicación, asi que es lento.</string>
+    <string name="preferences_general_use_apkpure_key" translatable="false">preferences_general_use_apkpure_key</string>
+    <string name="preferences_general_wifi_only_title">Sólo Wi-Fi</string>
+    <string name="preferences_general_wifi_only_summary">Sólo comprobar actualizaciones cuando estés conectado a una red Wi-Fi.</string>
+    <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
+    <string name="preferences_general_update_hour_title">Hora de actualización</string>
+    <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
+    <string name="notification_never">Nunca</string>
+    <string name="notification_always">Siempre</string>
+    <string name="notification_background">Segundo plano</string>
+    <string name="notification_if_at_least_1">Si hay actualizaciones disponibles</string>
+    <string name="alarm_never">Nunca</string>
+    <string name="alarm_daily">Diariamente</string>
+    <string name="alarm_weekly">Semanalmente</string>
+    <string name="theme_blue">Metanfetamina</string>
+    <string name="theme_pink">Pantera rosa</string>
+    <string name="theme_dark">Droide oscuro</string>
+    <string name="theme_orange">Zumo de naranja</string>
+    <string name="content_description_app_icon">Icono de la aplicación</string>
+    <string name="update_check_failed_no_internet">Error comprobando actualizaciones: no hay conexión a intermet.</string>
+    <string name="update_check_failed_no_wifi">Error comprobando actualizaciones: sin Wi-Fi.</string>
+    <string name="num_threads_one" translatable="false">1</string>
+    <string name="num_threads_three" translatable="false">3</string>
+    <string name="num_threads_five" translatable="false">5</string>
+    <string name="num_threads_ten" translatable="false">10</string>
+    <string name="action_ignore_app">IGNORAR</string>
+    <string name="action_unignore_app">NO IGNORAR</string>
+    <string name="action_apkmirror" translatable="false">APKMIRROR</string>
+    <string name="action_apkpure" translatable="false">APKPURE</string>
+    <string name="action_uptodown" translatable="false">UPTODOWN</string>
+    <string name="action_evozi" translatable="false">EVOZI</string>
+    <string name="update_hour_zero" translatable="false">00:00</string>
+    <string name="update_hour_one" translatable="false">01:00</string>
+    <string name="update_hour_two" translatable="false">02:00</string>
+    <string name="update_hour_three" translatable="false">03:00</string>
+    <string name="update_hour_four" translatable="false">04:00</string>
+    <string name="update_hour_five" translatable="false">05:00</string>
+    <string name="update_hour_six" translatable="false">06:00</string>
+    <string name="update_hour_seven" translatable="false">07:00</string>
+    <string name="update_hour_eight" translatable="false">08:00</string>
+    <string name="update_hour_eight" translatable="false">08:00</string>
+    <string name="update_hour_nine" translatable="false">09:00</string>
+    <string name="update_hour_ten" translatable="false">10:00</string>
+    <string name="update_hour_eleven" translatable="false">11:00</string>
+    <string name="update_hour_twelve" translatable="false">12:00</string>
+    <string name="update_hour_thirteen" translatable="false">13:00</string>
+    <string name="update_hour_fourteen" translatable="false">14:00</string>
+    <string name="update_hour_fifteen" translatable="false">15:00</string>
+    <string name="update_hour_sixteen" translatable="false">16:00</string>
+    <string name="update_hour_seventeen" translatable="false">17:00</string>
+    <string name="update_hour_eighteen" translatable="false">18:00</string>
+    <string name="update_hour_nineteen" translatable="false">19:00</string>
+    <string name="update_hour_twenty" translatable="false">20:00</string>
+    <string name="update_hour_twenty_one" translatable="false">21:00</string>
+    <string name="update_hour_twenty_two" translatable="false">22:00</string>
+    <string name="update_hour_twenty_three" translatable="false">23:00</string>
+</resources>
+
