@@ -6,7 +6,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.4.0-alpha1'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
