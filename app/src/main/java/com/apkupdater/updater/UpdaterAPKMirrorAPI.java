@@ -7,7 +7,13 @@ import android.util.Log;
 
 import com.apkupdater.model.APKMirror.AppExistsRequest;
 import com.apkupdater.model.APKMirror.AppExistsResponse;
+import com.apkupdater.model.APKMirror.AppExistsResponseApk;
+import com.apkupdater.model.APKMirror.AppExistsResponseData;
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.LogMessage;
+import com.apkupdater.util.LogUtil;
+import com.apkupdater.util.MyBus;
+import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -40,12 +46,25 @@ public class UpdaterAPKMirrorAPI
     private static final String Token = "rm5rcfruUjKy04sMpyMPJXW8";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    private List<InstalledApp> mApps;
+    private Context mContext;
+    private MyBus mBus;
+    private LogUtil mLog;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public UpdaterAPKMirrorAPI(
         Context context,
+        MyBus bus,
+        LogUtil log,
         List<InstalledApp> apps
     ) {
+        // Store vars
+        mApps = apps;
+        mContext = context;
+        mBus = bus;
+        mLog = log;
+
         // Create the OkHttp client
         OkHttpClient client = getOkHttpClient();
         if (client == null) {
@@ -93,10 +112,41 @@ public class UpdaterAPKMirrorAPI
             AppExistsResponse r = new Gson().fromJson(body, AppExistsResponse.class);
             if (r.getStatus() == 200) {
                 Log.i("Response", "Success!");
+
+                for (AppExistsResponseData data : r.getData()) {
+                    if (data.getApks() != null) {
+                        for (AppExistsResponseApk apk : data.getApks()) {
+                            InstalledApp app = getInstalledApp(data.getPname());
+                            if (app != null) {
+                                // TODO: Use versionCode
+                                if (VersionUtil.compareVersion(
+                                    VersionUtil.getVersionFromString(data.getRelease().getVersion()),
+                                    VersionUtil.getVersionFromString(app.getVersion()))
+                                > 0) {
+                                    mLog.log("Update Found", apk.getLink(), LogMessage.SEVERITY_INFO);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             // TODO: Log error
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private InstalledApp getInstalledApp(
+        String pname
+    ) {
+        for (InstalledApp app : mApps) {
+            if (app.getPname().equals(pname)) {
+                return app;
+            }
+        }
+        return null;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

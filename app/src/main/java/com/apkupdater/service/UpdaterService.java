@@ -202,7 +202,8 @@ public class UpdaterService
 				}
 			}
 
-            UpdaterAPKMirrorAPI test = new UpdaterAPKMirrorAPI(this, installedApps);
+			// TODO: Split in batches of 100
+            UpdaterAPKMirrorAPI test = new UpdaterAPKMirrorAPI(this, mBus, mLogger, installedApps);
 
 			// Save number to state
 			mAppState.setUpdateMax(appCount);
