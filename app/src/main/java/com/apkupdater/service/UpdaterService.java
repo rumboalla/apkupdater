@@ -183,16 +183,18 @@ public class UpdaterService
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates
-			int appCount = 0;
+            int appCount = 0;
 			for (final InstalledApp app: installedApps) {
 				// Check if this app is on the ignore list
 				if (options.getIgnoreList().contains(app.getPname())) {
 					continue;
 				}
+				/*
 				if (options.useAPKMirror()) {
 					appCount++;
 					updateSource(executor, "APKMirror", app, errors);
 				}
+				*/
 				if (options.useUptodown()) {
 					appCount++;
 					updateSource(executor, "Uptodown", app, errors);
@@ -204,9 +206,43 @@ public class UpdaterService
 			}
 
             if (options.useAPKMirror()) {
+			    // Remove ignored apps
+                List<InstalledApp> apps = new ArrayList<>();
+                for (InstalledApp app : installedApps) {
+                    if (options.getIgnoreList().contains(app.getPname())) {
+                        continue;
+                    } else {
+                        apps.add(app);
+                    }
+                }
+
                 // Split in batches of 100 and process
-                for (List<InstalledApp> batch : VersionUtil.batchList(installedApps, 100)) {
-                    new UpdaterAPKMirrorAPI(this, mBus, mLogger, batch);
+                for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
+                    appCount += batch.size();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(null, mBus, mLogger, batch);
+
+                            if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
+                                List<Update> us = upd.getUpdates();
+                                for (Update u : us) {
+                                    mUpdates.add(u);
+                                    mBus.post(new UpdateProgressEvent(u));
+                                }
+                            } else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
+                                errors.add(upd.getResultError());
+                                mBus.post(new UpdateProgressEvent(null));
+                            }
+
+                            for (int i = 0; i < batch.size(); ++i) {
+                                mAppState.increaseUpdateProgress();
+                            }
+                            mNotification.increaseProgress(mUpdates.size());
+                        }
+                    });
+
                 }
             }
 

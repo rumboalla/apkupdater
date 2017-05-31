@@ -10,6 +10,7 @@ import com.apkupdater.model.APKMirror.AppExistsResponseApk;
 import com.apkupdater.model.APKMirror.AppExistsResponseData;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
+import com.apkupdater.model.Update;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.google.gson.Gson;
@@ -39,6 +40,7 @@ public class UpdaterAPKMirrorAPI
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final String BaseUrl = "https://www.apkmirror.com/wp-json/apkm/v1/";
+    private static final String DownloadUrl = "https://www.apkmirror.com/";
     private static final String AppExists = "app_exists/";
     private static final String User = "api-apkupdater";
     private static final String Token = "rm5rcfruUjKy04sMpyMPJXW8";
@@ -48,6 +50,9 @@ public class UpdaterAPKMirrorAPI
     private Context mContext;
     private MyBus mBus;
     private LogUtil mLog;
+    private String mError;
+    private UpdaterStatus mResultCode = UpdaterStatus.STATUS_UPDATE_FOUND;
+    private List<Update> mUpdates = new ArrayList<>();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,7 +71,8 @@ public class UpdaterAPKMirrorAPI
         // Create the OkHttp client
         OkHttpClient client = getOkHttpClient();
         if (client == null) {
-            mLog.log("UpdaterAPKMirrorAPI", "Unable to get OkHttpClient.", LogMessage.SEVERITY_ERROR);
+            mError = "Unable to get OkHttpError";
+            mResultCode = UpdaterStatus.STATUS_ERROR;
             return;
         }
 
@@ -86,17 +92,14 @@ public class UpdaterAPKMirrorAPI
             .build();
 
         // Perform request
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                mLog.log("UpdaterAPKMirrorAPI", "Request failure: " + String.valueOf(e), LogMessage.SEVERITY_ERROR);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                parseResponse(response.body().string());
-            }
-        });
+        try {
+            Response r = client.newCall(request).execute();
+            parseResponse(r.body().string());
+        } catch (Exception e) {
+            mError = "Request failure: " + String.valueOf(e);
+            mResultCode = UpdaterStatus.STATUS_ERROR;
+            return;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +113,8 @@ public class UpdaterAPKMirrorAPI
 
             // Check if request was successful (Code 200)
             if (r.getStatus() != 200) {
-                mLog.log("UpdaterAPKMirrorAPI", "Request not successful: " + r.getStatus(), LogMessage.SEVERITY_ERROR);
+                mError = "Request not successful: " + r.getStatus();
+                mResultCode = UpdaterStatus.STATUS_ERROR;
                 return;
             }
 
@@ -125,8 +129,8 @@ public class UpdaterAPKMirrorAPI
                 for (AppExistsResponseApk apk : data.getApks()) {
                     InstalledApp app = getInstalledApp(data.getPname());
                     if (app != null && Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
-                        mLog.log("Update Found", apk.getLink(), LogMessage.SEVERITY_INFO);
-                        // TODO: Find a way to properly return updates
+                        // TODO: Check beta
+                        mUpdates.add(new Update(app, DownloadUrl + apk.getLink(), data.getRelease().getVersion(), false));
                         break;
                     }
                     // TODO: (NEW FEATURE) Filter architecture and API level
@@ -134,7 +138,8 @@ public class UpdaterAPKMirrorAPI
             }
 
         } catch (Exception e) {
-            // TODO: Log error
+            mError = "Parse response failed: " + String.valueOf(e);
+            mResultCode = UpdaterStatus.STATUS_ERROR;
         }
     }
 
@@ -176,6 +181,27 @@ public class UpdaterAPKMirrorAPI
         } catch (Exception e) {
             return null;
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public Throwable getResultError(
+    ) {
+        return new Throwable(mError);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public UpdaterStatus getResultStatus(
+    ) {
+        return mResultCode;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public List<Update> getUpdates(
+    ) {
+        return mUpdates;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
