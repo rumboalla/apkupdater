@@ -134,8 +134,7 @@ public class UpdaterAPKMirrorAPI
                             continue;
                         }
 
-                        // TODO: Handle architectures properly
-                        if (apk.getArches() != null && !apk.getArches().contains("armeabi") && !apk.getArches().contains("armeabi-v7a")) {
+                        if (apk.getArches() != null && VersionUtil.skipArchitecture(apk.getArches())) {
                             continue;
                         }
 

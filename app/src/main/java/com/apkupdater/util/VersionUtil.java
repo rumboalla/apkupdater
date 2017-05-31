@@ -4,6 +4,7 @@ package com.apkupdater.util;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.os.Build;
 
 import com.apkupdater.R;
 
@@ -125,6 +126,30 @@ public class VersionUtil {
             parts.add(new ArrayList<>(list.subList(i, Math.min(listSize, i + batchSize))));
         }
         return parts;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static public boolean skipArchitecture(
+        List<String> arches
+    ) {
+        String arch = "arm";
+
+        if (Build.CPU_ABI.contains("arm")) {
+            arch = "arm";
+        } else if (Build.CPU_ABI.contains("mips")) {
+            arch = "mips";
+        } else if (Build.CPU_ABI.contains("x86")) {
+            arch = "x86";
+        }
+
+        for (String a : arches) {
+            if (a.contains(arch)) {
+                return false;
+            }
+        }
+
+	    return true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
