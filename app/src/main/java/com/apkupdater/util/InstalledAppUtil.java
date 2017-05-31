@@ -61,6 +61,7 @@ public class InstalledAppUtil
 			app.setName(i.applicationInfo.loadLabel(pm).toString());
 			app.setPname(i.packageName);
 			app.setVersion(i.versionName);
+            app.setVersionCode(i.versionCode);
 			items.add(app);
 		}
 
