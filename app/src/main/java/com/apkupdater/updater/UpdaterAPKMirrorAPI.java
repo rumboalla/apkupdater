@@ -3,7 +3,6 @@ package com.apkupdater.updater;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.util.Log;
 
 import com.apkupdater.model.APKMirror.AppExistsRequest;
 import com.apkupdater.model.APKMirror.AppExistsResponse;
@@ -13,7 +12,6 @@ import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
-import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -68,7 +66,7 @@ public class UpdaterAPKMirrorAPI
         // Create the OkHttp client
         OkHttpClient client = getOkHttpClient();
         if (client == null) {
-            // TODO: Send error
+            mLog.log("UpdaterAPKMirrorAPI", "Unable to get OkHttpClient.", LogMessage.SEVERITY_ERROR);
             return;
         }
 
@@ -91,7 +89,7 @@ public class UpdaterAPKMirrorAPI
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("Response", String.valueOf(e));
+                mLog.log("UpdaterAPKMirrorAPI", "Request failure: " + String.valueOf(e), LogMessage.SEVERITY_ERROR);
             }
 
             @Override
@@ -107,27 +105,34 @@ public class UpdaterAPKMirrorAPI
         String body
     ) {
         try {
-            Log.i("Response", body);
-
+            // Convert response json to object
             AppExistsResponse r = new Gson().fromJson(body, AppExistsResponse.class);
-            if (r.getStatus() == 200) {
-                Log.i("Response", "Success!");
 
-                for (AppExistsResponseData data : r.getData()) {
-                    if (data.getApks() != null) {
-                        for (AppExistsResponseApk apk : data.getApks()) {
-                            InstalledApp app = getInstalledApp(data.getPname());
-                            if (app != null) {
-                                if (Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
-                                    mLog.log("Update Found", apk.getLink(), LogMessage.SEVERITY_INFO);
-                                    break;
-                                }
-                                // TODO: (NEW FEATURE) Filter architecture and API level
-                            }
-                        }
+            // Check if request was successful (Code 200)
+            if (r.getStatus() != 200) {
+                mLog.log("UpdaterAPKMirrorAPI", "Request not successful: " + r.getStatus(), LogMessage.SEVERITY_ERROR);
+                return;
+            }
+
+            // Check the response data
+            for (AppExistsResponseData data : r.getData()) {
+                // If no apk, check next data
+                if (data.getApks() == null) {
+                    continue;
+                }
+
+                // Check all apks
+                for (AppExistsResponseApk apk : data.getApks()) {
+                    InstalledApp app = getInstalledApp(data.getPname());
+                    if (app != null && Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
+                        mLog.log("Update Found", apk.getLink(), LogMessage.SEVERITY_INFO);
+                        // TODO: Find a way to properly return updates
+                        break;
                     }
+                    // TODO: (NEW FEATURE) Filter architecture and API level
                 }
             }
+
         } catch (Exception e) {
             // TODO: Log error
         }
