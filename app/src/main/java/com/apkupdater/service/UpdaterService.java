@@ -15,6 +15,7 @@ import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
 import com.apkupdater.updater.IUpdater;
 import com.apkupdater.updater.UpdaterAPKMirror;
+import com.apkupdater.updater.UpdaterAPKMirrorAPI;
 import com.apkupdater.updater.UpdaterAPKPure;
 import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
@@ -200,6 +201,8 @@ public class UpdaterService
 					updateSource(executor, "APKPure", app, errors);
 				}
 			}
+
+            UpdaterAPKMirrorAPI test = new UpdaterAPKMirrorAPI(this, installedApps);
 
 			// Save number to state
 			mAppState.setUpdateMax(appCount);
