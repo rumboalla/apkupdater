@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.apkupdater.model.APKMirror.AppExistsRequest;
+import com.apkupdater.model.APKMirror.AppExistsResponse;
 import com.apkupdater.model.InstalledApp;
 import com.google.gson.Gson;
 
@@ -60,9 +61,12 @@ public class UpdaterAPKMirrorAPI
         AppExistsRequest json = new AppExistsRequest(pnames);
 
         // Build the OkHttp request
-        String test = new Gson().toJson(json);
         RequestBody body = RequestBody.create(JSON, new Gson().toJson(json));
-        final Request request = new Request.Builder().url(BaseUrl + AppExists).post(body).header("Authorization", Credentials.basic(User, Token)).build();
+        final Request request = new Request.Builder()
+            .url(BaseUrl + AppExists)
+            .post(body)
+            .header("Authorization", Credentials.basic(User, Token))
+            .build();
 
         // Perform request
         client.newCall(request).enqueue(new Callback() {
@@ -73,9 +77,26 @@ public class UpdaterAPKMirrorAPI
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.i("Response", response.body().string());
+                parseResponse(response.body().string());
             }
         });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void parseResponse(
+        String body
+    ) {
+        try {
+            Log.i("Response", body);
+
+            AppExistsResponse r = new Gson().fromJson(body, AppExistsResponse.class);
+            if (r.getStatus() == 200) {
+                Log.i("Response", "Success!");
+            }
+        } catch (Exception e) {
+            // TODO: Log error
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
