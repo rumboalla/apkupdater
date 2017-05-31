@@ -13,6 +13,7 @@ import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -118,6 +119,8 @@ public class UpdaterAPKMirrorAPI
                 return;
             }
 
+            boolean skipExperimental = new UpdaterOptions(mContext).skipExperimental();
+
             // Check the response data
             for (AppExistsResponseData data : r.getData()) {
                 // If no apk, check next data
@@ -129,8 +132,20 @@ public class UpdaterAPKMirrorAPI
                 for (AppExistsResponseApk apk : data.getApks()) {
                     InstalledApp app = getInstalledApp(data.getPname());
                     if (app != null && Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
-                        // TODO: Check beta
-                        mUpdates.add(new Update(app, DownloadUrl + apk.getLink(), data.getRelease().getVersion(), false));
+                        // Check if app is beta and if we should skip it
+                        boolean isBeta = VersionUtil.isExperimental(data.getRelease().getVersion());
+                        if (isBeta && skipExperimental) {
+                            continue;
+                        }
+
+                        // Add the update
+                        mUpdates.add(new Update(
+                            app,
+                            DownloadUrl + apk.getLink(),
+                            data.getRelease().getVersion(),
+                            isBeta
+                        ));
+
                         break;
                     }
                     // TODO: (NEW FEATURE) Filter architecture and API level

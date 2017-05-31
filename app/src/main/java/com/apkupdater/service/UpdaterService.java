@@ -68,6 +68,7 @@ public class UpdaterService
 	private List<Update> mUpdates = new ArrayList<>();
 	private UpdaterNotification mNotification;
 	private boolean mIsFromAlarm = false;
+	private Context mContext;
 	static public final String isFromAlarmExtra = "isFromAlarm";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,12 +219,13 @@ public class UpdaterService
 
                 // Split in batches of 100 and process
                 for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
+                    mContext = this;
                     appCount += batch.size();
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
 
-                            UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(null, mBus, mLogger, batch);
+                            UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, mBus, mLogger, batch);
 
                             if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
                                 List<Update> us = upd.getUpdates();
