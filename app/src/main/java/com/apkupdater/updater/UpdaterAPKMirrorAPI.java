@@ -118,14 +118,11 @@ public class UpdaterAPKMirrorAPI
                         for (AppExistsResponseApk apk : data.getApks()) {
                             InstalledApp app = getInstalledApp(data.getPname());
                             if (app != null) {
-                                // TODO: Use versionCode
-                                if (VersionUtil.compareVersion(
-                                    VersionUtil.getVersionFromString(data.getRelease().getVersion()),
-                                    VersionUtil.getVersionFromString(app.getVersion()))
-                                > 0) {
+                                if (Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
                                     mLog.log("Update Found", apk.getLink(), LogMessage.SEVERITY_INFO);
                                     break;
                                 }
+                                // TODO: (NEW FEATURE) Filter architecture and API level
                             }
                         }
                     }

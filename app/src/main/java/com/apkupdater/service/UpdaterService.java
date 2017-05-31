@@ -26,6 +26,7 @@ import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
+import com.apkupdater.util.VersionUtil;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -202,8 +203,12 @@ public class UpdaterService
 				}
 			}
 
-			// TODO: Split in batches of 100
-            UpdaterAPKMirrorAPI test = new UpdaterAPKMirrorAPI(this, mBus, mLogger, installedApps);
+            if (options.useAPKMirror()) {
+                // Split in batches of 100 and process
+                for (List<InstalledApp> batch : VersionUtil.batchList(installedApps, 100)) {
+                    new UpdaterAPKMirrorAPI(this, mBus, mLogger, batch);
+                }
+            }
 
 			// Save number to state
 			mAppState.setUpdateMax(appCount);
