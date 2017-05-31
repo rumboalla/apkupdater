@@ -9,14 +9,12 @@ import com.apkupdater.model.APKMirror.AppExistsResponse;
 import com.apkupdater.model.APKMirror.AppExistsResponseApk;
 import com.apkupdater.model.APKMirror.AppExistsResponseData;
 import com.apkupdater.model.InstalledApp;
-import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +23,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Credentials;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -41,7 +37,7 @@ public class UpdaterAPKMirrorAPI
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final String BaseUrl = "https://www.apkmirror.com/wp-json/apkm/v1/";
-    private static final String DownloadUrl = "https://www.apkmirror.com/";
+    private static final String DownloadUrl = "https://www.apkmirror.com";
     private static final String AppExists = "app_exists/";
     private static final String User = "api-apkupdater";
     private static final String Token = "rm5rcfruUjKy04sMpyMPJXW8";
