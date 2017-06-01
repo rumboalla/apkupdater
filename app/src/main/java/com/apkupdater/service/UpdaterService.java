@@ -225,7 +225,7 @@ public class UpdaterService
                         @Override
                         public void run() {
 
-                            UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, mBus, mLogger, batch);
+                            UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, batch);
 
                             if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
                                 List<Update> us = upd.getUpdates();
@@ -244,7 +244,6 @@ public class UpdaterService
                             mNotification.increaseProgress(mUpdates.size());
                         }
                     });
-
                 }
             }
 

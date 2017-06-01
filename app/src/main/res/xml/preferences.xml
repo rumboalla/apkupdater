@@ -77,6 +77,18 @@
             android:title="@string/preferences_general_exclude_disabled_apps_title"
             android:defaultValue="true"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_skip_architecture_key"
+            android:summary="@string/preferences_general_skip_architecture_summary"
+            android:title="@string/preferences_general_skip_architecture_title"
+            android:defaultValue="true"
+        />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_skip_minapi_key"
+            android:summary="@string/preferences_general_skip_minapi_summary"
+            android:title="@string/preferences_general_skip_minapi_title"
+            android:defaultValue="true"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory

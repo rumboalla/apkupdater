@@ -45,8 +45,6 @@ public class UpdaterAPKMirrorAPI
 
     private List<InstalledApp> mApps;
     private Context mContext;
-    private MyBus mBus;
-    private LogUtil mLog;
     private String mError;
     private UpdaterStatus mResultCode = UpdaterStatus.STATUS_UPDATE_FOUND;
     private List<Update> mUpdates = new ArrayList<>();
@@ -55,15 +53,11 @@ public class UpdaterAPKMirrorAPI
 
     public UpdaterAPKMirrorAPI(
         Context context,
-        MyBus bus,
-        LogUtil log,
         List<InstalledApp> apps
     ) {
         // Store vars
         mApps = apps;
         mContext = context;
-        mBus = bus;
-        mLog = log;
 
         // Create the OkHttp client
         OkHttpClient client = getOkHttpClient();
@@ -115,7 +109,10 @@ public class UpdaterAPKMirrorAPI
                 return;
             }
 
-            boolean skipExperimental = new UpdaterOptions(mContext).skipExperimental();
+            UpdaterOptions options = new UpdaterOptions(mContext);
+            boolean skipExperimental = options.skipExperimental();
+            boolean skipArchitecture = options.skipArchitecture();
+            boolean skipMinapi = options.skipMinapi();
 
             // Check the response data
             for (AppExistsResponseData data : r.getData()) {
@@ -134,7 +131,11 @@ public class UpdaterAPKMirrorAPI
                             continue;
                         }
 
-                        if (apk.getArches() != null && VersionUtil.skipArchitecture(apk.getArches())) {
+                        if (skipArchitecture && apk.getArches() != null && VersionUtil.skipArchitecture(apk.getArches())) {
+                            continue;
+                        }
+
+                        if (skipMinapi && apk.getMinapi() != null && VersionUtil.skipMinapi(apk.getMinapi())) {
                             continue;
                         }
 

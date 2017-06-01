@@ -36,7 +36,23 @@ public class UpdaterOptions
 		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_skip_experimental_key), false);
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public boolean skipArchitecture(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_skip_architecture_key), true);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public boolean skipMinapi(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_skip_minapi_key), true);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public boolean useAPKMirror(
 	) {
