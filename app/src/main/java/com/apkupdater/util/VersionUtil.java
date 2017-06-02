@@ -33,39 +33,32 @@ public class VersionUtil {
 	static public List<Integer> getVersionFromString(
 		String full_string
 	) {
-		// First split string with spaces or -
-		String [] space_string = full_string.split("( )|(-)");
+        List<Integer> version = new ArrayList<>();
 
-		for (String i : space_string) {
-			// Try to split with "."
-			String [] dot_string = i.split("\\.");
-			if (dot_string.length < 2) {
-				continue;
-			}
-
-			// If its a number add it to version
-			List<Integer> version = new ArrayList<>();
-			for (String j : dot_string) {
-				try {
-					int c = Integer.parseInt(j.replace("v", "").replace("V", "").replace("b", "").replace("B", "").replace("u", "").replace("U", "")); // Remove v to properly read versions like v0.0.1
-					version.add(c);
-				} catch (NumberFormatException e) {
-					break;
-				}
-			}
-
-			// If we have at least 2 numbers consider it a version
-			if (version.size() >= 2) {
-				return version;
-			}
+		// First split string with spaces, - and .
+		for (String i : full_string.split("( )|(-)|(\\.)")) {
+            try {
+                int c = Integer.parseInt(
+                    // Remove v to properly read versions like v0.0.1
+                    i.replace("v", "").replace("V", "").replace("b", "").replace("B", "").replace("u", "").replace("U", "")
+                );
+                version.add(c);
+            } catch (NumberFormatException e) {
+                break;
+            }
 		}
+
+        // If we have at least 2 numbers consider it a version
+        if (version.size() >= 2) {
+            return version;
+        }
 
 		// If that failed, try making a version from all numbers on the string
-		String [] split = full_string.replaceAll("[^0-9]+", " ").trim().split(" ");
-		List<Integer> version = new ArrayList<>();
-		for (String i : split) {
+		version.clear();
+		for (String i : full_string.replaceAll("[^0-9]+", " ").trim().split(" ")) {
 			version.add(Integer.valueOf(i));
 		}
+
 		if (version.size() > 0) {
 			return version;
 		}
