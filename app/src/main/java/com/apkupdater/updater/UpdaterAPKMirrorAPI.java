@@ -10,8 +10,7 @@ import com.apkupdater.model.APKMirror.AppExistsResponseApk;
 import com.apkupdater.model.APKMirror.AppExistsResponseData;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.Update;
-import com.apkupdater.util.LogUtil;
-import com.apkupdater.util.MyBus;
+import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
@@ -48,16 +47,19 @@ public class UpdaterAPKMirrorAPI
     private String mError;
     private UpdaterStatus mResultCode = UpdaterStatus.STATUS_UPDATE_FOUND;
     private List<Update> mUpdates = new ArrayList<>();
+    private GenericCallback<Update> mUpdateCallback;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public UpdaterAPKMirrorAPI(
         Context context,
-        List<InstalledApp> apps
+        List<InstalledApp> apps,
+        GenericCallback<Update> updateCallback
     ) {
         // Store vars
         mApps = apps;
         mContext = context;
+        mUpdateCallback = updateCallback;
 
         // Create the OkHttp client
         OkHttpClient client = getOkHttpClient();
@@ -144,16 +146,19 @@ public class UpdaterAPKMirrorAPI
                         }
 
                         // Add the update
-                        mUpdates.add(new Update(
+                        Update u = new Update(
                             app,
-                            DownloadUrl + apk.getLink(),
+                            DownloadUrl + data.getRelease().getLink(),
                             data.getRelease().getVersion(),
                             isBeta
-                        ));
+                        );
 
+                        mUpdates.add(u);
+                        mUpdateCallback.onResult(u);
                         break;
                     }
-                    // TODO: (NEW FEATURE) Filter architecture and API level
+
+                    mUpdateCallback.onResult(null);
                 }
             }
 
