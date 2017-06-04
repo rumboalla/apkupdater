@@ -204,6 +204,9 @@ public class UpdaterService
 				}
 			}
 
+			// Uses 1 thread only for the moment
+			ExecutorService executorAPKMirror = Executors.newFixedThreadPool(1);
+
 			if (options.useAPKMirror()) {
 				// Remove ignored apps
 				List<InstalledApp> apps = new ArrayList<>();
@@ -224,24 +227,29 @@ public class UpdaterService
 				for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
 					mContext = this;
 
-					UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, batch, new GenericCallback<Update>() {
+					executorAPKMirror.execute(new Runnable() {
 						@Override
-						public void onResult(Update u) {
-							if (u != null) {
-								mUpdates.add(u);
-								mBus.post(new UpdateProgressEvent(u));
-							} else {
-								mBus.post(new UpdateProgressEvent(null));
-							}
+						public void run() {
+							UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, batch, new GenericCallback<Update>() {
+								@Override
+								public void onResult(Update u) {
+									if (u != null) {
+										mUpdates.add(u);
+										mBus.post(new UpdateProgressEvent(u));
+									} else {
+										mBus.post(new UpdateProgressEvent(null));
+									}
 
-							mAppState.increaseUpdateProgress();
-							mNotification.increaseProgress(mUpdates.size());
+									mAppState.increaseUpdateProgress();
+									mNotification.increaseProgress(mUpdates.size());
+								}
+							});
+
+							if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
+								errors.add(upd.getResultError());
+							}
 						}
 					});
-
-					if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
-						errors.add(upd.getResultError());
-					}
 				}
 			} else {
 				mAppState.setUpdateMax(appCount);
@@ -251,6 +259,12 @@ public class UpdaterService
 
 			// Wait until all threads are done
 			executor.shutdown();
+			executorAPKMirror.shutdown();
+
+			while (!executorAPKMirror.isTerminated()) {
+				Thread.sleep(1);
+			}
+
 			while (!executor.isTerminated()) {
 				Thread.sleep(1);
 			}
