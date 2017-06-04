@@ -72,7 +72,11 @@ public class UpdaterAPKMirrorAPI
         for (InstalledApp app : apps) {
             pnames.add(app.getPname());
         }
-        AppExistsRequest json = new AppExistsRequest(pnames);
+
+        AppExistsRequest json = new AppExistsRequest(
+            pnames,
+            new UpdaterOptions(context).skipExperimental() ? AppExistsRequest.excludeExperimental() : null
+        );
 
         // Build the OkHttp request
         RequestBody body = RequestBody.create(JSON, new Gson().toJson(json));
