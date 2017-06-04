@@ -58,4 +58,8 @@
     <string name="update_check_failed_no_wifi">Échec de la recherche de MAJ: Aucune connexion Wi-Fi</string>
     <string name="action_ignore_app">Ignorer</string>
     <string name="action_unignore_app">Ne plus ignorer</string>
+    <string name="preferences_general_skip_minapi_summary">*This will try to exclude apps that are not compatible with your Android version. Only works with APKMirror.*</string>
+    <string name="preferences_general_skip_minapi_title">*Exclude incompatible API level*</string>
+    <string name="preferences_general_skip_architecture_summary">*This will try to exclude apps that are not compatible with your architecture. Only works with APKMIrror.*</string>
+    <string name="preferences_general_skip_architecture_title">*Exclude other architectures*</string>
 </resources>
