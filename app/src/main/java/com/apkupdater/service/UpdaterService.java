@@ -1,4 +1,5 @@
 package com.apkupdater.service;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.IntentService;
 import android.content.Context;
@@ -22,6 +23,7 @@ import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
 import com.apkupdater.updater.UpdaterUptodown;
 import com.apkupdater.util.AlarmUtil;
+import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
@@ -190,69 +192,62 @@ public class UpdaterService
 				if (options.getIgnoreList().contains(app.getPname())) {
 					continue;
 				}
-				/*
-				if (options.useAPKMirror()) {
-					appCount++;
-					updateSource(executor, "APKMirror", app, errors);
-				}
-				*/
+
 				if (options.useUptodown()) {
 					appCount++;
 					updateSource(executor, "Uptodown", app, errors);
 				}
+
 				if (options.useAPKPure()) {
 					appCount++;
 					updateSource(executor, "APKPure", app, errors);
 				}
 			}
 
-            if (options.useAPKMirror()) {
-			    // Remove ignored apps
-                List<InstalledApp> apps = new ArrayList<>();
-                for (InstalledApp app : installedApps) {
-                    if (options.getIgnoreList().contains(app.getPname())) {
-                        continue;
-                    } else {
-                        apps.add(app);
-                    }
-                }
+			if (options.useAPKMirror()) {
+				// Remove ignored apps
+				List<InstalledApp> apps = new ArrayList<>();
+				for (InstalledApp app : installedApps) {
+					if (options.getIgnoreList().contains(app.getPname())) {
+						continue;
+					} else {
+						apps.add(app);
+					}
+				}
 
-                // Split in batches of 100 and process
-                for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
-                    mContext = this;
-                    appCount += batch.size();
-                    executor.execute(new Runnable() {
-                        @Override
-                        public void run() {
+				appCount += apps.size();
+				mAppState.setUpdateMax(appCount);
+				mNotification.setMaxApps(appCount);
+				mBus.post(new UpdateStartEvent(appCount));
 
-                            UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, batch);
+				// Split in batches of 100 and process
+				for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
+					mContext = this;
 
-                            if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
-                                List<Update> us = upd.getUpdates();
-                                for (Update u : us) {
-                                    mUpdates.add(u);
-                                    mBus.post(new UpdateProgressEvent(u));
-                                }
-                            } else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
-                                errors.add(upd.getResultError());
-                                mBus.post(new UpdateProgressEvent(null));
-                            }
+					UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, batch, new GenericCallback<Update>() {
+						@Override
+						public void onResult(Update u) {
+							if (u != null) {
+								mUpdates.add(u);
+								mBus.post(new UpdateProgressEvent(u));
+							} else {
+								mBus.post(new UpdateProgressEvent(null));
+							}
 
-                            for (int i = 0; i < batch.size(); ++i) {
-                                mAppState.increaseUpdateProgress();
-                            }
-                            mNotification.increaseProgress(mUpdates.size());
-                        }
-                    });
-                }
-            }
+							mAppState.increaseUpdateProgress();
+							mNotification.increaseProgress(mUpdates.size());
+						}
+					});
 
-			// Save number to state
-			mAppState.setUpdateMax(appCount);
-			mNotification.setMaxApps(appCount);
-
-			// Send start event
-			mBus.post(new UpdateStartEvent(appCount));
+					if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
+						errors.add(upd.getResultError());
+					}
+				}
+			} else {
+				mAppState.setUpdateMax(appCount);
+				mNotification.setMaxApps(appCount);
+				mBus.post(new UpdateStartEvent(appCount));
+			}
 
 			// Wait until all threads are done
 			executor.shutdown();
