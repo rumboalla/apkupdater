@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">APKUpdater</string>
-    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater es una herramienta que simplifica el proceso de encontrar actualizaciones para tus aplicaciones instaladas. Te proporcionará funcionalidad similar a una tienda de aplicaciones sin tener que instalar el spyware asociado que viene con ella. Esta es una aplicación muy útil para aquellos que quieren ejecutar Android sin una tienda de aplicaciones.</p><p>Características:</p><ul><li>Consigue actualizaciones desde múltiples origenes</li><li>Programa comprobaciones dn segundo plano</li><li>Soporta Android 2.3 a 7.1</li><li>Lista de aplicaciones ignoradas para no comprobar actualizaciones</li><li>Material design moderno  con soporte multi-tema</li><li>Mostrar notificaciones cuando se dncuentran actualizaciones</li></ul><p>Librerias usadas:</p><ul><li><a href="http://androidannotations.org">AndroidAnnotations</a></li><li><a href="http://jsoup.org">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li></ul><p>Origen de actualizaciones:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licenciado bajo la <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
+    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater es una herramienta que simplifica el proceso de encontrar actualizaciones para tus aplicaciones instaladas. Te proporcionará funcionalidad similar a una tienda de aplicaciones sin tener que instalar el spyware asociado que viene con ella. Esta es una aplicación muy útil para aquellos que quieren ejecutar Android sin una tienda de aplicaciones.</p><p>Características:</p><ul><li>Consigue actualizaciones desde múltiples orígenes</li><li>Programa comprobaciones dn segundo plano</li><li>Soporta Android 2.3 a 7.1</li><li>Lista de aplicaciones ignoradas para no comprobar actualizaciones</li><li>Material design moderno  con soporte multi-tema</li><li>Mostrar notificaciones cuando se dncuentran actualizaciones</li></ul><p>Librerias usadas:</p><ul><li><a href="http://androidannotations.org">AndroidAnnotations</a></li><li><a href="http://jsoup.org">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li></ul><p>Origen de actualizaciones:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licenciado bajo la <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
     <string name="action_settings">Ajustes</string>
     <string name="action_log">Registro</string>
     <string name="action_check_for_updates">Comprobar actualizaciones</string>
@@ -38,7 +38,7 @@
     <string name="preferences_general_use_uptodown_title">Actualizaciones desde Uptodown</string>
     <string name="preferences_general_use_uptodown_summary">Esto comprobará actualizaciones en Uptodown. Lento, necesita varias solicitudes.</string>
     <string name="preferences_general_use_apkpure_title">Actualizaciones desde APKPure</string>
-    <string name="preferences_general_use_apkpure_summary">Esto comprobará actualizaciones en APKPure.com. Necesita 2 solicitudes por aplicación, asi que es lento.</string>
+    <string name="preferences_general_use_apkpure_summary">Esto comprobará actualizaciones en APKPure.com. Necesita 2 solicitudes por aplicación, así que es lento.</string>
     <string name="preferences_general_wifi_only_title">Sólo Wi-Fi</string>
     <string name="preferences_general_wifi_only_summary">Sólo comprobar actualizaciones cuando estés conectado a una red Wi-Fi.</string>
     <string name="preferences_general_update_hour_title">Hora de actualización</string>
@@ -58,5 +58,9 @@
     <string name="update_check_failed_no_wifi">Error comprobando actualizaciones: sin Wi-Fi.</string>
     <string name="action_ignore_app">IGNORAR</string>
     <string name="action_unignore_app">NO IGNORAR</string>
+    <string name="preferences_general_skip_minapi_summary">*This will try to exclude apps that are not compatible with your Android version. Only works with APKMirror.*</string>
+   <string name="preferences_general_skip_minapi_title">*Exclude incompatible API level*</string>
+   <string name="preferences_general_skip_architecture_summary">*This will try to exclude apps that are not compatible with your architecture. Only works with APKMIrror.*</string>
+   <string name="preferences_general_skip_architecture_title">*Exclude other architectures*</string>
 </resources>
 

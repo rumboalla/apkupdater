@@ -56,5 +56,11 @@
     <string name="content_description_app_icon">App Icon</string>
     <string name="update_check_failed_no_internet">Falha ao verificar actualizações: Nenhuma ligação à Internet.</string>
     <string name="update_check_failed_no_wifi">Falha na verificação de atualizações: Sem Wifi.</string>
+    <string name="action_ignore_app">*IGNORE*</string>
+    <string name="action_unignore_app">*UNIGNORE*</string>
+    <string name="preferences_general_skip_minapi_summary">*This will try to exclude apps that are not compatible with your Android version. Only works with APKMirror.*</string>
+    <string name="preferences_general_skip_minapi_title">*Exclude incompatible API level*</string>
+    <string name="preferences_general_skip_architecture_summary">*This will try to exclude apps that are not compatible with your architecture. Only works with APKMIrror.*</string>
+    <string name="preferences_general_skip_architecture_title">*Exclude other architectures*</string>
 </resources>
 
