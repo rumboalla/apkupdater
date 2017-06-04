@@ -261,11 +261,7 @@ public class UpdaterService
 			executor.shutdown();
 			executorAPKMirror.shutdown();
 
-			while (!executorAPKMirror.isTerminated()) {
-				Thread.sleep(1);
-			}
-
-			while (!executor.isTerminated()) {
+			while (!executorAPKMirror.isTerminated() || !executor.isTerminated()) {
 				Thread.sleep(1);
 			}
 

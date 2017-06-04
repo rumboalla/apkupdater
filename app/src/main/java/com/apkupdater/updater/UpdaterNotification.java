@@ -77,10 +77,11 @@ public class UpdaterNotification
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
-		
+
+		mNotificationManager.cancelAll();
+
 		// Check if we should do notifications
 		if (!doNotification(numberOfUpdates)) {
-			mNotificationManager.cancelAll();
 			return;
 		}
 

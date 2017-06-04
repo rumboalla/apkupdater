@@ -120,16 +120,17 @@ public class UpdaterAPKMirrorAPI
             boolean skipArchitecture = options.skipArchitecture();
             boolean skipMinapi = options.skipMinapi();
 
+            for (InstalledApp app : mApps) {
             // Check the response data
-            for (AppExistsResponseData data : r.getData()) {
+                AppExistsResponseData data = getData(r, app.getPname());
+
                 // If no apk, check next data
-                if (data.getApks() == null) {
+                if (data == null || data.getApks() == null) {
                     continue;
                 }
 
                 // Check all apks
                 for (AppExistsResponseApk apk : data.getApks()) {
-                    InstalledApp app = getInstalledApp(data.getPname());
                     if (app != null && Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
                         // Check if app is beta and if we should skip it
                         boolean isBeta = VersionUtil.isExperimental(data.getRelease().getVersion());
@@ -176,6 +177,20 @@ public class UpdaterAPKMirrorAPI
         for (InstalledApp app : mApps) {
             if (app.getPname().equals(pname)) {
                 return app;
+            }
+        }
+        return null;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private AppExistsResponseData getData(
+        AppExistsResponse response,
+        String pname
+    ) {
+        for (AppExistsResponseData data : response.getData()) {
+            if (data.getPname().equals(pname)) {
+                return data;
             }
         }
         return null;
