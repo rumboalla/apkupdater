@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -121,7 +123,7 @@ public class UpdaterAPKMirrorAPI
             boolean skipMinapi = options.skipMinapi();
 
             for (InstalledApp app : mApps) {
-            // Check the response data
+                // Check the response data
                 AppExistsResponseData data = getData(r, app.getPname());
 
                 // If no apk, check next data
@@ -129,23 +131,37 @@ public class UpdaterAPKMirrorAPI
                     continue;
                 }
 
+                boolean isBeta = VersionUtil.isExperimental(data.getRelease().getVersion());
+
                 // Check all apks
+                List<AppExistsResponseApk> fapks = new ArrayList<>();
                 for (AppExistsResponseApk apk : data.getApks()) {
-                    if (app != null && Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
-                        // Check if app is beta and if we should skip it
-                        boolean isBeta = VersionUtil.isExperimental(data.getRelease().getVersion());
-                        if (isBeta && skipExperimental) {
-                            continue;
-                        }
+                    if (isBeta && skipExperimental) {
+                        continue;
+                    }
 
-                        if (skipArchitecture && apk.getArches() != null && VersionUtil.skipArchitecture(apk.getArches())) {
-                            continue;
-                        }
+                    if (skipArchitecture && apk.getArches() != null && VersionUtil.skipArchitecture(apk.getArches())) {
+                        continue;
+                    }
 
-                        if (skipMinapi && apk.getMinapi() != null && VersionUtil.skipMinapi(apk.getMinapi())) {
-                            continue;
-                        }
+                    if (skipMinapi && apk.getMinapi() != null && VersionUtil.skipMinapi(apk.getMinapi())) {
+                        continue;
+                    }
 
+                    fapks.add(apk);
+                }
+
+                if (!fapks.isEmpty()) {
+                    // Sort them by versionCode. TODO: Maybe improve this taking into account dpi
+                    Collections.sort(fapks, new Comparator<AppExistsResponseApk>() {
+                        @Override
+                        public int compare(AppExistsResponseApk o1, AppExistsResponseApk o2) {
+                            return o1.getVersionCode().compareTo(o2.getVersionCode());
+                        }
+                    });
+
+                    // Only compare with first one.
+                    if (Integer.valueOf(fapks.get(0).getVersionCode()) > app.getVersionCode()) {
                         // Add the update
                         Update u = new Update(
                             app,
@@ -156,11 +172,11 @@ public class UpdaterAPKMirrorAPI
 
                         mUpdates.add(u);
                         mUpdateCallback.onResult(u);
-                        break;
+                        continue;
                     }
-
-                    mUpdateCallback.onResult(null);
                 }
+
+                mUpdateCallback.onResult(null);
             }
 
         } catch (Exception e) {
