@@ -19,6 +19,7 @@ public class Update
 	private String mUrl;
 	private boolean mIsBeta;
 	private String mCookie;
+	private int mNewVersionCode;
 	private int mVersionCode;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,10 +35,11 @@ public class Update
 		setName(app.getName());
 		setPname(app.getPname());
 		setVersion(app.getVersion());
+        setVersionCode(app.getVersionCode());
 		setUrl(url);
 		setNewVersion(version);
 		setIsBeta(isBeta);
-		setVersionCode(versionCode);
+		setNewVersionCode(versionCode);
 		setCookie(cookie);
 	}
 
@@ -140,6 +142,18 @@ public class Update
 
     public void setVersionCode(int versionCode) {
         mVersionCode = versionCode;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public int getNewVersionCode() {
+        return mNewVersionCode;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void setNewVersionCode(int versionCode) {
+        mNewVersionCode = versionCode;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
