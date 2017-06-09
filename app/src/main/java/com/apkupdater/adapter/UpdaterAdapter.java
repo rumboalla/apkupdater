@@ -86,7 +86,7 @@ public class UpdaterAdapter
 			// Build version string with both old and new version
 			String version = update.getVersion();
 			if (update.getNewVersion() != null && !update.getNewVersion().isEmpty()) {
-				version += " -> " + update.getNewVersion();
+				version += "(" + update.getVersionCode() + ") -> " + update.getNewVersion() + " (" + update.getNewVersionCode()  + ")";
 			}
 
 			mVersion.setText(version);
@@ -115,7 +115,7 @@ public class UpdaterAdapter
                         if (Build.VERSION.SDK_INT > 10) {
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                         }
-                        request.setTitle(update.getPname() + " " + update.getVersion());
+                        request.setTitle(update.getPname() + " " + update.getNewVersion());
                         request.addRequestHeader("Cookie", update.getCookie());
                         dm.enqueue(request);
                     } else {
