@@ -71,7 +71,7 @@ public class UpdaterGooglePlay
         mLock.lock();
         int c = 0;
         while (mApi == null && c < 10) {
-            mApi = buildApi();
+			mApi = buildApi();
             c++;
         }
         mLock.unlock();
@@ -96,9 +96,11 @@ public class UpdaterGooglePlay
         try {
             GooglePlayAPI api = initApi();
             if (api == null) {
-                mError = new Throwable("Unable to get GooglePlayApi.");
+                mError = addCommonInfoToError(new Throwable("Unable to get GooglePlayApi."));
                 return UpdaterStatus.STATUS_ERROR;
             }
+
+			Thread.sleep(1000);	// Delay to avoid 429
 
             DetailsResponse response = api.details(pname);
             DocV2 details = response.getDocV2();
@@ -108,19 +110,19 @@ public class UpdaterGooglePlay
 
             if (versionCode > Integer.valueOf(mCurrentVersion)) {
                 if (details.getOfferCount() == 0) {
-                    mError = new Throwable("No offers found.");
+                    mError = addCommonInfoToError(new Throwable("No offers found."));
                     return UpdaterStatus.STATUS_ERROR;
                 }
 
                 PurchaseStatusResponse r = api.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
                 if (r.getStatus() != 1) {
-                    mError = new Throwable("Error getting app. App could be paid.");
+                    mError = addCommonInfoToError(new Throwable("Error getting app. App could be paid."));
                     return UpdaterStatus.STATUS_ERROR;
                 }
 
                 AndroidAppDeliveryData d = r.getAppDeliveryData();
                 if (d.getDownloadAuthCookieCount() == 0) {
-                    mError = new Throwable("Unable to get download cookie.");
+                    mError = addCommonInfoToError(new Throwable("Unable to get download cookie."));
                     return UpdaterStatus.STATUS_ERROR;
                 }
 
@@ -133,9 +135,14 @@ public class UpdaterGooglePlay
 
             return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
         } catch (GooglePlayException ex) {
-            if (ex.getCode() == 404) {
+            if (ex.getCode() == 404 || ex.getCode() == 403) {
                 return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
             }
+
+            if (ex.getCode() == 429) {
+				mError = addCommonInfoToError(new Throwable("Error 429. Too many requests, try lowering the number of threads."));
+				return UpdaterStatus.STATUS_ERROR;
+			}
 
             mError = addCommonInfoToError(ex);
             return UpdaterStatus.STATUS_ERROR;
