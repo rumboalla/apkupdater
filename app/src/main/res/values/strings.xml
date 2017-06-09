@@ -50,6 +50,9 @@
     <string name="preferences_general_use_apkmirror_title">Updates from APKMirror</string>
     <string name="preferences_general_use_apkmirror_summary">This will check for updates on APKMirror.</string>
     <string name="preferences_general_use_apkmirror_key" translatable="false">preferences_general_use_apkmirror_key</string>
+    <string name="preferences_general_use_play_title">Updates from Google Play</string>
+    <string name="preferences_general_use_play_summary">This will check for updates on Google Play.</string>
+    <string name="preferences_general_use_play_key" translatable="false">preferences_general_use_play_key</string>
     <string name="preferences_general_use_uptodown_title">Updates from Uptodown</string>
     <string name="preferences_general_use_uptodown_summary">This will check for updates on Uptodown. Slow, needs many requests.</string>
     <string name="preferences_general_use_uptodown_key" translatable="false">preferences_general_use_uptodown_key</string>
@@ -85,6 +88,7 @@
     <string name="action_apkpure" translatable="false">APKPURE</string>
     <string name="action_uptodown" translatable="false">UPTODOWN</string>
     <string name="action_evozi" translatable="false">EVOZI</string>
+    <string name="action_play" translatable="false">PLAY</string>
     <string name="update_hour_zero" translatable="false">00:00</string>
     <string name="update_hour_one" translatable="false">01:00</string>
     <string name="update_hour_two" translatable="false">02:00</string>

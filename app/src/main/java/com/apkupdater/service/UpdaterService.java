@@ -15,9 +15,9 @@ import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
 import com.apkupdater.updater.IUpdater;
-import com.apkupdater.updater.UpdaterAPKMirror;
 import com.apkupdater.updater.UpdaterAPKMirrorAPI;
 import com.apkupdater.updater.UpdaterAPKPure;
+import com.apkupdater.updater.UpdaterGooglePlay;
 import com.apkupdater.updater.UpdaterNotification;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.updater.UpdaterStatus;
@@ -85,16 +85,15 @@ public class UpdaterService
 	public IUpdater createUpdater(
 		String type,
 		Context context,
-		String s1,
-		String s2
+		InstalledApp app
 	) {
 		switch (type) {
-			case "APKMirror":
-				return new UpdaterAPKMirror(context, s1, s2);
+			case "GooglePlay":
+				return new UpdaterGooglePlay(context, app.getPname(), String.valueOf(app.getVersionCode()));
 			case "APKPure":
-				return new UpdaterAPKPure(context, s1, s2);
+				return new UpdaterAPKPure(context, app.getPname(), app.getVersion());
 			case "Uptodown":
-				return new UpdaterUptodown(context, s1, s2);
+				return new UpdaterUptodown(context, app.getPname(), app.getVersion());
 			default:
 				return null;
 		}
@@ -111,7 +110,7 @@ public class UpdaterService
 		executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				IUpdater upd = createUpdater(type, getBaseContext(), app.getPname(), app.getVersion());
+				IUpdater upd = createUpdater(type, getBaseContext(), app);
 				if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
 					Update u = new Update(app, upd.getResultUrl(), upd.getResultVersion(), upd.isBeta());
 					mUpdates.add(u);
@@ -168,7 +167,7 @@ public class UpdaterService
 			}
 
 			// Check if we have at least one update source
-			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure()) {
+			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure() && !options.useGooglePlay()) {
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_no_sources)));
 				mMutex.unlock();
 				return;
@@ -193,6 +192,11 @@ public class UpdaterService
 					continue;
 				}
 
+                if (options.useGooglePlay()) {
+                    appCount++;
+                    updateSource(executor, "GooglePlay", app, errors);
+                }
+
 				if (options.useUptodown()) {
 					appCount++;
 					updateSource(executor, "Uptodown", app, errors);
@@ -211,9 +215,7 @@ public class UpdaterService
 				// Remove ignored apps
 				List<InstalledApp> apps = new ArrayList<>();
 				for (InstalledApp app : installedApps) {
-					if (options.getIgnoreList().contains(app.getPname())) {
-						continue;
-					} else {
+					if (!options.getIgnoreList().contains(app.getPname())) {
 						apps.add(app);
 					}
 				}

@@ -97,7 +97,9 @@ public class UpdaterAdapter
 				action = mContext.getString(R.string.action_uptodown);
 			} else if (update.getUrl().contains("apkpure.com")) {
 				action = mContext.getString(R.string.action_apkpure);
-			}
+			} else if (update.getUrl().contains("play.google.com")) {
+			    action = mContext.getString(R.string.action_play);
+            }
 			mActionOneButton.setText(action);
 
 			// Action 1 listener
