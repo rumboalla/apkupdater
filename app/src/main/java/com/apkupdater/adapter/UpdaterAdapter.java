@@ -86,7 +86,8 @@ public class UpdaterAdapter
 			// Build version string with both old and new version
 			String version = update.getVersion();
 			if (update.getNewVersion() != null && !update.getNewVersion().isEmpty()) {
-				version += "(" + update.getVersionCode() + ") -> " + update.getNewVersion() + " (" + update.getNewVersionCode()  + ")";
+			    String newCode = update.getNewVersionCode() == 0 ? "?" : String.valueOf(update.getNewVersionCode());
+				version += "(" + update.getVersionCode() + ") -> " + update.getNewVersion() + " (" + newCode  + ")";
 			}
 
 			mVersion.setText(version);
