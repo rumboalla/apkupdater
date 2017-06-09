@@ -2,11 +2,13 @@ package com.apkupdater.adapter;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +19,13 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.model.Update;
-import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtitl;
-import com.apkupdater.view.UpdaterView;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,14 +92,14 @@ public class UpdaterAdapter
 			mVersion.setText(version);
 
 			// Build string for first action
-			String action = "";
+			String action = "Error";
 			if (update.getUrl().contains("apkmirror.com")) {
 				action = mContext.getString(R.string.action_apkmirror);
 			} else if (update.getUrl().contains("uptodown.com")) {
 				action = mContext.getString(R.string.action_uptodown);
 			} else if (update.getUrl().contains("apkpure.com")) {
 				action = mContext.getString(R.string.action_apkpure);
-			} else if (update.getUrl().contains("play.google.com")) {
+			} else if (update.getCookie() != null) {
 			    action = mContext.getString(R.string.action_play);
             }
 			mActionOneButton.setText(action);
@@ -106,8 +108,20 @@ public class UpdaterAdapter
 			mActionOneButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
-					mContext.startActivity(browserIntent);
+				    if (mActionOneButton.getText().equals(mContext.getString(R.string.action_play))) {
+				        // Download and install
+                        DownloadManager dm = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
+                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(update.getUrl()));
+                        if (Build.VERSION.SDK_INT > 10) {
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        }
+                        request.setTitle(update.getPname() + " " + update.getVersion());
+                        request.addRequestHeader("Cookie", update.getCookie());
+                        dm.enqueue(request);
+                    } else {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
+                        mContext.startActivity(browserIntent);
+                    }
 				}
 			});
 

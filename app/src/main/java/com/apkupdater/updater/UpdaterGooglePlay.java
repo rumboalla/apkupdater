@@ -7,6 +7,7 @@ import android.content.Context;
 import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
 import com.apkupdater.util.yalp.OkHttpClientAdapter;
 import com.apkupdater.util.VersionUtil;
+import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.github.yeriomin.playstoreapi.DetailsResponse;
 import com.github.yeriomin.playstoreapi.DeviceInfoProvider;
 import com.github.yeriomin.playstoreapi.DocV2;
@@ -89,12 +90,20 @@ public class UpdaterGooglePlay
 
             DetailsResponse response = mApi.details(pname);
             DocV2 details = response.getDocV2();
-            String v = details.getDetails().getAppDetails().getVersionString();
-            int c = details.getDetails().getAppDetails().getVersionCode();
 
-            if (c > Integer.valueOf(mCurrentVersion)) {
-                mResultUrl = DownloadUrl + pname;
+
+
+
+            String v = details.getDetails().getAppDetails().getVersionString();
+            int versionCode = details.getDetails().getAppDetails().getVersionCode();
+
+            if (versionCode > Integer.valueOf(mCurrentVersion)) {
+                AndroidAppDeliveryData d = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse().getAppDeliveryData();
+
+                mResultUrl = d.getDownloadUrl();
                 mResultVersion = VersionUtil.getStringVersionFromString(v);
+                mResultCookie = d.getDownloadAuthCookie(0).getName() + "=" + d.getDownloadAuthCookie(0).getValue();
+                mResultVersionCode = versionCode;
                 return UpdaterStatus.STATUS_UPDATE_FOUND;
             }
 
