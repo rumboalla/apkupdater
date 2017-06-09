@@ -96,6 +96,12 @@
         android:key="pref_key_sources_settings"
     >
         <CheckBoxPreference
+            android:key="@string/preferences_general_use_play_key"
+            android:summary="@string/preferences_general_use_play_summary"
+            android:title="@string/preferences_general_use_play_title"
+            android:defaultValue="true"
+        />
+        <CheckBoxPreference
             android:key="@string/preferences_general_use_apkmirror_key"
             android:summary="@string/preferences_general_use_apkmirror_summary"
             android:title="@string/preferences_general_use_apkmirror_title"
