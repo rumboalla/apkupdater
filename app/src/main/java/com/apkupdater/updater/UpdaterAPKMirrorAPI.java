@@ -167,7 +167,9 @@ public class UpdaterAPKMirrorAPI
                             app,
                             DownloadUrl + data.getRelease().getLink(),
                             data.getRelease().getVersion(),
-                            isBeta
+                            isBeta,
+                            null,
+                            Integer.valueOf(fapks.get(0).getVersionCode())
                         );
 
                         mUpdates.add(u);
