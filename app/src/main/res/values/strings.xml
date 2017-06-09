@@ -88,7 +88,7 @@
     <string name="action_apkpure" translatable="false">APKPURE</string>
     <string name="action_uptodown" translatable="false">UPTODOWN</string>
     <string name="action_evozi" translatable="false">EVOZI</string>
-    <string name="action_play" translatable="false">PLAY</string>
+    <string name="action_play">DOWNLOAD</string>
     <string name="update_hour_zero" translatable="false">00:00</string>
     <string name="update_hour_one" translatable="false">01:00</string>
     <string name="update_hour_two" translatable="false">02:00</string>
