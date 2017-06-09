@@ -25,7 +25,6 @@ public class UpdaterGooglePlay
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	static final private String Type = "GooglePlay";
-    static final private String DownloadUrl = "https://play.google.com/store/apps/details?id=";
 	private static GooglePlayAPI mApi = null;
     private static ReentrantLock mLock = new ReentrantLock();
 
@@ -41,9 +40,8 @@ public class UpdaterGooglePlay
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private GooglePlayAPI initApi() {
+    private GooglePlayAPI buildApi() {
 	    try {
-	        Thread.sleep(100);
             DeviceInfoProvider deviceInfoProvider = new NativeDeviceInfoProvider();
             ((NativeDeviceInfoProvider) deviceInfoProvider).setContext(mContext);
             ((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
@@ -65,7 +63,21 @@ public class UpdaterGooglePlay
         }
     }
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private GooglePlayAPI initApi(
+    ) {
+        mLock.lock();
+        int c = 0;
+        while (mApi == null && c < 10) {
+            mApi = buildApi();
+            c++;
+        }
+        mLock.unlock();
+        return mApi;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	protected String getUrl(
@@ -81,24 +93,20 @@ public class UpdaterGooglePlay
 		String pname
 	) {
         try {
-            // TODO: Do this crap properly
-            mLock.lock();
-            while (mApi == null) {
-                mApi = initApi();
+            GooglePlayAPI api = initApi();
+            if (api == null) {
+                mError = new Throwable("Unable to get GooglePlayApi");
+                return UpdaterStatus.STATUS_ERROR;
             }
-            mLock.unlock();
 
-            DetailsResponse response = mApi.details(pname);
+            DetailsResponse response = api.details(pname);
             DocV2 details = response.getDocV2();
-
-
-
 
             String v = details.getDetails().getAppDetails().getVersionString();
             int versionCode = details.getDetails().getAppDetails().getVersionCode();
 
             if (versionCode > Integer.valueOf(mCurrentVersion)) {
-                AndroidAppDeliveryData d = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse().getAppDeliveryData();
+                AndroidAppDeliveryData d = api.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse().getAppDeliveryData();
 
                 mResultUrl = d.getDownloadUrl();
                 mResultVersion = VersionUtil.getStringVersionFromString(v);
