@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.util.DownloadUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -110,18 +111,14 @@ public class UpdaterAdapter
 				@Override
 				public void onClick(View view) {
 				    if (mActionOneButton.getText().equals(mContext.getString(R.string.action_play))) {
-				        // Download and install
-                        DownloadManager dm = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
-                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(update.getUrl()));
-                        if (Build.VERSION.SDK_INT > 10) {
-                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        }
-                        request.setTitle(update.getPname() + " " + update.getNewVersion());
-                        request.addRequestHeader("Cookie", update.getCookie());
-                        dm.enqueue(request);
+				        DownloadUtil.downloadFile(
+				            mContext,
+                            update.getUrl(),
+                            update.getCookie(),
+                            update.getPname() + " " + update.getNewVersion()
+                        );
                     } else {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(update.getUrl()));
-                        mContext.startActivity(browserIntent);
+                        DownloadUtil.LaunchBrowser(mContext, update.getUrl());
                     }
 				}
 			});
