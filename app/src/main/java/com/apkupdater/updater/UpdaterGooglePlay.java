@@ -13,6 +13,7 @@ import com.github.yeriomin.playstoreapi.DeviceInfoProvider;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
+import com.github.yeriomin.playstoreapi.PurchaseStatusResponse;
 
 import java.util.Locale;
 import java.util.concurrent.locks.ReentrantLock;
@@ -95,7 +96,7 @@ public class UpdaterGooglePlay
         try {
             GooglePlayAPI api = initApi();
             if (api == null) {
-                mError = new Throwable("Unable to get GooglePlayApi");
+                mError = new Throwable("Unable to get GooglePlayApi.");
                 return UpdaterStatus.STATUS_ERROR;
             }
 
@@ -106,7 +107,22 @@ public class UpdaterGooglePlay
             int versionCode = details.getDetails().getAppDetails().getVersionCode();
 
             if (versionCode > Integer.valueOf(mCurrentVersion)) {
-                AndroidAppDeliveryData d = api.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse().getAppDeliveryData();
+                if (details.getOfferCount() == 0) {
+                    mError = new Throwable("No offers found.");
+                    return UpdaterStatus.STATUS_ERROR;
+                }
+
+                PurchaseStatusResponse r = api.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
+                if (r.getStatus() != 1) {
+                    mError = new Throwable("Error getting app. App could be paid.");
+                    return UpdaterStatus.STATUS_ERROR;
+                }
+
+                AndroidAppDeliveryData d = r.getAppDeliveryData();
+                if (d.getDownloadAuthCookieCount() == 0) {
+                    mError = new Throwable("Unable to get download cookie.");
+                    return UpdaterStatus.STATUS_ERROR;
+                }
 
                 mResultUrl = d.getDownloadUrl();
                 mResultVersion = VersionUtil.getStringVersionFromString(v);
