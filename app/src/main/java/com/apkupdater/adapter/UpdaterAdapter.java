@@ -84,7 +84,7 @@ public class UpdaterAdapter
 			String version = update.getVersion();
 			if (update.getNewVersion() != null && !update.getNewVersion().isEmpty()) {
 			    String newCode = update.getNewVersionCode() == 0 ? "?" : String.valueOf(update.getNewVersionCode());
-				version += "(" + update.getVersionCode() + ") -> " + update.getNewVersion() + " (" + newCode  + ")";
+				version += " (" + update.getVersionCode() + ") -> " + update.getNewVersion() + " (" + newCode  + ")";
 			}
 
 			mVersion.setText(version);
