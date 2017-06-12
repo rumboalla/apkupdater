@@ -182,6 +182,7 @@ public class UpdaterService
 
 			// Create an executor with N threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(options.getNumThreads());
+            ExecutorService executorPlay = Executors.newFixedThreadPool(1);
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates
@@ -194,7 +195,7 @@ public class UpdaterService
 
                 if (options.useGooglePlay()) {
                     appCount++;
-                    updateSource(executor, "GooglePlay", app, errors);
+                    updateSource(executorPlay, "GooglePlay", app, errors);
                 }
 
 				if (options.useUptodown()) {
@@ -262,8 +263,9 @@ public class UpdaterService
 			// Wait until all threads are done
 			executor.shutdown();
 			executorAPKMirror.shutdown();
+			executorPlay.shutdown();
 
-			while (!executorAPKMirror.isTerminated() || !executor.isTerminated()) {
+			while (!executorAPKMirror.isTerminated() || !executor.isTerminated() || !executorPlay.isTerminated()) {
 				Thread.sleep(1);
 			}
 
