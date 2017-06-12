@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/installed_app_version"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     tools:text="Subtitle 2"
                 />
                 <TextView
