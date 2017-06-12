@@ -2,13 +2,11 @@ package com.apkupdater.adapter;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +23,6 @@ import com.apkupdater.util.DownloadUtil;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static android.content.Context.DOWNLOAD_SERVICE;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,45 +90,55 @@ public class UpdaterAdapter
 			mVersion.setText(version);
 
 			// Build string for first action
-			String action = "Error";
+			String action = "";
+			String action2 = "";
+
 			if (update.getUrl().contains("apkmirror.com")) {
 				action = mContext.getString(R.string.action_apkmirror);
+				action2 = mContext.getString(R.string.action_evozi);
 			} else if (update.getUrl().contains("uptodown.com")) {
 				action = mContext.getString(R.string.action_uptodown);
+                action2 = mContext.getString(R.string.action_evozi);
 			} else if (update.getUrl().contains("apkpure.com")) {
 				action = mContext.getString(R.string.action_apkpure);
+                action2 = mContext.getString(R.string.action_evozi);
 			} else if (update.getCookie() != null) {
 			    action = mContext.getString(R.string.action_play);
             }
 			mActionOneButton.setText(action);
+            mActionTwoButton.setText(action2);
 
 			// Action 1 listener
-			mActionOneButton.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-				    if (mActionOneButton.getText().equals(mContext.getString(R.string.action_play))) {
-				        DownloadUtil.downloadFile(
-				            mContext,
-                            update.getUrl(),
-                            update.getCookie(),
-                            update.getPname() + " " + update.getNewVersion()
-                        );
-                    } else {
-                        DownloadUtil.LaunchBrowser(mContext, update.getUrl());
+            if (!action.isEmpty()) {
+                mActionOneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mActionOneButton.getText().equals(mContext.getString(R.string.action_play))) {
+                            DownloadUtil.downloadFile(
+                                mContext,
+                                update.getUrl(),
+                                update.getCookie(),
+                                update.getPname() + " " + update.getNewVersion()
+                            );
+                        } else {
+                            DownloadUtil.LaunchBrowser(mContext, update.getUrl());
+                        }
                     }
-				}
-			});
+                });
+            }
 
 			// Action2 evozi listener
-			mActionTwoButton.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-						"https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
-					));
-					mContext.startActivity(browserIntent);
-				}
-			});
+            if (!action2.isEmpty()) {
+                mActionTwoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+                            "https://apps.evozi.com/apk-downloader/?id=" + update.getPname()
+                        ));
+                        mContext.startActivity(browserIntent);
+                    }
+                });
+            }
 
 			// Icon
 			try {

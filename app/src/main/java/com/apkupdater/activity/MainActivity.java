@@ -2,7 +2,9 @@ package com.apkupdater.activity;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -18,8 +20,10 @@ import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
+import com.apkupdater.receiver.DownloadReceiver;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
+import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.ThemeUtil;
@@ -54,6 +58,8 @@ public class MainActivity
 	SettingsFragment_ mSettingsFragment;
 	LogFragment_ mLogFragment;
 	MainFragment_ mMainFragment;
+
+	DownloadReceiver downloadReceiver;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -116,6 +122,11 @@ public class MainActivity
 				}
 			}, 1);
 		}
+
+		// Download receiver
+        DownloadUtil.deleteDownloadedFiles(this);
+        downloadReceiver = new DownloadReceiver();
+        registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,6 +250,7 @@ public class MainActivity
 	protected void onDestroy() {
 		super.onDestroy();
 		mBus.unregister(this);
+		unregisterReceiver(downloadReceiver);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

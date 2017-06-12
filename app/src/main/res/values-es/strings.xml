@@ -64,6 +64,6 @@
     <string name="preferences_general_skip_architecture_title">*Exclude other architectures*</string>
     <string name="preferences_general_use_play_title">*Updates from Google Play*</string>
     <string name="preferences_general_use_play_summary">*This will check for updates on Google Play.*</string>
-    <string name="action_play">*DOWNLOAD*</string>
+    <string name="action_play">*INSTALL*</string>
 </resources>
 

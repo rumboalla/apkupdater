@@ -5,6 +5,7 @@ package com.apkupdater.util;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 
@@ -38,6 +39,24 @@ public class DownloadUtil
         request.setTitle(name);
         request.addRequestHeader("Cookie", cookie);
         dm.enqueue(request);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static public void deleteDownloadedFiles(
+        Context context
+    ) {
+        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Query query = new DownloadManager.Query();
+
+        Cursor cursor = manager.query(query);
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
+            manager.remove(id);
+        }
+
+        cursor.close();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
