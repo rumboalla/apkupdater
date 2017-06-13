@@ -201,18 +201,7 @@ public class UpdaterAdapter
 	) {
 		holder.bind(mUpdates.get(position));
 
-		if (position == 0) {
-		    // Set the other holders margin to 0
-            for (int i = 0; i < getItemCount(); i++) {
-                View v = mView.getChildAt(i);
-                if (v != null) {
-                    UpdateViewHolder h = (UpdateViewHolder) mView.getChildViewHolder(v);
-                    h.setTopMargin(0);
-                }
-
-            }
-
-            // Set current margin
+        if (position == 0) {
 		    holder.setTopMargin(8);
         }
 	}
@@ -232,7 +221,21 @@ public class UpdaterAdapter
 	) {
 		mUpdates.add(update);
 		sort();
-		notifyItemInserted(mUpdates.indexOf(update));
+
+		int index = mUpdates.indexOf(update);
+
+		// If first item, reset margins
+		if (index == 0) {
+            for (int i = 0; i < getItemCount(); i++) {
+                View v = mView.getChildAt(i);
+                if (v != null) {
+                    UpdateViewHolder h = (UpdateViewHolder) mView.getChildViewHolder(v);
+                    h.setTopMargin(0);
+                }
+            }
+        }
+
+		notifyItemInserted(index);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
