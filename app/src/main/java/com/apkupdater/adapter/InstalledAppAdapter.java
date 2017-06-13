@@ -3,16 +3,23 @@ package com.apkupdater.adapter;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.apkupdater.R;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.InstalledAppUtil;
-import com.apkupdater.view.InstalledAppView;
-import com.apkupdater.view.InstalledAppView_;
+import com.apkupdater.util.PixelConversion;
 
 import java.util.List;
 
@@ -27,6 +34,7 @@ public class InstalledAppAdapter
 	private List<InstalledApp> mApps;
 	private Context mContext;
 	private RecyclerView mView;
+    private InstalledAppAdapter mAdapter;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -35,12 +43,17 @@ public class InstalledAppAdapter
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		private InstalledAppView mView;
+		private View mView;
+        private TextView mName;
+        private TextView mPname;
+        private TextView mVersion;
+        private ImageView mIcon;
+        private Button mActionOneButton;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		InstalledAppViewHolder(
-			InstalledAppView view
+			View view
 		) {
 			super(view);
 			mView = view;
@@ -51,10 +64,54 @@ public class InstalledAppAdapter
 		public void bind(
 			InstalledApp app
 		) {
-			mView.bind(app);
+		    // Get views
+            mName = ((TextView) mView.findViewById(R.id.installed_app_name));
+            mPname = ((TextView) mView.findViewById(R.id.installed_app_pname));
+            mVersion = ((TextView) mView.findViewById(R.id.installed_app_version));
+            mIcon = ((ImageView) mView.findViewById(R.id.installed_app_icon));
+            mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
+
+            mName.setText(app.getName());
+            mPname.setText(app.getPname());
+            mVersion.setText(app.getVersion());
+
+            // Make the ignore overlay visible if this app is on the ignore list
+            UpdaterOptions options = new UpdaterOptions(mContext);
+            if (options.getIgnoreList().contains(app.getPname())) {
+                if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
+                    mView.setAlpha(0.50f);
+                } else {
+                    mView.setBackgroundColor(0x55000000);
+                }
+                mActionOneButton.setText(R.string.action_unignore_app);
+            } else {
+                if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
+                    mView.setAlpha(1.0f);
+                } else {
+                    mView.setBackgroundColor(0x00FFFFFF);
+                }
+                mActionOneButton.setText(R.string.action_ignore_app);
+            }
+
+            try {
+                Drawable icon = mContext.getPackageManager().getApplicationIcon(app.getPname());
+                mIcon.setImageDrawable(icon);
+            } catch (PackageManager.NameNotFoundException ignored) {
+            }
+
+            mActionOneButton.setOnClickListener(mAdapter);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void addTopMargin(
+            int margin
+        ) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
+            params.topMargin = (int) PixelConversion.convertDpToPixel(margin, mContext);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +122,7 @@ public class InstalledAppAdapter
 		List<InstalledApp> apps
 	) {
 		mContext = context;
+		mAdapter = this;
 		mView = view;
 		AnimationUtil.startListAnimation(mView);
 		mApps = InstalledAppUtil.sort(mContext, apps);
@@ -77,25 +135,19 @@ public class InstalledAppAdapter
 		ViewGroup parent,
 		int viewType
 	) {
-		InstalledAppView v = InstalledAppView_.build(parent.getContext());
-		v.setLayoutParams(new RecyclerView.LayoutParams(
-			ViewGroup.LayoutParams.MATCH_PARENT,
-			ViewGroup.LayoutParams.WRAP_CONTENT
-		));
-		v.setActionOneButtonListener(this);
-		//v.setOnLongClickListener(this);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.installed_app_item, parent, false);
 		return new InstalledAppViewHolder(v);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private InstalledAppView getInstalledAppViewParent(
+	private CardView getInstalledAppViewParent(
 		View v
 	) {
 		while (v != null) {
 			v = (View) v.getParent();
-			if (v instanceof InstalledAppView) {
-				return (InstalledAppView) v;
+			if (v instanceof CardView) {
+				return (CardView) v;
 			}
 		}
 		return null;
@@ -112,7 +164,7 @@ public class InstalledAppAdapter
 		List<String> ignore_list = options.getIgnoreList();
 
 		// Get the InstalledAppView parent
-		InstalledAppView parent = getInstalledAppViewParent(view);
+        CardView parent = getInstalledAppViewParent(view);
 		if (parent == null) {
 			return;
 		}
@@ -143,6 +195,10 @@ public class InstalledAppAdapter
 		int position
 	) {
 		holder.bind(mApps.get(position));
+
+        if (position == 0) {
+            holder.addTopMargin(8);
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

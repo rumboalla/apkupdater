@@ -19,6 +19,7 @@ import com.apkupdater.R;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.ColorUtitl;
 import com.apkupdater.util.DownloadUtil;
+import com.apkupdater.util.PixelConversion;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -155,6 +156,16 @@ public class UpdaterAdapter
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void addTopMargin(
+            int margin
+        ) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
+            params.topMargin = (int) PixelConversion.convertDpToPixel(margin, mContext);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,12 +190,6 @@ public class UpdaterAdapter
 		int viewType
 	) {
 		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.updater_item, parent, false);
-		/*
-		v.setLayoutParams(new RecyclerView.LayoutParams(
-			ViewGroup.LayoutParams.MATCH_PARENT,
-			ViewGroup.LayoutParams.WRAP_CONTENT
-		));
-		*/
 		return new UpdateViewHolder(v);
 	}
 
@@ -196,6 +201,10 @@ public class UpdaterAdapter
 		int position
 	) {
 		holder.bind(mUpdates.get(position));
+
+		if (position == 0) {
+		    holder.addTopMargin(8);
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
