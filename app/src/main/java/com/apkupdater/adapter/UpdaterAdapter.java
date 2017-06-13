@@ -157,7 +157,7 @@ public class UpdaterAdapter
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void addTopMargin(
+        private void setTopMargin(
             int margin
         ) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
@@ -177,7 +177,6 @@ public class UpdaterAdapter
 	) {
 		mContext = context;
 		mView = view;
-
 		mUpdates = apps;
 		sort();
 	}
@@ -203,9 +202,21 @@ public class UpdaterAdapter
 		holder.bind(mUpdates.get(position));
 
 		if (position == 0) {
-		    holder.addTopMargin(8);
+		    // Set the other holders margin to 0
+            for (int i = 0; i < getItemCount(); i++) {
+                View v = mView.getChildAt(i);
+                if (v != null) {
+                    UpdateViewHolder h = (UpdateViewHolder) mView.getChildViewHolder(v);
+                    h.setTopMargin(0);
+                }
+
+            }
+
+            // Set current margin
+		    holder.setTopMargin(8);
         }
 	}
+
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
