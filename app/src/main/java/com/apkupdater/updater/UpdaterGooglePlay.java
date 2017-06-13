@@ -4,10 +4,16 @@ package com.apkupdater.updater;
 
 import android.content.Context;
 
+import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.Update;
+import com.apkupdater.util.GenericCallback;
+import com.apkupdater.util.PixelConversion;
 import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
 import com.apkupdater.util.yalp.OkHttpClientAdapter;
 import com.apkupdater.util.VersionUtil;
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
+import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
+import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
 import com.github.yeriomin.playstoreapi.DetailsResponse;
 import com.github.yeriomin.playstoreapi.DeviceInfoProvider;
 import com.github.yeriomin.playstoreapi.DocV2;
@@ -15,29 +21,105 @@ import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
 import com.github.yeriomin.playstoreapi.PurchaseStatusResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.locks.ReentrantLock;
+
+import okhttp3.MediaType;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 public class UpdaterGooglePlay
-	extends UpdaterBase
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	static final private String Type = "GooglePlay";
-	private static GooglePlayAPI mApi = null;
+    private static GooglePlayAPI mApi = null;
     private static ReentrantLock mLock = new ReentrantLock();
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private List<InstalledApp> mApps;
+    private Context mContext;
+    private String mError;
+    private UpdaterStatus mResultCode = UpdaterStatus.STATUS_UPDATE_FOUND;
+    private List<Update> mUpdates = new ArrayList<>();
 
-	public UpdaterGooglePlay(
-		Context context,
-		String pname,
-	    String cversion
-	) {
-		super(context, pname, cversion, Type);
-	}
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public UpdaterGooglePlay(
+        Context context,
+        List<InstalledApp> apps
+    ) {
+        try {
+            // Store vars
+            mApps = apps;
+            mContext = context;
+            mApi = initApi();
+
+            if (mApi == null) {
+                mError = "Unable to get GooglePlayApi";
+                mResultCode = UpdaterStatus.STATUS_ERROR;
+                return;
+            }
+
+            List<String> pnames = new ArrayList<>();
+            for (InstalledApp app : apps) {
+                pnames.add(app.getPname());
+            }
+
+            BulkDetailsResponse response = mApi.bulkDetails(pnames);
+
+            if (response == null || response.getEntryList() == null) {
+                mError = "Response is null";
+                mResultCode = UpdaterStatus.STATUS_ERROR;
+            }
+
+            for (BulkDetailsEntry entry : response.getEntryList()) {
+                if (!entry.hasDoc()) {
+                    continue;
+                }
+
+                DocV2 details = entry.getDoc();
+                boolean b = details.getDetails().getAppDetails().hasVersionString();
+                String v = details.getDetails().getAppDetails().getVersionString();
+                int versionCode = details.getDetails().getAppDetails().getVersionCode();
+                String pname = details.getDetails().getAppDetails().getPackageName();
+                InstalledApp app = getInstalledApp(pname);
+                if (app == null) {
+                    continue;
+                }
+
+                if (versionCode > app.getVersionCode()) {
+                    if (details.getOfferCount() == 0) {
+                        continue;
+                    }
+
+                    PurchaseStatusResponse r = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
+                    if (r.getStatus() != 1) {
+                        continue;
+                    }
+
+                    AndroidAppDeliveryData d = r.getAppDeliveryData();
+                    if (d.getDownloadAuthCookieCount() == 0) {
+                        continue;
+                    }
+
+                    Update u = new Update(
+                        app,
+                        d.getDownloadUrl(),
+                        b ? v : "?",
+                        false,
+                        d.getDownloadAuthCookie(0).getName() + "=" + d.getDownloadAuthCookie(0).getValue(),
+                        versionCode
+                    );
+                    mUpdates.add(u);
+                }
+            }
+
+        } catch (Exception e) {
+            mError = String.valueOf(e);
+            mResultCode = UpdaterStatus.STATUS_ERROR;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,80 +162,39 @@ public class UpdaterGooglePlay
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	protected String getUrl(
-		String pname
-	) {
-		return pname;
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected UpdaterStatus parseUrl(
-		String pname
-	) {
-        try {
-            GooglePlayAPI api = initApi();
-            if (api == null) {
-                mError = addCommonInfoToError(new Throwable("Unable to get GooglePlayApi."));
-                return UpdaterStatus.STATUS_ERROR;
+    private InstalledApp getInstalledApp(
+        String pname
+    ) {
+        for (InstalledApp app : mApps) {
+            if (app.getPname().equals(pname)) {
+                return app;
             }
-
-			Thread.sleep(1000);	// Delay to avoid 429
-
-            DetailsResponse response = api.details(pname);
-            DocV2 details = response.getDocV2();
-
-            String v = details.getDetails().getAppDetails().getVersionString();
-            int versionCode = details.getDetails().getAppDetails().getVersionCode();
-
-            if (versionCode > Integer.valueOf(mCurrentVersion)) {
-                if (details.getOfferCount() == 0) {
-                    mError = addCommonInfoToError(new Throwable("No offers found."));
-                    return UpdaterStatus.STATUS_ERROR;
-                }
-
-                PurchaseStatusResponse r = api.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
-                if (r.getStatus() != 1) {
-                    mError = addCommonInfoToError(new Throwable("Error getting app. App could be paid."));
-                    return UpdaterStatus.STATUS_ERROR;
-                }
-
-                AndroidAppDeliveryData d = r.getAppDeliveryData();
-                if (d.getDownloadAuthCookieCount() == 0) {
-                    mError = addCommonInfoToError(new Throwable("Unable to get download cookie."));
-                    return UpdaterStatus.STATUS_ERROR;
-                }
-
-                mResultUrl = d.getDownloadUrl();
-                mResultVersion = VersionUtil.getStringVersionFromString(v);
-                mResultCookie = d.getDownloadAuthCookie(0).getName() + "=" + d.getDownloadAuthCookie(0).getValue();
-                mResultVersionCode = versionCode;
-                return UpdaterStatus.STATUS_UPDATE_FOUND;
-            }
-
-            return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
-        } catch (GooglePlayException ex) {
-            if (ex.getCode() == 404 || ex.getCode() == 403) {
-                return UpdaterStatus.STATUS_UPDATE_NOT_FOUND;
-            }
-
-            if (ex.getCode() == 429) {
-				mError = addCommonInfoToError(new Throwable("Error 429. Too many requests, try lowering the number of threads."));
-				return UpdaterStatus.STATUS_ERROR;
-			}
-
-            mError = addCommonInfoToError(ex);
-            return UpdaterStatus.STATUS_ERROR;
-        } catch (Exception e) {
-            mError = addCommonInfoToError(e);
-            return UpdaterStatus.STATUS_ERROR;
         }
+        return null;
+    }
 
-	}
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public Throwable getResultError(
+    ) {
+        return new Throwable(mError + " | Source: GooglePlay");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public UpdaterStatus getResultStatus(
+    ) {
+        return mResultCode;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public List<Update> getUpdates(
+    ) {
+        return mUpdates;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
