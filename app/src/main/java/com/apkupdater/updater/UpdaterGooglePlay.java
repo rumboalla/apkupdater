@@ -79,11 +79,10 @@ public class UpdaterGooglePlay
                 }
 
                 DocV2 details = entry.getDoc();
-                boolean b = details.getDetails().getAppDetails().hasVersionString();
-                String v = details.getDetails().getAppDetails().getVersionString();
                 int versionCode = details.getDetails().getAppDetails().getVersionCode();
                 String pname = details.getDetails().getAppDetails().getPackageName();
                 InstalledApp app = getInstalledApp(pname);
+
                 if (app == null) {
                     continue;
                 }
@@ -106,7 +105,7 @@ public class UpdaterGooglePlay
                     Update u = new Update(
                         app,
                         d.getDownloadUrl(),
-                        b ? v : "?",
+                        details.getDetails().getAppDetails().hasVersionString() ? details.getDetails().getAppDetails().getVersionString() : "?",
                         false,
                         d.getDownloadAuthCookie(0).getName() + "=" + d.getDownloadAuthCookie(0).getValue(),
                         versionCode
