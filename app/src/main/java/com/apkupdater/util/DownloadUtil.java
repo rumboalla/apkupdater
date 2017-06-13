@@ -51,6 +51,10 @@ public class DownloadUtil
 
         Cursor cursor = manager.query(query);
 
+        if (cursor == null) {
+            return;
+        }
+
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
             manager.remove(id);
