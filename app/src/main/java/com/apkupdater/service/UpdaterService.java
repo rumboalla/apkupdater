@@ -88,8 +88,8 @@ public class UpdaterService
 		InstalledApp app
 	) {
 		switch (type) {
-			case "GooglePlay":
-				return new UpdaterGooglePlay(context, app.getPname(), String.valueOf(app.getVersionCode()));
+			//case "GooglePlay":
+			//	return new UpdaterGooglePlay(context, app.getPname(), String.valueOf(app.getVersionCode()));
 			case "APKPure":
 				return new UpdaterAPKPure(context, app.getPname(), app.getVersion());
 			case "Uptodown":
@@ -180,24 +180,23 @@ public class UpdaterService
 			// Retrieve installed apps
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());
 
-			// Create an executor with N threads to perform the requests
+            // Remove ignored apps
+            final List<InstalledApp> apps = new ArrayList<>();
+            for (InstalledApp app : installedApps) {
+                if (!options.getIgnoreList().contains(app.getPname())) {
+                    apps.add(app);
+                }
+            }
+
+            // Create an executor with N threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(options.getNumThreads());
             ExecutorService executorPlay = Executors.newFixedThreadPool(1);
+            ExecutorService executorAPKMirror = Executors.newFixedThreadPool(1);
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
 
 			// Iterate through installed apps and check for updates
             int appCount = 0;
-			for (final InstalledApp app: installedApps) {
-				// Check if this app is on the ignore list
-				if (options.getIgnoreList().contains(app.getPname())) {
-					continue;
-				}
-
-                if (options.useGooglePlay()) {
-                    appCount++;
-                    updateSource(executorPlay, "GooglePlay", app, errors);
-                }
-
+			for (final InstalledApp app: apps) {
 				if (options.useUptodown()) {
 					appCount++;
 					updateSource(executor, "Uptodown", app, errors);
@@ -209,18 +208,34 @@ public class UpdaterService
 				}
 			}
 
-			// Uses 1 thread only for the moment
-			ExecutorService executorAPKMirror = Executors.newFixedThreadPool(1);
+
+            if (options.useGooglePlay()) {
+                appCount += apps.size();
+                executorPlay.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        UpdaterGooglePlay updater = new UpdaterGooglePlay(getBaseContext(), apps);
+
+                        if (updater.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
+                            errors.add(updater.getResultError());
+                        } else {
+                            for (Update u : updater.getUpdates()) {
+                                mUpdates.add(u);
+                                mBus.post(new UpdateProgressEvent(u));
+                            }
+                        }
+
+                        for (InstalledApp app : apps) {
+                            mAppState.increaseUpdateProgress();
+                        }
+
+                        mNotification.increaseProgress(mUpdates.size());
+                    }
+                });
+            }
+
 
 			if (options.useAPKMirror()) {
-				// Remove ignored apps
-				List<InstalledApp> apps = new ArrayList<>();
-				for (InstalledApp app : installedApps) {
-					if (!options.getIgnoreList().contains(app.getPname())) {
-						apps.add(app);
-					}
-				}
-
 				appCount += apps.size();
 				mAppState.setUpdateMax(appCount);
 				mNotification.setMaxApps(appCount);
@@ -228,12 +243,10 @@ public class UpdaterService
 
 				// Split in batches of 100 and process
 				for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
-					mContext = this;
-
 					executorAPKMirror.execute(new Runnable() {
 						@Override
 						public void run() {
-							UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(mContext, batch, new GenericCallback<Update>() {
+							UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(getBaseContext(), batch, new GenericCallback<Update>() {
 								@Override
 								public void onResult(Update u) {
 									if (u != null) {
