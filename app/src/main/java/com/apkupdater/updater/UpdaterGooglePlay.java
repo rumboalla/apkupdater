@@ -92,8 +92,14 @@ public class UpdaterGooglePlay
                         continue;
                     }
 
-                    PurchaseStatusResponse r = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
-                    if (r.getStatus() != 1) {
+                    PurchaseStatusResponse r;
+                    try {
+                        r = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
+                        if (r.getStatus() != 1) {
+                            continue;
+                        }
+                    } catch (GooglePlayException ex) {
+                        // Paid app most likely
                         continue;
                     }
 
