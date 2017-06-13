@@ -71,6 +71,7 @@ public class UpdaterGooglePlay
             if (response == null || response.getEntryList() == null) {
                 mError = "Response is null";
                 mResultCode = UpdaterStatus.STATUS_ERROR;
+                return;
             }
 
             for (BulkDetailsEntry entry : response.getEntryList()) {
@@ -88,12 +89,14 @@ public class UpdaterGooglePlay
                 }
 
                 if (versionCode > app.getVersionCode()) {
-                    if (details.getOfferCount() == 0) {
-                        continue;
-                    }
 
                     PurchaseStatusResponse r;
                     try {
+                        details = mApi.details(pname).getDocV2();
+                        if (details.getOfferCount() == 0) {
+                            continue;
+                        }
+
                         r = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
                         if (r.getStatus() != 1) {
                             continue;
