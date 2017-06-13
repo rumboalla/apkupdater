@@ -46,21 +46,23 @@ public class DownloadUtil
     static public void deleteDownloadedFiles(
         Context context
     ) {
-        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        DownloadManager.Query query = new DownloadManager.Query();
+        try {
+            DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Query query = new DownloadManager.Query();
 
-        Cursor cursor = manager.query(query);
+            Cursor cursor = manager.query(query);
 
-        if (cursor == null) {
-            return;
-        }
+            if (cursor == null) {
+                return;
+            }
 
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
-            manager.remove(id);
-        }
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
+                manager.remove(id);
+            }
 
-        cursor.close();
+            cursor.close();
+        } catch (Exception ignored) {}
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
