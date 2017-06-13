@@ -119,7 +119,7 @@ public class UpdaterAdapter
                                 mContext,
                                 update.getUrl(),
                                 update.getCookie(),
-                                update.getPname() + " " + update.getNewVersion()
+                                update.getPname() + " " + update.getNewVersionCode()
                             );
                         } else {
                             DownloadUtil.LaunchBrowser(mContext, update.getUrl());
