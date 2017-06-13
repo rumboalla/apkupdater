@@ -104,7 +104,7 @@ public class InstalledAppAdapter
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void addTopMargin(
+        private void setTopMargin(
             int margin
         ) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
@@ -197,7 +197,7 @@ public class InstalledAppAdapter
 		holder.bind(mApps.get(position));
 
         if (position == 0) {
-            holder.addTopMargin(8);
+            holder.setTopMargin(8);
         }
 	}
 
