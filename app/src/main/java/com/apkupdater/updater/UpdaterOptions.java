@@ -65,7 +65,7 @@ public class UpdaterOptions
     public boolean useGooglePlay(
     ) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_use_play_key), false);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_use_play_key), true);
     }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -155,7 +155,7 @@ public class UpdaterService
 			}
 
 			// Get the options
-			UpdaterOptions options = new UpdaterOptions(getBaseContext());
+			final UpdaterOptions options = new UpdaterOptions(getBaseContext());
 
 			// Check if wifi only option
 			if (options.getWifiOnly()) {
@@ -190,95 +190,79 @@ public class UpdaterService
 
             // Create an executor with N threads to perform the requests
 			ExecutorService executor = Executors.newFixedThreadPool(options.getNumThreads());
-            ExecutorService executorPlay = Executors.newFixedThreadPool(1);
-            ExecutorService executorAPKMirror = Executors.newFixedThreadPool(1);
 			final ConcurrentLinkedQueue<Throwable> errors = new ConcurrentLinkedQueue<>();
-
-			// Iterate through installed apps and check for updates
             int appCount = 0;
-			for (final InstalledApp app: apps) {
-				if (options.useUptodown()) {
-					appCount++;
-					updateSource(executor, "Uptodown", app, errors);
-				}
 
-				if (options.useAPKPure()) {
-					appCount++;
-					updateSource(executor, "APKPure", app, errors);
-				}
-			}
+			// Callback for APKMirrorAPI and GooglePlay
+            final GenericCallback<Update> callback = new GenericCallback<Update>() {
+                @Override
+                public void onResult(Update u) {
+                    if (u != null) {
+                        mUpdates.add(u);
+                        mBus.post(new UpdateProgressEvent(u));
+                    } else {
+                        mBus.post(new UpdateProgressEvent(null));
+                    }
 
+                    mAppState.increaseUpdateProgress();
+                    mNotification.increaseProgress(mUpdates.size());
+                }
+            };
 
             if (options.useGooglePlay()) {
                 appCount += apps.size();
-                executorPlay.execute(new Runnable() {
+                executor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        UpdaterGooglePlay updater = new UpdaterGooglePlay(getBaseContext(), apps);
-
+                        UpdaterGooglePlay updater = new UpdaterGooglePlay(
+                            getBaseContext(),
+                            apps,
+                            Executors.newFixedThreadPool(options.getNumThreads()),
+                            callback
+                        );
                         if (updater.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
                             errors.add(updater.getResultError());
-                        } else {
-                            for (Update u : updater.getUpdates()) {
-                                mUpdates.add(u);
-                                mBus.post(new UpdateProgressEvent(u));
-                            }
                         }
-
-                        for (InstalledApp app : apps) {
-                            mAppState.increaseUpdateProgress();
-                        }
-
-                        mNotification.increaseProgress(mUpdates.size());
                     }
                 });
             }
 
-
 			if (options.useAPKMirror()) {
 				appCount += apps.size();
-				mAppState.setUpdateMax(appCount);
-				mNotification.setMaxApps(appCount);
-				mBus.post(new UpdateStartEvent(appCount));
-
 				// Split in batches of 100 and process
 				for (final List<InstalledApp> batch : VersionUtil.batchList(apps, 100)) {
-					executorAPKMirror.execute(new Runnable() {
+					executor.execute(new Runnable() {
 						@Override
 						public void run() {
-							UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(getBaseContext(), batch, new GenericCallback<Update>() {
-								@Override
-								public void onResult(Update u) {
-									if (u != null) {
-										mUpdates.add(u);
-										mBus.post(new UpdateProgressEvent(u));
-									} else {
-										mBus.post(new UpdateProgressEvent(null));
-									}
-
-									mAppState.increaseUpdateProgress();
-									mNotification.increaseProgress(mUpdates.size());
-								}
-							});
-
+							UpdaterAPKMirrorAPI upd = new UpdaterAPKMirrorAPI(getBaseContext(), batch, callback);
 							if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
 								errors.add(upd.getResultError());
 							}
 						}
 					});
 				}
-			} else {
-				mAppState.setUpdateMax(appCount);
-				mNotification.setMaxApps(appCount);
-				mBus.post(new UpdateStartEvent(appCount));
 			}
 
-			// Wait until all threads are done
-			executor.shutdown();
-			executorAPKMirror.shutdown();
-			executorPlay.shutdown();
+            // Iterate through installed apps and check for updates
+            for (final InstalledApp app: apps) {
+                if (options.useUptodown()) {
+                    appCount++;
+                    updateSource(executor, "Uptodown", app, errors);
+                }
 
-			while (!executorAPKMirror.isTerminated() || !executor.isTerminated() || !executorPlay.isTerminated()) {
+                if (options.useAPKPure()) {
+                    appCount++;
+                    updateSource(executor, "APKPure", app, errors);
+                }
+            }
+
+            mAppState.setUpdateMax(appCount);
+            mNotification.setMaxApps(appCount);
+            mBus.post(new UpdateStartEvent(appCount));
+
+            // Wait until all threads are done
+			executor.shutdown();
+			while (!executor.isTerminated()) {
 				Thread.sleep(1);
 			}
 
