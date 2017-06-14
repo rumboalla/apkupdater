@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.adapter.InstalledAppAdapter;
+import com.apkupdater.adapter.SearchAdapter;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.event.UpdateInstalledAppsEvent;
@@ -131,7 +132,7 @@ public class SearchFragment
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		mRecyclerView.setAdapter(new InstalledAppAdapter(getContext(), mRecyclerView, items));
+		mRecyclerView.setAdapter(new SearchAdapter(getContext(), mRecyclerView, items));
 
 		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));
 	}
