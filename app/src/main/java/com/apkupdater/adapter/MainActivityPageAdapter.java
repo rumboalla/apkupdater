@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.InstalledAppFragment_;
+import com.apkupdater.fragment.SearchFragment;
+import com.apkupdater.fragment.SearchFragment_;
 import com.apkupdater.fragment.UpdaterFragment_;
 import com.apkupdater.R;
 
@@ -24,6 +26,7 @@ public class MainActivityPageAdapter
 	private InstalledAppFragment_ mInstalledAppFragment = new InstalledAppFragment_();
 	private UpdaterFragment_ mUpdaterFragment = new UpdaterFragment_();
 	private AboutFragment_ mAboutFragment = new AboutFragment_();
+	private SearchFragment mSearchFragment = new SearchFragment_();
 	private Context mContext;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +51,7 @@ public class MainActivityPageAdapter
 			return mUpdaterFragment;
 		} else if (position == 2){
 			return mAboutFragment;
+			//return mSearchFragment;
 		} else {
 			throw new InvalidParameterException("Invalid position.");
 		}
