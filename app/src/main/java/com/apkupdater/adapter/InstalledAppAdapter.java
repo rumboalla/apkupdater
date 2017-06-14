@@ -96,7 +96,8 @@ public class InstalledAppAdapter
             try {
                 Drawable icon = mContext.getPackageManager().getApplicationIcon(app.getPname());
                 mIcon.setImageDrawable(icon);
-            } catch (PackageManager.NameNotFoundException ignored) {
+            } catch (PackageManager.NameNotFoundException e) {
+            	mIcon.setImageResource(R.drawable.ic_android);
             }
 
             mActionOneButton.setOnClickListener(mAdapter);

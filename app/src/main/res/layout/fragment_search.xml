@@ -14,15 +14,17 @@
             android:id="@+id/input_search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
         >
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
-                android:hint="Search"
+                android:textColor="?android:textColor"
+                android:hint="@string/tab_search"
             />
         </android.support.design.widget.TextInputLayout>
 

@@ -6,6 +6,7 @@
     <string name="action_check_for_updates">Check for updates</string>
     <string name="tab_installed">Installed</string>
     <string name="tab_updates">Updates</string>
+    <string name="tab_search">Search</string>
     <string name="tab_about">About</string>
     <string name="notification_update_title">Checking for updates</string>
     <string name="notification_update_content">$1/$2</string>

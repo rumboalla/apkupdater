@@ -8,7 +8,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 17
-        versionName "1.5.0"
+        versionName "1.4.8 Beta 4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all {

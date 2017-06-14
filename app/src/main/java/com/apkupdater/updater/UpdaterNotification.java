@@ -136,7 +136,7 @@ public class UpdaterNotification
 	) {
 		mNotificationBuilder = new NotificationCompat.Builder(mContext);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title));
-		mNotificationBuilder.setSmallIcon(R.drawable.ic_update_white_24dp);
+		mNotificationBuilder.setSmallIcon(R.drawable.ic_update);
 		mNotificationBuilder.setContentIntent(createPendingIntent());
 		mNotificationBuilder.setAutoCancel(true);
 		mNotificationBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));

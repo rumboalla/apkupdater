@@ -25,7 +25,6 @@ public class MainActivityPageAdapter
 
 	private InstalledAppFragment_ mInstalledAppFragment = new InstalledAppFragment_();
 	private UpdaterFragment_ mUpdaterFragment = new UpdaterFragment_();
-	private AboutFragment_ mAboutFragment = new AboutFragment_();
 	private SearchFragment mSearchFragment = new SearchFragment_();
 	private Context mContext;
 
@@ -50,8 +49,7 @@ public class MainActivityPageAdapter
 		} else if (position == 1){
 			return mUpdaterFragment;
 		} else if (position == 2){
-			return mAboutFragment;
-			//return mSearchFragment;
+			return mSearchFragment;
 		} else {
 			throw new InvalidParameterException("Invalid position.");
 		}
@@ -76,7 +74,7 @@ public class MainActivityPageAdapter
 		} else if (position == 1){
 			return mContext.getString(R.string.tab_updates);
 		}  else if (position == 2){
-			return mContext.getString(R.string.tab_about);
+			return mContext.getString(R.string.tab_search);
 		} else {
 			return "Error";
 		}
