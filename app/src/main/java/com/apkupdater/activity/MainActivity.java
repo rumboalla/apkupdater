@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.fragment.AboutFragment;
+import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.MainFragment;
 import com.apkupdater.fragment.MainFragment_;
@@ -56,6 +58,7 @@ public class MainActivity
 	FrameLayout mContainer;
 
 	SettingsFragment_ mSettingsFragment;
+	AboutFragment_ mAboutFragment;
 	LogFragment_ mLogFragment;
 	MainFragment_ mMainFragment;
 
@@ -93,6 +96,7 @@ public class MainActivity
 		mMainFragment = new MainFragment_();
 		mSettingsFragment = new SettingsFragment_();
 		mLogFragment = new LogFragment_();
+		mAboutFragment = new AboutFragment_();
 
 		// Add the main fragment
 		if (!(getSupportFragmentManager().findFragmentById(R.id.container) instanceof MainFragment)) {
@@ -100,9 +104,11 @@ public class MainActivity
 				.replace(R.id.container, mMainFragment)
 				.add(R.id.container, mSettingsFragment)
 				.add(R.id.container, mLogFragment)
+				.add(R.id.container, mAboutFragment)
 				.show(mMainFragment)
 				.hide(mSettingsFragment)
 				.hide(mLogFragment)
+				.hide(mAboutFragment)
 			.commit();
 		}
 
@@ -140,6 +146,7 @@ public class MainActivity
 				.show(mSettingsFragment)
 				.hide(mMainFragment)
 				.hide(mLogFragment)
+				.hide(mAboutFragment)
 			.commit();
 
 			changeToolbar(getString(R.string.action_settings), true);
@@ -149,6 +156,7 @@ public class MainActivity
 				.show(mMainFragment)
 				.hide(mSettingsFragment)
 				.hide(mLogFragment)
+				.hide(mAboutFragment)
 			.commit();
 
 			changeToolbar(getString(R.string.app_name), false);
@@ -168,6 +176,7 @@ public class MainActivity
 				.show(mLogFragment)
 				.hide(mMainFragment)
 				.hide(mSettingsFragment)
+				.hide(mAboutFragment)
 			.commit();
 
 			changeToolbar(getString(R.string.action_log), true);
@@ -177,12 +186,43 @@ public class MainActivity
 				.show(mMainFragment)
 				.hide(mSettingsFragment)
 				.hide(mLogFragment)
+				.hide(mAboutFragment)
 			.commit();
 
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
 		mAppState.setLogActive(b);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void switchAbout(
+		boolean b
+	) {
+		if (b) {
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+				.show(mAboutFragment)
+				.hide(mMainFragment)
+				.hide(mSettingsFragment)
+				.hide(mLogFragment)
+				.commit();
+
+			changeToolbar(getString(R.string.tab_about), true);
+		} else {
+			getSupportFragmentManager().beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+				.show(mMainFragment)
+				.hide(mSettingsFragment)
+				.hide(mLogFragment)
+				.hide(mAboutFragment)
+				.commit();
+
+			changeToolbar(getString(R.string.app_name), false);
+		}
+
+		mAppState.setAboutActive(b);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,6 +273,8 @@ public class MainActivity
 			switchSettings(!mAppState.getSettingsActive());
 		} else if (mAppState.getLogActive()) {
 			switchLog(!mAppState.getLogActive());
+		} else if (mAppState.getAboutActive()) {
+			switchAbout(!mAppState.getAboutActive());
 		}
 	}
 
@@ -242,6 +284,14 @@ public class MainActivity
 	void onLogClick(
 	) {
 		switchLog(!mAppState.getLogActive());
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@OptionsItem(R.id.action_about)
+	void onAboutClick(
+	) {
+		switchAbout(!mAppState.getAboutActive());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -284,6 +334,8 @@ public class MainActivity
 			switchLog(false);
 		} else if (mAppState.getSettingsActive()){
 			switchSettings(false);
+		} else if (mAppState.getAboutActive()){
+			switchAbout(false);
 		} else {
 			super.onBackPressed();
 		}

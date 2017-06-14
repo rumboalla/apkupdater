@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.adapter.InstalledAppAdapter;
 import com.apkupdater.event.InstalledAppTitleChange;
+import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.event.UpdateInstalledAppsEvent;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterGooglePlay;
@@ -36,6 +37,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,9 +53,6 @@ public class SearchFragment
 
 	@ViewById(R.id.input_search)
     EditText mInputSearch;
-
-	@Bean
-	InstalledAppUtil mInstalledAppUtil;
 
 	@Bean
 	MyBus mBus;
@@ -103,32 +102,23 @@ public class SearchFragment
                     SearchIterator i = new SearchIterator(api, text);
                     SearchResponse r = i.next();
 
+                    List<InstalledApp> apps = new ArrayList<>();
                     for (DocV2 d : r.getDoc(0).getChildList()) {
-                        String test = d.getDetails().getAppDetails().getPackageName();
-                        test = test + "test";
+                        InstalledApp app = new InstalledApp();
+                        app.setPname(d.getDetails().getAppDetails().getPackageName());
+                        app.setVersionCode(d.getDetails().getAppDetails().getVersionCode());
+                        app.setVersion(d.getDetails().getAppDetails().getVersionString());
+                        app.setName(d.getTitle());
+                        apps.add(app);
                     }
 
-
+                    setListAdapter(apps);
                 } catch (Exception e) {
                     return;
                 }
             }
         }).start();
     }
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Subscribe
-	public void updateInstalledApps(
-		UpdateInstalledAppsEvent ev
-	) {
-//		mInstalledAppUtil.getInstalledAppsAsync(getContext(), new GenericCallback<List<InstalledApp>>() {
-//			@Override
-//			public void onResult(List<InstalledApp> items) {
-//				setListAdapter(items);
-//			}
-//		});
-	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -143,7 +133,7 @@ public class SearchFragment
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		mRecyclerView.setAdapter(new InstalledAppAdapter(getContext(), mRecyclerView, items));
 
-		mBus.post(new InstalledAppTitleChange(getString(R.string.tab_installed) + " (" + items.size() + ")"));
+		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

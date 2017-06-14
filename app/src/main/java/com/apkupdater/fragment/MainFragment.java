@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import com.apkupdater.R;
 import com.apkupdater.adapter.MainActivityPageAdapter;
 import com.apkupdater.event.InstalledAppTitleChange;
+import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.model.AppState;
 import com.apkupdater.util.MyBus;
@@ -123,6 +124,20 @@ public class MainFragment
 	) {
 		if (mTabLayout != null) {
 			TabLayout.Tab selectedTab = mTabLayout.getTabAt(1);
+			if (selectedTab != null) {
+				selectedTab.setText(t.getTitle());
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onSearchTitleChange(
+		SearchTitleChange t
+	) {
+		if (mTabLayout != null) {
+			TabLayout.Tab selectedTab = mTabLayout.getTabAt(2);
 			if (selectedTab != null) {
 				selectedTab.setText(t.getTitle());
 			}
