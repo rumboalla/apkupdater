@@ -86,6 +86,7 @@ public class UpdaterAPKMirrorAPI
         RequestBody body = RequestBody.create(JSON, new Gson().toJson(json));
         final Request request = new Request.Builder()
             .url(BaseUrl + AppExists)
+            .header("User-Agent", VersionUtil.getUserAgent(mContext))
             .post(body)
             .header("Authorization", Credentials.basic(User, Token))
             .build();
