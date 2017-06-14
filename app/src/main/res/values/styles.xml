@@ -10,6 +10,7 @@
         <item name="android:textColor">@color/textColorBlue</item>
         <item name="preferenceTheme">@style/PreferenceThemeBlue</item>
         <item name="alertDialogTheme">@style/PreferenceThemeBlue</item>
+        <item name="android:editTextStyle">@style/PreferenceThemeBlue</item>
     </style>
 
     <style name="PreferenceThemeBlue" parent="AppThemeBlue">
@@ -29,6 +30,7 @@
         <item name="android:textColor">@color/textColorOrange</item>
         <item name="preferenceTheme">@style/PreferenceThemeOrange</item>
         <item name="alertDialogTheme">@style/PreferenceThemeOrange</item>
+        <item name="android:editTextStyle">@style/PreferenceThemeOrange</item>
     </style>
 
     <style name="PreferenceThemeOrange" parent="AppThemeOrange">
@@ -46,6 +48,7 @@
         <item name="android:textColor">@color/textColorPink</item>
         <item name="preferenceTheme">@style/PreferenceThemePink</item>
         <item name="alertDialogTheme">@style/PreferenceThemePink</item>
+        <item name="android:editTextStyle">@style/PreferenceThemePink</item>
     </style>
 
     <style name="PreferenceThemePink" parent="AppThemePink">
@@ -61,6 +64,7 @@
         <item name="android:textColor">@color/textColorDark</item>
         <item name="preferenceTheme">@style/PreferenceThemeDark</item>
         <item name="alertDialogTheme">@style/PreferenceThemeDark</item>
+        <item name="android:editTextStyle">@style/PreferenceThemeDark</item>
     </style>
 
     <style name="PreferenceThemeDark" parent="AppThemeDark">

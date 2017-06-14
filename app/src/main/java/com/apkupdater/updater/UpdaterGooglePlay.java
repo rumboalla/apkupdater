@@ -30,7 +30,6 @@ public class UpdaterGooglePlay
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static GooglePlayAPI mApi = null;
-    private static ReentrantLock mLock = new ReentrantLock();
 
     private List<InstalledApp> mApps;
     private Context mContext;
@@ -50,7 +49,7 @@ public class UpdaterGooglePlay
             // Store vars
             mApps = apps;
             mContext = context;
-            mApi = initApi();
+            mApi = getGooglePlayApi(mContext);
 
             if (mApi == null) {
                 mError = "Unable to get GooglePlayApi";
@@ -144,41 +143,37 @@ public class UpdaterGooglePlay
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private GooglePlayAPI buildApi() {
-	    try {
-            DeviceInfoProvider deviceInfoProvider = new NativeDeviceInfoProvider();
-            ((NativeDeviceInfoProvider) deviceInfoProvider).setContext(mContext);
-            ((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
-
-            com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
-                .setHttpClient(new OkHttpClientAdapter())
-                .setDeviceInfoProvider(deviceInfoProvider)
-                .setLocale(Locale.getDefault())
-                .setEmail(null)
-                .setPassword(null)
-                .setGsfId("332840dd1f6fbcb7")
-                .setToken("xwTCN6FyGkcpTew5FcY5NqOchMjh5bV5u172U2hJELXLGcGXCpCFqJFlBpjjOWjeG3jDng.");
-
-            GooglePlayAPI api = builder.build();
-            api.uploadDeviceConfig();
-            return api;
-        } catch (Exception e) {
-	        return null;
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private GooglePlayAPI initApi(
+    static public GooglePlayAPI getGooglePlayApi(
+        Context context
     ) {
-        mLock.lock();
+        GooglePlayAPI api = null;
         int c = 0;
-        while (mApi == null && c < 10) {
-			mApi = buildApi();
-            c++;
+
+        while (api == null && c < 10) {
+            try {
+                DeviceInfoProvider deviceInfoProvider = new NativeDeviceInfoProvider();
+                ((NativeDeviceInfoProvider) deviceInfoProvider).setContext(context);
+                ((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
+
+                com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
+                    .setHttpClient(new OkHttpClientAdapter())
+                    .setDeviceInfoProvider(deviceInfoProvider)
+                    .setLocale(Locale.getDefault())
+                    .setEmail(null)
+                    .setPassword(null)
+                    .setGsfId("332840dd1f6fbcb7")
+                    .setToken("xwTCN6FyGkcpTew5FcY5NqOchMjh5bV5u172U2hJELXLGcGXCpCFqJFlBpjjOWjeG3jDng.");
+
+                api = builder.build();
+                api.uploadDeviceConfig();
+            } catch (Exception e) {
+                api = null;
+            } finally {
+                c++;
+            }
         }
-        mLock.unlock();
-        return mApi;
+
+        return api;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
