@@ -83,7 +83,9 @@ public class AlarmUtil
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
-		if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+		if (calendar.getTimeInMillis() < System.currentTimeMillis()     // Add a day if alarm is in the past
+            || Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == hour // Add a day if we are setting an alarm for the current hour
+        ) {
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, alarmIntent);
