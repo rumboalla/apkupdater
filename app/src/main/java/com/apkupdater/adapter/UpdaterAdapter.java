@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.model.Update;
-import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.PixelConversion;
 
@@ -150,7 +150,7 @@ public class UpdaterAdapter
 			// Beta icon
 			mIsBetaIcon.setVisibility(update.isBeta() ? View.VISIBLE : View.GONE);
 			mIsBetaIcon.getBackground().setColorFilter(
-				ColorUtitl.getColorFromTheme(mContext.getTheme(), R.attr.colorAccent),
+				ColorUtil.getColorFromTheme(mContext.getTheme(), R.attr.colorAccent),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			);
 		}

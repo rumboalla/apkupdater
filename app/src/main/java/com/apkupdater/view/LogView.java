@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.util.ColorUtil;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -51,7 +51,7 @@ public class LogView
 	public void bind(
 		LogMessage message
 	) {
-		int color = ColorUtitl.getColorFromContext(getContext(), android.R.attr.textColorTertiary);
+		int color = ColorUtil.getColorFromContext(getContext(), android.R.attr.textColorTertiary);
 
 		mTitle.setText(message.getTitle());
 		//mTitle.setTextColor(color);

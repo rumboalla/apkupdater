@@ -32,9 +32,9 @@ public class SnackBarUtil {
 				}
 			}).show();
 			View view = bar.getView();
-			view.setBackgroundColor(ColorUtitl.getColorFromTheme(activity.getTheme(), R.attr.colorPrimary));
+			view.setBackgroundColor(ColorUtil.getColorFromTheme(activity.getTheme(), R.attr.colorPrimary));
 			TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-			tv.setTextColor(ColorUtitl.getColorFromContext(activity, android.R.attr.textColorPrimary));
+			tv.setTextColor(ColorUtil.getColorFromContext(activity, android.R.attr.textColorPrimary));
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
