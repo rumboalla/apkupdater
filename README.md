@@ -26,7 +26,7 @@ Big thanks to the developers of these wonderful libraries:
 * [play-store-api](https://github.com/yeriomin/play-store-api)
 
 # Update sources
-At the moment three sources are supported:
+At the moment four sources are supported:
 * [APKMirror](https://www.apkmirror.com)
 * [Google Play](https://play.google.com)
 * [APKPure](https://apkpure.com)
