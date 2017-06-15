@@ -7,6 +7,7 @@
     <string name="tab_installed">Instalado</string>
     <string name="tab_updates">Atualizações</string>
     <string name="tab_about">Sobre</string>
+    <string name="tab_search">*Search*</string>
     <string name="notification_update_title">Verificando atualizações</string>
     <string name="notification_update_content">$1/$2</string>
     <string name="notification_update_title_finished">Verificação concluída das atualizações</string>
