@@ -33,15 +33,12 @@ At the moment four sources are supported:
 * [Uptodown](https://en.uptodown.com)
 
 # Screenshots
-<img src="https://cloud.githubusercontent.com/assets/21153554/17836760/228bca80-679e-11e6-8394-2fa321702709.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17836762/22a340f2-679e-11e6-8d6a-34d2d2b5cc7f.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17836761/22a2c24e-679e-11e6-83b4-1d48ba1035bf.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17836764/22a4d660-679e-11e6-9d3b-0ff6bdde7880.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17836763/22a40744-679e-11e6-8353-ab2f7f474f43.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17836815/42c6e856-679f-11e6-91dc-c68bc39b3f15.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17906593/460c77f8-6978-11e6-9675-b5361166584d.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17906592/460c3a36-6978-11e6-896d-371c181c4797.png" width="256">
-<img src="https://cloud.githubusercontent.com/assets/21153554/17906591/460c0a84-6978-11e6-9b85-c29b76680a43.png" width="256">
+<img src="https://user-images.githubusercontent.com/21153554/27194451-7f4b85b6-51fa-11e7-8cfb-da192a9a3bf6.png" width="256">
+<img src="https://user-images.githubusercontent.com/21153554/27194454-7f561ef4-51fa-11e7-9cb8-9db0345a221e.png" width="256">
+<img src="https://user-images.githubusercontent.com/21153554/27194455-7f5c9f9a-51fa-11e7-9ea6-1538dd1ff3d7.png" width="256">
+<img src="https://user-images.githubusercontent.com/21153554/27194450-7f3e11a6-51fa-11e7-9053-e91862a413f5.png" width="256">
+<img src="https://user-images.githubusercontent.com/21153554/27194448-7f21f6c4-51fa-11e7-8d7e-383a094df6e1.png" width="256">
+<img src="https://user-images.githubusercontent.com/21153554/27194452-7f4f7fa4-51fa-11e7-8fc3-985212bfa749.png" width="256">
 
 # License
 Copyright &copy; 2016 Rumboalla.
