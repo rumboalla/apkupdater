@@ -7,6 +7,7 @@
     <string name="tab_installed">Installées</string>
     <string name="tab_updates">MAJ</string>
     <string name="tab_about">À propos</string>
+    <string name="tab_search">*Search*</string>
     <string name="notification_update_title">Recherche en cours</string>
     <string name="notification_update_content">$1/$2</string>
     <string name="notification_update_title_finished">Recherche terminée</string>
