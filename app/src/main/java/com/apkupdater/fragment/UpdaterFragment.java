@@ -22,7 +22,7 @@ import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.AnimationUtil;
-import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.SnackBarUtil;
@@ -96,7 +96,7 @@ public class UpdaterFragment
 	) {
 		try {
 			mLoader.getIndeterminateDrawable().setColorFilter(
-				ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent),
+				ColorUtil.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			);
 			setProgressBarProgress(mProgressCount, mProgressMax);

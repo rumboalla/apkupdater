@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.util.ColorUtitl;
+import com.apkupdater.util.ColorUtil;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -48,7 +48,7 @@ public class AboutFragment
 		webView.getSettings().setDefaultFontSize(14);
 
 		// Change the webview font color
-		final String color = ColorUtitl.getHexStringFromInt( mAppVersionText.getTextColors().getDefaultColor());
+		final String color = ColorUtil.getHexStringFromInt( mAppVersionText.getTextColors().getDefaultColor());
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.setWebViewClient(new WebViewClient() {
 			public void onPageFinished(WebView view, String url) {
@@ -86,7 +86,7 @@ public class AboutFragment
 	@AfterViews
 	protected void onInit(
 	) {
-		mAppNameText.setTextColor(ColorUtitl.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent));
+		mAppNameText.setTextColor(ColorUtil.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent));
 
 		try {
 			WebView v = getWebView();

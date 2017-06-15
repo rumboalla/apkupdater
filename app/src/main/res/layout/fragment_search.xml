@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColorHint="?attr/colorAccent"
         >
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_search"
@@ -25,15 +26,23 @@
                 android:imeOptions="actionSearch"
                 android:textColor="?android:textColor"
                 android:hint="@string/tab_search"
+                android:gravity="center_horizontal"
             />
         </android.support.design.widget.TextInputLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+        />
+
         <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
+            android:layout_height="match_parent"
         />
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

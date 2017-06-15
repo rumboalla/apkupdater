@@ -2,35 +2,33 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.adapter.InstalledAppAdapter;
 import com.apkupdater.adapter.SearchAdapter;
-import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.SearchTitleChange;
-import com.apkupdater.event.UpdateInstalledAppsEvent;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterGooglePlay;
-import com.apkupdater.util.ColorUtitl;
-import com.apkupdater.util.GenericCallback;
-import com.apkupdater.util.InstalledAppUtil;
+import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.MyBus;
-import com.apkupdater.util.ThemeUtil;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.SearchIterator;
 import com.github.yeriomin.playstoreapi.SearchResponse;
-import com.github.yeriomin.playstoreapi.SearchSuggestEntry;
-import com.github.yeriomin.playstoreapi.SearchSuggestResponse;
-import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -55,7 +53,13 @@ public class SearchFragment
 	@ViewById(R.id.input_search)
     EditText mInputSearch;
 
-	@Bean
+    @ViewById(R.id.input_search_layout)
+    TextInputLayout mInputLayout;
+
+    @ViewById(R.id.progress_bar)
+    ProgressBar mProgressBar;
+
+    @Bean
 	MyBus mBus;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,19 +69,26 @@ public class SearchFragment
 	) {
 		mBus.register(this);
 
+		// Change color for the bottom line
+		int color = ColorUtil.getColorFromContext(getContext(), R.attr.colorAccent);
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
+        ViewCompat.setBackgroundTintList(mInputSearch, colorStateList);
+
+        // Set the input action listener
         mInputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     search(mInputSearch.getText().toString());
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
                     return true;
                 }
                 return false;
             }
         });
-
-
-        //updateInstalledApps(new UpdateInstalledAppsEvent());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +104,8 @@ public class SearchFragment
     private void search(
         final String text
     ) {
-        // TODO: Implement
+        setListAdapter(new ArrayList<InstalledApp>());
+        mProgressBar.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -115,7 +127,7 @@ public class SearchFragment
 
                     setListAdapter(apps);
                 } catch (Exception e) {
-                    return;
+                    setListAdapter(new ArrayList<InstalledApp>());
                 }
             }
         }).start();
@@ -125,16 +137,16 @@ public class SearchFragment
 
 	@UiThread(propagation = UiThread.Propagation.REUSE)
 	protected void setListAdapter(
-		List<InstalledApp> items
+		@NonNull List<InstalledApp> items
 	) {
-		if (mRecyclerView == null || mBus == null) {
+		if (mRecyclerView == null || mBus == null || mProgressBar == null) {
 			return;
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		mRecyclerView.setAdapter(new SearchAdapter(getContext(), mRecyclerView, items));
-
 		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));
+		mProgressBar.setVisibility(View.GONE);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
