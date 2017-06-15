@@ -49,7 +49,9 @@
     <color name="textColorPink">#FFFFFF</color>
 
     <!-- Dark theme -->
-    <color name="colorAccentDark">#16ac01</color>
+    <color name="colorPrimaryD">#0e7300</color>
+    <color name="colorPrimaryDarkD">#0b5300</color>
+    <color name="colorAccentDark">#19cc00</color>
     <color name="textColorPrimaryDark">#FFFFFF</color>
     <color name="textColorSecondaryDark">#99FFFFFF</color>
     <color name="textColorDark">#FFFFFF</color>

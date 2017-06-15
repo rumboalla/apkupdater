@@ -7,14 +7,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.fragment.AboutFragment;
 import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.MainFragment;
@@ -31,6 +33,7 @@ import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.ThemeUtil;
 
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
@@ -56,6 +59,9 @@ public class MainActivity
 
 	@ViewById(R.id.container)
 	FrameLayout mContainer;
+
+	@ViewById(R.id.update_button)
+    FloatingActionButton mUpdateButton;
 
 	SettingsFragment_ mSettingsFragment;
 	AboutFragment_ mAboutFragment;
@@ -127,7 +133,14 @@ public class MainActivity
 					switchLog(true);
 				}
 			}, 1);
-		}
+		} else if (mAppState.getAboutActive()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    switchAbout(true);
+                }
+            }, 1);
+        }
 
 		// Download receiver
         DownloadUtil.deleteDownloadedFiles(this);
@@ -148,7 +161,7 @@ public class MainActivity
 				.hide(mLogFragment)
 				.hide(mAboutFragment)
 			.commit();
-
+            setUpdateButtonVisibility(false);
 			changeToolbar(getString(R.string.action_settings), true);
 		} else {
 			getSupportFragmentManager().beginTransaction()
@@ -159,6 +172,7 @@ public class MainActivity
 				.hide(mAboutFragment)
 			.commit();
 
+            setUpdateButtonVisibility(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -178,7 +192,7 @@ public class MainActivity
 				.hide(mSettingsFragment)
 				.hide(mAboutFragment)
 			.commit();
-
+            setUpdateButtonVisibility(false);
 			changeToolbar(getString(R.string.action_log), true);
 		} else {
 			getSupportFragmentManager().beginTransaction()
@@ -188,7 +202,7 @@ public class MainActivity
 				.hide(mLogFragment)
 				.hide(mAboutFragment)
 			.commit();
-
+            setUpdateButtonVisibility(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -208,7 +222,7 @@ public class MainActivity
 				.hide(mSettingsFragment)
 				.hide(mLogFragment)
 				.commit();
-
+            setUpdateButtonVisibility(false);
 			changeToolbar(getString(R.string.tab_about), true);
 		} else {
 			getSupportFragmentManager().beginTransaction()
@@ -218,7 +232,7 @@ public class MainActivity
 				.hide(mLogFragment)
 				.hide(mAboutFragment)
 				.commit();
-
+            setUpdateButtonVisibility(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -256,13 +270,13 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@OptionsItem(R.id.action_update)
-	void onUpdateClick(
-	) {
-		if (!ServiceUtil.isServiceRunning(getBaseContext(), UpdaterService_.class)) {
-			UpdaterService_.intent(getApplication()).start();
-		}
-	}
+//	@OptionsItem(R.id.action_update)
+//	void onUpdateClick(
+//	) {
+//		if (!ServiceUtil.isServiceRunning(getBaseContext(), UpdaterService_.class)) {
+//			UpdaterService_.intent(getApplication()).start();
+//		}
+//	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -343,6 +357,23 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Click(R.id.update_button)
+    protected void onUpdateClick(
+    ) {
+        if (!ServiceUtil.isServiceRunning(getBaseContext(), UpdaterService_.class)) {
+            UpdaterService_.intent(getApplication()).start();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void setUpdateButtonVisibility(
+        boolean visible
+    ) {
+        mUpdateButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -57,6 +57,8 @@
 
     <!-- Dark Theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryD</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkD</item>
         <item name="colorAccent">@color/colorAccentDark</item>
         <item name="android:textColor">@color/textColorDark</item>
         <item name="preferenceTheme">@style/PreferenceThemeDark</item>

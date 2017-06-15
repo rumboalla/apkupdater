@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -25,6 +26,7 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:textColor="?android:textColor"
+                app:backgroundTint="?attr/colorAccent"
                 android:hint="@string/tab_search"
                 android:gravity="center_horizontal"
             />

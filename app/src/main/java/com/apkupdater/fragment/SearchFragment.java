@@ -3,11 +3,9 @@ package com.apkupdater.fragment;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -23,7 +21,6 @@ import com.apkupdater.adapter.SearchAdapter;
 import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterGooglePlay;
-import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.MyBus;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
@@ -69,11 +66,6 @@ public class SearchFragment
 	) {
 		mBus.register(this);
 
-		// Change color for the bottom line
-		int color = ColorUtil.getColorFromContext(getContext(), R.attr.colorAccent);
-        ColorStateList colorStateList = ColorStateList.valueOf(color);
-        ViewCompat.setBackgroundTintList(mInputSearch, colorStateList);
-
         // Set the input action listener
         mInputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -104,6 +96,10 @@ public class SearchFragment
     private void search(
         final String text
     ) {
+	    if (mProgressBar.getVisibility() == View.VISIBLE) {
+	        return;
+        }
+
         setListAdapter(new ArrayList<InstalledApp>());
         mProgressBar.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {

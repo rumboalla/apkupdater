@@ -4,14 +4,6 @@
       tools:context="com.apkupdater.activity.MainActivity"
 >
     <item
-        android:id="@+id/action_update"
-        android:orderInCategory="1"
-        android:title="@string/action_check_for_updates"
-        android:icon="@drawable/ic_update"
-        app:showAsAction="always"
-    />
-
-    <item
         android:id="@+id/action_log"
         android:orderInCategory="2"
         android:title="@string/action_log"
