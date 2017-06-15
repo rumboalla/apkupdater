@@ -1,8 +1,7 @@
 # APKUpdater
-APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.
+APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide similar functionality to an app store, without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.
 
-More information can be found in this [XDA thread](https://forum.xda-developers.com/android/apps-games/app-apkupdater-t3444517
-).
+More information can be found on this [XDA thread](https://forum.xda-developers.com/android/apps-games/app-apkupdater-t3444517).
 
 # Download
 * [APK for latest version (1.4.6)](https://github.com/rumboalla/apkupdater/releases/download/1.4.6/app-release.apk)
@@ -11,23 +10,27 @@ More information can be found in this [XDA thread](https://forum.xda-developers.
 # Features
 * Get updates from multiple sources.
 * Schedule background update checks.
-* Supports Android 2.3 to 7.1.
+* Supports Android 2.3 to 7.1.2.
 * Modern material design with multiple theme support.
 * Display notifications when updates are found.
 * Ignore list for apps that should not be checked for updates.
+* Search for new apps to install.
 
 # Used libraries
 Big thanks to the developers of these wonderful libraries:
-* [AndroidAnnotations](http://androidannotations.org)
-* [Jsoup](http://jsoup.org)
+* [AndroidAnnotations](https://github.com/androidannotations/androidannotations)
+* [Jsoup](https://github.com/jhy/jsoup)
 * [Otto](https://github.com/square/otto)
 * [Gson](https://github.com/google/gson)
+* [OkHttp](https://github.com/square/okhttp)
+* [play-store-api](https://github.com/yeriomin/play-store-api)
 
 # Update sources
 At the moment three sources are supported:
-* [APKMirror](http://www.apkmirror.com/)
+* [APKMirror](https://www.apkmirror.com)
+* [Google Play](https://play.google.com)
 * [APKPure](https://apkpure.com)
-* [Uptodown](http://en.uptodown.com/)
+* [Uptodown](https://en.uptodown.com)
 
 # Screenshots
 <img src="https://cloud.githubusercontent.com/assets/21153554/17836760/228bca80-679e-11e6-8394-2fa321702709.png" width="256">
