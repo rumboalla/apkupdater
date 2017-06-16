@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.apkupdater.model.Update;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.PixelConversion;
+import com.apkupdater.util.ThemeUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -153,6 +155,10 @@ public class UpdaterAdapter
 				ColorUtil.getColorFromTheme(mContext.getTheme(), R.attr.colorAccent),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			);
+
+			// Background color
+            CardView card = (CardView) mView;
+            card.setCardBackgroundColor(ThemeUtil.getCardBackgroundColor(mContext));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////

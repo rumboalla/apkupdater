@@ -17,11 +17,11 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.updater.UpdaterGooglePlay;
-import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.PixelConversion;
+import com.apkupdater.util.ThemeUtil;
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
@@ -89,6 +89,10 @@ public class SearchAdapter
 
             mActionOneButton.setText(R.string.action_play);
             mActionOneButton.setOnClickListener(mAdapter);
+
+            // Background color
+            CardView card = (CardView) mView;
+            card.setCardBackgroundColor(ThemeUtil.getCardBackgroundColor(mContext));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
