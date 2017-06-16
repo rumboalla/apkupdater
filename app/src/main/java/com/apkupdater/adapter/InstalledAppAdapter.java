@@ -95,10 +95,6 @@ public class InstalledAppAdapter
             }
 
             mActionOneButton.setOnClickListener(mAdapter);
-
-            // Background color
-            CardView card = (CardView) mView;
-            card.setCardBackgroundColor(ThemeUtil.getCardBackgroundColor(mContext));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
