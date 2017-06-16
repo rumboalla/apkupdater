@@ -76,6 +76,7 @@
     <string name="theme_pink">Pink Panther</string>
     <string name="theme_dark">Dark Droid</string>
     <string name="theme_orange">Orange Juice</string>
+    <string name="theme_bloody">Bloody Void</string>
     <string name="content_description_app_icon">App Icon</string>
     <string name="update_check_failed_no_internet">Checking for updates failed: No internet connection.</string>
     <string name="update_check_failed_no_wifi">Checking for updates failed: No Wi-Fi.</string>

@@ -23,9 +23,11 @@ public class ThemeUtil
 			return R.style.AppThemeDark;
 		} else if (theme.equals(context.getString(R.string.theme_pink))) {
 			return R.style.AppThemePink;
-		}else if (theme.equals(context.getString(R.string.theme_orange))) {
-			return R.style.AppThemeOrange;
-		} else {
+		} else if (theme.equals(context.getString(R.string.theme_orange))) {
+            return R.style.AppThemeOrange;
+        } else if (theme.equals(context.getString(R.string.theme_bloody))) {
+            return R.style.AppThemeBloody;
+        } else {
 			return R.style.AppThemeBlue;
 		}
 	}
@@ -44,12 +46,35 @@ public class ThemeUtil
 			return R.style.PreferenceThemePink;
 		}else if (theme.equals(context.getString(R.string.theme_orange))) {
 			return R.style.PreferenceThemeOrange;
-		} else {
+        } else if (theme.equals(context.getString(R.string.theme_bloody))) {
+            return R.style.PreferenceThemeBloody;
+        } else {
 			return R.style.PreferenceThemeBlue;
 		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static int getCardBackgroundColor(
+        Context context
+    ) {
+        String theme = new UpdaterOptions(context).getTheme();
+        if(theme.equals(context.getString(R.string.theme_blue))) {
+            return 0xFFFFFFFF;
+        } else if (theme.equals(context.getString(R.string.theme_dark))) {
+            return 0xFF424242;
+        } else if (theme.equals(context.getString(R.string.theme_pink))) {
+            return 0xFF424242;
+        }else if (theme.equals(context.getString(R.string.theme_orange))) {
+            return 0xFFFFFFFF;
+        } else if (theme.equals(context.getString(R.string.theme_bloody))) {
+            return 0;
+        } else {
+            return 0xFFFFFFFF;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
