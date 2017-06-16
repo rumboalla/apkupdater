@@ -89,10 +89,6 @@ public class SearchAdapter
 
             mActionOneButton.setText(R.string.action_play);
             mActionOneButton.setOnClickListener(mAdapter);
-
-            // Background color
-            CardView card = (CardView) mView;
-            card.setCardBackgroundColor(ThemeUtil.getCardBackgroundColor(mContext));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////

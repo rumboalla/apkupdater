@@ -155,10 +155,6 @@ public class UpdaterAdapter
 				ColorUtil.getColorFromTheme(mContext.getTheme(), R.attr.colorAccent),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			);
-
-			// Background color
-            CardView card = (CardView) mView;
-            card.setCardBackgroundColor(ThemeUtil.getCardBackgroundColor(mContext));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
