@@ -10,7 +10,7 @@ More information can be found on this [XDA thread](https://forum.xda-developers.
 # Features
 * Get updates from multiple sources.
 * Schedule background update checks.
-* Supports Android 2.3 to 7.1.2.
+* Supports Android 2.3 to 8.
 * Modern material design with multiple theme support.
 * Display notifications when updates are found.
 * Ignore list for apps that should not be checked for updates.
