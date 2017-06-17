@@ -155,6 +155,8 @@ public class UpdaterAdapter
 				ColorUtil.getColorFromTheme(mContext.getTheme(), R.attr.colorAccent),
 				android.graphics.PorterDuff.Mode.MULTIPLY
 			);
+
+			setTopMargin(0);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,17 +228,7 @@ public class UpdaterAdapter
 
 		int index = mUpdates.indexOf(update);
 
-		// If first item, reset margins
-		if (index == 0) {
-            for (int i = 0; i < getItemCount(); i++) {
-                View v = mView.getChildAt(i);
-                if (v != null) {
-                    UpdateViewHolder h = (UpdateViewHolder) mView.getChildViewHolder(v);
-                    h.setTopMargin(0);
-                }
-            }
-        }
-
+		notifyItemChanged(0);
 		notifyItemInserted(index);
 	}
 
