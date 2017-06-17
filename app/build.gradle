@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.apkupdater"
         minSdkVersion 9
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 18
         versionName "1.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -22,7 +22,7 @@ android {
     }
 }
 
-def AAVersion = '4.2.0'
+def AAVersion = '4.3.1'
 
 dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
@@ -37,7 +37,7 @@ dependencies {
     compile 'com.squareup:otto:1.3.8'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.github.yeriomin:play-store-api:0.16'
+    compile 'com.github.yeriomin:play-store-api:0.17'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
