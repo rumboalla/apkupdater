@@ -9,19 +9,16 @@ import com.apkupdater.model.Update;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
 import com.apkupdater.util.yalp.OkHttpClientAdapter;
-import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
 import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
 import com.github.yeriomin.playstoreapi.DeviceInfoProvider;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
-import com.github.yeriomin.playstoreapi.PurchaseStatusResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.locks.ReentrantLock;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +73,7 @@ public class UpdaterGooglePlay
                     continue;
                 }
 
-                DocV2 details = entry.getDoc();
+                final DocV2 details = entry.getDoc();
                 final int versionCode = details.getDetails().getAppDetails().getVersionCode();
                 final String pname = details.getDetails().getAppDetails().getPackageName();
                 final InstalledApp app = getInstalledApp(pname);
@@ -91,38 +88,18 @@ public class UpdaterGooglePlay
                         @Override
                         public void run() {
                             try {
-                                PurchaseStatusResponse r;
-                                DocV2 details = mApi.details(pname).getDocV2();
-                                if (details.getOfferCount() == 0) {
-                                    callback.onResult(null);
-                                    return;
-                                }
-
-                                r = mApi.purchase(pname, versionCode, details.getOffer(0).getOfferType()).getPurchaseStatusResponse();
-                                if (r.getStatus() != 1) {
-                                    callback.onResult(null);
-                                    return;
-                                }
-
-                                AndroidAppDeliveryData d = r.getAppDeliveryData();
-                                if (d.getDownloadAuthCookieCount() == 0) {
-                                    callback.onResult(null);
-                                    return;
-                                }
-
                                 Update u = new Update(
                                     app,
-                                    d.getDownloadUrl(),
+                                    "",
                                     details.getDetails().getAppDetails().hasVersionString() ? details.getDetails().getAppDetails().getVersionString() : "?",
                                     false,
-                                    d.getDownloadAuthCookie(0).getName() + "=" + d.getDownloadAuthCookie(0).getValue(),
+                                    "Cookie",
                                     versionCode
                                 );
 
                                 mUpdates.add(u);
                                 callback.onResult(u);
                             } catch (Exception ex) {
-                                // TODO: Maybe log these
                                 callback.onResult(null);
                             }
                         }
