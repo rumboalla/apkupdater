@@ -20,10 +20,14 @@ import com.apkupdater.R;
 import com.apkupdater.adapter.SearchAdapter;
 import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.LogMessage;
 import com.apkupdater.updater.UpdaterGooglePlay;
+import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.SnackBarUtil;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
+import com.github.yeriomin.playstoreapi.GooglePlayException;
 import com.github.yeriomin.playstoreapi.SearchIterator;
 import com.github.yeriomin.playstoreapi.SearchResponse;
 
@@ -59,6 +63,9 @@ public class SearchFragment
     @Bean
 	MyBus mBus;
 
+    @Bean
+    LogUtil mLog;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@AfterViews
@@ -75,18 +82,23 @@ public class SearchFragment
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        mInputSearch.clearFocus();
                     }
                     return true;
                 }
                 return false;
             }
         });
+
+        // For smooth scrolling
+        mRecyclerView.setNestedScrollingEnabled(false);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy(
+    ) {
 		mBus.unregister(this);
 		super.onDestroy();
 	}
@@ -123,6 +135,20 @@ public class SearchFragment
 
                     setListAdapter(apps);
                 } catch (Exception e) {
+                    String message = "";
+                    
+                    if (e.getCause() instanceof GooglePlayException) {
+                        if (((GooglePlayException) e.getCause()).getCode() == 429) {
+                            message = "Error 429: Too many requests.";
+                        }
+                    }
+                    
+                    if (message.isEmpty()) {
+                        message = "Error searching.";
+                    }
+
+                    SnackBarUtil.make(getActivity(), message);
+                    mLog.log("SearchFragment", String.valueOf(e), LogMessage.SEVERITY_ERROR);
                     setListAdapter(new ArrayList<InstalledApp>());
                 }
             }
