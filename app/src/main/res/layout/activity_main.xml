@@ -38,6 +38,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_update"
         app:backgroundTint="?attr/colorPrimary"
+
         app:layout_anchor="@id/container"
         app:layout_anchorGravity="bottom|right|end"
     />

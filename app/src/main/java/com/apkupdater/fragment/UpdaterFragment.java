@@ -64,8 +64,6 @@ public class UpdaterFragment
 	@ViewById(R.id.loader)
 	ProgressBar mLoader;
 
-	UpdaterAdapter mAdapter;
-
 	@Bean
 	InstalledAppUtil mInstalledAppUtil;
 
@@ -77,6 +75,9 @@ public class UpdaterFragment
 
 	@Bean
 	AppState mAppState;
+
+	@Bean
+    UpdaterAdapter mAdapter;
 
 	private int mProgressCount = 0;
 	private int mProgressMax = 0;
@@ -261,7 +262,7 @@ public class UpdaterFragment
 	@AfterViews
 	void init(
 	) {
-		mAdapter = new UpdaterAdapter(getContext(), mRecyclerView, new ArrayList<Update>());
+        mAdapter.init(getActivity(), mRecyclerView, new ArrayList<Update>());
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		mRecyclerView.setAdapter(mAdapter);
 

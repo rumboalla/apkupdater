@@ -66,5 +66,6 @@
     <string name="preferences_general_use_play_title">*Updates from Google Play*</string>
     <string name="preferences_general_use_play_summary">*This will check for updates on Google Play.*</string>
     <string name="action_play">*INSTALL*</string>
+    <string name="theme_bloody">*Bloody Void*</string>
 </resources>
 

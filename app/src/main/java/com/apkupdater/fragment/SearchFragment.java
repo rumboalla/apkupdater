@@ -20,8 +20,11 @@ import com.apkupdater.R;
 import com.apkupdater.adapter.SearchAdapter;
 import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.LogMessage;
 import com.apkupdater.updater.UpdaterGooglePlay;
+import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.SnackBarUtil;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.SearchIterator;
@@ -59,6 +62,12 @@ public class SearchFragment
     @Bean
 	MyBus mBus;
 
+    @Bean
+    LogUtil mLog;
+
+    @Bean
+    SearchAdapter mAdapter;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@AfterViews
@@ -75,18 +84,23 @@ public class SearchFragment
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        mInputSearch.clearFocus();
                     }
                     return true;
                 }
                 return false;
             }
         });
+
+        // For smooth scrolling
+        mRecyclerView.setNestedScrollingEnabled(false);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy(
+    ) {
 		mBus.unregister(this);
 		super.onDestroy();
 	}
@@ -122,7 +136,13 @@ public class SearchFragment
                     }
 
                     setListAdapter(apps);
+                } catch (RuntimeException rex) {
+                    SnackBarUtil.make(getActivity(), String.valueOf(rex.getCause().getMessage()));
+                    mLog.log("SearchFragment", String.valueOf(rex), LogMessage.SEVERITY_ERROR);
+                    setListAdapter(new ArrayList<InstalledApp>());
                 } catch (Exception e) {
+                    SnackBarUtil.make(getActivity(), "Error searching.");
+                    mLog.log("SearchFragment", String.valueOf(e), LogMessage.SEVERITY_ERROR);
                     setListAdapter(new ArrayList<InstalledApp>());
                 }
             }
@@ -140,7 +160,8 @@ public class SearchFragment
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		mRecyclerView.setAdapter(new SearchAdapter(getContext(), mRecyclerView, items));
+		mAdapter.init(getActivity(), mRecyclerView, items);
+		mRecyclerView.setAdapter(mAdapter);
 		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));
 		mProgressBar.setVisibility(View.GONE);
 	}

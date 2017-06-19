@@ -72,4 +72,27 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+    <!-- Bloody Theme -->
+    <style name="AppThemeBloody" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryBloody</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBloody</item>
+        <item name="colorAccent">@color/textColorBloody</item>
+        <item name="colorControlActivated">@color/textColorBloody</item>
+        <item name="colorControlNormal">@color/textColorBloody</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryBloody</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryBloody</item>
+        <item name="android:colorBackground">@color/colorPrimaryBloody</item>
+        <item name="android:textColor">@color/textColorBloody</item>
+        <item name="preferenceTheme">@style/PreferenceThemeBloody</item>
+        <item name="alertDialogTheme">@style/PreferenceThemeBloody</item>
+    </style>
+
+    <style name="PreferenceThemeBloody" parent="AppThemeBloody">
+        <item name="android:textColorPrimary">@color/textColorPrimaryBloody</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryBloody</item>
+        <item name="tabIndicatorColor">@color/textColorPrimaryBloody</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="textColorAlertDialogListItem">@color/textColorBloody</item>
+    </style>
+
 </resources>
