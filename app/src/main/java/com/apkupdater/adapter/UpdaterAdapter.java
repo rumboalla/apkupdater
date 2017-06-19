@@ -2,26 +2,39 @@ package com.apkupdater.adapter;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
+import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
+import com.apkupdater.updater.UpdaterGooglePlay;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
+import com.apkupdater.util.LogUtil;
+import com.apkupdater.util.MyBus;
 import com.apkupdater.util.PixelConversion;
-import com.apkupdater.util.ThemeUtil;
+import com.apkupdater.util.SnackBarUtil;
+import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
+import com.github.yeriomin.playstoreapi.DocV2;
+import com.github.yeriomin.playstoreapi.GooglePlayAPI;
+import com.github.yeriomin.playstoreapi.GooglePlayException;
+
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,6 +42,7 @@ import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@EBean
 public class UpdaterAdapter
 	extends RecyclerView.Adapter<UpdaterAdapter.UpdateViewHolder>
 {
@@ -37,6 +51,13 @@ public class UpdaterAdapter
 	private List<Update> mUpdates;
 	private Context mContext;
 	private RecyclerView mView;
+    private Activity mActivity;
+
+    @Bean
+    MyBus mBus;
+
+    @Bean
+    LogUtil mLog;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +75,7 @@ public class UpdaterAdapter
 		private Button mActionOneButton;
 		private Button mActionTwoButton;
 		private ImageView mIsBetaIcon;
+        private ProgressBar mActionOneProgressBar;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,6 +100,7 @@ public class UpdaterAdapter
 			mUrl = ((TextView) mView.findViewById(R.id.update_url));
 			mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
 			mActionTwoButton = ((Button) mView.findViewById(R.id.action_two_button));
+            mActionOneProgressBar = ((ProgressBar) mView.findViewById(R.id.action_one_progressbar));
 
 			// Set values
 			mName.setText(update.getName());
@@ -117,12 +140,39 @@ public class UpdaterAdapter
                     @Override
                     public void onClick(View view) {
                         if (mActionOneButton.getText().equals(mContext.getString(R.string.action_play))) {
-                            DownloadUtil.downloadFile(
-                                mContext,
-                                update.getUrl(),
-                                update.getCookie(),
-                                update.getPname() + " " + update.getNewVersionCode()
-                            );
+                            setProgressBarVisibility(View.VISIBLE);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        GooglePlayAPI api = UpdaterGooglePlay.getGooglePlayApi(mContext);
+                                        DocV2 d = api.details(update.getPname()).getDocV2();
+                                        AndroidAppDeliveryData data = api.purchase(
+                                            d.getDetails().getAppDetails().getPackageName(),
+                                            d.getDetails().getAppDetails().getVersionCode(),
+                                            d.getOffer(0).getOfferType()
+                                        ).getPurchaseStatusResponse().getAppDeliveryData();
+
+                                        DownloadUtil.downloadFile(
+                                            mContext,
+                                            data.getDownloadUrl(),
+                                            data.getDownloadAuthCookie(0).getName() + "=" + data.getDownloadAuthCookie(0).getValue(),
+                                            update.getPname() + " " + update.getVersionCode()
+                                        );
+
+                                        setProgressBarVisibility(View.GONE); // TODO: Implement download/install notification
+                                    } catch (GooglePlayException gex) {
+                                        SnackBarUtil.make(mActivity, String.valueOf(gex.getMessage()));
+                                        mLog.log("UpdaterAdapter", String.valueOf(gex), LogMessage.SEVERITY_ERROR);
+                                        setProgressBarVisibility( View.GONE);
+                                    } catch (Exception e) {
+                                        SnackBarUtil.make(mActivity, "Error downloading.");
+                                        mLog.log("UpdaterAdapter", String.valueOf(e), LogMessage.SEVERITY_ERROR);
+                                        setProgressBarVisibility(View.GONE);
+                                    }
+                                }
+                            }).start();
+
                         } else {
                             DownloadUtil.LaunchBrowser(mContext, update.getUrl());
                         }
@@ -159,6 +209,25 @@ public class UpdaterAdapter
 			setTopMargin(0);
 		}
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void setProgressBarVisibility(
+            final int visibility
+        ) {
+            if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+                mActionOneProgressBar.setVisibility(visibility);
+                mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+            } else {
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActionOneProgressBar.setVisibility(visibility);
+                        mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+                    }
+                });
+            }
+        }
+
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void setTopMargin(
@@ -175,14 +244,9 @@ public class UpdaterAdapter
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public UpdaterAdapter(
-		Context context,
-		RecyclerView view,
-		List<Update> apps
+		Context context
 	) {
 		mContext = context;
-		mView = view;
-		mUpdates = apps;
-		sort();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,8 +301,7 @@ public class UpdaterAdapter
 	public void setUpdates(
 		List<Update> updates
 	) {
-		mUpdates.clear();
-		mUpdates.addAll(updates);
+		mUpdates = updates;
 		sort();
 		notifyDataSetChanged();
 	}
@@ -262,6 +325,19 @@ public class UpdaterAdapter
 			}
 		});
 	}
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void init(
+        Activity activity,
+        RecyclerView view,
+        List<Update> updates
+    ) {
+        mActivity = activity;
+        mView = view;
+        setUpdates(updates);
+        mBus.register(this);
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
