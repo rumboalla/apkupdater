@@ -2,9 +2,11 @@ package com.apkupdater.adapter;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,24 +14,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.event.DownloadCompleteEvent;
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.model.LogMessage;
 import com.apkupdater.updater.UpdaterGooglePlay;
-import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.InstalledAppUtil;
+import com.apkupdater.util.LogUtil;
+import com.apkupdater.util.MyBus;
 import com.apkupdater.util.PixelConversion;
-import com.apkupdater.util.ThemeUtil;
+import com.apkupdater.util.SnackBarUtil;
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
+import com.github.yeriomin.playstoreapi.GooglePlayException;
+
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@EBean
 public class SearchAdapter
 	extends RecyclerView.Adapter<SearchAdapter.InstalledAppViewHolder>
 	implements View.OnClickListener
@@ -40,6 +51,13 @@ public class SearchAdapter
 	private Context mContext;
 	private RecyclerView mView;
     private SearchAdapter mAdapter;
+    private Activity mActivity;
+
+    @Bean
+    LogUtil mLog;
+
+    @Bean
+    MyBus myBus;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +72,8 @@ public class SearchAdapter
         private TextView mVersion;
         private ImageView mIcon;
         private Button mActionOneButton;
+        private ProgressBar mActionOneProgressBar;
+        private long dowloadId;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -75,6 +95,7 @@ public class SearchAdapter
             mVersion = ((TextView) mView.findViewById(R.id.installed_app_version));
             mIcon = ((ImageView) mView.findViewById(R.id.installed_app_icon));
             mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
+            mActionOneProgressBar = ((ProgressBar) mView.findViewById(R.id.action_one_progressbar));
 
             mName.setText(app.getName());
             mPname.setText(app.getPname());
@@ -91,7 +112,7 @@ public class SearchAdapter
             mActionOneButton.setOnClickListener(mAdapter);
 		}
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void setTopMargin(
             int margin
@@ -101,20 +122,38 @@ public class SearchAdapter
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public void setProgressBarVisibility(
+            int visibility
+        ) {
+		    mActionOneProgressBar.setVisibility(visibility);
+		    mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public void setDownloadId(
+            long id
+        ) {
+		    dowloadId = id;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public long getDownloadId(
+        ) {
+		    return dowloadId;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public SearchAdapter(
-		Context context,
-		RecyclerView view,
-		List<InstalledApp> apps
+		Context context
 	) {
 		mContext = context;
-		mAdapter = this;
-		mView = view;
-		AnimationUtil.startListAnimation(mView);
-		mApps = InstalledAppUtil.sort(mContext, apps);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,6 +194,8 @@ public class SearchAdapter
 		}
 
 		final InstalledApp app = mApps.get(mView.getChildLayoutPosition(parent));
+        final InstalledAppViewHolder holder = (InstalledAppViewHolder) mView.getChildViewHolder(parent);
+        setProgressBarVisibility(holder, View.VISIBLE);
 
 		new Thread(new Runnable() {
 			@Override
@@ -174,13 +215,39 @@ public class SearchAdapter
 						data.getDownloadAuthCookie(0).getName() + "=" + data.getDownloadAuthCookie(0).getValue(),
 						app.getPname() + " " + app.getVersionCode()
 					);
-				} catch (Exception e) {
 
-				}
+                    setProgressBarVisibility(holder, View.GONE); // TODO: Implement download/install notification
+                } catch (GooglePlayException gex) {
+                    SnackBarUtil.make(mActivity, String.valueOf(gex.getMessage()));
+                    mLog.log("SearchAdapter", String.valueOf(gex), LogMessage.SEVERITY_ERROR);
+                    setProgressBarVisibility(holder, View.GONE);
+                } catch (Exception e) {
+                    SnackBarUtil.make(mActivity, "Error downloading.");
+                    mLog.log("SearchAdapter", String.valueOf(e), LogMessage.SEVERITY_ERROR);
+                    setProgressBarVisibility(holder, View.GONE);
+                }
 			}
 		}).start();
 
 	}
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void setProgressBarVisibility(
+	    final InstalledAppViewHolder holder,
+	    final int visibility
+    ) {
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            holder.setProgressBarVisibility(visibility);
+        } else {
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    holder.setProgressBarVisibility(visibility);
+                }
+            });
+        }
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -205,6 +272,29 @@ public class SearchAdapter
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void init(
+        Activity activity,
+        RecyclerView view,
+        List<InstalledApp> apps
+    ) {
+	    mActivity = activity;
+        mAdapter = this;
+        mView = view;
+        mApps = InstalledAppUtil.sort(mContext, apps);
+
+        myBus.register(this);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected void onDownloadComplete(
+        DownloadCompleteEvent ev
+    ) {
+	    // TODO: Implement
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 
