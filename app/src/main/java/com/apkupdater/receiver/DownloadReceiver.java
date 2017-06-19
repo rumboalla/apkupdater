@@ -12,6 +12,7 @@ import android.net.Uri;
 
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.util.LogUtil;
+import com.apkupdater.util.MyBus;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EReceiver;
@@ -22,8 +23,13 @@ import org.androidannotations.annotations.EReceiver;
 public class DownloadReceiver
     extends BroadcastReceiver
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @Bean
     LogUtil mLog;
+
+    @Bean
+    MyBus mBus;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -39,12 +45,15 @@ public class DownloadReceiver
         }
 
         // Launch install
-        openDownloadedFile(context, id);
+        boolean b = openDownloadedFile(context, id);
+
+        // Post the event
+        //mBus.post(new DownloadCompleteEvent(b, id));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void openDownloadedFile(
+    private boolean openDownloadedFile(
         final Context context,
         final long id
     ) {
@@ -67,12 +76,15 @@ public class DownloadReceiver
                         install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(install);
                     }
+                } else {
+                    throw new Exception("Error downloading.");
                 }
             }
             cursor.close();
-            throw new Exception("test");
+            return true;
         } catch (Exception e) {
             mLog.log("openDownloadFile", String.valueOf(e), LogMessage.SEVERITY_ERROR);
+            return false;
         }
     }
 

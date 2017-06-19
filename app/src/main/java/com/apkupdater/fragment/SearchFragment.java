@@ -27,7 +27,6 @@ import com.apkupdater.util.MyBus;
 import com.apkupdater.util.SnackBarUtil;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
-import com.github.yeriomin.playstoreapi.GooglePlayException;
 import com.github.yeriomin.playstoreapi.SearchIterator;
 import com.github.yeriomin.playstoreapi.SearchResponse;
 
@@ -65,6 +64,9 @@ public class SearchFragment
 
     @Bean
     LogUtil mLog;
+
+    @Bean
+    SearchAdapter mAdapter;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -134,20 +136,12 @@ public class SearchFragment
                     }
 
                     setListAdapter(apps);
+                } catch (RuntimeException rex) {
+                    SnackBarUtil.make(getActivity(), String.valueOf(rex.getCause().getMessage()));
+                    mLog.log("SearchFragment", String.valueOf(rex), LogMessage.SEVERITY_ERROR);
+                    setListAdapter(new ArrayList<InstalledApp>());
                 } catch (Exception e) {
-                    String message = "";
-                    
-                    if (e.getCause() instanceof GooglePlayException) {
-                        if (((GooglePlayException) e.getCause()).getCode() == 429) {
-                            message = "Error 429: Too many requests.";
-                        }
-                    }
-                    
-                    if (message.isEmpty()) {
-                        message = "Error searching.";
-                    }
-
-                    SnackBarUtil.make(getActivity(), message);
+                    SnackBarUtil.make(getActivity(), "Error searching.");
                     mLog.log("SearchFragment", String.valueOf(e), LogMessage.SEVERITY_ERROR);
                     setListAdapter(new ArrayList<InstalledApp>());
                 }
@@ -166,7 +160,8 @@ public class SearchFragment
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		mRecyclerView.setAdapter(new SearchAdapter(getContext(), mRecyclerView, items));
+		mAdapter.init(getActivity(), mRecyclerView, items);
+		mRecyclerView.setAdapter(mAdapter);
 		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));
 		mProgressBar.setVisibility(View.GONE);
 	}
