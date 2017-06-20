@@ -66,5 +66,5 @@
     <string name="preferences_general_use_play_title">Mise à jour depuis Google Play</string>
     <string name="preferences_general_use_play_summary">Ceci vérifiera les mises à jour sur Google Play.</string>
     <string name="action_play">INSTALLER</string>
-    <string name="theme_bloody">*Bloody Void*</string>
+    <string name="theme_bloody">Sanglant</string>
 </resources>
