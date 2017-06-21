@@ -40,6 +40,6 @@ At the moment four sources are supported:
 <img src="https://user-images.githubusercontent.com/21153554/27254067-6951e334-5378-11e7-81ab-d8acca871262.png" width="512"> | <img src="https://user-images.githubusercontent.com/21153554/27194452-7f4f7fa4-51fa-11e7-8fc3-985212bfa749.png" width="512">
 
 # License
-Copyright &copy; 2016 Rumboalla.
+Copyright &copy; 2017 Rumboalla.
 
 Licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
