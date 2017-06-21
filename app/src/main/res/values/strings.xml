@@ -21,6 +21,7 @@
     <string name="preferences_general_category">General settings</string>
     <string name="preferences_filter_category">Filter settings</string>
     <string name="preferences_sources_category">Update sources</string>
+    <string name="preferences_play_category">Google Play Settings</string>
     <string name="preferences_general_skip_experimental_title">Exclude experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
     <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
@@ -65,6 +66,9 @@
     <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
     <string name="preferences_general_update_hour_title">Update hour</string>
     <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
+    <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
+    <string name="preferences_play_root_install_title">Root install</string>
+    <string name="preferences_play_root_install_summary">Install apps in the background using root. NEEDS ROOT.</string>
     <string name="notification_never">Never</string>
     <string name="notification_always">Always</string>
     <string name="notification_background">Background</string>
@@ -115,5 +119,7 @@
     <string name="update_hour_twenty_one" translatable="false">21:00</string>
     <string name="update_hour_twenty_two" translatable="false">22:00</string>
     <string name="update_hour_twenty_three" translatable="false">23:00</string>
+    <string name="install_success">App was successfully installed!</string>
+    <string name="install_failure">Error installing app!</string>
 </resources>
 

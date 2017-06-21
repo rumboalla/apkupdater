@@ -10,12 +10,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.model.LogMessage;
+import com.apkupdater.updater.UpdaterOptions;
+import com.apkupdater.util.FileUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EReceiver;
+
+import java.io.File;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,16 +70,22 @@ public class DownloadReceiver
             if (cursor.moveToFirst()) {
                 int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
                 String uri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                //String mime = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_MEDIA_TYPE));
+
                 if (status == DownloadManager.STATUS_SUCCESSFUL && uri != null) {
-                    Intent install = new Intent(Intent.ACTION_VIEW);
-                    install.setDataAndType(Uri.parse(uri), "application/vnd.android.package-archive");
-                    install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    try {
-                        context.startActivity(install);
-                    } catch (ActivityNotFoundException e) {
-                        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(install);
+                    UpdaterOptions options = new UpdaterOptions(context);
+
+                    if (options.useRootInstall()) {
+                        installWithRoot(context, uri);
+                    } else {
+                        Intent install = new Intent(Intent.ACTION_VIEW);
+                        install.setDataAndType(Uri.parse(uri), "application/vnd.android.package-archive");
+                        install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        try {
+                            context.startActivity(install);
+                        } catch (ActivityNotFoundException e) {
+                            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(install);
+                        }
                     }
                 } else {
                     throw new Exception("Error downloading.");
@@ -89,6 +100,36 @@ public class DownloadReceiver
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void installWithRoot(
+        Context context,
+        String uriString
+    ) {
+        File f = null;
+        try {
+            f = FileUtil.inputStreamToCacheFile(
+                context,
+                context.getContentResolver().openInputStream(Uri.parse(uriString))
+            );
+
+            if (FileUtil.installApk(f.getAbsolutePath())) {
+                mBus.post(new InstallAppEvent(true));
+            } else {
+                throw new Exception("Error in FileUtil.installApk. Probably no root.");
+            }
+
+        } catch (Exception e) {
+            mLog.log("installWithRoot", String.valueOf(e), LogMessage.SEVERITY_ERROR);
+            mBus.post(new InstallAppEvent(false));
+        } finally {
+            if (f != null) {
+                f.delete();
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
