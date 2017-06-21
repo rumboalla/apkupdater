@@ -24,7 +24,7 @@ import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
-import com.apkupdater.receiver.DownloadReceiver;
+import com.apkupdater.receiver.DownloadReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
@@ -68,7 +68,7 @@ public class MainActivity
 	LogFragment_ mLogFragment;
 	MainFragment_ mMainFragment;
 
-	DownloadReceiver downloadReceiver;
+	DownloadReceiver_ downloadReceiver;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -144,7 +144,7 @@ public class MainActivity
 
 		// Download receiver
         DownloadUtil.deleteDownloadedFiles(this);
-        downloadReceiver = new DownloadReceiver();
+        downloadReceiver = new DownloadReceiver_();
         registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         // Tint floating action button
