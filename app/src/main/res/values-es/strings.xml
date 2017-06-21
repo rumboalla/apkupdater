@@ -67,5 +67,10 @@
     <string name="preferences_general_use_play_summary">*This will check for updates on Google Play.*</string>
     <string name="action_play">*INSTALL*</string>
     <string name="theme_bloody">*Bloody Void*</string>
+    <string name="install_success">*App was successfully installed!*</string>
+   <string name="install_failure">*Error installing app!*</string>
+   <string name="preferences_play_category">*Google Play Settings*</string>
+   <string name="preferences_play_root_install_title">*Root install*</string>
+   <string name="preferences_play_root_install_summary">*Install apps in the background using root. NEEDS ROOT.*</string>
 </resources>
 

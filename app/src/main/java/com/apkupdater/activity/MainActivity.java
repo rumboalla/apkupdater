@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.MainFragment;
@@ -31,7 +32,9 @@ import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
+import com.apkupdater.util.SnackBarUtil;
 import com.apkupdater.util.ThemeUtil;
+import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -62,7 +65,6 @@ public class MainActivity
 	@ViewById(R.id.update_button)
     FloatingActionButton mUpdateButton;
 
-	Menu mMenu;
 	SettingsFragment_ mSettingsFragment;
 	AboutFragment_ mAboutFragment;
 	LogFragment_ mLogFragment;
@@ -380,6 +382,15 @@ public class MainActivity
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onInstallAppEvent(
+		InstallAppEvent ev
+	) {
+		SnackBarUtil.make(this, ev.isSuccess() ? getString(R.string.install_success) : getString(R.string.install_failure));
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

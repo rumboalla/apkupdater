@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 public class DownloadUtil
 {
@@ -44,25 +47,30 @@ public class DownloadUtil
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     static public void deleteDownloadedFiles(
-        Context context
+        @NonNull final Context context
     ) {
-        try {
-            DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-            DownloadManager.Query query = new DownloadManager.Query();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    DownloadManager.Query query = new DownloadManager.Query();
 
-            Cursor cursor = manager.query(query);
+                    Cursor cursor = manager.query(query);
 
-            if (cursor == null) {
-                return;
+                    if (cursor == null) {
+                        return;
+                    }
+
+                    while (cursor.moveToNext()) {
+                        int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
+                        manager.remove(id);
+                    }
+
+                    cursor.close();
+                } catch (Exception ignored) {}
             }
-
-            while (cursor.moveToNext()) {
-                int id = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
-                manager.remove(id);
-            }
-
-            cursor.close();
-        } catch (Exception ignored) {}
+        }).start();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -120,4 +120,16 @@
             android:defaultValue="false"
         />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preferences_play_category"
+        android:key="pref_key_play_settings"
+    >
+        <CheckBoxPreference
+            android:key="@string/preferences_play_root_install_key"
+            android:summary="@string/preferences_play_root_install_summary"
+            android:title="@string/preferences_play_root_install_title"
+            android:defaultValue="false"
+        />
+    </PreferenceCategory>
 </PreferenceScreen>
