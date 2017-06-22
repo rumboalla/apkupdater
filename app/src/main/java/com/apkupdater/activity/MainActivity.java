@@ -11,12 +11,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.MainFragment;
@@ -24,25 +25,26 @@ import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
-import com.apkupdater.receiver.DownloadReceiver;
+import com.apkupdater.receiver.DownloadReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
+import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
+import com.apkupdater.util.SnackBarUtil;
 import com.apkupdater.util.ThemeUtil;
+import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EActivity
-@OptionsMenu(R.menu.menu_main)
 public class MainActivity
 	extends AppCompatActivity
 {
@@ -68,7 +70,7 @@ public class MainActivity
 	LogFragment_ mLogFragment;
 	MainFragment_ mMainFragment;
 
-	DownloadReceiver downloadReceiver;
+	DownloadReceiver_ downloadReceiver;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -144,8 +146,11 @@ public class MainActivity
 
 		// Download receiver
         DownloadUtil.deleteDownloadedFiles(this);
-        downloadReceiver = new DownloadReceiver();
+        downloadReceiver = new DownloadReceiver_();
         registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+        // Tint floating action button
+        mUpdateButton.setImageDrawable(ColorUtil.tintDrawable(this, mUpdateButton.getDrawable(), android.R.attr.textColorPrimary));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,13 +275,16 @@ public class MainActivity
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//	@OptionsItem(R.id.action_update)
-//	void onUpdateClick(
-//	) {
-//		if (!ServiceUtil.isServiceRunning(getBaseContext(), UpdaterService_.class)) {
-//			UpdaterService_.intent(getApplication()).start();
-//		}
-//	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        menu.findItem(R.id.action_settings).setIcon(
+            ColorUtil.tintDrawable(this, menu.findItem(R.id.action_settings).getIcon(), android.R.attr.textColorPrimary)
+        );
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -374,6 +382,15 @@ public class MainActivity
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onInstallAppEvent(
+		InstallAppEvent ev
+	) {
+		SnackBarUtil.make(this, ev.isSuccess() ? getString(R.string.install_success) : getString(R.string.install_failure));
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

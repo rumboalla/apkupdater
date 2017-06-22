@@ -122,6 +122,8 @@ public class OkHttpClientAdapter extends HttpClientAdapter {
                 e.setTwoFactorUrl(authResponse.get("Url"));
             }
             throw e;
+        } else if (code == 429) {
+            throw new GooglePlayException("Error 429: Too many requests.", code);
         } else if (code >= 500) {
             throw new GooglePlayException("Server error", code);
         } else if (code >= 400) {
