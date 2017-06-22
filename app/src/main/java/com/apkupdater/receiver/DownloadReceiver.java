@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Looper;
 
 import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.model.LogMessage;
@@ -40,17 +41,22 @@ public class DownloadReceiver
 
     @Override
     public void onReceive(
-        Context context,
+        final Context context,
         Intent intent
     ) {
         // Check if it's a download
-        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+        final long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         if (id == -1) {
             return;
         }
 
         // Launch install
-        boolean b = openDownloadedFile(context, id);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                openDownloadedFile(context, id);
+            }
+        }).start();
 
         // Post the event
         //mBus.post(new DownloadCompleteEvent(b, id));
