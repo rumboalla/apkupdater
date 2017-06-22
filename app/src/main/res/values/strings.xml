@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">APKUpdater</string>
-    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.</p><p>Features:</p><ul><li>Get updates from multiple sources</li><li>Schedule background checks</li><li>Supports Android 2.3 to 7.1</li><li>Ignore list of apps to not check for updates</li><li>Modern material design with multi theme support</li><li>Display notifications when updates are found</li></ul><p>Used libraries:</p><ul><li><a href="http://androidannotations.org">AndroidAnnotations</a></li><li><a href="http://jsoup.org">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li></ul><p>Update sources:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
+    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide functionality similar to an app store without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.</p><p>Features:</p><ul><li>Get updates from multiple sources</li><li>Schedule background checks</li><li>Supports Android 2.3 to 7.1</li><li>Ignore list of apps to not check for updates</li><li>Modern material design with multi theme support</li><li>Display notifications when updates are found</li><li>Search for new apps to install</li></ul><p>Used libraries:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>Update sources:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
     <string name="action_settings">Settings</string>
     <string name="action_log">Log</string>
     <string name="action_check_for_updates">Check for updates</string>
@@ -21,6 +21,7 @@
     <string name="preferences_general_category">General settings</string>
     <string name="preferences_filter_category">Filter settings</string>
     <string name="preferences_sources_category">Update sources</string>
+    <string name="preferences_play_category">Google Play Settings</string>
     <string name="preferences_general_skip_experimental_title">Exclude experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
     <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
@@ -65,6 +66,9 @@
     <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
     <string name="preferences_general_update_hour_title">Update hour</string>
     <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
+    <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
+    <string name="preferences_play_root_install_title">Root install</string>
+    <string name="preferences_play_root_install_summary">Install apps in the background using root. NEEDS ROOT.</string>
     <string name="notification_never">Never</string>
     <string name="notification_always">Always</string>
     <string name="notification_background">Background</string>
@@ -76,6 +80,7 @@
     <string name="theme_pink">Pink Panther</string>
     <string name="theme_dark">Dark Droid</string>
     <string name="theme_orange">Orange Juice</string>
+    <string name="theme_bloody">Bloody Void</string>
     <string name="content_description_app_icon">App Icon</string>
     <string name="update_check_failed_no_internet">Checking for updates failed: No internet connection.</string>
     <string name="update_check_failed_no_wifi">Checking for updates failed: No Wi-Fi.</string>
@@ -114,5 +119,7 @@
     <string name="update_hour_twenty_one" translatable="false">21:00</string>
     <string name="update_hour_twenty_two" translatable="false">22:00</string>
     <string name="update_hour_twenty_three" translatable="false">23:00</string>
+    <string name="install_success">App was successfully installed!</string>
+    <string name="install_failure">Error installing app!</string>
 </resources>
 

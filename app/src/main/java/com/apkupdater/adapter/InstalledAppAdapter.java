@@ -5,6 +5,7 @@ package com.apkupdater.adapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.PixelConversion;
+import com.apkupdater.util.ThemeUtil;
 
 import java.util.List;
 
@@ -78,18 +80,10 @@ public class InstalledAppAdapter
             // Make the ignore overlay visible if this app is on the ignore list
             UpdaterOptions options = new UpdaterOptions(mContext);
             if (options.getIgnoreList().contains(app.getPname())) {
-                if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
-                    mView.setAlpha(0.50f);
-                } else {
-                    mView.setBackgroundColor(0x55000000);
-                }
+                ViewCompat.setAlpha(mView, 0.50f);
                 mActionOneButton.setText(R.string.action_unignore_app);
             } else {
-                if (android.os.Build.VERSION.SDK_INT >= 11) { // No alpha for old versions
-                    mView.setAlpha(1.0f);
-                } else {
-                    mView.setBackgroundColor(0x00FFFFFF);
-                }
+                ViewCompat.setAlpha(mView, 1.00f);
                 mActionOneButton.setText(R.string.action_ignore_app);
             }
 
