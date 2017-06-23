@@ -7,8 +7,8 @@ android {
         applicationId "com.apkupdater"
         minSdkVersion 9
         targetSdkVersion 26
-        versionCode 20
-        versionName "1.5.2"
+        versionCode 21
+        versionName "1.5.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     applicationVariants.all {
