@@ -118,12 +118,13 @@ public class DownloadReceiver
                 context.getContentResolver().openInputStream(Uri.parse(uriString))
             );
 
-            if (FileUtil.installApk(f.getAbsolutePath())) {
-                mBus.post(new InstallAppEvent(true));
-            } else {
-                throw new Exception("Error in FileUtil.installApk. Probably no root.");
+            if (f == null || !f.exists()) {
+                throw new Exception("Unable to copy file before install.");
             }
 
+            FileUtil.installApk(f.getAbsolutePath());
+
+            mBus.post(new InstallAppEvent(true));
         } catch (Exception e) {
             mLog.log("installWithRoot", String.valueOf(e), LogMessage.SEVERITY_ERROR);
             mBus.post(new InstallAppEvent(false));

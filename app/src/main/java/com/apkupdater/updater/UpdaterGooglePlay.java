@@ -138,8 +138,8 @@ public class UpdaterGooglePlay
                     .setLocale(Locale.getDefault())
                     .setEmail(null)
                     .setPassword(null)
-                    .setGsfId("332840dd1f6fbcb7")
-                    .setToken("xwTCN6FyGkcpTew5FcY5NqOchMjh5bV5u172U2hJELXLGcGXCpCFqJFlBpjjOWjeG3jDng.");
+                    .setGsfId("3205280df61a4644")
+                    .setToken("1gTCN_ouDuqbAVg7UViJL5tJ00m7Pc061nEWsf8SLQdE0bCIkhrqp6rUSikdxEaJA9sGCQ.");
 
                 api = builder.build();
                 api.uploadDeviceConfig();
