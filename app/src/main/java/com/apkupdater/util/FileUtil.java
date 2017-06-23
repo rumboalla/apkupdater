@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import eu.chainfire.libsuperuser.Shell;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 public class FileUtil
@@ -44,13 +46,17 @@ public class FileUtil
 
     static public boolean installApk(
         String path
-    ) {
-        try {
-            final String command = "pm install -r " + path;
-            Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command });
-            return proc.waitFor() == 0;
-        } catch (Exception e) {
-            return false;
+    )
+        throws Exception
+    {
+        if (Shell.SU.available()) {
+            if(Shell.SU.run("pm install -r " + path) == null) {
+                throw new Exception("Error executing pm install.");
+            } else {
+                return true;
+            }
+        } else {
+            throw new Exception("Root not available.");
         }
     }
 
