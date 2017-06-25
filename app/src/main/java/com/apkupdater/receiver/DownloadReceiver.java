@@ -3,15 +3,14 @@ package com.apkupdater.receiver;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Looper;
 
 import com.apkupdater.event.InstallAppEvent;
+import com.apkupdater.event.PackageInstallerEvent;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.FileUtil;
@@ -57,9 +56,6 @@ public class DownloadReceiver
                 openDownloadedFile(context, id);
             }
         }).start();
-
-        // Post the event
-        //mBus.post(new DownloadCompleteEvent(b, id));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,25 +78,24 @@ public class DownloadReceiver
 
                     if (options.useRootInstall()) {
                         installWithRoot(context, uri);
+                        mBus.post(new InstallAppEvent(null, id, true));
                     } else {
                         Intent install = new Intent(Intent.ACTION_VIEW);
                         install.setDataAndType(Uri.parse(uri), "application/vnd.android.package-archive");
                         install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        try {
-                            context.startActivity(install);
-                        } catch (ActivityNotFoundException e) {
-                            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(install);
-                        }
+                        mBus.post(new PackageInstallerEvent(install, id));
                     }
                 } else {
                     throw new Exception("Error downloading.");
                 }
-            }
+            } else {
+				throw new Exception("Download cancelled.");
+			}
             cursor.close();
             return true;
         } catch (Exception e) {
             mLog.log("openDownloadFile", String.valueOf(e), LogMessage.SEVERITY_ERROR);
+            mBus.post(new InstallAppEvent(null, id, false));
             return false;
         }
     }
@@ -110,7 +105,9 @@ public class DownloadReceiver
     private void installWithRoot(
         Context context,
         String uriString
-    ) {
+    )
+        throws  Exception
+    {
         File f = null;
         try {
             f = FileUtil.inputStreamToCacheFile(
@@ -123,11 +120,9 @@ public class DownloadReceiver
             }
 
             FileUtil.installApk(f.getAbsolutePath());
-
-            mBus.post(new InstallAppEvent(true));
         } catch (Exception e) {
             mLog.log("installWithRoot", String.valueOf(e), LogMessage.SEVERITY_ERROR);
-            mBus.post(new InstallAppEvent(false));
+            throw e;
         } finally {
             if (f != null) {
                 f.delete();
