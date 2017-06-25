@@ -401,11 +401,16 @@ public class MainActivity
 
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(
+		int requestCode,
+		int resultCode,
+		Intent data
+	) {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (mRequestCodes.containsKey(requestCode)) {
 			mBus.post(new InstallAppEvent(null, mRequestCodes.get(requestCode), false));
+			mRequestCodes.remove(requestCode);
 		}
 	}
 

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,22 +18,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.event.InstallAppEvent;
+import com.apkupdater.event.SnackBarEvent;
+import com.apkupdater.model.InstallStatus;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
-import com.apkupdater.updater.UpdaterGooglePlay;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
+import com.apkupdater.util.GooglePlayUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.PixelConversion;
 import com.apkupdater.util.SnackBarUtil;
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
-import com.github.yeriomin.playstoreapi.DocV2;
-import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
+import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -92,15 +94,15 @@ public class UpdaterAdapter
 			final Update update
 		) {
 			// Get views
-			mName = ((TextView) mView.findViewById(R.id.installed_app_name));
-			mPname = ((TextView) mView.findViewById(R.id.installed_app_pname));
-			mVersion = ((TextView) mView.findViewById(R.id.installed_app_version));
-			mIcon = ((ImageView) mView.findViewById(R.id.installed_app_icon));
-			mIsBetaIcon = ((ImageView) mView.findViewById(R.id.isbeta_icon));
-			mUrl = ((TextView) mView.findViewById(R.id.update_url));
-			mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
-			mActionTwoButton = ((Button) mView.findViewById(R.id.action_two_button));
-            mActionOneProgressBar = ((ProgressBar) mView.findViewById(R.id.action_one_progressbar));
+			mName = mView.findViewById(R.id.installed_app_name);
+			mPname = mView.findViewById(R.id.installed_app_pname);
+			mVersion = mView.findViewById(R.id.installed_app_version);
+			mIcon = mView.findViewById(R.id.installed_app_icon);
+			mIsBetaIcon = mView.findViewById(R.id.isbeta_icon);
+			mUrl = mView.findViewById(R.id.update_url);
+			mActionOneButton = mView.findViewById(R.id.action_one_button);
+			mActionTwoButton = mView.findViewById(R.id.action_two_button);
+            mActionOneProgressBar = mView.findViewById(R.id.action_one_progressbar);
 
 			// Set values
 			mName.setText(update.getName());
@@ -121,18 +123,32 @@ public class UpdaterAdapter
 
 			if (update.getUrl().contains("apkmirror.com")) {
 				action = mContext.getString(R.string.action_apkmirror);
-				action2 = mContext.getString(R.string.action_evozi);
+				//action2 = mContext.getString(R.string.action_evozi);
 			} else if (update.getUrl().contains("uptodown.com")) {
 				action = mContext.getString(R.string.action_uptodown);
-                action2 = mContext.getString(R.string.action_evozi);
+                //action2 = mContext.getString(R.string.action_evozi);
 			} else if (update.getUrl().contains("apkpure.com")) {
 				action = mContext.getString(R.string.action_apkpure);
-                action2 = mContext.getString(R.string.action_evozi);
+                //action2 = mContext.getString(R.string.action_evozi);
 			} else if (update.getCookie() != null) {
 			    action = mContext.getString(R.string.action_play);
             }
 			mActionOneButton.setText(action);
             mActionTwoButton.setText(action2);
+
+            if (action.equals(mContext.getString(R.string.action_play)) && update.getInstallStatus() != null) {
+				mActionOneButton.setVisibility(View.VISIBLE);
+				mActionOneProgressBar.setVisibility(View.INVISIBLE);
+				mActionOneButton.setOnClickListener(null);
+				if (update.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALL) {
+					mActionOneButton.setText(R.string.action_play);
+				} else if (update.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLED) {
+					mActionOneButton.setText(R.string.action_installed);
+				} else if (update.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
+					mActionOneProgressBar.setVisibility(View.VISIBLE);
+					mActionOneButton.setVisibility(View.INVISIBLE);
+				}
+			}
 
 			// Action 1 listener
             if (!action.isEmpty()) {
@@ -140,39 +156,41 @@ public class UpdaterAdapter
                     @Override
                     public void onClick(View view) {
                         if (mActionOneButton.getText().equals(mContext.getString(R.string.action_play))) {
-                            setProgressBarVisibility(View.VISIBLE);
-                            new Thread(new Runnable() {
+
+							// Check if we are already installing
+							if (update.getInstallStatus() != null && update.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
+								return;
+							} else {
+								changeAppInstallStatusAndNotify(update, InstallStatus.STATUS_INSTALLING, 0, getAdapterPosition());
+							}
+
+							new Thread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
-                                        GooglePlayAPI api = UpdaterGooglePlay.getGooglePlayApi(mContext);
-                                        DocV2 d = api.details(update.getPname()).getDocV2();
-                                        AndroidAppDeliveryData data = api.purchase(
-                                            d.getDetails().getAppDetails().getPackageName(),
-                                            d.getDetails().getAppDetails().getVersionCode(),
-                                            d.getOffer(0).getOfferType()
-                                        ).getPurchaseStatusResponse().getAppDeliveryData();
+                                        AndroidAppDeliveryData data = GooglePlayUtil.getAppDeliveryData(
+                                        	GooglePlayUtil.getApi(mContext),
+											update.getPname()
+										);
 
-                                        DownloadUtil.downloadFile(
+                                        long id = DownloadUtil.downloadFile(
                                             mContext,
                                             data.getDownloadUrl(),
                                             data.getDownloadAuthCookie(0).getName() + "=" + data.getDownloadAuthCookie(0).getValue(),
-                                            update.getPname() + " " + update.getVersionCode()
+                                            update.getPname() + " " + update.getNewVersionCode()
                                         );
-
-                                        setProgressBarVisibility(View.GONE); // TODO: Implement download/install notification
+										changeAppInstallStatusAndNotify(update, InstallStatus.STATUS_INSTALLING, id, getAdapterPosition());
                                     } catch (GooglePlayException gex) {
                                         SnackBarUtil.make(mActivity, String.valueOf(gex.getMessage()));
                                         mLog.log("UpdaterAdapter", String.valueOf(gex), LogMessage.SEVERITY_ERROR);
-                                        setProgressBarVisibility( View.GONE);
+										changeAppInstallStatusAndNotify(update, InstallStatus.STATUS_INSTALL, 0, getAdapterPosition());
                                     } catch (Exception e) {
                                         SnackBarUtil.make(mActivity, "Error downloading.");
                                         mLog.log("UpdaterAdapter", String.valueOf(e), LogMessage.SEVERITY_ERROR);
-                                        setProgressBarVisibility(View.GONE);
+										changeAppInstallStatusAndNotify(update, InstallStatus.STATUS_INSTALL, 0, getAdapterPosition());
                                     }
                                 }
                             }).start();
-
                         } else {
                             DownloadUtil.LaunchBrowser(mContext, update.getUrl());
                         }
@@ -208,25 +226,6 @@ public class UpdaterAdapter
 
 			setTopMargin(0);
 		}
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private void setProgressBarVisibility(
-            final int visibility
-        ) {
-            if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
-                mActionOneProgressBar.setVisibility(visibility);
-                mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-            } else {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mActionOneProgressBar.setVisibility(visibility);
-                        mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-                    }
-                });
-            }
-        }
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -338,6 +337,50 @@ public class UpdaterAdapter
         setUpdates(updates);
         mBus.register(this);
     }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@UiThread
+	protected void changeAppInstallStatusAndNotify(
+		final Update app,
+		int status,
+		long id,
+		final int pos
+	) {
+		if (app.getInstallStatus() != null) {
+			app.getInstallStatus().setId(id);
+			app.getInstallStatus().setStatus(status);
+			notifyItemChanged(pos);
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onInstallEvent(
+		InstallAppEvent ev
+	) {
+		for (int i = 0; i < mUpdates.size(); i++) {
+			Update app = mUpdates.get(i);
+			if (app.getInstallStatus().getId() == ev.getId() || app.getPname().equals(ev.getPackageName())) {
+				app.getInstallStatus().setId(0);
+				if (ev.isSuccess()) {
+					app.getInstallStatus().setStatus(InstallStatus.STATUS_INSTALLED);
+					mBus.post(new SnackBarEvent(mContext.getString(R.string.install_success)));
+				} else {
+					// If the app is already set as installed, do nothing
+					if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
+						app.getInstallStatus().setStatus(InstallStatus.STATUS_INSTALL);
+						mBus.post(new SnackBarEvent(mContext.getString(R.string.install_failure)));
+					}
+				}
+				notifyItemChanged(i);
+
+				// Delete file
+				DownloadUtil.deleteDownloadedFile(mContext, app.getInstallStatus().getId());
+			}
+		}
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

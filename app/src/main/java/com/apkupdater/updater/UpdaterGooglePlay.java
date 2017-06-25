@@ -7,17 +7,14 @@ import android.content.Context;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.Update;
 import com.apkupdater.util.GenericCallback;
-import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
-import com.apkupdater.util.yalp.OkHttpClientAdapter;
+import com.apkupdater.util.GooglePlayUtil;
 import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
 import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
-import com.github.yeriomin.playstoreapi.DeviceInfoProvider;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +43,7 @@ public class UpdaterGooglePlay
             // Store vars
             mApps = apps;
             mContext = context;
-            mApi = getGooglePlayApi(mContext);
+            mApi = GooglePlayUtil.getApi(mContext);
 
             if (mApi == null) {
                 mError = "Unable to get GooglePlayApi";
@@ -116,41 +113,6 @@ public class UpdaterGooglePlay
             mError = String.valueOf(e);
             mResultCode = UpdaterStatus.STATUS_ERROR;
         }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    static public GooglePlayAPI getGooglePlayApi(
-        Context context
-    ) {
-        GooglePlayAPI api = null;
-        int c = 0;
-
-        while (api == null && c < 10) {
-            try {
-                DeviceInfoProvider deviceInfoProvider = new NativeDeviceInfoProvider();
-                ((NativeDeviceInfoProvider) deviceInfoProvider).setContext(context);
-                ((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
-
-                com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
-                    .setHttpClient(new OkHttpClientAdapter())
-                    .setDeviceInfoProvider(deviceInfoProvider)
-                    .setLocale(Locale.getDefault())
-                    .setEmail(null)
-                    .setPassword(null)
-                    .setGsfId("3205280df61a4644")
-                    .setToken("1gTCN_ouDuqbAVg7UViJL5tJ00m7Pc061nEWsf8SLQdE0bCIkhrqp6rUSikdxEaJA9sGCQ.");
-
-                api = builder.build();
-                api.uploadDeviceConfig();
-            } catch (Exception e) {
-                api = null;
-            } finally {
-                c++;
-            }
-        }
-
-        return api;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

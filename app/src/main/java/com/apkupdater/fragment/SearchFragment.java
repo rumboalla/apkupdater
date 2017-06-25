@@ -22,7 +22,7 @@ import com.apkupdater.adapter.SearchAdapter;
 import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.updater.UpdaterGooglePlay;
+import com.apkupdater.util.GooglePlayUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.SnackBarUtil;
@@ -121,7 +121,7 @@ public class SearchFragment
             @Override
             public void run() {
                 try {
-                    GooglePlayAPI api = UpdaterGooglePlay.getGooglePlayApi(getContext());
+                    GooglePlayAPI api = GooglePlayUtil.getApi(getContext());
 
                     SearchIterator i = new SearchIterator(api, text);
                     SearchResponse r = i.next();
