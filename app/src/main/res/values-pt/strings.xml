@@ -72,5 +72,6 @@
     <string name="preferences_play_category">*Google Play Settings*</string>
     <string name="preferences_play_root_install_title">*Root install*</string>
     <string name="preferences_play_root_install_summary">*Install apps in the background using root. NEEDS ROOT.*</string>
+    <string name="action_installed">*INSTALLED*</string>
 </resources>
 
