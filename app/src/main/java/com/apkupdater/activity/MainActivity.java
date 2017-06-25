@@ -146,8 +146,6 @@ public class MainActivity
 
 		// Download receiver
         DownloadUtil.deleteDownloadedFiles(this);
-        downloadReceiver = new DownloadReceiver_();
-        registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         // Tint floating action button
         mUpdateButton.setImageDrawable(ColorUtil.tintDrawable(this, mUpdateButton.getDrawable(), android.R.attr.textColorPrimary));
