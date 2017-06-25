@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Looper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,21 +22,20 @@ import com.apkupdater.event.SnackBarEvent;
 import com.apkupdater.model.InstallStatus;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.updater.UpdaterGooglePlay;
 import com.apkupdater.util.DownloadUtil;
+import com.apkupdater.util.GooglePlayUtil;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.PixelConversion;
 import com.apkupdater.util.SnackBarUtil;
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
-import com.github.yeriomin.playstoreapi.DocV2;
-import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
 import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
 
@@ -118,7 +116,7 @@ public class SearchAdapter
 				mActionOneButton.setText(R.string.action_play);
 				mActionOneButton.setOnClickListener(mAdapter);
 			} else if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLED) {
-				mActionOneButton.setText("INSTALLED");
+				mActionOneButton.setText(R.string.action_installed);
 			} else if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
 				mActionOneProgressBar.setVisibility(View.VISIBLE);
 				mActionOneButton.setVisibility(View.INVISIBLE);
@@ -132,15 +130,6 @@ public class SearchAdapter
         ) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
             params.topMargin = (int) PixelConversion.convertDpToPixel(margin, mContext);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public void setProgressBarVisibility(
-            int visibility
-        ) {
-		    mActionOneProgressBar.setVisibility(visibility);
-		    mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,13 +195,10 @@ public class SearchAdapter
 			@Override
 			public void run() {
 				try {
-					GooglePlayAPI api = UpdaterGooglePlay.getGooglePlayApi(mContext);
-					DocV2 d = api.details(app.getPname()).getDocV2();
-					AndroidAppDeliveryData data = api.purchase(
-						d.getDetails().getAppDetails().getPackageName(),
-						d.getDetails().getAppDetails().getVersionCode(),
-						d.getOffer(0).getOfferType()
-					).getPurchaseStatusResponse().getAppDeliveryData();
+					AndroidAppDeliveryData data = GooglePlayUtil.getAppDeliveryData(
+						GooglePlayUtil.getApi(mContext),
+						app.getPname()
+					);
 
 					long id = DownloadUtil.downloadFile(
 						mContext,
@@ -277,23 +263,17 @@ public class SearchAdapter
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void changeAppInstallStatusAndNotify(
+	@UiThread
+	protected void changeAppInstallStatusAndNotify(
 		final InstalledApp app,
 		int status,
 		long id,
 		final int pos
 	) {
-		app.getInstallStatus().setId(id);
-		app.getInstallStatus().setStatus(status);
-		if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+		if (app.getInstallStatus() != null) {
+			app.getInstallStatus().setId(id);
+			app.getInstallStatus().setStatus(status);
 			notifyItemChanged(pos);
-		} else {
-			mActivity.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					notifyItemChanged(pos);
-				}
-			});
 		}
 	}
 
