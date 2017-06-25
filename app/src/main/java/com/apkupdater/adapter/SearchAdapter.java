@@ -18,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.event.DownloadCompleteEvent;
+import com.apkupdater.event.InstallAppEvent;
+import com.apkupdater.event.SnackBarEvent;
+import com.apkupdater.model.InstallStatus;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.updater.UpdaterGooglePlay;
@@ -32,6 +34,7 @@ import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
+import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -73,7 +76,6 @@ public class SearchAdapter
         private ImageView mIcon;
         private Button mActionOneButton;
         private ProgressBar mActionOneProgressBar;
-        private long dowloadId;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,12 +92,12 @@ public class SearchAdapter
 			InstalledApp app
 		) {
 		    // Get views
-            mName = ((TextView) mView.findViewById(R.id.installed_app_name));
-            mPname = ((TextView) mView.findViewById(R.id.installed_app_pname));
-            mVersion = ((TextView) mView.findViewById(R.id.installed_app_version));
-            mIcon = ((ImageView) mView.findViewById(R.id.installed_app_icon));
-            mActionOneButton = ((Button) mView.findViewById(R.id.action_one_button));
-            mActionOneProgressBar = ((ProgressBar) mView.findViewById(R.id.action_one_progressbar));
+            mName = mView.findViewById(R.id.installed_app_name);
+            mPname = mView.findViewById(R.id.installed_app_pname);
+            mVersion = mView.findViewById(R.id.installed_app_version);
+            mIcon = mView.findViewById(R.id.installed_app_icon);
+            mActionOneButton = mView.findViewById(R.id.action_one_button);
+            mActionOneProgressBar = mView.findViewById(R.id.action_one_progressbar);
 
             mName.setText(app.getName());
             mPname.setText(app.getPname());
@@ -108,8 +110,19 @@ public class SearchAdapter
             	mIcon.setImageResource(R.drawable.ic_android);
             }
 
-            mActionOneButton.setText(R.string.action_play);
-            mActionOneButton.setOnClickListener(mAdapter);
+            // Install button and its progress bar
+            mActionOneButton.setVisibility(View.VISIBLE);
+            mActionOneProgressBar.setVisibility(View.INVISIBLE);
+			mActionOneButton.setOnClickListener(null);
+            if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALL) {
+				mActionOneButton.setText(R.string.action_play);
+				mActionOneButton.setOnClickListener(mAdapter);
+			} else if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLED) {
+				mActionOneButton.setText("INSTALLED");
+			} else if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
+				mActionOneProgressBar.setVisibility(View.VISIBLE);
+				mActionOneButton.setVisibility(View.INVISIBLE);
+			}
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,21 +141,6 @@ public class SearchAdapter
         ) {
 		    mActionOneProgressBar.setVisibility(visibility);
 		    mActionOneButton.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public void setDownloadId(
-            long id
-        ) {
-		    dowloadId = id;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        public long getDownloadId(
-        ) {
-		    return dowloadId;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,7 +193,14 @@ public class SearchAdapter
 
 		final InstalledApp app = mApps.get(mView.getChildLayoutPosition(parent));
         final InstalledAppViewHolder holder = (InstalledAppViewHolder) mView.getChildViewHolder(parent);
-        setProgressBarVisibility(holder, View.VISIBLE);
+		final int pos = mView.getChildAdapterPosition(parent);
+
+        // Check if we are already installing
+        if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
+			return;
+		} else {
+			changeAppInstallStatusAndNotify(app, InstallStatus.STATUS_INSTALLING, 0, pos);
+		}
 
 		new Thread(new Runnable() {
 			@Override
@@ -209,45 +214,27 @@ public class SearchAdapter
 						d.getOffer(0).getOfferType()
 					).getPurchaseStatusResponse().getAppDeliveryData();
 
-					DownloadUtil.downloadFile(
+					long id = DownloadUtil.downloadFile(
 						mContext,
 						data.getDownloadUrl(),
 						data.getDownloadAuthCookie(0).getName() + "=" + data.getDownloadAuthCookie(0).getValue(),
 						app.getPname() + " " + app.getVersionCode()
 					);
 
-                    setProgressBarVisibility(holder, View.GONE); // TODO: Implement download/install notification
+					changeAppInstallStatusAndNotify(app, InstallStatus.STATUS_INSTALLING, id, pos);
                 } catch (GooglePlayException gex) {
                     SnackBarUtil.make(mActivity, String.valueOf(gex.getMessage()));
                     mLog.log("SearchAdapter", String.valueOf(gex), LogMessage.SEVERITY_ERROR);
-                    setProgressBarVisibility(holder, View.GONE);
+					changeAppInstallStatusAndNotify(app, InstallStatus.STATUS_INSTALL, 0, pos);
                 } catch (Exception e) {
                     SnackBarUtil.make(mActivity, "Error downloading.");
                     mLog.log("SearchAdapter", String.valueOf(e), LogMessage.SEVERITY_ERROR);
-                    setProgressBarVisibility(holder, View.GONE);
+					changeAppInstallStatusAndNotify(app, InstallStatus.STATUS_INSTALL, 0, pos);
                 }
 			}
 		}).start();
 
 	}
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void setProgressBarVisibility(
-	    final InstalledAppViewHolder holder,
-	    final int visibility
-    ) {
-        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
-            holder.setProgressBarVisibility(visibility);
-        } else {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    holder.setProgressBarVisibility(visibility);
-                }
-            });
-        }
-    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -283,15 +270,59 @@ public class SearchAdapter
         mView = view;
         mApps = InstalledAppUtil.sort(mContext, apps);
 
-        mBus.register(this);
+        try {
+			mBus.register(this);
+		} catch (Exception ignored) {}
     }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void changeAppInstallStatusAndNotify(
+		final InstalledApp app,
+		int status,
+		long id,
+		final int pos
+	) {
+		app.getInstallStatus().setId(id);
+		app.getInstallStatus().setStatus(status);
+		if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+			notifyItemChanged(pos);
+		} else {
+			mActivity.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					notifyItemChanged(pos);
+				}
+			});
+		}
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void onDownloadComplete(
-        DownloadCompleteEvent ev
+	@Subscribe
+    public void onInstallEvent(
+        InstallAppEvent ev
     ) {
-	    // TODO: Implement
+		for (int i = 0; i < mApps.size(); i++) {
+			InstalledApp app = mApps.get(i);
+			if (app.getInstallStatus().getId() == ev.getId() || app.getPname().equals(ev.getPackageName())) {
+				app.getInstallStatus().setId(0);
+				if (ev.isSuccess()) {
+					app.getInstallStatus().setStatus(InstallStatus.STATUS_INSTALLED);
+					mBus.post(new SnackBarEvent(mContext.getString(R.string.install_success)));
+				} else {
+					// If the app is already set as installed, do nothing
+					if (app.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLING) {
+						app.getInstallStatus().setStatus(InstallStatus.STATUS_INSTALL);
+						mBus.post(new SnackBarEvent(mContext.getString(R.string.install_failure)));
+					}
+				}
+				notifyItemChanged(i);
+
+				// Delete file
+				DownloadUtil.deleteDownloadedFile(mContext, app.getInstallStatus().getId());
+			}
+		}
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -160,6 +161,7 @@ public class SearchFragment
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+		((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 		mAdapter.init(getActivity(), mRecyclerView, items);
 		mRecyclerView.setAdapter(mAdapter);
 		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));

@@ -28,7 +28,7 @@ public class DownloadUtil
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static public void downloadFile(
+    static public long downloadFile(
         Context context,
         String url,
         String cookie,
@@ -41,7 +41,7 @@ public class DownloadUtil
         }
         request.setTitle(name);
         request.addRequestHeader("Cookie", cookie);
-        dm.enqueue(request);
+        return dm.enqueue(request);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +74,36 @@ public class DownloadUtil
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static public void deleteDownloadedFile(
+        @NonNull final Context context,
+        final long id
+    ) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    DownloadManager.Query query = new DownloadManager.Query();
+
+                    Cursor cursor = manager.query(query);
+
+                    if (cursor == null) {
+                        return;
+                    }
+
+                    while (cursor.moveToNext()) {
+                        if(cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_ID)) == id) {
+                            manager.remove(id);
+                        }
+                    }
+
+                    cursor.close();
+                } catch (Exception ignored) {}
+            }
+        }).start();
+    }
+
 
 }
 

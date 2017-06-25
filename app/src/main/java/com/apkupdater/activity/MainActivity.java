@@ -2,9 +2,7 @@ package com.apkupdater.activity;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.app.DownloadManager;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +16,8 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.event.InstallAppEvent;
+import com.apkupdater.event.PackageInstallerEvent;
+import com.apkupdater.event.SnackBarEvent;
 import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.LogFragment_;
 import com.apkupdater.fragment.MainFragment;
@@ -25,11 +25,9 @@ import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
-import com.apkupdater.receiver.DownloadReceiver_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
-import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
@@ -41,6 +39,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.HashMap;
+import java.util.Map;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,7 +71,8 @@ public class MainActivity
 	LogFragment_ mLogFragment;
 	MainFragment_ mMainFragment;
 
-	DownloadReceiver_ downloadReceiver;
+	Map<Integer, Long> mRequestCodes = new HashMap<>();
+	private int mRequestCode = 1000;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -143,9 +145,6 @@ public class MainActivity
                 }
             }, 1);
         }
-
-		// Download receiver
-        DownloadUtil.deleteDownloadedFiles(this);
 
         // Tint floating action button
         mUpdateButton.setImageDrawable(ColorUtil.tintDrawable(this, mUpdateButton.getDrawable(), android.R.attr.textColorPrimary));
@@ -320,7 +319,6 @@ public class MainActivity
 	protected void onDestroy() {
 		super.onDestroy();
 		mBus.unregister(this);
-		unregisterReceiver(downloadReceiver);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -383,12 +381,36 @@ public class MainActivity
 
 	@Subscribe
 	public void onInstallAppEvent(
-		InstallAppEvent ev
+		SnackBarEvent ev
 	) {
-		SnackBarUtil.make(this, ev.isSuccess() ? getString(R.string.install_success) : getString(R.string.install_failure));
+		SnackBarUtil.make(this, ev.getMessage());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onPackageInstallerEvent(
+		PackageInstallerEvent ev
+	) {
+		mRequestCodes.put(mRequestCode, ev.getId());
+		startActivityForResult(ev.getIntent(), mRequestCode);
+		mRequestCode++;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (mRequestCodes.containsKey(requestCode)) {
+			mBus.post(new InstallAppEvent(null, mRequestCodes.get(requestCode), false));
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
