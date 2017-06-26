@@ -3,6 +3,7 @@ package com.apkupdater.activity;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -146,9 +147,27 @@ public class MainActivity
             }, 1);
         }
 
-        // Tint floating action button
-        mUpdateButton.setImageDrawable(ColorUtil.tintDrawable(this, mUpdateButton.getDrawable(), android.R.attr.textColorPrimary));
+        // Color floating action button
+        colorFloatingActionButton();
 	}
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void colorFloatingActionButton(
+    ) {
+	    if (ThemeUtil.getActivityThemeFromOptions(this) == R.style.AppThemeBloody) {
+	        mUpdateButton.setBackgroundTintList(
+	            ColorStateList.valueOf(ColorUtil.getColorFromContext(this, android.R.attr.textColorPrimary))
+            );
+            mUpdateButton.setImageDrawable(
+                ColorUtil.tintDrawable(this, mUpdateButton.getDrawable(), R.attr.colorPrimary)
+            );
+        } else {
+            mUpdateButton.setImageDrawable(
+                ColorUtil.tintDrawable(this, mUpdateButton.getDrawable(), android.R.attr.textColorPrimary)
+            );
+        }
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
