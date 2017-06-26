@@ -53,6 +53,12 @@
             android:title="@string/preferences_general_wifi_only_title"
             android:defaultValue="false"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_disable_animations_key"
+            android:summary="@string/preferences_general_disable_animations_summary"
+            android:title="@string/preferences_general_disable_animations_title"
+            android:defaultValue="false"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory

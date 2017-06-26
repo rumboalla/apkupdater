@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.apkupdater.fragment.AboutFragment_;
 import com.apkupdater.fragment.InstalledAppFragment_;
 import com.apkupdater.fragment.SearchFragment;
 import com.apkupdater.fragment.SearchFragment_;

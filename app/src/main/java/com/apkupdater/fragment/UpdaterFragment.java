@@ -119,7 +119,7 @@ public class UpdaterFragment
 		int v
 	) {
 		try {
-			AnimationUtil.startListAnimation(mLoaderContainer);
+			AnimationUtil.startAnimation(getContext(), mLoaderContainer);
 			mLoaderContainer.setVisibility(v);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class UpdaterFragment
 		int max
 	) {
 		try {
-			AnimationUtil.startListAnimation(mLoaderContainer);
+			AnimationUtil.startAnimation(getContext(), mLoaderContainer);
 
 			// Change progress bar
 			mLoader.setMax(max);

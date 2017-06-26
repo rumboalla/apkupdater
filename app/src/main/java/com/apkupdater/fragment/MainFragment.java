@@ -15,6 +15,7 @@ import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.model.AppState;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.view.CustomViewPager;
 import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
@@ -32,7 +33,7 @@ public class MainFragment
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@ViewById(R.id.container)
-	ViewPager mViewPager;
+    CustomViewPager mViewPager;
 
 	@ViewById(R.id.tabs)
 	TabLayout mTabLayout;
