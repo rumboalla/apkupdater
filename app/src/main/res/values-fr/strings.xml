@@ -73,4 +73,6 @@
     <string name="preferences_play_root_install_title">Installation Root</string>
     <string name="preferences_play_root_install_summary">Installer les applications en arrière-plan via les accès root. ROOT REQUIS.</string>
     <string name="action_installed">*INSTALLED*</string>
+    <string name="preferences_general_disable_animations_title">*Disable animations*</string>
+    <string name="preferences_general_disable_animations_summary">*This will disable all animations and transitions.*</string>
 </resources>

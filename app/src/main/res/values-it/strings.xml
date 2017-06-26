@@ -70,8 +70,10 @@
     <string name="update_finished_with_errors">Verifica degli aggiornamenti terminata con $1 errore.</string>
     <string name="install_success">L\'applicazione è stata installata correttamente!</string>
     <string name="install_failure">Errore durante l\'installazione dell\'app!</string>
-    <string name="preferences_play_category">*Google Play Settings*</string>
+    <string name="preferences_play_category">Settaggi Google Play</string>
     <string name="preferences_play_root_install_title">Installazione Root</string>
     <string name="preferences_play_root_install_summary">Installa le app in secondo piano usando il root. NECESSITA DEL ROOT</string>
-    <string name="action_installed">*INSTALLED*</string>
+    <string name="action_installed">INSTALLATO</string>
+    <string name="preferences_general_disable_animations_title">*Disable animations*</string>
+    <string name="preferences_general_disable_animations_summary">*This will disable all animations and transitions.*</string>
 </resources>
