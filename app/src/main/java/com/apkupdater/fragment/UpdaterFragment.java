@@ -22,6 +22,7 @@ import com.apkupdater.event.UpdateStopEvent;
 import com.apkupdater.event.UpdaterTitleChange;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.Update;
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.InstalledAppUtil;
@@ -265,7 +266,11 @@ public class UpdaterFragment
 	) {
         mAdapter.init(getActivity(), mRecyclerView, new ArrayList<Update>());
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+		if (new UpdaterOptions(getContext()).disableAnimations()) {
+		    mRecyclerView.setItemAnimator(null);
+        } else {
+            ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
 		mRecyclerView.setAdapter(mAdapter);
 
 		// Load data

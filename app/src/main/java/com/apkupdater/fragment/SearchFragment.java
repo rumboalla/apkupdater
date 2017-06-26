@@ -22,6 +22,7 @@ import com.apkupdater.adapter.SearchAdapter;
 import com.apkupdater.event.SearchTitleChange;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.GooglePlayUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
@@ -161,7 +162,11 @@ public class SearchFragment
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-		((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        if (new UpdaterOptions(getContext()).disableAnimations()) {
+            mRecyclerView.setItemAnimator(null);
+        } else {
+            ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
 		mAdapter.init(getActivity(), mRecyclerView, items);
 		mRecyclerView.setAdapter(mAdapter);
 		mBus.post(new SearchTitleChange(getString(R.string.tab_search) + " (" + items.size() + ")"));
