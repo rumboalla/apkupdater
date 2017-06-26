@@ -38,6 +38,14 @@ public class UpdaterOptions
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public boolean disableAnimations(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_disable_animations_key), false);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public boolean skipArchitecture(
     ) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);

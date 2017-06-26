@@ -2,6 +2,7 @@ package com.apkupdater.util;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.content.Context;
 import android.os.Build;
 import android.support.transition.AutoTransition;
 import android.transition.ChangeBounds;
@@ -12,16 +13,21 @@ import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 
+import com.apkupdater.updater.UpdaterOptions;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 public class AnimationUtil
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void startListAnimation(
+    public static void startAnimation(
+        Context context,
         ViewGroup v
     ) {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (new UpdaterOptions(context).disableAnimations()) {
+            // No animation
+        } else if (Build.VERSION.SDK_INT >= 21) {
             TransitionManager.beginDelayedTransition(v, new Slide());
         } else if (Build.VERSION.SDK_INT >= 14){
             android.support.transition.TransitionManager.beginDelayedTransition(v);
@@ -33,8 +39,13 @@ public class AnimationUtil
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void startToolbarAnimation(
+        Context context,
         ViewGroup v
     ) {
+        if (new UpdaterOptions(context).disableAnimations()) {
+            return;
+        }
+
         if (Build.VERSION.SDK_INT >= 21) {
             TransitionManager.beginDelayedTransition(v, new TransitionSet()
                 .addTransition(new Fade(Fade.IN))

@@ -25,6 +25,9 @@
     <string name="preferences_general_skip_experimental_title">Exclude experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
     <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
+    <string name="preferences_general_disable_animations_title">Disable animations</string>
+    <string name="preferences_general_disable_animations_summary">This will disable all animations and transitions.</string>
+    <string name="preferences_general_disable_animations_key" translatable="false">preferences_general_disable_animations_key</string>
     <string name="preferences_general_skip_architecture_title">Exclude other architectures</string>
     <string name="preferences_general_skip_architecture_summary">This will try to exclude apps that are not compatible with your architecture. Only works with APKMIrror.</string>
     <string name="preferences_general_skip_architecture_key" translatable="false">preferences_general_skip_architecture_key</string>

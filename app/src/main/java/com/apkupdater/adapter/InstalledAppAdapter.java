@@ -119,7 +119,7 @@ public class InstalledAppAdapter
 		mContext = context;
 		mAdapter = this;
 		mView = view;
-		AnimationUtil.startListAnimation(mView);
+		AnimationUtil.startAnimation(mContext, mView);
 		mApps = InstalledAppUtil.sort(mContext, apps);
 	}
 
@@ -177,7 +177,7 @@ public class InstalledAppAdapter
 		options.setIgnoreList(ignore_list);
 
 		// Sort it
-		AnimationUtil.startListAnimation(mView);
+		AnimationUtil.startAnimation(mContext, mView);
 		mApps = InstalledAppUtil.sort(mContext, mApps);
 		notifyDataSetChanged();
 	}

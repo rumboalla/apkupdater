@@ -84,7 +84,6 @@ public class InstalledAppFragment
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		mRecyclerView.setAdapter(new InstalledAppAdapter(getContext(), mRecyclerView, items));
-
 		mBus.post(new InstalledAppTitleChange(getString(R.string.tab_installed) + " (" + items.size() + ")"));
 	}
 

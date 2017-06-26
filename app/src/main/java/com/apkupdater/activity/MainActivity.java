@@ -7,6 +7,8 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +29,7 @@ import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.UpdaterService_;
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.MyBus;
@@ -74,6 +77,9 @@ public class MainActivity
 
 	Map<Integer, Long> mRequestCodes = new HashMap<>();
 	private int mRequestCode = 1000;
+
+    private int [] mSlideOut = { R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left };
+    private int [] mSlideIn = { R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right };
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -169,30 +175,40 @@ public class MainActivity
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void doTransition(
+        int [] anim,
+        Fragment show,
+        Fragment [] hide
+    ) {
+        boolean disableAnimations = new UpdaterOptions(this).disableAnimations();
+	    FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+
+	    if (!disableAnimations) {
+            t = t.setCustomAnimations(anim[0], anim[1], anim[2], anim[3]);
+        }
+
+        t = t.show(show);
+
+	    for (Fragment f : hide) {
+	        t = t.hide(f);
+        }
+
+        t.commit();
+    }
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void switchSettings(
 		boolean b
 	) {
 		if (b) {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
-				.show(mSettingsFragment)
-				.hide(mMainFragment)
-				.hide(mLogFragment)
-				.hide(mAboutFragment)
-			.commit();
+		    doTransition(mSlideOut, mSettingsFragment, new Fragment[] {mMainFragment, mLogFragment, mAboutFragment});
             setUpdateButtonVisibility(false);
 			changeToolbar(getString(R.string.action_settings), true);
 		} else {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-				.show(mMainFragment)
-				.hide(mSettingsFragment)
-				.hide(mLogFragment)
-				.hide(mAboutFragment)
-			.commit();
-
+            doTransition(mSlideIn, mMainFragment, new Fragment[] {mSettingsFragment, mLogFragment, mAboutFragment});
             setUpdateButtonVisibility(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
@@ -206,23 +222,11 @@ public class MainActivity
 		boolean b
 	) {
 		if (b) {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
-				.show(mLogFragment)
-				.hide(mMainFragment)
-				.hide(mSettingsFragment)
-				.hide(mAboutFragment)
-			.commit();
+            doTransition(mSlideOut, mLogFragment, new Fragment[] {mMainFragment, mSettingsFragment, mAboutFragment});
             setUpdateButtonVisibility(false);
 			changeToolbar(getString(R.string.action_log), true);
 		} else {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-				.show(mMainFragment)
-				.hide(mSettingsFragment)
-				.hide(mLogFragment)
-				.hide(mAboutFragment)
-			.commit();
+            doTransition(mSlideIn, mMainFragment, new Fragment[] {mSettingsFragment, mLogFragment, mAboutFragment});
             setUpdateButtonVisibility(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
@@ -236,23 +240,11 @@ public class MainActivity
 		boolean b
 	) {
 		if (b) {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
-				.show(mAboutFragment)
-				.hide(mMainFragment)
-				.hide(mSettingsFragment)
-				.hide(mLogFragment)
-				.commit();
+            doTransition(mSlideOut, mAboutFragment, new Fragment[] {mMainFragment, mSettingsFragment, mLogFragment});
             setUpdateButtonVisibility(false);
 			changeToolbar(getString(R.string.tab_about), true);
 		} else {
-			getSupportFragmentManager().beginTransaction()
-				.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-				.show(mMainFragment)
-				.hide(mSettingsFragment)
-				.hide(mLogFragment)
-				.hide(mAboutFragment)
-				.commit();
+            doTransition(mSlideIn, mMainFragment, new Fragment[] {mSettingsFragment, mLogFragment, mAboutFragment});
             setUpdateButtonVisibility(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
@@ -269,7 +261,7 @@ public class MainActivity
 		try {
 		ActionBar bar = getSupportActionBar();
 			if (bar != null) {
-				AnimationUtil.startToolbarAnimation(mToolbar);
+				AnimationUtil.startToolbarAnimation(this, mToolbar);
 
 				// This is to try to avoid the text to be cut during animation. TODO: Find a better way.
 				TextView t = (TextView) mToolbar.getChildAt(0);
