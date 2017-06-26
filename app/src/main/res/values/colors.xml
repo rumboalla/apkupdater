@@ -60,8 +60,8 @@
     <color name="colorPrimaryBloody">#000000</color>
     <color name="colorPrimaryDarkBloody">#000000</color>
     <color name="colorAccentBloody">#000000</color>
-    <color name="textColorPrimaryBloody">#c40000</color>
-    <color name="textColorSecondaryBloody">#740000</color>
-    <color name="textColorBloody">#d90000</color>
+    <color name="textColorPrimaryBloody">#e70000</color>
+    <color name="textColorSecondaryBloody">#a70000</color>
+    <color name="textColorBloody">#e70000</color>
 
 </resources>
