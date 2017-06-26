@@ -1,0 +1,124 @@
+<resources>
+    <string name="app_name">APKUpdater</string>
+    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater هو الأداة التي تبسط عملية البحث عن تحديثات للتطبيقات المثبتة. وسوف توفر وظائف مماثلة لمتجر التطبيقات دون الحاجة إلى تثبيت برامج التجسس المرتبطة بها والتي تأتي معها. هذا هو التطبيق مفيدة جدا لأولئك الذين يريدون لتشغيل أندرويد دون المتجر.</p><p>الميزات:</p><ul><li>الحصول على تحديثات من مصادر متعددة</li><li>جدولة التحقق من الخلفية</li><li>يدعم أنظمة أندرويد 2.3 إلي 7.1</li><li>تجاهل قائمة التطبيقات لعدم التحقق من وجود تحديثات</li><li>تصميم المواد الحديثة مع موضوع الدعم المتعدد</li><li>عرض الإشعارات عند العثور على التحديثات</li><li>ابحث عن تطبيقات جديدة لتثبيتها</li></ul><p>المكتبات المستخدمة:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>تحديث المصادر:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>حقوق النشر &copy; 2016 Rumboalla. تم الترخيص بإسم <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU الترخيص العام v3</a>.</p></body></html>]]></string>
+    <string name="action_settings">الإعدادت</string>
+    <string name="action_log">السجل</string>
+    <string name="action_check_for_updates">البحث عن تحديثات</string>
+    <string name="tab_installed">Installed</string>
+    <string name="tab_updates">تحديث</string>
+    <string name="tab_search">البحث</string>
+    <string name="tab_about">حـول</string>
+    <string name="notification_update_title">البحث عن تحديثات</string>
+    <string name="notification_update_content">$1/$2</string>
+    <string name="notification_update_title_finished">إنتهاء البحث عن التحديثات</string>
+    <string name="notification_update_content_finished">تم العثور عن $1 تحديث جديد</string>
+    <string name="notification_update_title_failed">فشل البحث عن تحديثات</string>
+    <string name="already_updating">القد قمت بالفعل التحقق من الحصول على التحديثات.</string>
+    <string name="update_finished">تم الإنتهاء من البحث عن تحديثات.</string>
+    <string name="update_finished_with_errors">تم البحث عن التحديثات تم العثور عليها $1 الأخطاء.</string>
+    <string name="update_failed">فشل التحقق من وجود تحديثات مع استثناء $1.</string>
+    <string name="update_no_sources">يجب اختيار مصدر واحد على الأقل.</string>
+    <string name="preferences_general_category">الإعدادات العامة</string>
+    <string name="preferences_filter_category">فرز الإعدادات</string>
+    <string name="preferences_sources_category">تحديث المصادر</string>
+    <string name="preferences_play_category">Google Play إعدادات</string>
+    <string name="preferences_general_skip_experimental_title">استبعاد الإصدارات التجريبية</string>
+    <string name="preferences_general_skip_experimental_summary">سيؤدي ذلك إلى محاولة استبعاد الإصدارات التجربية (ألفا وبيتا) من التحديثات.</string>
+    <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
+    <string name="preferences_general_skip_architecture_title">استبعاد الإصدارات الأخرى</string>
+    <string name="preferences_general_skip_architecture_summary">سيحاول هذا استبعاد التطبيقات التي لا تتوافق مع معالج هاتفك. يعمل فقط مع APKMIrror.</string>
+    <string name="preferences_general_skip_architecture_key" translatable="false">preferences_general_skip_architecture_key</string>
+    <string name="preferences_general_skip_minapi_title">استبعاد مستوى واجهة برمجة التطبيقات غير المتوافق</string>
+    <string name="preferences_general_skip_minapi_summary">سيحاول هذا استبعاد التطبيقات غير المتوافقة مع إصدار أندرويد. يعمل فقط مع APKMirror.</string>
+    <string name="preferences_general_skip_minapi_key" translatable="false">preferences_general_skip_minapi_key</string>
+    <string name="preferences_general_exclude_system_apps_title">استبعاد تطبيقات النظام</string>
+    <string name="preferences_general_exclude_system_apps_summary">هذا سيستبعد تطبيقات النظام من التحديثات.</string>
+    <string name="preferences_general_exclude_system_apps_key" translatable="false">preferences_general_exclude_system_apps_key</string>
+    <string name="preferences_general_exclude_disabled_apps_title">استبعاد التطبيقات المعطلة</string>
+    <string name="preferences_general_exclude_disabled_apps_summary">سيؤدي هذا إلى استبعاد التطبيقات المعطلة من التحديثات.</string>
+    <string name="preferences_general_exclude_disabled_apps_key" translatable="false">preferences_general_exclude_disabled_apps_key</string>
+    <string name="preferences_general_ignorelist_title">التطبيقات الموجودة في قائمة التجاهل</string>
+    <string name="preferences_general_ignorelist_summary">سيؤدي هذا إلى استبعاد التطبيقات من فحص التحديث.</string>
+    <string name="preferences_general_ignorelist_value">com.google.android.gms,com.google.android.gsf,com.android.vending</string>
+    <string name="preferences_general_ignorelist_key" translatable="false">preferences_general_ignorelist_key</string>
+    <string name="preferences_general_notification_title">الإشعارات</string>
+    <string name="preferences_general_notification_key" translatable="false">preferences_general_notification_key</string>
+    <string name="preferences_general_theme_title">الموضوعات</string>
+    <string name="preferences_general_theme_key" translatable="false">preferences_general_theme_key</string>
+    <string name="preferences_general_alarm_title">البحث عن تحديثات</string>
+    <string name="preferences_general_alarm_key" translatable="false">preferences_general_alarm_key</string>
+    <string name="preferences_general_num_threads_title">عدد المواضيع</string>
+    <string name="preferences_general_num_threads_key" translatable="false">preferences_general_num_threads_key</string>
+    <string name="preferences_general_use_apkmirror_title">تحديثات من APKMirror</string>
+    <string name="preferences_general_use_apkmirror_summary">سيؤدي هذا إلى التحقق من وجود تحديثات APKMirror.</string>
+    <string name="preferences_general_use_apkmirror_key" translatable="false">preferences_general_use_apkmirror_key</string>
+    <string name="preferences_general_use_play_title">تحديثات من Google Play</string>
+    <string name="preferences_general_use_play_summary">سيؤدي هذا إلى التحقق من وجود تحديثات من قوقل بلاي.</string>
+    <string name="preferences_general_use_play_key" translatable="false">preferences_general_use_play_key</string>
+    <string name="preferences_general_use_uptodown_title">تحديثات من Uptodown</string>
+    <string name="preferences_general_use_uptodown_summary">سيؤدي هذا تحقق من وجود تحديثات من أوبتودوون. ولكنه بطيئة جداً، ويحتاج العديد من الطلبات.</string>
+    <string name="preferences_general_use_uptodown_key" translatable="false">preferences_general_use_uptodown_key</string>
+    <string name="preferences_general_use_apkpure_title">تحديثات من APKPure</string>
+    <string name="preferences_general_use_apkpure_summary">سيؤدي هذا إلى التحقق من وجود تحديثات APKPure.com. يحتاج 2 طلبات في التطبيق، لذلك هو أبطأ.</string>
+    <string name="preferences_general_use_apkpure_key" translatable="false">preferences_general_use_apkpure_key</string>
+    <string name="preferences_general_wifi_only_title">Wi-Fi فقط</string>
+    <string name="preferences_general_wifi_only_summary">فقط التحقق من وجود تحديثات عند الاتصال بشبكة واي فاي.</string>
+    <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
+    <string name="preferences_general_update_hour_title">تحديث الزمني</string>
+    <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
+    <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
+    <string name="preferences_play_root_install_title">تثبيت الروت</string>
+    <string name="preferences_play_root_install_summary">تثبيت التطبيقات في الخلفية باستخدام الروت. يحتاج الروت.</string>
+    <string name="notification_never">أبدا</string>
+    <string name="notification_always">دائما</string>
+    <string name="notification_background">يعمل في الخلفية</string>
+    <string name="notification_if_at_least_1">في حالة توفر التحديثات</string>
+    <string name="alarm_never">أبدا</string>
+    <string name="alarm_daily">يومي</string>
+    <string name="alarm_weekly">أسبوعي</string>
+    <string name="theme_blue">أرزق على أبيض</string>
+    <string name="theme_pink">وردي على أسود</string>
+    <string name="theme_dark">أخضر على أسود</string>
+    <string name="theme_orange">برتقالي على أبيض</string>
+    <string name="theme_bloody">أسود على أحمر</string>
+    <string name="content_description_app_icon">App Icon</string>
+    <string name="update_check_failed_no_internet">فشل التحقق من التحديثات: لا يوجد اتصال بالإنترنت.</string>
+    <string name="update_check_failed_no_wifi">فشل التحقق من التحديثات: لا شبكة واي فاي.</string>
+    <string name="num_threads_one" translatable="false">1</string>
+    <string name="num_threads_three" translatable="false">3</string>
+    <string name="num_threads_five" translatable="false">5</string>
+    <string name="num_threads_ten" translatable="false">10</string>
+    <string name="action_ignore_app">التجاهل</string>
+    <string name="action_unignore_app">إلغاء التجاهل</string>
+    <string name="action_apkmirror" translatable="false">APKMIRROR</string>
+    <string name="action_apkpure" translatable="false">APKPURE</string>
+    <string name="action_uptodown" translatable="false">UPTODOWN</string>
+    <string name="action_evozi" translatable="false">EVOZI</string>
+    <string name="action_play">تنزيل وتثبيت</string>
+    <string name="update_hour_zero" translatable="false">00:00</string>
+    <string name="update_hour_one" translatable="false">01:00</string>
+    <string name="update_hour_two" translatable="false">02:00</string>
+    <string name="update_hour_three" translatable="false">03:00</string>
+    <string name="update_hour_four" translatable="false">04:00</string>
+    <string name="update_hour_five" translatable="false">05:00</string>
+    <string name="update_hour_six" translatable="false">06:00</string>
+    <string name="update_hour_seven" translatable="false">07:00</string>
+    <string name="update_hour_eight" translatable="false">08:00</string>
+    <string name="update_hour_nine" translatable="false">09:00</string>
+    <string name="update_hour_ten" translatable="false">10:00</string>
+    <string name="update_hour_eleven" translatable="false">11:00</string>
+    <string name="update_hour_twelve" translatable="false">12:00</string>
+    <string name="update_hour_thirteen" translatable="false">13:00</string>
+    <string name="update_hour_fourteen" translatable="false">14:00</string>
+    <string name="update_hour_fifteen" translatable="false">15:00</string>
+    <string name="update_hour_sixteen" translatable="false">16:00</string>
+    <string name="update_hour_seventeen" translatable="false">17:00</string>
+    <string name="update_hour_eighteen" translatable="false">18:00</string>
+    <string name="update_hour_nineteen" translatable="false">19:00</string>
+    <string name="update_hour_twenty" translatable="false">20:00</string>
+    <string name="update_hour_twenty_one" translatable="false">21:00</string>
+    <string name="update_hour_twenty_two" translatable="false">22:00</string>
+    <string name="update_hour_twenty_three" translatable="false">23:00</string>
+    <string name="install_success">تم تثبيت التطبيق بنجاح!</string>
+    <string name="install_failure">حدث خطأ أثناء تثبيت التطبيق!</string>
+</resources>
