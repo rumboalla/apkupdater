@@ -5,12 +5,14 @@ package com.apkupdater.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 
 import com.apkupdater.R;
 import com.apkupdater.adapter.InstalledAppAdapter;
 import com.apkupdater.event.InstalledAppTitleChange;
 import com.apkupdater.event.UpdateInstalledAppsEvent;
 import com.apkupdater.model.InstalledApp;
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
@@ -83,6 +85,11 @@ public class InstalledAppFragment
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (new UpdaterOptions(getContext()).disableAnimations()) {
+            mRecyclerView.setItemAnimator(null);
+        } else {
+            ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
 		mRecyclerView.setAdapter(new InstalledAppAdapter(getContext(), mRecyclerView, items));
 		mBus.post(new InstalledAppTitleChange(getString(R.string.tab_installed) + " (" + items.size() + ")"));
 	}
