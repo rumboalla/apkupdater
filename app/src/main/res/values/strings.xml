@@ -25,6 +25,9 @@
     <string name="preferences_general_skip_experimental_title">Exclude experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
     <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
+    <string name="preferences_general_self_update_title">Self update check on startup</string>
+    <string name="preferences_general_self_update_summary">The app will check for updates of itself on startup. If an update is found, a notification will be displayed and clicking on the notification will update the app.</string>
+    <string name="preferences_general_self_update_key" translatable="false">preferences_general_self_update_key</string>
     <string name="preferences_general_disable_animations_title">Disable animations</string>
     <string name="preferences_general_disable_animations_summary">This will disable all animations and transitions.</string>
     <string name="preferences_general_disable_animations_key" translatable="false">preferences_general_disable_animations_key</string>
@@ -125,5 +128,7 @@
     <string name="update_hour_twenty_three" translatable="false">23:00</string>
     <string name="install_success">App was successfully installed!</string>
     <string name="install_failure">Error installing app!</string>
+    <string name="selfupdate_update">Update %s</string>
+    <string name="selfupdate_click_to_install">Click to install.</string>
 </resources>
 

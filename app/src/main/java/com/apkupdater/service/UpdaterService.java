@@ -1,4 +1,5 @@
 package com.apkupdater.service;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.IntentService;
@@ -70,7 +71,6 @@ public class UpdaterService
 	private List<Update> mUpdates = new ArrayList<>();
 	private UpdaterNotification mNotification;
 	private boolean mIsFromAlarm = false;
-	private Context mContext;
 	static public final String isFromAlarmExtra = "isFromAlarm";
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -59,6 +59,12 @@
             android:title="@string/preferences_general_disable_animations_title"
             android:defaultValue="false"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_self_update_key"
+            android:summary="@string/preferences_general_self_update_summary"
+            android:title="@string/preferences_general_self_update_title"
+            android:defaultValue="true"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory

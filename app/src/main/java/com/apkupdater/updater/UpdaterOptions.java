@@ -38,6 +38,15 @@ public class UpdaterOptions
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public boolean selfUpdate(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_self_update_key), true);
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public boolean disableAnimations(
     ) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
