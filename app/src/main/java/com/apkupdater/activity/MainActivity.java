@@ -28,6 +28,8 @@ import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.receiver.BootReceiver_;
+import com.apkupdater.service.SelfUpdateService;
+import com.apkupdater.service.SelfUpdateService_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
@@ -155,6 +157,14 @@ public class MainActivity
 
         // Color floating action button
         colorFloatingActionButton();
+
+
+		// Self update check
+        if (new UpdaterOptions(this).selfUpdate()) {
+            if (!ServiceUtil.isServiceRunning(this, SelfUpdateService_.class)) {
+                SelfUpdateService_.intent(getApplication()).start();
+            }
+        }
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -391,7 +401,7 @@ public class MainActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Subscribe
-	public void onInstallAppEvent(
+	public void onSnackBarEvent(
 		SnackBarEvent ev
 	) {
 		SnackBarUtil.make(this, ev.getMessage());
