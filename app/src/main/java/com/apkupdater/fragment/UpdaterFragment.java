@@ -63,6 +63,9 @@ public class UpdaterFragment
 	@ViewById(R.id.loader_text)
 	TextView mLoaderText;
 
+    @ViewById(R.id.no_updates_text)
+    TextView mNoUpdatesText;
+
 	@ViewById(R.id.loader)
 	ProgressBar mLoader;
 
@@ -120,7 +123,7 @@ public class UpdaterFragment
 		int v
 	) {
 		try {
-			AnimationUtil.startAnimation(getContext(), mLoaderContainer);
+			AnimationUtil.startSlideAnimation(getContext(), mLoaderContainer);
 			mLoaderContainer.setVisibility(v);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +138,7 @@ public class UpdaterFragment
 		int max
 	) {
 		try {
-			AnimationUtil.startAnimation(getContext(), mLoaderContainer);
+			AnimationUtil.startSlideAnimation(getContext(), mLoaderContainer);
 
 			// Change progress bar
 			mLoader.setMax(max);
@@ -165,6 +168,7 @@ public class UpdaterFragment
 		mProgressMax = ev.getNumUpdates();
 		setProgressBarProgress(mProgressCount, mProgressMax);
 		setProgressBarVisibility(View.VISIBLE);
+		mNoUpdatesText.setVisibility(GONE);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +198,9 @@ public class UpdaterFragment
 		if (mAdapter.getCount() < updates.size()) {
 			mAdapter.setUpdates(updates);
 		}
+        if (updates.isEmpty()) {
+		    mNoUpdatesText.setVisibility(VISIBLE);
+        }
 
 		sendUpdateTitleEvent();
 	}

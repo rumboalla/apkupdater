@@ -21,7 +21,7 @@ public class AnimationUtil
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void startAnimation(
+    public static void startSlideAnimation(
         Context context,
         ViewGroup v
     ) {
@@ -30,7 +30,7 @@ public class AnimationUtil
         } else if (Build.VERSION.SDK_INT >= 21) {
             TransitionManager.beginDelayedTransition(v, new Slide());
         } else if (Build.VERSION.SDK_INT >= 14){
-            android.support.transition.TransitionManager.beginDelayedTransition(v);
+            android.support.transition.TransitionManager.beginDelayedTransition(v); // Support v26 will add Slide
         } {
             // No animation
         }

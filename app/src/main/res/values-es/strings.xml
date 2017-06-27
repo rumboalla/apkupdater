@@ -79,5 +79,6 @@
     <string name="preferences_general_self_update_summary">*The app will check for updates of itself on startup. If an update is found, a notification will be displayed and clicking on the notification will update the app.*</string>
     <string name="selfupdate_update">*Update %s*</string>
     <string name="selfupdate_click_to_install">*Click to install.*</string>
+    <string name="no_new_updates">*No new updates were found*</string>
 </resources>
 
