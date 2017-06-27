@@ -362,7 +362,9 @@ public class UpdaterAdapter
 	) {
 		for (int i = 0; i < mUpdates.size(); i++) {
 			Update app = mUpdates.get(i);
-			if (app.getInstallStatus().getId() == ev.getId() || app.getPname().equals(ev.getPackageName())) {
+			if (app.getInstallStatus().getId() != 0 &&
+				(app.getInstallStatus().getId() == ev.getId() || app.getPname().equals(ev.getPackageName())))
+			{
 				app.getInstallStatus().setId(0);
 				if (ev.isSuccess()) {
 					app.getInstallStatus().setStatus(InstallStatus.STATUS_INSTALLED);
