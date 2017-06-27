@@ -58,7 +58,7 @@ public class LogFragment
 	public void onMessage(
 		LogMessage message
 	) {
-		AnimationUtil.startAnimation(getContext(), mListView);
+		AnimationUtil.startSlideAnimation(getContext(), mListView);
 		mAdapter.add(message);
 		mAdapter.notifyDataSetChanged();
 	}

@@ -9,6 +9,16 @@
     android:orientation="vertical"
     android:fillViewport="true"
 >
+    <TextView
+        android:id="@+id/no_updates_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:text="@string/no_new_updates"
+    />
     <com.apkupdater.view.CustomCardView
         android:id="@+id/loader_container"
         android:layout_width="match_parent"
