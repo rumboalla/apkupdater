@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.event.SnackBarEvent;
+import com.apkupdater.model.AppState;
+import com.apkupdater.model.DownloadInfo;
 import com.apkupdater.model.InstallStatus;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.LogMessage;
@@ -59,6 +61,9 @@ public class SearchAdapter
 
     @Bean
     MyBus mBus;
+
+    @Bean
+    AppState mAppState;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -206,6 +211,11 @@ public class SearchAdapter
 						data.getDownloadAuthCookie(0).getName() + "=" + data.getDownloadAuthCookie(0).getValue(),
 						app.getPname() + " " + app.getVersionCode()
 					);
+
+					mAppState.getDownloadInfo().put(
+					    id,
+                        new DownloadInfo(app.getPname(), app.getVersionCode(), app.getVersion())
+                    );
 
 					changeAppInstallStatusAndNotify(app, InstallStatus.STATUS_INSTALLING, id, pos);
                 } catch (GooglePlayException gex) {
