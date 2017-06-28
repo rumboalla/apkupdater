@@ -33,7 +33,7 @@ public class UpdaterOptions
 	public boolean skipExperimental(
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_skip_experimental_key), false);
+		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_skip_experimental_key), true);
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

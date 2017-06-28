@@ -37,7 +37,7 @@ public class DownloadUtil
         DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         if (Build.VERSION.SDK_INT > 10) {
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
         request.setTitle(name);
         request.addRequestHeader("Cookie", cookie);
@@ -104,7 +104,7 @@ public class DownloadUtil
         }).start();
     }
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

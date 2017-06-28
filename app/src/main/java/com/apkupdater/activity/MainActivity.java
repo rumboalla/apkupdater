@@ -27,13 +27,14 @@ import com.apkupdater.fragment.MainFragment;
 import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
+import com.apkupdater.model.DownloadInfo;
 import com.apkupdater.receiver.BootReceiver_;
-import com.apkupdater.service.SelfUpdateService;
 import com.apkupdater.service.SelfUpdateService_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
+import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
@@ -77,9 +78,7 @@ public class MainActivity
 	LogFragment_ mLogFragment;
 	MainFragment_ mMainFragment;
 
-	Map<Integer, Long> mRequestCodes = new HashMap<>();
 	private int mRequestCode = 1000;
-
     private int [] mSlideOut = { R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left };
     private int [] mSlideIn = { R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right };
 
@@ -413,7 +412,7 @@ public class MainActivity
 	public void onPackageInstallerEvent(
 		PackageInstallerEvent ev
 	) {
-		mRequestCodes.put(mRequestCode, ev.getId());
+		mAppState.getDownloadIds().put(mRequestCode, ev.getId());
 		startActivityForResult(ev.getIntent(), mRequestCode);
 		mRequestCode++;
 	}
@@ -429,9 +428,28 @@ public class MainActivity
 	) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (mRequestCodes.containsKey(requestCode)) {
-			mBus.post(new InstallAppEvent(null, mRequestCodes.get(requestCode), false));
-			mRequestCodes.remove(requestCode);
+		if (mAppState.getDownloadIds().containsKey(requestCode)) {
+		    long id = mAppState.getDownloadIds().get(requestCode);
+            if (mAppState.getDownloadInfo().containsKey(id)) {
+
+                DownloadInfo i = mAppState.getDownloadInfo().get(mAppState.getDownloadIds().get(requestCode));
+
+                if (i.getPackageName().equals(getPackageName())) {
+                    // When self updating
+                    String version = InstalledAppUtil.getAppVersionName(this, i.getPackageName());
+                    mBus.post(new SnackBarEvent(version.equals(
+                        i.getVersionName()) ? getString(R.string.install_success) : getString(R.string.install_failure)
+                    ));
+                } else {
+                    // Normal installs coming with versionCode
+                    int code = InstalledAppUtil.getAppVersionCode(this, i.getPackageName());
+                    mBus.post(new InstallAppEvent(i.getPackageName(), id, code == i.getVersionCode()));
+                }
+
+                // Clean data
+                mAppState.getDownloadInfo().remove(i);
+                mAppState.getDownloadIds().remove(requestCode);
+            }
 		}
 	}
 

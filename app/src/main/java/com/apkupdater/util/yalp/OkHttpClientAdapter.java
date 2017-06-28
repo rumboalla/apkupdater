@@ -105,29 +105,31 @@ public class OkHttpClientAdapter extends HttpClientAdapter {
     }
 
     byte[] request(Request.Builder requestBuilder, Map<String, String> headers) throws IOException {
-        Request request = requestBuilder
-            .headers(Headers.of(headers))
-            .build();
-        System.out.println("Requesting: " + request.url().toString());
-
+        Request request = requestBuilder.headers(Headers.of(headers)).build();
         Response response = client.newCall(request).execute();
 
         int code = response.code();
         byte[] content = response.body().bytes();
 
         if (code == 401 || code == 403) {
-            AuthException e = new AuthException("Auth error", code);
             Map<String, String> authResponse = GooglePlayAPI.parseResponse(new String(content));
             if (authResponse.containsKey("Error") && authResponse.get("Error").equals("NeedsBrowser")) {
+                AuthException e = new AuthException("Auth error.", code);
                 e.setTwoFactorUrl(authResponse.get("Url"));
+                throw e;
+            } else {
+                if (code == 401) {
+                    throw new GooglePlayException("Error 401: Unauthorized.");
+                } else {
+                    throw new GooglePlayException("Error 403: Forbidden.");
+                }
             }
-            throw e;
         } else if (code == 429) {
             throw new GooglePlayException("Error 429: Too many requests.", code);
         } else if (code >= 500) {
-            throw new GooglePlayException("Server error", code);
+            throw new GooglePlayException("Server error.", code);
         } else if (code >= 400) {
-            throw new GooglePlayException("Malformed request", code);
+            throw new GooglePlayException("Malformed request.", code);
         }
 
         return content;

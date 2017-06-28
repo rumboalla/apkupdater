@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import com.apkupdater.R;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.GitHub.Release;
+import com.apkupdater.model.LogMessage;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
@@ -61,6 +62,8 @@ public class SelfUpdateService
 		super(SelfUpdateService.class.getSimpleName());
 	}
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	private void doNotification(
 	    String newVersion,
         String apkUrl
@@ -78,13 +81,15 @@ public class SelfUpdateService
         Intent intent = new Intent("com.apkupdater.selfupdatenotification");
         intent.setFlags(0);
         intent.putExtra("url", apkUrl);
-        intent.putExtra("name", String.format("%s %s", c.getString(R.string.app_name), newVersion));
+        intent.putExtra("versionName", newVersion);
         b.setContentIntent(PendingIntent.getBroadcast(c, new Random().nextInt(), intent, 0));
 
         // Launch notification
         NotificationManager m = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         m.notify(42 + 1, b.build());
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void checkForUpdate(
     ) {
@@ -98,9 +103,7 @@ public class SelfUpdateService
                 .build();
 
             Response response = client.newCall(request).execute();
-
             Release r = new Gson().fromJson(response.body().string(), Release.class);
-
 
             int c = VersionUtil.compareVersion(
                 VersionUtil.getVersionFromString(getPackageManager().getPackageInfo(getPackageName(), 0).versionName),
@@ -111,7 +114,7 @@ public class SelfUpdateService
                 doNotification(r.getTagName(), r.getAssets().get(0).getBrowserDownloadUrl());
             }
         } catch (Exception e) {
-	        // Error checking for update
+	        mLogger.log("checkForUpdate", String.valueOf(e), LogMessage.SEVERITY_ERROR);
         }
     }
 
