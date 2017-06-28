@@ -140,11 +140,10 @@ public class UpdaterAdapter
             }
 			mActionOneButton.setText(action);
             mActionTwoButton.setText(action2);
+            mActionOneButton.setVisibility(View.VISIBLE);
+            mActionOneProgressBar.setVisibility(View.INVISIBLE);
 
             if (action.equals(mContext.getString(R.string.action_play)) && update.getInstallStatus() != null) {
-				mActionOneButton.setVisibility(View.VISIBLE);
-				mActionOneProgressBar.setVisibility(View.INVISIBLE);
-				mActionOneButton.setOnClickListener(null);
 				if (update.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALL) {
 					mActionOneButton.setText(R.string.action_play);
 				} else if (update.getInstallStatus().getStatus() == InstallStatus.STATUS_INSTALLED) {
