@@ -6,7 +6,7 @@
     <string name="action_check_for_updates">البحث عن تحديثات</string>
     <string name="tab_installed">المثبت</string>
     <string name="tab_updates">تحديث</string>
-    <string name="tab_search">البحث</string>
+    <string name="tab_search">البحث عن تطبيق</string>
     <string name="tab_about">حـول التطبيق</string>
     <string name="notification_update_title">البحث عن تحديثات</string>
     <string name="notification_update_content">$1/$2</string>
@@ -25,9 +25,9 @@
     <string name="preferences_general_skip_experimental_title">استبعاد الإصدارات التجريبية</string>
     <string name="preferences_general_skip_experimental_summary">سيؤدي ذلك إلى محاولة استبعاد الإصدارات التجربية (ألفا و بيتا) من التحديثات.</string>
     <string name="preferences_general_skip_architecture_title">استبعاد الإصدارات الأخرى</string>
-    <string name="preferences_general_skip_architecture_summary">سيحاول هذا استبعاد التطبيقات التي لا تتوافق مع معالج هاتفك. يعمل فقط مع APKMIrror.</string>
+    <string name="preferences_general_skip_architecture_summary">سيحاول هذا استبعاد التطبيقات التي لا تتوافق مع معالج هاتفك. يعمل هذا فقط مع APKMIrror.</string>
     <string name="preferences_general_skip_minapi_title">استبعاد قوة النظام البرمجة التطبيقات غير المتوافق</string>
-    <string name="preferences_general_skip_minapi_summary">سيحاول هذا استبعاد التطبيقات غير المتوافقة مع إصدار أندرويد. يعمل فقط مع APKMirror.</string>
+    <string name="preferences_general_skip_minapi_summary">سيحاول هذا استبعاد التطبيقات غير المتوافقة مع إصدار أندرويد. يعمل هذا فقط مع APKMirror.</string>
     <string name="preferences_general_exclude_system_apps_title">استبعاد تطبيقات النظام</string>
     <string name="preferences_general_exclude_system_apps_summary">هذا سيستبعد تطبيقات النظام من التحديثات.</string>
     <string name="preferences_general_exclude_disabled_apps_title">استبعاد التطبيقات المعطلة</string>
@@ -65,8 +65,8 @@
     <string name="theme_orange">برتقالي على أبيض</string>
     <string name="theme_bloody">أسود على أحمر</string>
     <string name="content_description_app_icon">رمز التطبيق</string>
-    <string name="update_check_failed_no_internet">فشل التحقق من التحديثات: لا يوجد اتصال بالإنترنت.</string>
-    <string name="update_check_failed_no_wifi">فشل التحقق من التحديثات: لا شبكة WiFi.</string>
+    <string name="update_check_failed_no_internet">فشل التحقق من التحديثات: لا يوجد أي اتصال بالإنترنت.</string>
+    <string name="update_check_failed_no_wifi">فشل التحقق من التحديثات: لا يوجد شبكة WiFi.</string>
     <string name="action_ignore_app">التجاهل</string>
     <string name="action_unignore_app">إلغاء التجاهل</string>
     <string name="action_play">تنزيل وتثبيت</string>
@@ -79,5 +79,5 @@
     <string name="preferences_general_self_update_summary">سيقوم التطبيق بالتحقق من وجود تحديثات تلقائيا عند بدء التشغيل. في حالة إذا تم العثور على تحديث جديد، سيتم إعلامك بإشعار التحديث  قم بالنقر على الإشعار ليتم تنزيل تحديث التطبيق.</string>
     <string name="selfupdate_update">تحديث %s</string>
     <string name="selfupdate_click_to_install">انقر للتثبيت.</string>
-    <string name="no_new_updates">لم يتم العثور على أي تحديثات جديده</string>
+    <string name="no_new_updates">لم يتم العثور على أي تحديثات جديدة</string>
 </resources>
