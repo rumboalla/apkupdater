@@ -42,6 +42,8 @@ public class GooglePlayUtil
 		"1gTCN_ouDuqbAVg7UViJL5tJ00m7Pc061nEWsf8SLQdE0bCIkhrqp6rUSikdxEaJA9sGCQ."
 	};
 
+	private static int i = getCounter();
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	static public GooglePlayAPI getApi(
@@ -57,7 +59,7 @@ public class GooglePlayUtil
 				((NativeDeviceInfoProvider) deviceInfoProvider).setContext(context);
 				((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
 
-				int i = r.nextInt(GSFID.length);
+				int i = 1;
 				com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
 					.setHttpClient(new OkHttpClientAdapter())
 					.setDeviceInfoProvider(deviceInfoProvider)
@@ -71,6 +73,7 @@ public class GooglePlayUtil
 				api.uploadDeviceConfig();
 			} catch (Exception e) {
 				api = null;
+				i = getCounter();
 			} finally {
 				c++;
 			}
@@ -95,6 +98,12 @@ public class GooglePlayUtil
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static int getCounter(
+    ) {
+        return new Random().nextInt(GSFID.length);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
