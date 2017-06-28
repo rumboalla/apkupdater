@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import com.apkupdater.R;
 import com.apkupdater.activity.MainActivity;
+import com.apkupdater.activity.MainActivity_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.DownloadInfo;
 import com.apkupdater.util.DownloadUtil;
@@ -37,9 +38,7 @@ public class SelfUpdateNotificationReceiver
             String url = intent.getStringExtra("url");
             String versionName = intent.getStringExtra("versionName");
 
-            //Intent startIntent = new Intent();
-            //startIntent.setPackage(context.getPackageName());
-            //context.startActivity(startIntent);
+            MainActivity_.intent(context).flags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP).start();
 
             String text = String.format("%s %s", context.getString(R.string.app_name), versionName);
             long id = DownloadUtil.downloadFile(context, url, "", text);
