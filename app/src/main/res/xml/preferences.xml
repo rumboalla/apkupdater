@@ -75,7 +75,7 @@
             android:key="@string/preferences_general_skip_experimental_key"
             android:summary="@string/preferences_general_skip_experimental_summary"
             android:title="@string/preferences_general_skip_experimental_title"
-            android:defaultValue="false"
+            android:defaultValue="true"
         />
         <CheckBoxPreference
             android:key="@string/preferences_general_exclude_system_apps_key"
