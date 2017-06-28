@@ -68,7 +68,7 @@
     <string name="action_play">INSTALLER</string>
     <string name="theme_bloody">Sanglant</string>
     <string name="install_success">Application installée avec succès !</string>
-    <string name="install_failure">Échec de l\'installation de l\'application !*</string>
+    <string name="install_failure">Échec de l\'installation de l\'application !</string>
     <string name="preferences_play_category">Paramètres Google Play</string>
     <string name="preferences_play_root_install_title">Installation Root</string>
     <string name="preferences_play_root_install_summary">Installer les applications en arrière-plan via les accès root. ROOT REQUIS.</string>
