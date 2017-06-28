@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">APKUpdater</string>
-    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater هو الأداة التي تبسط عملية البحث عن تحديثات للتطبيقات المثبتة. وسوف توفر وظائف مماثلة لمتجر التطبيقات دون الحاجة إلى تثبيت برامج التجسس المرتبطة بها والتي تأتي معها. هذا هو التطبيق مفيدة جدا لأولئك الذين يريدون لتشغيل أندرويد دون المتجر.</p><p>الميزات:</p><ul><li>الحصول على تحديثات من مصادر متعددة</li><li>جدولة التحقق من الخلفية</li><li>يدعم أنظمة أندرويد 2.3 إلي 7.1</li><li>تجاهل قائمة التطبيقات لعدم التحقق من وجود تحديثات</li><li>تصميم المواد الحديثة مع موضوع الدعم المتعدد</li><li>عرض الإشعارات عند العثور على التحديثات</li><li>ابحث عن تطبيقات جديدة لتثبيتها</li></ul><p>المكتبات المستخدمة:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>تحديث المصادر:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>حقوق النشر &copy; 2016 Rumboalla. تم الترخيص بإسم <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU الترخيص العام v3</a>.</p></body></html>]]></string>
+    <string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater هو الأداة التي تبسط عملية البحث عن تحديثات للتطبيقات المثبتة. وسوف توفر وظائف مماثلة لمتجر التطبيقات دون الحاجة إلى تثبيت برامج التجسس المرتبطة بها والتي تأتي معها. هذا هو التطبيق مفيدة جدا لأولئك الذين يريدون لتشغيل أندرويد دون المتجر.</p><p>الميزات:</p><ul><li>الحصول على تحديثات من مصادر متعددة</li><li>جدولة التحقق من الخلفية</li><li>يدعم أنظمة أندرويد 2.3 إلي 8</li><li>تجاهل قائمة التطبيقات لعدم التحقق من وجود تحديثات</li><li>تصميم المواد الحديثة مع موضوع الدعم المتعدد</li><li>عرض الإشعارات عند العثور على التحديثات</li><li>ابحث عن تطبيقات جديدة لتثبيتها</li></ul><p>المكتبات المستخدمة:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>تحديث المصادر:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>حقوق النشر &Copy; 2017 Rumboalla. تم الترخيص بإسم <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU الترخيص العام v3</a>.</p></body></html>]]></string>
     <string name="action_settings">الإعدادت</string>
     <string name="action_log">السجل</string>
     <string name="action_check_for_updates">البحث عن تحديثات</string>
@@ -64,7 +64,7 @@
     <string name="theme_dark">أخضر على أسود</string>
     <string name="theme_orange">برتقالي على أبيض</string>
     <string name="theme_bloody">أسود على أحمر</string>
-    <string name="content_description_app_icon">App Icon</string>
+    <string name="content_description_app_icon">رمز التطبيق</string>
     <string name="update_check_failed_no_internet">فشل التحقق من التحديثات: لا يوجد اتصال بالإنترنت.</string>
     <string name="update_check_failed_no_wifi">فشل التحقق من التحديثات: لا شبكة WiFi.</string>
     <string name="action_ignore_app">التجاهل</string>
@@ -72,12 +72,12 @@
     <string name="action_play">تنزيل وتثبيت</string>
     <string name="install_success">تم تثبيت التطبيق بنجاح!</string>
     <string name="install_failure">حدث خطأ أثناء تثبيت التطبيق!</string>
-    <string name="action_installed">*INSTALLED*</string>
-    <string name="preferences_general_disable_animations_title">*Disable animations*</string>
-    <string name="preferences_general_disable_animations_summary">*This will disable all animations and transitions.*</string>
-    <string name="preferences_general_self_update_title">*Self update check on startup*</string>
-    <string name="preferences_general_self_update_summary">*The app will check for updates of itself on startup. If an update is found, a notification will be displayed and clicking on the notification will update the app.*</string>
-    <string name="selfupdate_update">*Update %s*</string>
-    <string name="selfupdate_click_to_install">*Click to install.*</string>
-    <string name="no_new_updates">*No new updates were found*</string>
+    <string name="action_installed">تثبيت</string>
+    <string name="preferences_general_disable_animations_title">تعطيل الرسوم المتحركة</string>
+    <string name="preferences_general_disable_animations_summary">هذا سيعطل جميع الرسوم المتحركة والتحولات.</string>
+    <string name="preferences_general_self_update_title">التحديث الذاتي عند بدء التشغيل</string>
+    <string name="preferences_general_self_update_summary">التطبيق سيتم التحقق من وجود تحديثات لنفسه عند بدء التشغيل. إذا تم العثور على تحديث، سيتم عرض اعلام والنقر على الاعلام سيتم تحديث التطبيق.</string>
+    <string name="selfupdate_update">تحديث %s</string>
+    <string name="selfupdate_click_to_install">انقر للتثبيت.</string>
+    <string name="no_new_updates">لم يتم العثور على أي تحديثات جديده</string>
 </resources>
