@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.apkupdater.R;
 import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.event.SnackBarEvent;
+import com.apkupdater.model.AppState;
+import com.apkupdater.model.DownloadInfo;
 import com.apkupdater.model.InstallStatus;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
@@ -60,6 +62,9 @@ public class UpdaterAdapter
 
     @Bean
     LogUtil mLog;
+
+    @Bean
+    AppState mAppState;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -179,6 +184,12 @@ public class UpdaterAdapter
                                             data.getDownloadAuthCookie(0).getName() + "=" + data.getDownloadAuthCookie(0).getValue(),
                                             update.getPname() + " " + update.getNewVersionCode()
                                         );
+
+                                        mAppState.getDownloadInfo().put(
+                                            id,
+                                            new DownloadInfo(update.getPname(), update.getNewVersionCode(), update.getNewVersion())
+                                        );
+
 										changeAppInstallStatusAndNotify(update, InstallStatus.STATUS_INSTALLING, id, getAdapterPosition());
                                     } catch (GooglePlayException gex) {
                                         SnackBarUtil.make(mActivity, String.valueOf(gex.getMessage()));
@@ -363,7 +374,7 @@ public class UpdaterAdapter
 		for (int i = 0; i < mUpdates.size(); i++) {
 			Update app = mUpdates.get(i);
 			if (app.getInstallStatus().getId() != 0 &&
-				(app.getInstallStatus().getId() == ev.getId() || app.getPname().equals(ev.getPackageName())))
+				(app.getInstallStatus().getId() == ev.getId()))
 			{
 				app.getInstallStatus().setId(0);
 				if (ev.isSuccess()) {

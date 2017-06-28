@@ -133,6 +133,36 @@ public class InstalledAppUtil
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    static public int getAppVersionCode(
+        Context context,
+        String pName
+    ) {
+	    try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo i = pm.getPackageInfo(pName, 0);
+            return i.versionCode;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static public String getAppVersionName(
+        Context context,
+        String pName
+    ) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo i = pm.getPackageInfo(pName, 0);
+            return i.versionName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
