@@ -4,7 +4,7 @@ APKUpdater is a tool that simplifies the process of finding updates for your ins
 More information can be found on this [XDA thread](https://forum.xda-developers.com/android/apps-games/app-apkupdater-t3444517).
 
 # Download
-* [APK for latest version (1.5.5)](https://github.com/rumboalla/apkupdater/releases/download/1.5.5/app-release.apk)
+* [APK for latest version (1.5.6)](https://github.com/rumboalla/apkupdater/releases/download/1.5.6/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Features
