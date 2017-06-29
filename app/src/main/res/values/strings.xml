@@ -75,6 +75,9 @@
     <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
     <string name="preferences_play_root_install_title">Root install</string>
     <string name="preferences_play_root_install_summary">Install apps in the background using root. NEEDS ROOT.</string>
+    <string name="preferences_play_automatic_install_key" translatable="false">preferences_play_automatic_install_key</string>
+    <string name="preferences_play_automatic_install_title">Automatic update installation</string>
+    <string name="preferences_play_automatic_install_summary">All updates will be installed automatically. NOT IMPLEMENTED YET. NEEDS ROOT.</string>
     <string name="notification_never">Never</string>
     <string name="notification_always">Always</string>
     <string name="notification_background">Background</string>

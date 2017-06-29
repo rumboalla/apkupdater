@@ -41,6 +41,8 @@
 
         <service android:name=".service.SelfUpdateService_"/>
 
+        <service android:name=".service.AutomaticInstallerService_"/>
+
         <receiver android:name=".receiver.AlarmReceiver_" android:exported="false">
             <intent-filter>
                 <action android:name="com.apkupdater.alarm"/>

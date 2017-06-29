@@ -6,8 +6,10 @@ import android.content.Context;
 
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.Update;
+import com.apkupdater.service.AutomaticInstallerService_;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.GooglePlayUtil;
+import com.apkupdater.util.ServiceUtil;
 import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
 import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
 import com.github.yeriomin.playstoreapi.DocV2;
@@ -64,6 +66,8 @@ public class UpdaterGooglePlay
                 return;
             }
 
+            final UpdaterOptions options = new UpdaterOptions(context);
+
             for (BulkDetailsEntry entry : response.getEntryList()) {
                 if (!entry.hasDoc()) {
                     callback.onResult(null);
@@ -95,7 +99,12 @@ public class UpdaterGooglePlay
                                 );
 
                                 mUpdates.add(u);
-                                callback.onResult(u);
+
+                                if (options.automaticInstall()) {
+                                    callback.onResult(null);
+                                } else {
+                                    callback.onResult(u);
+                                }
                             } catch (Exception ex) {
                                 callback.onResult(null);
                             }
@@ -109,6 +118,17 @@ public class UpdaterGooglePlay
                 Thread.sleep(1);
             }
 
+            if (options.automaticInstall() && !ServiceUtil.isServiceRunning(context, AutomaticInstallerService_.class)) {
+                List<String> l = new ArrayList<>();
+                for (Update u : mUpdates) {
+                    l.add(u.getPname());
+                }
+
+                AutomaticInstallerService_
+                    .intent(context.getApplicationContext())
+                    .extra("apps", l.toArray(new String[0]))
+                    .start();
+            }
         } catch (Exception e) {
             mError = String.valueOf(e);
             mResultCode = UpdaterStatus.STATUS_ERROR;

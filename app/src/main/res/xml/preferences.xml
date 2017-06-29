@@ -143,5 +143,11 @@
             android:title="@string/preferences_play_root_install_title"
             android:defaultValue="false"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_play_automatic_install_key"
+            android:summary="@string/preferences_play_automatic_install_summary"
+            android:title="@string/preferences_play_automatic_install_title"
+            android:defaultValue="false"
+        />
     </PreferenceCategory>
 </PreferenceScreen>
