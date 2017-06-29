@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import java.io.File;
@@ -36,7 +37,8 @@ public class DownloadUtil
         String url,
         String cookie,
         String name
-    ) {
+    ) throws Exception
+    {
         DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         if (Build.VERSION.SDK_INT > 10) {
@@ -44,7 +46,14 @@ public class DownloadUtil
         }
         request.setTitle(name);
         request.addRequestHeader("Cookie", cookie);
-        request.setDestinationUri(Uri.fromFile(new File(context.getExternalCacheDir(), UUID.randomUUID().toString())));
+        File dir = context.getExternalCacheDir();
+        if (dir == null) {
+            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (dir == null) {
+                throw new Exception("Can't get external directory.");
+            }
+        }
+        request.setDestinationUri(Uri.fromFile(new File(dir, UUID.randomUUID().toString())));
         return dm.enqueue(request);
     }
 
