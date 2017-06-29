@@ -10,6 +10,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
+import java.io.File;
+import java.util.UUID;
+
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,6 +44,7 @@ public class DownloadUtil
         }
         request.setTitle(name);
         request.addRequestHeader("Cookie", cookie);
+        request.setDestinationUri(Uri.fromFile(new File(context.getExternalCacheDir(), UUID.randomUUID().toString())));
         return dm.enqueue(request);
     }
 
