@@ -139,7 +139,9 @@ public class SearchFragment
 
                     setListAdapter(apps);
                 } catch (RuntimeException rex) {
-                    SnackBarUtil.make(getActivity(), String.valueOf(rex.getCause().getMessage()));
+                    if (rex.getCause() != null) {
+                        SnackBarUtil.make(getActivity(), String.valueOf(rex.getCause().getMessage()));
+                    }
                     mLog.log("SearchFragment", String.valueOf(rex), LogMessage.SEVERITY_ERROR);
                     setListAdapter(new ArrayList<InstalledApp>());
                 } catch (Exception e) {
