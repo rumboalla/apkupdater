@@ -28,6 +28,7 @@ import com.apkupdater.fragment.MainFragment_;
 import com.apkupdater.fragment.SettingsFragment_;
 import com.apkupdater.model.AppState;
 import com.apkupdater.model.DownloadInfo;
+import com.apkupdater.model.LogMessage;
 import com.apkupdater.receiver.BootReceiver_;
 import com.apkupdater.service.SelfUpdateService_;
 import com.apkupdater.service.UpdaterService_;
@@ -35,6 +36,7 @@ import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.InstalledAppUtil;
+import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.SnackBarUtil;
@@ -66,6 +68,9 @@ public class MainActivity
 
 	@Bean
 	AppState mAppState;
+
+	@Bean
+    LogUtil mLog;
 
 	@ViewById(R.id.container)
 	FrameLayout mContainer;
@@ -412,9 +417,14 @@ public class MainActivity
 	public void onPackageInstallerEvent(
 		PackageInstallerEvent ev
 	) {
-		mAppState.getDownloadIds().put(mRequestCode, ev.getId());
-		startActivityForResult(ev.getIntent(), mRequestCode);
-		mRequestCode++;
+	    try {
+            mAppState.getDownloadIds().put(mRequestCode, ev.getId());
+            startActivityForResult(ev.getIntent(), mRequestCode);
+            mRequestCode++;
+        } catch (Exception e) {
+            SnackBarUtil.make(this, String.valueOf(e));
+            mLog.log("Error launching Package Installer", String.valueOf(e), LogMessage.SEVERITY_ERROR);
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
