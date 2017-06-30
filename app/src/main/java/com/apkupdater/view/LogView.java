@@ -3,6 +3,8 @@ package com.apkupdater.view;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,24 +53,21 @@ public class LogView
 	public void bind(
 		LogMessage message
 	) {
-		int color = ColorUtil.getColorFromContext(getContext(), android.R.attr.textColorTertiary);
-
 		mTitle.setText(message.getTitle());
-		//mTitle.setTextColor(color);
-
 		mMessage.setText(message.getMessage());
-		//mMessage.setTextColor(color);
 
 		DateFormat df = SimpleDateFormat.getDateTimeInstance();
 		mTime.setText(df.format(new Date(message.getTime())));
-		//mTime.setTextColor(color);
 
 		if (message.getSeverity() == LogMessage.SEVERITY_INFO) {
             mIcon.setImageResource(R.drawable.ic_info);
+			mIcon.setColorFilter(ContextCompat.getColor(getContext(), R.color.infoColor));
 		} else if  (message.getSeverity() == LogMessage.SEVERITY_WARNING) {
             mIcon.setImageResource(R.drawable.ic_warning);
+			mIcon.setColorFilter(ContextCompat.getColor(getContext(), R.color.warningColor));
 		} else if  (message.getSeverity() == LogMessage.SEVERITY_ERROR) {
 			mIcon.setImageResource(R.drawable.ic_error);
+			mIcon.setColorFilter(ContextCompat.getColor(getContext(), R.color.errorColor));
 		}
 	}
 
