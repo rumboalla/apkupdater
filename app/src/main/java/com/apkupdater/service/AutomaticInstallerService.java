@@ -76,8 +76,11 @@ public class AutomaticInstallerService
                         if (FileUtil.installApk(f.getAbsolutePath())) {
                             mLogger.log("installApps", "Installed " + u.getPname(), LogMessage.SEVERITY_INFO);
                         } else {
-                            mLogger.log("installApps", "Installed " + u.getPname(), LogMessage.SEVERITY_INFO);
+                            mLogger.log("installApps", "Failed to install " + u.getPname(), LogMessage.SEVERITY_INFO);
                         }
+
+                        // TODO: Should check with the package manager if app is really installed.
+
                         f.delete();
                     } else {
                         mLogger.log("installApps", "Error downloading " + u.getPname(), LogMessage.SEVERITY_INFO);
