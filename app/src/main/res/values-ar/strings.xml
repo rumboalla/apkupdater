@@ -80,4 +80,6 @@
     <string name="selfupdate_update">تحديث %s</string>
     <string name="selfupdate_click_to_install">انقر للتثبيت.</string>
     <string name="no_new_updates">لم يتم العثور على أي تحديثات جديدة</string>
+    <string name="preferences_play_automatic_install_summary">*All updates will be installed automatically. BETA. NEEDS ROOT.*</string>
+    <string name="preferences_play_automatic_install_title">*Automatic update installation*</string>
 </resources>
