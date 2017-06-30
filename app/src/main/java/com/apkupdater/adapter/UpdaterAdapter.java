@@ -372,7 +372,7 @@ public class UpdaterAdapter
 	) {
 		for (int i = 0; i < mUpdates.size(); i++) {
 			Update app = mUpdates.get(i);
-			if (app.getInstallStatus().getId() != 0 &&
+			if (app.getInstallStatus() != null && app.getInstallStatus().getId() != 0 &&
 				(app.getInstallStatus().getId() == ev.getId()))
 			{
 				app.getInstallStatus().setId(0);
