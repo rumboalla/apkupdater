@@ -64,9 +64,9 @@ public class LogView
 		//mTime.setTextColor(color);
 
 		if (message.getSeverity() == LogMessage.SEVERITY_INFO) {
-			mIcon.setContentDescription("Info");
+            mIcon.setImageResource(R.drawable.ic_info);
 		} else if  (message.getSeverity() == LogMessage.SEVERITY_WARNING) {
-			mIcon.setContentDescription("Warning");
+            mIcon.setImageResource(R.drawable.ic_warning);
 		} else if  (message.getSeverity() == LogMessage.SEVERITY_ERROR) {
 			mIcon.setImageResource(R.drawable.ic_error);
 		}
