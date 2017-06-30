@@ -21,6 +21,9 @@
     
     <!-- General colors -->
     <color name="tabIndicatorColor">#FFFFFF</color>
+    <color name="errorColor">#FFCC0000</color>
+    <color name="warningColor">#FFFFCC00</color>
+    <color name="infoColor">#FF30A0FF</color>
 
     <!-- Blue theme -->
     <color name="colorPrimaryBlue">#0D47A1</color>
