@@ -14,6 +14,7 @@ import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
 import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,20 +119,30 @@ public class UpdaterGooglePlay
                 Thread.sleep(1);
             }
 
-            if (options.automaticInstall() && !ServiceUtil.isServiceRunning(context, AutomaticInstallerService_.class)) {
-                List<String> l = new ArrayList<>();
-                for (Update u : mUpdates) {
-                    l.add(u.getPname());
-                }
-
-                AutomaticInstallerService_
-                    .intent(context.getApplicationContext())
-                    .extra("apps", l.toArray(new String[0]))
-                    .start();
-            }
+            doAutomaticInstalls();
         } catch (Exception e) {
             mError = String.valueOf(e);
             mResultCode = UpdaterStatus.STATUS_ERROR;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void doAutomaticInstalls(
+    ) {
+        try {
+            UpdaterOptions options = new UpdaterOptions(mContext);
+
+            if (options.automaticInstall() && !ServiceUtil.isServiceRunning(mContext, AutomaticInstallerService_.class)) {
+                String s = new Gson().toJson(mUpdates);
+
+                AutomaticInstallerService_
+                    .intent(mContext.getApplicationContext())
+                    .extra("updates", s)
+                    .start();
+            }
+        } catch (Exception e) {
+
         }
     }
 

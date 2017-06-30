@@ -39,7 +39,6 @@ public class FileUtil
 
             return true;
         } catch (Exception e) {
-            String t = String.valueOf(e);
             return false;
         }
     }
