@@ -134,14 +134,14 @@ public class OkHttpClientAdapter extends HttpClientAdapter {
 
         return content;
     }
-
-    static private HttpUrl buildUrl(String url, Map<String, String> params) {
+    
+    public String buildUrl(String url, Map<String, String> params) {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
         if (null != params && !params.isEmpty()) {
             for (String name: params.keySet()) {
                 urlBuilder.addQueryParameter(name, params.get(name));
             }
         }
-        return urlBuilder.build();
+        return urlBuilder.build().toString();
     }
 }

@@ -171,6 +171,25 @@ public class DownloadUtil
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static public File downloadFile(
+        @NonNull final Context context,
+        @NonNull String url,
+        @Nullable String cookie
+    ) {
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request r = new Request.Builder().url(url).addHeader("Cookie", cookie).build();
+            Response response = client.newCall(r).execute();
+            File f = FileUtil.getRandomFile(context);
+            boolean b = FileUtil.inputStreamToFile(response.body().byteStream(), f);
+            return b ? f : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
