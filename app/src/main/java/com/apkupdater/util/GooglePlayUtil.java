@@ -3,11 +3,6 @@ package com.apkupdater.util;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.TypedValue;
 
 import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
 import com.apkupdater.util.yalp.OkHttpClientAdapter;
@@ -49,7 +44,6 @@ public class GooglePlayUtil
 	static public GooglePlayAPI getApi(
 		Context context
 	) {
-		Random r = new Random();
 		GooglePlayAPI api = null;
 		int c = 0;
 
@@ -59,7 +53,6 @@ public class GooglePlayUtil
 				((NativeDeviceInfoProvider) deviceInfoProvider).setContext(context);
 				((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
 
-				int i = 1;
 				com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
 					.setHttpClient(new OkHttpClientAdapter())
 					.setDeviceInfoProvider(deviceInfoProvider)

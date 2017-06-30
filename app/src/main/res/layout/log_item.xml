@@ -2,9 +2,17 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="0dp"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardUseCompatPadding="true"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="false"
+    android:foreground="?selectableItemBackground"
+    android:clickable="true"
 >
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
