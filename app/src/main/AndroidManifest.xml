@@ -70,6 +70,7 @@
         <receiver android:name=".receiver.DownloadReceiver_" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="com.apkupdater.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 
