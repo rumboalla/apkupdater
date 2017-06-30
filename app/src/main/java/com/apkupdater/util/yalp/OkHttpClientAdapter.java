@@ -127,7 +127,7 @@ public class OkHttpClientAdapter extends HttpClientAdapter {
         } else if (code == 429) {
             throw new GooglePlayException("Error 429: Too many requests.", code);
         } else if (code >= 500) {
-            throw new GooglePlayException("Server error.", code);
+            throw new GooglePlayException("Server error. Paid app maybe?", code);
         } else if (code >= 400) {
             throw new GooglePlayException("Malformed request.", code);
         }
@@ -135,13 +135,13 @@ public class OkHttpClientAdapter extends HttpClientAdapter {
         return content;
     }
 
-    static private HttpUrl buildUrl(String url, Map<String, String> params) {
+    public String buildUrl(String url, Map<String, String> params) {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
         if (null != params && !params.isEmpty()) {
             for (String name: params.keySet()) {
                 urlBuilder.addQueryParameter(name, params.get(name));
             }
         }
-        return urlBuilder.build();
+        return urlBuilder.build().toString();
     }
 }

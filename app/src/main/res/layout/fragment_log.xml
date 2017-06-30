@@ -9,6 +9,7 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
         android:dividerHeight="0dp"
         android:divider="@null"
     />

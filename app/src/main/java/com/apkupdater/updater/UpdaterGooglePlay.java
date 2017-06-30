@@ -6,12 +6,15 @@ import android.content.Context;
 
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.Update;
+import com.apkupdater.service.AutomaticInstallerService_;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.GooglePlayUtil;
+import com.apkupdater.util.ServiceUtil;
 import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
 import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
 import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +67,8 @@ public class UpdaterGooglePlay
                 return;
             }
 
+            final UpdaterOptions options = new UpdaterOptions(context);
+
             for (BulkDetailsEntry entry : response.getEntryList()) {
                 if (!entry.hasDoc()) {
                     callback.onResult(null);
@@ -95,7 +100,12 @@ public class UpdaterGooglePlay
                                 );
 
                                 mUpdates.add(u);
-                                callback.onResult(u);
+
+                                if (options.automaticInstall()) {
+                                    callback.onResult(null);
+                                } else {
+                                    callback.onResult(u);
+                                }
                             } catch (Exception ex) {
                                 callback.onResult(null);
                             }
@@ -109,9 +119,30 @@ public class UpdaterGooglePlay
                 Thread.sleep(1);
             }
 
+            doAutomaticInstalls();
         } catch (Exception e) {
             mError = String.valueOf(e);
             mResultCode = UpdaterStatus.STATUS_ERROR;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void doAutomaticInstalls(
+    ) {
+        try {
+            UpdaterOptions options = new UpdaterOptions(mContext);
+
+            if (options.automaticInstall() && !ServiceUtil.isServiceRunning(mContext, AutomaticInstallerService_.class)) {
+                String s = new Gson().toJson(mUpdates);
+
+                AutomaticInstallerService_
+                    .intent(mContext.getApplicationContext())
+                    .extra("updates", s)
+                    .start();
+            }
+        } catch (Exception e) {
+
         }
     }
 
