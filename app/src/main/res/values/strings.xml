@@ -24,58 +24,38 @@
     <string name="preferences_play_category">Google Play Settings</string>
     <string name="preferences_general_skip_experimental_title">Exclude experimental builds</string>
     <string name="preferences_general_skip_experimental_summary">This will try to exclude experimental builds (alpha, beta) from the updates.</string>
-    <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
     <string name="preferences_general_self_update_title">Self update check on startup</string>
     <string name="preferences_general_self_update_summary">The app will check for updates of itself on startup. If an update is found, a notification will be displayed and clicking on the notification will update the app.</string>
-    <string name="preferences_general_self_update_key" translatable="false">preferences_general_self_update_key</string>
     <string name="preferences_general_disable_animations_title">Disable animations</string>
     <string name="preferences_general_disable_animations_summary">This will disable all animations and transitions.</string>
-    <string name="preferences_general_disable_animations_key" translatable="false">preferences_general_disable_animations_key</string>
     <string name="preferences_general_skip_architecture_title">Exclude other architectures</string>
     <string name="preferences_general_skip_architecture_summary">This will try to exclude apps that are not compatible with your architecture. Only works with APKMIrror.</string>
-    <string name="preferences_general_skip_architecture_key" translatable="false">preferences_general_skip_architecture_key</string>
     <string name="preferences_general_skip_minapi_title">Exclude incompatible API level</string>
     <string name="preferences_general_skip_minapi_summary">This will try to exclude apps that are not compatible with your Android version. Only works with APKMirror.</string>
-    <string name="preferences_general_skip_minapi_key" translatable="false">preferences_general_skip_minapi_key</string>
     <string name="preferences_general_exclude_system_apps_title">Exclude system apps</string>
     <string name="preferences_general_exclude_system_apps_summary">This will exclude system apps from the updates.</string>
-    <string name="preferences_general_exclude_system_apps_key" translatable="false">preferences_general_exclude_system_apps_key</string>
     <string name="preferences_general_exclude_disabled_apps_title">Exclude disabled apps</string>
     <string name="preferences_general_exclude_disabled_apps_summary">This will exclude disabled apps from the updates.</string>
-    <string name="preferences_general_exclude_disabled_apps_key" translatable="false">preferences_general_exclude_disabled_apps_key</string>
     <string name="preferences_general_ignorelist_title">App ignore list</string>
     <string name="preferences_general_ignorelist_summary">This will exclude apps from the update check.</string>
     <string name="preferences_general_ignorelist_value">com.google.android.gms,com.google.android.gsf,com.android.vending</string>
-    <string name="preferences_general_ignorelist_key" translatable="false">preferences_general_ignorelist_key</string>
     <string name="preferences_general_notification_title">Notifications</string>
-    <string name="preferences_general_notification_key" translatable="false">preferences_general_notification_key</string>
     <string name="preferences_general_theme_title">Theme</string>
-    <string name="preferences_general_theme_key" translatable="false">preferences_general_theme_key</string>
     <string name="preferences_general_alarm_title">Check for updates</string>
-    <string name="preferences_general_alarm_key" translatable="false">preferences_general_alarm_key</string>
     <string name="preferences_general_num_threads_title">Number of threads</string>
-    <string name="preferences_general_num_threads_key" translatable="false">preferences_general_num_threads_key</string>
     <string name="preferences_general_use_apkmirror_title">Updates from APKMirror</string>
     <string name="preferences_general_use_apkmirror_summary">This will check for updates on APKMirror.</string>
-    <string name="preferences_general_use_apkmirror_key" translatable="false">preferences_general_use_apkmirror_key</string>
     <string name="preferences_general_use_play_title">Updates from Google Play</string>
     <string name="preferences_general_use_play_summary">This will check for updates on Google Play.</string>
-    <string name="preferences_general_use_play_key" translatable="false">preferences_general_use_play_key</string>
     <string name="preferences_general_use_uptodown_title">Updates from Uptodown</string>
     <string name="preferences_general_use_uptodown_summary">This will check for updates on Uptodown. Slow, needs many requests.</string>
-    <string name="preferences_general_use_uptodown_key" translatable="false">preferences_general_use_uptodown_key</string>
     <string name="preferences_general_use_apkpure_title">Updates from APKPure</string>
     <string name="preferences_general_use_apkpure_summary">This will check for updates on APKPure.com. Needs 2 requests per app, so it\'s slower.</string>
-    <string name="preferences_general_use_apkpure_key" translatable="false">preferences_general_use_apkpure_key</string>
     <string name="preferences_general_wifi_only_title">Wi-Fi only</string>
     <string name="preferences_general_wifi_only_summary">Only check for updates when connected to a Wi-Fi network.</string>
-    <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
     <string name="preferences_general_update_hour_title">Update hour</string>
-    <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
-    <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
     <string name="preferences_play_root_install_title">Root install</string>
     <string name="preferences_play_root_install_summary">Install apps in the background using root. NEEDS ROOT.</string>
-    <string name="preferences_play_automatic_install_key" translatable="false">preferences_play_automatic_install_key</string>
     <string name="preferences_play_automatic_install_title">Automatic update installation</string>
     <string name="preferences_play_automatic_install_summary">All updates will be installed automatically. BETA. NEEDS ROOT.</string>
     <string name="notification_never">Never</string>
@@ -93,42 +73,10 @@
     <string name="content_description_app_icon">App Icon</string>
     <string name="update_check_failed_no_internet">Checking for updates failed: No internet connection.</string>
     <string name="update_check_failed_no_wifi">Checking for updates failed: No Wi-Fi.</string>
-    <string name="num_threads_one" translatable="false">1</string>
-    <string name="num_threads_three" translatable="false">3</string>
-    <string name="num_threads_five" translatable="false">5</string>
-    <string name="num_threads_ten" translatable="false">10</string>
     <string name="action_ignore_app">IGNORE</string>
     <string name="action_unignore_app">UNIGNORE</string>
-    <string name="action_apkmirror" translatable="false">APKMIRROR</string>
-    <string name="action_apkpure" translatable="false">APKPURE</string>
-    <string name="action_uptodown" translatable="false">UPTODOWN</string>
-    <string name="action_evozi" translatable="false">EVOZI</string>
     <string name="action_play">INSTALL</string>
     <string name="action_installed">INSTALLED</string>
-    <string name="update_hour_zero" translatable="false">00:00</string>
-    <string name="update_hour_one" translatable="false">01:00</string>
-    <string name="update_hour_two" translatable="false">02:00</string>
-    <string name="update_hour_three" translatable="false">03:00</string>
-    <string name="update_hour_four" translatable="false">04:00</string>
-    <string name="update_hour_five" translatable="false">05:00</string>
-    <string name="update_hour_six" translatable="false">06:00</string>
-    <string name="update_hour_seven" translatable="false">07:00</string>
-    <string name="update_hour_eight" translatable="false">08:00</string>
-    <string name="update_hour_nine" translatable="false">09:00</string>
-    <string name="update_hour_ten" translatable="false">10:00</string>
-    <string name="update_hour_eleven" translatable="false">11:00</string>
-    <string name="update_hour_twelve" translatable="false">12:00</string>
-    <string name="update_hour_thirteen" translatable="false">13:00</string>
-    <string name="update_hour_fourteen" translatable="false">14:00</string>
-    <string name="update_hour_fifteen" translatable="false">15:00</string>
-    <string name="update_hour_sixteen" translatable="false">16:00</string>
-    <string name="update_hour_seventeen" translatable="false">17:00</string>
-    <string name="update_hour_eighteen" translatable="false">18:00</string>
-    <string name="update_hour_nineteen" translatable="false">19:00</string>
-    <string name="update_hour_twenty" translatable="false">20:00</string>
-    <string name="update_hour_twenty_one" translatable="false">21:00</string>
-    <string name="update_hour_twenty_two" translatable="false">22:00</string>
-    <string name="update_hour_twenty_three" translatable="false">23:00</string>
     <string name="install_success">App was successfully installed!</string>
     <string name="install_failure">Error installing app!</string>
     <string name="selfupdate_update">Update %s</string>
