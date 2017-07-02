@@ -32,6 +32,9 @@ At the moment four sources are supported:
 * [APKPure](https://apkpure.com)
 * [Uptodown](https://en.uptodown.com)
 
+# Translations
+[<img src="https://poeditor.com/public/images/logo_small.png">](https://poeditor.com/join/project/NWTNMrPFj8)
+
 # Screenshots
 <img src="https://user-images.githubusercontent.com/21153554/27194453-7f4fd10c-51fa-11e7-81e1-1ad6bf11a05d.png" width="512"> | <img src="https://user-images.githubusercontent.com/21153554/27194451-7f4b85b6-51fa-11e7-8cfb-da192a9a3bf6.png" width="512">
 ------------ | -------------
