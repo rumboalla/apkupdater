@@ -33,6 +33,8 @@ At the moment four sources are supported:
 * [Uptodown](https://en.uptodown.com)
 
 # Translations
+If you want to help with translations:
+
 [<img src="https://poeditor.com/public/images/logo_small.png">](https://poeditor.com/join/project/NWTNMrPFj8)
 
 # Screenshots
