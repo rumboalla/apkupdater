@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="app_name">"APKUpdater"</string>
-<string name="app_description_html"><![CDATA[<html><body style="text-align:justify"><p>APKUpdater &egrave; uno strumento che semplifica il processo di ricerca degli aggiornamenti per le applicazioni installate. Fornir&agrave; funzionalit&agrave; simili ad uno store di applicazioni senza dover installare gli spyware associati che vengono forniti con esso. Questa &egrave; un\'applicazione molto utile per chi desidera eseguire Android senza un app store.</p><p>Caratteristiche:</p><ul><li>Ottieni aggiornamenti da pi&ugrave; fonti</li><li>Pianifica controlli in secondo piano</li><li>Supporta Android 2.3 a 7.1</li><li>Ignorare l\'elenco delle applicazioni non selezionate per l\'aggiornamento</li><li>Material design moderno con supporto a selezione multipla di temi</li><li>Visualizza notifiche quando vengono trovati aggiornamenti</li><li>Cerca nuove applicazioni da installare</li></ul><p>Librerie utilizzate:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>Update sources:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licensa sotto la <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
+<string name="app_description_html"><![CDATA[<html><body style="text-align:justify"><p>APKUpdater &egrave; uno strumento che semplifica il processo di ricerca degli aggiornamenti per le applicazioni installate. Fornir&agrave; funzionalit&agrave; simili ad uno store di applicazioni senza dover installare gli spyware associati che vengono forniti con esso. Questa &egrave; un\'applicazione molto utile per chi desidera eseguire Android senza un app store.</p><p>Caratteristiche:</p><ul><li>Ottieni aggiornamenti da pi&ugrave; fonti</li><li>Pianifica controlli in secondo piano</li><li>Supporta Android 2.3 a 8</li><li>Ignorare l\'elenco delle applicazioni non selezionate per l\'aggiornamento</li><li>Material design moderno con supporto a selezione multipla di temi</li><li>Visualizza notifiche quando vengono trovati aggiornamenti</li><li>Cerca nuove applicazioni da installare</li></ul><p>Librerie utilizzate:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>Update sources:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2016 Rumboalla. Licensa sotto la <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
 <string name="action_settings">"Parametri"</string>
 <string name="action_log">"Registro"</string>
 <string name="action_check_for_updates">"Verifica Aggiornamenti"</string>
@@ -25,10 +25,10 @@
 <string name="preferences_play_category">"Settaggi Google Play"</string>
 <string name="preferences_general_skip_experimental_title">"Escludi build sperimentali"</string>
 <string name="preferences_general_skip_experimental_summary">"Questo escluderà le build sperimentali (alfa, beta) dagli aggiornamenti."</string>
-<string name="preferences_general_self_update_title">"*Self update check on startup*"</string>
+<string name="preferences_general_self_update_title">"Verifica auto-aggiornamento all\'avvio"</string>
 <string name="preferences_general_self_update_summary">"*The app will check for updates of itself on startup. If an update is found, a notification will be displayed and clicking on the notification will update the app.*"</string>
-<string name="preferences_general_disable_animations_title">"*Disable animations*"</string>
-<string name="preferences_general_disable_animations_summary">"*This will disable all animations and transitions.*"</string>
+<string name="preferences_general_disable_animations_title">"Disabilita animazioni"</string>
+<string name="preferences_general_disable_animations_summary">"Questo disattiverà tutte le animazioni e le transizioni."</string>
 <string name="preferences_general_skip_architecture_title">"Escludi altre architetture"</string>
 <string name="preferences_general_skip_architecture_summary">"Questo escluderà le applicazioni non compatibili con la tua architettura. Funziona solo con APKMIrror."</string>
 <string name="preferences_general_skip_minapi_title">"Escludere livello API incompatibile"</string>
@@ -57,8 +57,8 @@
 <string name="preferences_general_update_hour_title">"Orario per l'aggiornamento"</string>
 <string name="preferences_play_root_install_title">"Installazione Root"</string>
 <string name="preferences_play_root_install_summary">"Installa le app in secondo piano usando il root. NECESSITA DEL ROOT"</string>
-<string name="preferences_play_automatic_install_title">"*Automatic update installation*"</string>
-<string name="preferences_play_automatic_install_summary">"*All updates will be installed automatically. BETA. NEEDS ROOT.*"</string>
+<string name="preferences_play_automatic_install_title">"Installazione automatica dell\'aggiornamento"</string>
+<string name="preferences_play_automatic_install_summary">"Tutti gli aggiornamenti verranno installati automaticamente. BETA. NECESSITA DEL ROOT."</string>
 <string name="notification_never">"Mai"</string>
 <string name="notification_always">"Sempre"</string>
 <string name="notification_background">"Secondo Piano"</string>
@@ -80,7 +80,7 @@
 <string name="action_installed">"INSTALLATO"</string>
 <string name="install_success">"L'applicazione è stata installata correttamente!"</string>
 <string name="install_failure">"Errore durante l'installazione dell'app!"</string>
-<string name="selfupdate_update">"*Update %s*"</string>
-<string name="selfupdate_click_to_install">"*Click to install.*"</string>
-<string name="no_new_updates">"*No new updates were found*"</string>
+<string name="selfupdate_update">"Aggiorna %s"</string>
+<string name="selfupdate_click_to_install">"Clicca per installare."</string>
+<string name="no_new_updates">"Nessun nuovo aggiornamento trovato"</string>
 </resources>
