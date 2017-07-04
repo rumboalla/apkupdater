@@ -162,7 +162,7 @@ public class AutomaticInstallerService
             for (Update u : updates) {
                 try {
                     i++;
-                    doAppNotification(i, updates.length + 1, u);
+                    doAppNotification(i, updates.length, u);
 
                     AndroidAppDeliveryData data = GooglePlayUtil.getAppDeliveryData(
                         GooglePlayUtil.getApi(getApplicationContext()),
