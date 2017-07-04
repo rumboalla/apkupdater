@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.NotificationCompat;
 
 import com.apkupdater.R;
+import com.apkupdater.model.Constants;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -89,7 +90,7 @@ public class UpdaterNotification
 		mNotificationBuilder.setProgress(0, 0, false);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title_finished));
 		mNotificationBuilder.setContentText(s);
-		mNotificationManager.notify(42, mNotificationBuilder.build());
+		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +111,7 @@ public class UpdaterNotification
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 		
-		mNotificationManager.notify(42, mNotificationBuilder.build());
+		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +147,7 @@ public class UpdaterNotification
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 		
-		mNotificationManager.notify(42, mNotificationBuilder.build());
+		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 		updateNotification(mMaxApps, 0);
 	}
 
@@ -164,7 +165,7 @@ public class UpdaterNotification
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 		
-		mNotificationManager.notify(42, mNotificationBuilder.build());
+		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

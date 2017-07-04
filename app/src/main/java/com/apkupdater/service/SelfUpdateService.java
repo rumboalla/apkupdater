@@ -12,6 +12,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.apkupdater.R;
 import com.apkupdater.model.AppState;
+import com.apkupdater.model.Constants;
 import com.apkupdater.model.GitHub.Release;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.util.InstalledAppUtil;
@@ -86,7 +87,7 @@ public class SelfUpdateService
 
         // Launch notification
         NotificationManager m = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-        m.notify(42 + 1, b.build());
+        m.notify(Constants.SelfUpdateNotificationId, b.build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
