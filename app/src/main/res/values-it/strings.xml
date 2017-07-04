@@ -83,4 +83,10 @@
 <string name="selfupdate_update">"Aggiorna %s"</string>
 <string name="selfupdate_click_to_install">"Clicca per installare."</string>
 <string name="no_new_updates">"Nessun nuovo aggiornamento trovato"</string>
+<string name="automatic_installer_title"></string>
+<string name="automatic_installer_progress_title"></string>
+<string name="automatic_installing"></string>
+<string name="automatic_error"></string>
+<string name="automatic_successfully_installed"></string>
+<string name="automatic_failed_to_install"></string>
 </resources>
