@@ -83,8 +83,8 @@
 <string name="selfupdate_update">"Update %s"</string>
 <string name="selfupdate_click_to_install">"Click to install."</string>
 <string name="no_new_updates">"No new updates were found"</string>
-<string name="automatic_installer_title">Automatic Installer</string>
-<string name="automatic_installer_progress_title">Automatic Installer %1$d/%2$d</string>
+<string name="automatic_installer_title">"Automatic Installer"</string>
+<string name="automatic_installer_progress_title">"Automatic Installer %1$d/%2$d"</string>
 <string name="automatic_installing">"Installing %s"</string>
 <string name="automatic_error">"Error installing. Check log."</string>
 <string name="automatic_successfully_installed">"Successfully installed %d apps: "</string>
