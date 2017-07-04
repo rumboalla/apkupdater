@@ -3,6 +3,7 @@ package com.apkupdater.service;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -60,6 +61,15 @@ public class AutomaticInstallerService
 		super(AutomaticInstallerService.class.getSimpleName());
 	}
 
+	private void doNotification(
+	    Notification notification
+    ) {
+        NotificationManager m = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (m != null) {
+            m.notify(Constants.AutomaticUpdateNotificationId, notification);
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void doAppNotification(
@@ -78,8 +88,7 @@ public class AutomaticInstallerService
         b.setStyle(new NotificationCompat.BigTextStyle());
 
         // Launch notification
-        NotificationManager m = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-        m.notify(Constants.AutomaticUpdateNotificationId, b.build());
+        doNotification(b.build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,8 +105,7 @@ public class AutomaticInstallerService
         b.setLargeIcon(BitmapFactory.decodeResource(c.getResources(), R.mipmap.ic_launcher));
 
         // Launch notification
-        NotificationManager m = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-        m.notify(Constants.AutomaticUpdateNotificationId, b.build());
+        doNotification(b.build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,8 +147,7 @@ public class AutomaticInstallerService
         b.setStyle(new NotificationCompat.BigTextStyle());
 
         // Launch notification
-        NotificationManager m = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-        m.notify(Constants.AutomaticUpdateNotificationId, b.build());
+        doNotification(b.build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
