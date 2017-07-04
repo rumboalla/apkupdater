@@ -57,8 +57,9 @@
 <string name="preferences_general_update_hour_title">"تحديث الزمني"</string>
 <string name="preferences_play_root_install_title">"تثبيت الروت"</string>
 <string name="preferences_play_root_install_summary">"تثبيت التطبيقات في الخلفية باستخدام الروت. يحتاج الروت."</string>
-<string name="preferences_play_automatic_install_title">"*Automatic update installation*"</string>
-<string name="preferences_play_automatic_install_summary">"*All updates will be installed automatically. BETA. NEEDS ROOT.*"</string>
+<string name="preferences_play_automatic_install_title">"تثبيت التحديث التلقائي"</string>
+<string name="preferences_play_automatic_install_summary">"سيتم تثبيت التحديثات تلقائيا. يحتاج Root.
+"</string>
 <string name="notification_never">"أبدا"</string>
 <string name="notification_always">"دائما"</string>
 <string name="notification_background">"يعمل في الخلفية"</string>
@@ -83,4 +84,10 @@
 <string name="selfupdate_update">"تحديث %s"</string>
 <string name="selfupdate_click_to_install">"انقر للتثبيت."</string>
 <string name="no_new_updates">"لم يتم العثور على أي تحديثات جديدة"</string>
+<string name="automatic_installer_title"></string>
+<string name="automatic_installer_progress_title"></string>
+<string name="automatic_installing"></string>
+<string name="automatic_error"></string>
+<string name="automatic_successfully_installed"></string>
+<string name="automatic_failed_to_install"></string>
 </resources>
