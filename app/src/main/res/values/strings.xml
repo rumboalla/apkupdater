@@ -58,7 +58,7 @@
 <string name="preferences_play_root_install_title">"Root install"</string>
 <string name="preferences_play_root_install_summary">"Install apps in the background using root. NEEDS ROOT."</string>
 <string name="preferences_play_automatic_install_title">"Automatic update installation"</string>
-<string name="preferences_play_automatic_install_summary">"All updates will be installed automatically. BETA. NEEDS ROOT."</string>
+<string name="preferences_play_automatic_install_summary">"All updates will be installed automatically. NEEDS ROOT."</string>
 <string name="notification_never">"Never"</string>
 <string name="notification_always">"Always"</string>
 <string name="notification_background">"Background"</string>
@@ -83,4 +83,11 @@
 <string name="selfupdate_update">"Update %s"</string>
 <string name="selfupdate_click_to_install">"Click to install."</string>
 <string name="no_new_updates">"No new updates were found"</string>
+    <string name="automatic_installer_title">Automatic Installer</string>
+    <string name="automatic_installer_progress_title">Automatic Installer %d/%d</string>
+    <string name="automatic_installing">"Installing %s..."</string>
+    <string name="automatic_error">"Error installing. Check log."</string>
+    <string name="automatic_successfully_installed">"Successfully installed %d apps: "</string>
+    <string name="automatic_failed_to_install">"Failed to install %d apps: "</string>
+
 </resources>
