@@ -2,13 +2,18 @@ package com.apkupdater.dialog
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.view.LayoutInflater
+import android.support.v7.app.AlertDialog
+import android.view.ContextThemeWrapper
 import android.view.View
-import android.view.ViewGroup
 import com.apkupdater.R
+import com.apkupdater.model.Constants
+import com.apkupdater.util.GooglePlayUtil
+import com.apkupdater.util.ThemeUtil
 import kotlinx.android.synthetic.main.dialog_own_play.view.*
+import kotlin.concurrent.thread
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,36 +21,76 @@ class OwnPlayAccountDialog : DialogFragment()
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    override fun onCreateView(
-        inflater: LayoutInflater?,
-        container: ViewGroup?,
+    val ResultSuccess = 0
+    val ResultFailure = 1
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var mView : View? = null
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    override fun onCreateDialog(
         savedInstanceState: Bundle?
-    ) : View
-    {
-        val rootView = inflater?.inflate(R.layout.dialog_own_play, container, false)
-        return buildView(rootView)
+    ): Dialog {
+        return AlertDialog.Builder(ContextThemeWrapper(context, ThemeUtil.getActivityThemeFromOptions(context)))
+            .setTitle("Setup Play Account")
+            .setView(getContentView())
+            .setNegativeButton("CANCEL", { _, _ ->  })
+            .setPositiveButton("GET TOKEN", { _, _ -> })
+            .create()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun buildView(
-        v : View?
+    override fun onStart(
+
+    ) {
+        super.onStart()
+
+        val d = dialog as AlertDialog
+
+        // Override negative button click handler
+        d.getButton(Dialog.BUTTON_NEGATIVE).setOnClickListener({
+            targetFragment.onActivityResult(Constants.OwnPlayAccountRequestCode, ResultFailure, null)
+            dismiss()
+        })
+
+        // Override positive button click handler
+        d.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener({
+            val v = mView as View
+            v.error_text?.text = ""
+
+            thread(start = true) {
+                try {
+                    val t = GooglePlayUtil.getIdTokenPairFromEmailPassword(
+                        context,
+                        v.user_edit_text?.text.toString(),
+                        v.password_edit_text?.text.toString()
+                    )
+
+                    t.first
+
+                    v.post {
+                        targetFragment.onActivityResult(Constants.OwnPlayAccountRequestCode, ResultSuccess, null)
+                        dismiss()
+                    }
+                } catch (e : Exception) {
+                    v.post {
+                        v.error_text?.text = "There was an error attempting to get the token. Two factor auth is not yet supported."
+                    }
+                }
+            }
+        })
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun getContentView(
     ) : View
     {
-        // Dialog title
-        dialog.setTitle("Setup Play Account")
-
-        // Set callback for cancel button click
-        v?.cancel_button?.setOnClickListener {
-            dismiss()
-        }
-
-        // Set callback for ok button click
-        v?.ok_button?.setOnClickListener {
-            // TODO: Implement
-        }
-
-        return v as View
+        mView = activity.layoutInflater?.inflate(R.layout.dialog_own_play, null, false)
+        return mView as View
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

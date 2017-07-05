@@ -14,6 +14,7 @@ public class Constants
     static public final int UpdaterNotificationId = 42;
     static public final int SelfUpdateNotificationId = 42 + 1;
     static public final int AutomaticUpdateNotificationId = 42 + 2;
+    static public final int OwnPlayAccountRequestCode = 42;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
