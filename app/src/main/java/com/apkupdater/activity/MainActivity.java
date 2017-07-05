@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
-import com.apkupdater.dialog.OwnPlayAccountDialog;
 import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.event.PackageInstallerEvent;
 import com.apkupdater.event.SnackBarEvent;
@@ -49,9 +48,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.HashMap;
-import java.util.Map;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
