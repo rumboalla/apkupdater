@@ -1,0 +1,54 @@
+package com.apkupdater.dialog
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.apkupdater.R
+import kotlinx.android.synthetic.main.dialog_own_play.view.*
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class OwnPlayAccountDialog : DialogFragment()
+{
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    override fun onCreateView(
+        inflater: LayoutInflater?,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) : View
+    {
+        val rootView = inflater?.inflate(R.layout.dialog_own_play, container, false)
+        return buildView(rootView)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun buildView(
+        v : View?
+    ) : View
+    {
+        // Dialog title
+        dialog.setTitle("Setup Play Account")
+
+        // Set callback for cancel button click
+        v?.cancel_button?.setOnClickListener {
+            dismiss()
+        }
+
+        // Set callback for ok button click
+        v?.ok_button?.setOnClickListener {
+            // TODO: Implement
+        }
+
+        return v as View
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
