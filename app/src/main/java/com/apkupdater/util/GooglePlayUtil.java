@@ -3,6 +3,7 @@ package com.apkupdater.util;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
 import com.apkupdater.util.yalp.OkHttpClientAdapter;
@@ -49,13 +50,11 @@ public class GooglePlayUtil
 
 		while (api == null && c < 10) {
 			try {
-				DeviceInfoProvider deviceInfoProvider = new NativeDeviceInfoProvider();
-				((NativeDeviceInfoProvider) deviceInfoProvider).setContext(context);
-				((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
+
 
 				com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
 					.setHttpClient(new OkHttpClientAdapter())
-					.setDeviceInfoProvider(deviceInfoProvider)
+					.setDeviceInfoProvider(getNativeProvider(context))
 					.setLocale(Locale.getDefault())
 					.setEmail(null)
 					.setPassword(null)
@@ -75,6 +74,17 @@ public class GooglePlayUtil
 		return api;
 	}
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static DeviceInfoProvider getNativeProvider(
+	    Context context
+    ) {
+        DeviceInfoProvider deviceInfoProvider = new NativeDeviceInfoProvider();
+        ((NativeDeviceInfoProvider) deviceInfoProvider).setContext(context);
+        ((NativeDeviceInfoProvider) deviceInfoProvider).setLocaleString(Locale.getDefault().toString());
+        return deviceInfoProvider;
+    }
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static AndroidAppDeliveryData getAppDeliveryData(
@@ -88,6 +98,25 @@ public class GooglePlayUtil
 			d.getOffer(0).getOfferType()
 		).getPurchaseStatusResponse().getAppDeliveryData();
 	}
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static Pair<String, String> getIdTokenPairFromEmailPassword(
+	    Context context,
+        String email,
+        String password
+    ) throws Exception {
+
+        com.github.yeriomin.playstoreapi.PlayStoreApiBuilder builder = new com.github.yeriomin.playstoreapi.PlayStoreApiBuilder()
+            .setHttpClient(new OkHttpClientAdapter())
+            .setDeviceInfoProvider(getNativeProvider(context))
+            .setLocale(Locale.getDefault())
+            .setEmail(email)
+            .setPassword(password);
+
+        GooglePlayAPI api = builder.build();
+	    return new Pair<>(api.getGsfId(), api.getToken());
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

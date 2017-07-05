@@ -169,10 +169,6 @@ public class MainActivity
                 SelfUpdateService_.intent(getApplication()).start();
             }
         }
-
-        // Dialog test
-        OwnPlayAccountDialog d = new OwnPlayAccountDialog();
-        d.show(getSupportFragmentManager(), "test");
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

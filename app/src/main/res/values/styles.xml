@@ -9,7 +9,16 @@
         <item name="android:textColorSecondary">@color/textColorSecondaryBlue</item>
         <item name="android:textColor">@color/textColorBlue</item>
         <item name="preferenceTheme">@style/PreferenceThemeBlue</item>
-        <item name="alertDialogTheme">@style/PreferenceThemeBlue</item>
+        <item name="alertDialogTheme">@style/DialogThemeBlue</item>
+    </style>
+
+    <style name="DialogThemeBlue" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryBlue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryBlue</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryBlue</item>
+        <item name="android:textColor">@color/textColorBlue</item>
     </style>
 
     <style name="PreferenceThemeBlue" parent="AppThemeBlue">
@@ -28,7 +37,16 @@
         <item name="android:textColorSecondary">@color/textColorSecondaryOrange</item>
         <item name="android:textColor">@color/textColorOrange</item>
         <item name="preferenceTheme">@style/PreferenceThemeOrange</item>
-        <item name="alertDialogTheme">@style/PreferenceThemeOrange</item>
+        <item name="alertDialogTheme">@style/DialogThemeOrange</item>
+    </style>
+
+    <style name="DialogThemeOrange" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryOrange</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOrange</item>
+        <item name="colorAccent">@color/colorAccentOrange</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryOrange</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryOrange</item>
+        <item name="android:textColor">@color/textColorOrange</item>
     </style>
 
     <style name="PreferenceThemeOrange" parent="AppThemeOrange">
@@ -45,7 +63,14 @@
         <item name="colorAccent">@color/colorAccentPink</item>
         <item name="android:textColor">@color/textColorPink</item>
         <item name="preferenceTheme">@style/PreferenceThemePink</item>
-        <item name="alertDialogTheme">@style/PreferenceThemePink</item>
+        <item name="alertDialogTheme">@style/DialogThemePink</item>
+    </style>
+
+    <style name="DialogThemePink" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryPink</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkPink</item>
+        <item name="colorAccent">@color/colorAccentPink</item>
+        <item name="android:textColor">@color/textColorPink</item>
     </style>
 
     <style name="PreferenceThemePink" parent="AppThemePink">
@@ -62,7 +87,14 @@
         <item name="colorAccent">@color/colorAccentDark</item>
         <item name="android:textColor">@color/textColorDark</item>
         <item name="preferenceTheme">@style/PreferenceThemeDark</item>
-        <item name="alertDialogTheme">@style/PreferenceThemeDark</item>
+        <item name="alertDialogTheme">@style/DialogThemeDark</item>
+    </style>
+
+    <style name="DialogThemeDark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryD</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkD</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
 
     <style name="PreferenceThemeDark" parent="AppThemeDark">
@@ -84,7 +116,19 @@
         <item name="android:colorBackground">@color/colorPrimaryBloody</item>
         <item name="android:textColor">@color/textColorBloody</item>
         <item name="preferenceTheme">@style/PreferenceThemeBloody</item>
-        <item name="alertDialogTheme">@style/PreferenceThemeBloody</item>
+        <item name="alertDialogTheme">@style/DialogThemeBloody</item>
+    </style>
+
+    <style name="DialogThemeBloody" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryBloody</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBloody</item>
+        <item name="colorAccent">@color/textColorBloody</item>
+        <item name="colorControlActivated">@color/textColorBloody</item>
+        <item name="colorControlNormal">@color/textColorBloody</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryBloody</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryBloody</item>
+        <item name="android:colorBackground">@color/colorPrimaryBloody</item>
+        <item name="android:textColor">@color/textColorBloody</item>
     </style>
 
     <style name="PreferenceThemeBloody" parent="AppThemeBloody">
