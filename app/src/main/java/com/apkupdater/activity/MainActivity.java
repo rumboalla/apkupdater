@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.dialog.OwnPlayAccountDialog;
 import com.apkupdater.event.InstallAppEvent;
 import com.apkupdater.event.PackageInstallerEvent;
 import com.apkupdater.event.SnackBarEvent;
@@ -162,13 +163,16 @@ public class MainActivity
         // Color floating action button
         colorFloatingActionButton();
 
-
 		// Self update check
         if (new UpdaterOptions(this).selfUpdate()) {
             if (!ServiceUtil.isServiceRunning(this, SelfUpdateService_.class)) {
                 SelfUpdateService_.intent(getApplication()).start();
             }
         }
+
+        // Dialog test
+        OwnPlayAccountDialog d = new OwnPlayAccountDialog();
+        d.show(getSupportFragmentManager(), "test");
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

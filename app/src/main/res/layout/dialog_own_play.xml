@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/user_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textColorHint="?attr/colorAccent"
+        android:focusable="false"
+    >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/user_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:textColor="?android:textColor"
+            app:backgroundTint="?attr/colorAccent"
+            android:hint="User"
+            android:gravity="center_horizontal"
+        />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textColorHint="?attr/colorAccent"
+        android:focusable="false"
+    >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:textColor="?android:textColor"
+            app:backgroundTint="?attr/colorAccent"
+            android:hint="Password"
+            android:gravity="center_horizontal"
+        />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    >
+        <Button
+            android:id="@+id/cancel_button"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Cancel"
+        />
+
+        <Button
+            android:id="@+id/ok_button"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Get Token"
+        />
+    </LinearLayout>
+
+
+</LinearLayout>
