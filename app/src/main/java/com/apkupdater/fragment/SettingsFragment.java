@@ -5,8 +5,8 @@ package com.apkupdater.fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.apkupdater.R;
@@ -52,7 +52,20 @@ public class SettingsFragment
         int resultCode,
         Intent data
     ) {
-        super.onActivityResult(requestCode, resultCode, data);
+	    if (requestCode == Constants.OwnPlayAccountRequestCode && resultCode == OwnPlayAccountDialog.ResultSuccess) {
+            setOwnPlayAccount(true);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void setOwnPlayAccount(
+        boolean b
+    ) {
+        CheckBoxPreference p = (CheckBoxPreference)findPreference(getString(R.string.preferences_play_own_account_key));
+        p.setChecked(b);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +91,10 @@ public class SettingsFragment
 					mBus.post(new UpdateInstalledAppsEvent());
 				} else if (key.equals(getString(R.string.preferences_play_own_account_key))) {
                     if (prefs.getBoolean(getString(R.string.preferences_play_own_account_key), false)) {
+                        // Set pref to unchecked
+                        setOwnPlayAccount(false);
+
+                        // Launch dialog
                         OwnPlayAccountDialog d = new OwnPlayAccountDialog();
                         d.setTargetFragment(SettingsFragment.this, Constants.OwnPlayAccountRequestCode);
                         d.show(getFragmentManager(), getTag());

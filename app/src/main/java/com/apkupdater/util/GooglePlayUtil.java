@@ -5,6 +5,7 @@ package com.apkupdater.util;
 import android.content.Context;
 import android.util.Pair;
 
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.yalp.NativeDeviceInfoProvider;
 import com.apkupdater.util.yalp.OkHttpClientAdapter;
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
@@ -57,9 +58,14 @@ public class GooglePlayUtil
 					.setDeviceInfoProvider(getNativeProvider(context))
 					.setLocale(Locale.getDefault())
 					.setEmail(null)
-					.setPassword(null)
-					.setGsfId(GSFID[i])
-					.setToken(TOKEN[i]);
+					.setPassword(null);
+
+                UpdaterOptions options = new UpdaterOptions(context);
+				if (options.useOwnPlayAccount()) {
+                    builder.setGsfId(options.getOwnGsfId()).setToken(options.getOwnToken());
+                } else {
+					builder.setGsfId(GSFID[i]).setToken(TOKEN[i]);
+                }
 
 				api = builder.build();
 				api.uploadDeviceConfig();

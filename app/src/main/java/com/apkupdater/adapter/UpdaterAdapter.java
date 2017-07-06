@@ -202,7 +202,7 @@ public class UpdaterAdapter
                                 }
                             }).start();
                         } else {
-                            DownloadUtil.LaunchBrowser(mContext, update.getUrl());
+                            DownloadUtil.launchBrowser(mContext, update.getUrl());
                         }
                     }
                 });

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.apkupdater.R;
+import com.apkupdater.model.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -222,8 +223,49 @@ public class UpdaterOptions
 		return sharedPref.getBoolean(mContext.getString(R.string.preferences_play_root_install_key), false);
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public boolean useOwnPlayAccount(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_play_own_account_key), false);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public String getOwnGsfId(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getString(Constants.OWN_GSFID_KEY, null);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void setOwnGsfId(
+        String id
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        sharedPref.edit().putString(Constants.OWN_GSFID_KEY, id).apply();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public String getOwnToken(
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getString(Constants.OWN_TOKEN_KEY, null);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void setOwnToken(
+        String id
+    ) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        sharedPref.edit().putString(Constants.OWN_TOKEN_KEY, id).apply();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

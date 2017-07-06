@@ -15,6 +15,8 @@ public class Constants
     static public final int SelfUpdateNotificationId = 42 + 1;
     static public final int AutomaticUpdateNotificationId = 42 + 2;
     static public final int OwnPlayAccountRequestCode = 42;
+    static public final String OWN_GSFID_KEY = "own_gsfid_key";
+    static public final String OWN_TOKEN_KEY = "oen_token_key";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

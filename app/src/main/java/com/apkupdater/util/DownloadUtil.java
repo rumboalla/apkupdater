@@ -34,7 +34,7 @@ public class DownloadUtil
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static public void LaunchBrowser(
+    static public void launchBrowser(
         Context context,
         String url
     ) {
