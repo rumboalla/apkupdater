@@ -2,14 +2,18 @@ package com.apkupdater.fragment;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.apkupdater.R;
 import com.apkupdater.activity.MainActivity_;
+import com.apkupdater.dialog.OwnPlayAccountDialog;
 import com.apkupdater.event.UpdateInstalledAppsEvent;
+import com.apkupdater.model.Constants;
 import com.apkupdater.util.AlarmUtil;
 import com.apkupdater.util.MyBus;
 
@@ -29,6 +33,8 @@ public class SettingsFragment
 	@Bean
 	MyBus mBus;
 
+	private boolean mIgnoreChange;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -40,12 +46,37 @@ public class SettingsFragment
 		addPreferencesFromResource(R.xml.preferences);
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onActivityResult(
+        int requestCode,
+        int resultCode,
+        Intent data
+    ) {
+	    if (requestCode == Constants.OwnPlayAccountRequestCode && resultCode == OwnPlayAccountDialog.ResultSuccess) {
+			mIgnoreChange = true;
+            setOwnPlayAccount(true);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void setOwnPlayAccount(
+        boolean b
+    ) {
+        CheckBoxPreference p = (CheckBoxPreference)findPreference(getString(R.string.preferences_play_own_account_key));
+        p.setChecked(b);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	SharedPreferences.OnSharedPreferenceChangeListener mChanges = new SharedPreferences.OnSharedPreferenceChangeListener() {
 		@Override
 		public void onSharedPreferenceChanged(
-			SharedPreferences sharedPreferences,
+			SharedPreferences prefs,
 			String key
 		) {
 			try {
@@ -61,7 +92,18 @@ public class SettingsFragment
 				) {
 					// Update list of apps
 					mBus.post(new UpdateInstalledAppsEvent());
-				}
+				} else if (key.equals(getString(R.string.preferences_play_own_account_key))) {
+                    if (!mIgnoreChange && prefs.getBoolean(getString(R.string.preferences_play_own_account_key), false)) {
+                        // Set pref to unchecked
+                        setOwnPlayAccount(false);
+
+                        // Launch dialog
+                        OwnPlayAccountDialog d = new OwnPlayAccountDialog();
+                        d.setTargetFragment(SettingsFragment.this, Constants.OwnPlayAccountRequestCode);
+                        d.show(getFragmentManager(), getTag());
+                    }
+                    mIgnoreChange = false;
+                }
 			} catch (IllegalStateException ignored) {
 
 			}

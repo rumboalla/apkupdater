@@ -49,9 +49,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.HashMap;
-import java.util.Map;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @EActivity
@@ -161,7 +158,6 @@ public class MainActivity
 
         // Color floating action button
         colorFloatingActionButton();
-
 
 		// Self update check
         if (new UpdaterOptions(this).selfUpdate()) {

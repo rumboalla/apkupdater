@@ -19,6 +19,7 @@
     <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
     <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
     <string name="preferences_play_automatic_install_key" translatable="false">preferences_play_automatic_install_key</string>
+    <string name="preferences_play_own_account_key" translatable="false">preferences_play_own_account_key</string>
     <string name="num_threads_one" translatable="false">1</string>
     <string name="num_threads_three" translatable="false">3</string>
     <string name="num_threads_five" translatable="false">5</string>
