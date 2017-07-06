@@ -33,6 +33,8 @@ public class SettingsFragment
 	@Bean
 	MyBus mBus;
 
+	private boolean mIgnoreChange;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -53,6 +55,7 @@ public class SettingsFragment
         Intent data
     ) {
 	    if (requestCode == Constants.OwnPlayAccountRequestCode && resultCode == OwnPlayAccountDialog.ResultSuccess) {
+			mIgnoreChange = true;
             setOwnPlayAccount(true);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -90,7 +93,7 @@ public class SettingsFragment
 					// Update list of apps
 					mBus.post(new UpdateInstalledAppsEvent());
 				} else if (key.equals(getString(R.string.preferences_play_own_account_key))) {
-                    if (prefs.getBoolean(getString(R.string.preferences_play_own_account_key), false)) {
+                    if (!mIgnoreChange && prefs.getBoolean(getString(R.string.preferences_play_own_account_key), false)) {
                         // Set pref to unchecked
                         setOwnPlayAccount(false);
 
@@ -99,6 +102,7 @@ public class SettingsFragment
                         d.setTargetFragment(SettingsFragment.this, Constants.OwnPlayAccountRequestCode);
                         d.show(getFragmentManager(), getTag());
                     }
+                    mIgnoreChange = false;
                 }
 			} catch (IllegalStateException ignored) {
 
