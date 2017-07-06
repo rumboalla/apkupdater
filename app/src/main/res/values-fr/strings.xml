@@ -83,10 +83,14 @@
 <string name="selfupdate_update">"Mettre à jour %s"</string>
 <string name="selfupdate_click_to_install">"Appuyez pour installer."</string>
 <string name="no_new_updates">"Aucune mise à jour trouvée"</string>
-<string name="automatic_installer_title"></string>
-<string name="automatic_installer_progress_title"></string>
-<string name="automatic_installing"></string>
-<string name="automatic_error"></string>
-<string name="automatic_successfully_installed"></string>
-<string name="automatic_failed_to_install"></string>
+<string name="automatic_installer_title">"Installeur automatique"</string>
+<string name="automatic_installer_progress_title">"Installeur automatique %1$d/%2$d"</string>
+<string name="automatic_installing">"Installation de %s"</string>
+<string name="automatic_error">"Échec de l'installation. Consultez le journal."</string>
+<string name="automatic_successfully_installed">"%d application•s installée•s avec succès : "</string>
+<string name="automatic_failed_to_install">"Échec de l'installation de %d application•s : "</string>
+<string name="preferences_play_own_account_title"></string>
+<string name="preferences_play_own_account_summary"></string>
+<string name="get_token_error"></string>
+<string name="get_token_launch_url"></string>
 </resources>
