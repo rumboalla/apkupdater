@@ -94,4 +94,8 @@ href="https://github.com/Alsidi-Group">Marwan ALsidi</a></li><li><a href="https:
 تم التثبيت بنجاح %d apps:"</string>
 <string name="automatic_failed_to_install">"
 للإسف فشل التثبيت %d apps:"</string>
+<string name="preferences_play_own_account_title"></string>
+<string name="preferences_play_own_account_summary"></string>
+<string name="get_token_error"></string>
+<string name="get_token_launch_url"></string>
 </resources>
