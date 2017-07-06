@@ -10,9 +10,9 @@
         android:id="@+id/user_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:textColorHint="?attr/colorAccent"
         android:focusable="false"
     >
@@ -25,8 +25,7 @@
             android:imeOptions="actionSearch"
             android:textColor="?android:textColor"
             app:backgroundTint="?attr/colorAccent"
-            android:hint="User"
-            android:gravity="center_horizontal"
+            android:hint="Email"
         />
     </android.support.design.widget.TextInputLayout>
 
@@ -34,9 +33,12 @@
         android:id="@+id/password_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="?attr/colorAccent"
         android:textColorHint="?attr/colorAccent"
         android:focusable="false"
     >
@@ -45,24 +47,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:imeOptions="actionSearch"
             android:textColor="?android:textColor"
             app:backgroundTint="?attr/colorAccent"
             android:hint="Password"
-            android:gravity="center_horizontal"
         />
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/error_text"
+    <RelativeLayout
+        android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text=""
-    />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+    >
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+        />
+    </RelativeLayout>
 
 </LinearLayout>
