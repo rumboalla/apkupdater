@@ -89,8 +89,4 @@
 <string name="automatic_error">"Échec de l'installation. Consultez le journal."</string>
 <string name="automatic_successfully_installed">"%d application•s installée•s avec succès : "</string>
 <string name="automatic_failed_to_install">"Échec de l'installation de %d application•s : "</string>
-<string name="preferences_play_own_account_title"></string>
-<string name="preferences_play_own_account_summary"></string>
-<string name="get_token_error"></string>
-<string name="get_token_launch_url"></string>
 </resources>
