@@ -89,8 +89,8 @@
 <string name="automatic_error">"Сбой автоустановки. Проверьте журнал."</string>
 <string name="automatic_successfully_installed">"Автоустановлено приложений: %d:_"</string>
 <string name="automatic_failed_to_install">"Не удалось автоустановить приложений: %d:_"</string>
-<string name="preferences_play_own_account_title"></string>
-<string name="preferences_play_own_account_summary"></string>
-<string name="get_token_error"></string>
-<string name="get_token_launch_url"></string>
+<string name="preferences_play_own_account_title">"Свой аккаунт Google"</string>
+<string name="preferences_play_own_account_summary">"Использовать собственный аккаунт Google вместо общего."</string>
+<string name="get_token_error">"Ошибка при получении токена"</string>
+<string name="get_token_launch_url">"Получение двухфакторной ссылки"</string>
 </resources>
