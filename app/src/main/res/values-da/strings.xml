@@ -89,4 +89,8 @@
 <string name="automatic_error">"Fejl ved installation. Tjek loggen."</string>
 <string name="automatic_successfully_installed">"Installeret med succes %d apps: "</string>
 <string name="automatic_failed_to_install">"Kunne ikke installere %d apps: "</string>
+<string name="preferences_play_own_account_title">"Anvend egen Google Konto"</string>
+<string name="preferences_play_own_account_summary">"Anvend din egen Google konto i stedet for en delt konto."</string>
+<string name="get_token_error">"Der var en fejl i forsøget på at få mærket"</string>
+<string name="get_token_launch_url">"Starter totrins-url."</string>
 </resources>
