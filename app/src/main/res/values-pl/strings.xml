@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="app_name"></string>
-<string name="app_description_html"></string>
 <string name="action_settings">"Ustawienia"</string>
 <string name="action_log">"Log"</string>
 <string name="action_check_for_updates">"Szukaj aktualizacji"</string>
@@ -10,14 +8,12 @@
 <string name="tab_search">"Szukaj"</string>
 <string name="tab_about">"O programie"</string>
 <string name="notification_update_title">"Szukanie aktualizacji"</string>
-<string name="notification_update_content"></string>
 <string name="notification_update_title_finished">"Zakończono szukanie aktualizacji"</string>
 <string name="notification_update_content_finished">"Znaleziono $1 aktualizacje"</string>
 <string name="notification_update_title_failed">"Szukanie aktualizacji nie powiodło się"</string>
 <string name="already_updating">"Szukanie aktualizacji w toku."</string>
 <string name="update_finished">"Zakończono szukanie aktualizacji."</string>
 <string name="update_finished_with_errors">"Szukanie aktualizacji zakończono z $1 błędami."</string>
-<string name="update_failed"></string>
 <string name="update_no_sources">"Co najmniej jedno źródło musi zostać wybrane."</string>
 <string name="preferences_general_category">"Podstawowe ustawienia"</string>
 <string name="preferences_filter_category">"Filtruj ustawienia"</string>
