@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import com.apkupdater.model.DownloadInfo;
 import com.apkupdater.model.InstallStatus;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.model.Update;
+import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.DownloadUtil;
 import com.apkupdater.util.GooglePlayUtil;
@@ -85,6 +87,7 @@ public class UpdaterAdapter
 		private ImageView mIsBetaIcon;
         private ProgressBar mActionOneProgressBar;
         private TextView mChangeLog;
+        private LinearLayout mChangeLogContainer;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,6 +114,7 @@ public class UpdaterAdapter
 			mActionOneButton = mView.findViewById(R.id.action_one_button);
 			mActionTwoButton = mView.findViewById(R.id.action_two_button);
             mActionOneProgressBar = mView.findViewById(R.id.action_one_progressbar);
+            mChangeLogContainer = mView.findViewById(R.id.change_log_container);
 
 			// Set values
 			mName.setText(update.getName());
@@ -156,6 +160,19 @@ public class UpdaterAdapter
 					mActionOneButton.setVisibility(View.INVISIBLE);
 				}
 			}
+
+			// Changelog expand collapse
+			mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AnimationUtil.startDefaultAnimation(mContext, mChangeLogContainer);
+                    if (mChangeLogContainer.getVisibility() == View.GONE) {
+                        mChangeLogContainer.setVisibility(View.VISIBLE);
+                    } else {
+                        mChangeLogContainer.setVisibility(View.GONE);
+                    }
+                }
+            });
 
 			if (update.getChangeLog() != null && !update.getChangeLog().isEmpty()) {
                 mChangeLog.setText(Html.fromHtml(update.getChangeLog()));

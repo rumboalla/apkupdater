@@ -21,6 +21,23 @@ public class AnimationUtil
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void startDefaultAnimation(
+        Context context,
+        ViewGroup v
+    ) {
+        if (new UpdaterOptions(context).disableAnimations()) {
+            // No animation
+        } else if (Build.VERSION.SDK_INT >= 21) {
+            TransitionManager.beginDelayedTransition(v);
+        } else if (Build.VERSION.SDK_INT >= 14){
+            android.support.transition.TransitionManager.beginDelayedTransition(v);
+        } {
+            // No animation
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void startSlideAnimation(
         Context context,
         ViewGroup v
