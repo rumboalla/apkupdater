@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ public class UpdaterAdapter
 		private Button mActionTwoButton;
 		private ImageView mIsBetaIcon;
         private ProgressBar mActionOneProgressBar;
+        private TextView mChangeLog;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,6 +104,7 @@ public class UpdaterAdapter
 			mName = mView.findViewById(R.id.installed_app_name);
 			mPname = mView.findViewById(R.id.installed_app_pname);
 			mVersion = mView.findViewById(R.id.installed_app_version);
+            mChangeLog = mView.findViewById(R.id.change_log_text);
 			mIcon = mView.findViewById(R.id.installed_app_icon);
 			mIsBetaIcon = mView.findViewById(R.id.isbeta_icon);
 			mUrl = mView.findViewById(R.id.update_url);
@@ -153,6 +156,14 @@ public class UpdaterAdapter
 					mActionOneButton.setVisibility(View.INVISIBLE);
 				}
 			}
+
+			if (update.getChangeLog() != null && !update.getChangeLog().isEmpty()) {
+                mChangeLog.setText(Html.fromHtml(update.getChangeLog()));
+                mChangeLog.setVisibility(View.VISIBLE);
+            } else {
+                mChangeLog.setText("");
+                mChangeLog.setVisibility(View.GONE);
+            }
 
 			// Action 1 listener
             if (!action.isEmpty()) {

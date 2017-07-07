@@ -99,6 +99,10 @@ public class UpdaterGooglePlay
                                     versionCode
                                 );
 
+                                if (details.getDetails().getAppDetails().hasRecentChangesHtml()) {
+                                    u.setChangeLog(details.getDetails().getAppDetails().getRecentChangesHtml());
+                                }
+
                                 mUpdates.add(u);
 
                                 if (options.automaticInstall()) {
