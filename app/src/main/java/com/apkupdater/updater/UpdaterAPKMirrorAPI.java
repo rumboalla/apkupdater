@@ -172,7 +172,7 @@ public class UpdaterAPKMirrorAPI
                             null,
                             Integer.valueOf(fapks.get(0).getVersionCode())
                         );
-
+                        u.setChangeLog(data.getRelease().getWhatsNew());
                         mUpdates.add(u);
                         mUpdateCallback.onResult(u);
                         continue;
