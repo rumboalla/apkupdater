@@ -158,13 +158,6 @@ public class MainActivity
 
         // Color floating action button
         colorFloatingActionButton();
-
-		// Self update check
-        if (new UpdaterOptions(this).selfUpdate()) {
-            if (!ServiceUtil.isServiceRunning(this, SelfUpdateService_.class)) {
-                SelfUpdateService_.intent(getApplication()).start();
-            }
-        }
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

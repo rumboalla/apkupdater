@@ -15,9 +15,11 @@ import com.apkupdater.model.AppState;
 import com.apkupdater.model.Constants;
 import com.apkupdater.model.GitHub.Release;
 import com.apkupdater.model.LogMessage;
+import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.InstalledAppUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.ServiceUtil;
 import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
@@ -62,6 +64,19 @@ public class SelfUpdateService
 	) {
 		super(SelfUpdateService.class.getSimpleName());
 	}
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	static public void launcSelfUpdate(
+	    Context context
+    ) {
+        // Self update check
+        if (new UpdaterOptions(context).selfUpdate()) {
+            if (!ServiceUtil.isServiceRunning(context, SelfUpdateService_.class)) {
+                SelfUpdateService_.intent(context).start();
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

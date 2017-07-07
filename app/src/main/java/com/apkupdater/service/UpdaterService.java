@@ -297,8 +297,11 @@ public class UpdaterService
 				mNotification.failNotification();
 			}
 			mMutex.unlock();
-		}
-	}
+		} finally {
+            // Self update check
+            SelfUpdateService.launcSelfUpdate(getApplicationContext());
+        }
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
