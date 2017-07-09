@@ -37,7 +37,7 @@ At the moment four sources are supported:
 * Russian: [mihey4ik1](https://4pda.ru/forum/index.php?showtopic=783384)
 * Chinese: [Zhiyuan Wang](http://weibo.com/321134526)
 
-If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211)
+If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211).
 
 If you want to help with translations:
 
