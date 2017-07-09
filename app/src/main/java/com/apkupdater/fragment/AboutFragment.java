@@ -8,13 +8,16 @@ import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.model.Constants;
 import com.apkupdater.util.ColorUtil;
+import com.apkupdater.util.DownloadUtil;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -87,6 +90,12 @@ public class AboutFragment
 	protected void onInit(
 	) {
 		mAppNameText.setTextColor(ColorUtil.getColorFromTheme(getActivity().getTheme(), R.attr.colorAccent));
+		mAppNameText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				DownloadUtil.launchBrowser(getContext(), Constants.GitHubURL);
+			}
+		});
 
 		try {
 			WebView v = getWebView();
