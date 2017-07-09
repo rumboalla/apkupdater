@@ -40,6 +40,7 @@ At the moment four sources are supported:
 If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211)
 
 If you want to help with translations:
+
 [<img src="https://poeditor.com/public/images/logo_small.png">](https://poeditor.com/join/project/NWTNMrPFj8)
 
 # Screenshots
