@@ -27,7 +27,9 @@ public class ThemeUtil
             return R.style.AppThemeOrange;
         } else if (theme.equals(context.getString(R.string.theme_bloody))) {
             return R.style.AppThemeBloody;
-        } else {
+		} else if (theme.equals(context.getString(R.string.theme_amoled))) {
+			return R.style.AppThemeAmoled;
+		} else {
 			return R.style.AppThemeBlue;
 		}
 	}
@@ -48,7 +50,9 @@ public class ThemeUtil
 			return R.style.PreferenceThemeOrange;
         } else if (theme.equals(context.getString(R.string.theme_bloody))) {
             return R.style.PreferenceThemeBloody;
-        } else {
+		} else if (theme.equals(context.getString(R.string.theme_amoled))) {
+			return R.style.PreferenceThemeAmoled;
+		} else {
 			return R.style.PreferenceThemeBlue;
 		}
 	}
@@ -69,7 +73,9 @@ public class ThemeUtil
             return 0xFFFFFFFF;
         } else if (theme.equals(context.getString(R.string.theme_bloody))) {
             return 0;
-        } else {
+		} else if (theme.equals(context.getString(R.string.theme_amoled))) {
+			return 0;
+		} else {
             return 0xFFFFFFFF;
         }
     }

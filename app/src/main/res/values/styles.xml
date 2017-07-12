@@ -104,6 +104,32 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+    <!-- Dark Theme -->
+    <style name="AppThemeAmoled" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryD</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkD</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:colorBackground">@color/colorPrimaryBloody</item>
+        <item name="preferenceTheme">@style/PreferenceThemeAmoled</item>
+        <item name="alertDialogTheme">@style/DialogThemeAmoled</item>
+    </style>
+
+    <style name="DialogThemeAmoled" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimaryD</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkD</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:colorBackground">@color/colorPrimaryBloody</item>
+    </style>
+
+    <style name="PreferenceThemeAmoled" parent="AppThemeDark">
+        <item name="android:textColorPrimary">@color/textColorPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryDark</item>
+        <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <!-- Bloody Theme -->
     <style name="AppThemeBloody" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryBloody</item>
