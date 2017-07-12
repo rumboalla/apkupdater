@@ -36,6 +36,7 @@ At the moment four sources are supported:
 * French: [Primokorn](https://t.me/Primokorn)
 * Russian: [mihey4ik1](https://4pda.ru/forum/index.php?showtopic=783384)
 * Chinese: [Zhiyuan Wang](http://weibo.com/321134526)
+* Italian: [DeltaFoX](https://www.dfox.it)
 
 If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211).
 
