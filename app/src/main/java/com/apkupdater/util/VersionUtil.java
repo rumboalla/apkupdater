@@ -155,11 +155,8 @@ public class VersionUtil {
         String minApi
     ) {
 	    try {
-            // Extract api from string
-            String [] split = minApi.split("-");
-
             // If minapi is higher than current api, skip this
-            if (Integer.valueOf(split[1]) > Build.VERSION.SDK_INT) {
+            if (Integer.valueOf(minApi) > Build.VERSION.SDK_INT) {
                 return true;
             }
 
