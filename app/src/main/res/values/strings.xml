@@ -93,4 +93,7 @@
 <string name="preferences_play_own_account_summary">"Use your own Google account instead of a shared account."</string>
 <string name="get_token_error">"There was an error attempting to get the token."</string>
 <string name="get_token_launch_url">"Launching two factor url."</string>
+    <string name="get_token_get_token">"GET TOKEN"</string>
+    <string name="get_token_cancel">"CANCEL"</string>
+    <string name="get_token_help">"HELP"</string>
 </resources>

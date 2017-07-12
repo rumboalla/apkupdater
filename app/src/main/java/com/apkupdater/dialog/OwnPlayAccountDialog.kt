@@ -42,8 +42,9 @@ class OwnPlayAccountDialog
         return AlertDialog.Builder(ContextThemeWrapper(context, ThemeUtil.getActivityThemeFromOptions(context)))
             .setTitle("Setup Play Account")
             .setView(getContentView())
-            .setNegativeButton("CANCEL", null)
-            .setPositiveButton("GET TOKEN", null)
+            .setNegativeButton(getString(R.string.get_token_cancel), null)
+            .setPositiveButton(getString(R.string.get_token_get_token), null)
+            .setNeutralButton(getString(R.string.get_token_help), null)
             .setCancelable(false)
             .create()
     }
@@ -58,6 +59,16 @@ class OwnPlayAccountDialog
         val d = dialog as AlertDialog
         d.getButton(Dialog.BUTTON_NEGATIVE).setOnClickListener(this::onNegativeButtonClick)
         d.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(this::onPositiveButtonClick)
+        d.getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener(this::onNeutralButton)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun onNeutralButton(
+        view : View
+    ) {
+        DownloadUtil.launchBrowser(context, Constants.OwnAccountHelpURL)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

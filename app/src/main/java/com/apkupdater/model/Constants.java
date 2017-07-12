@@ -8,6 +8,7 @@ public class Constants
 
     static public final String PackageName = "com.apkupdater";
     static public final String GitHubURL = "https://github.com/rumboalla/apkupdater";
+	static public final String OwnAccountHelpURL = "https://github.com/rumboalla/apkupdater/issues/223";
     static public final String DownloadAction = PackageName + ".DOWNLOAD_COMPLETE";
     static public final String DownloadManagerAction = "android.intent.action.DOWNLOAD_COMPLETE";
     static public final String FileProvider = PackageName + ".fileprovider";
