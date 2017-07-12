@@ -361,6 +361,10 @@ public class UpdaterAdapter
 				return u1.isBeta() == u2.isBeta() ? u1.getName().compareToIgnoreCase(u2.getName()) : u1.isBeta() ? 1 : -1;
 			}
 		});
+
+		if (mView != null && mView.getLayoutManager() != null) {
+			mView.getLayoutManager().scrollToPosition(0);
+		}
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
