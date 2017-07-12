@@ -17,6 +17,7 @@
         <item>@string/theme_dark</item>
         <item>@string/theme_orange</item>
         <item>@string/theme_bloody</item>
+        <item>@string/theme_amoled</item>
     </array>
     <array name="num_threads_values">
         <item>@string/num_threads_one</item>

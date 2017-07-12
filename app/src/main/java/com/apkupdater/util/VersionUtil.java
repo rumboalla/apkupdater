@@ -126,6 +126,10 @@ public class VersionUtil {
     static public boolean skipArchitecture(
         List<String> arches
     ) {
+		if (arches.isEmpty()) {
+			return false;
+		}
+
         String arch = "arm";
 
         if (Build.CPU_ABI.contains("arm")) {
@@ -137,7 +141,7 @@ public class VersionUtil {
         }
 
         for (String a : arches) {
-            if (a.contains(arch)) {
+            if (a.contains(arch) || a.contains("universal") || a.contains("noarch")) {
                 return false;
             }
         }
