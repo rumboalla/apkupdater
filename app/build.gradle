@@ -9,8 +9,8 @@ android {
         applicationId "com.apkupdater"
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 28
-        versionName "1.5.10"
+        versionCode 29
+        versionName "1.5.11"
         testApplicationId "com.apkupdater.test"
         testInstrumentationRunner "com.apkupdater.test.CucumberInstrumentation"
         multiDexEnabled true
