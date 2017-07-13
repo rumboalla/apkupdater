@@ -24,6 +24,7 @@ Big thanks to the developers of these wonderful libraries:
 * [Gson](https://github.com/google/gson)
 * [OkHttp](https://github.com/square/okhttp)
 * [play-store-api](https://github.com/yeriomin/play-store-api)
+* [libsuperuser](https://github.com/Chainfire/libsuperuser)
 
 # Update sources
 At the moment four sources are supported:
@@ -35,7 +36,7 @@ At the moment four sources are supported:
 # Translations
 * French: [Primokorn](https://t.me/Primokorn)
 * Russian: [mihey4ik1](https://4pda.ru/forum/index.php?showtopic=783384)
-* Chinese: [Zhiyuan Wang](http://weibo.com/321134526)
+* Chinese (simplified): [Zhiyuan Wang](http://weibo.com/321134526)
 * Italian: [DeltaFoX](https://www.dfox.it)
 
 If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211).
