@@ -32,6 +32,10 @@ android {
             assets.srcDirs = ['src/androidTest/assets']
         }
     }
+
+    lintOptions{
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {
