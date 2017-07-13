@@ -81,6 +81,8 @@
 <string name="install_success">"App wurde erfolgreich installiert!"</string>
 <string name="install_failure">"App-Installation fehlgeschlagen!"</string>
 <string name="selfupdate_update">"Update %s"</string>
+
+<!-- Fuzzy -->
 <string name="selfupdate_click_to_install">"Klicken = Installieren"</string>
 <string name="no_new_updates">"Keine Updates gefunden!"</string>
 <string name="automatic_installer_title">"Automatische Installation"</string>
