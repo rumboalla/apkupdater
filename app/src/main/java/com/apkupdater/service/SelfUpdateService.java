@@ -82,18 +82,22 @@ public class SelfUpdateService
 
 	private void doNotification(
 	    String newVersion,
+		String changelog,
         String apkUrl
     ) {
 	    Context c = getApplicationContext();
         NotificationCompat.Builder b = new NotificationCompat.Builder(getApplicationContext());
 
-        b.setContentTitle(String.format(c.getString(R.string.selfupdate_update), newVersion));
-        b.setContentText((c.getString(R.string.selfupdate_click_to_install)));
+		String title = String.format(c.getString(R.string.selfupdate_update), newVersion);
+		title = String.format("%s - %s", title, c.getString(R.string.selfupdate_click_to_install));
+        b.setContentTitle(title);
+        b.setContentText(changelog);
         b.setSmallIcon(R.drawable.ic_update);
         b.setAutoCancel(true);
         b.setLargeIcon(BitmapFactory.decodeResource(c.getResources(), R.mipmap.ic_launcher));
+		b.setStyle(new NotificationCompat.BigTextStyle());
 
-        // Set the click intent
+		// Set the click intent
         Intent intent = new Intent("com.apkupdater.selfupdatenotification");
         intent.setFlags(0);
         intent.putExtra("url", apkUrl);
@@ -127,7 +131,7 @@ public class SelfUpdateService
             );
 
             if (c < 0) {
-                doNotification(r.getTagName(), r.getAssets().get(0).getBrowserDownloadUrl());
+                doNotification(r.getTagName(), r.getBody(), r.getAssets().get(0).getBrowserDownloadUrl());
             }
         } catch (Exception e) {
 	        mLogger.log("checkForUpdate", String.valueOf(e), LogMessage.SEVERITY_ERROR);
