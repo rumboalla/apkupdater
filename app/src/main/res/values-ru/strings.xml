@@ -81,6 +81,8 @@
 <string name="install_success">"Приложение установлено!"</string>
 <string name="install_failure">"Сбой установки приложения!"</string>
 <string name="selfupdate_update">"Обновление %s"</string>
+
+<!-- Fuzzy -->
 <string name="selfupdate_click_to_install">"Кликните для установки"</string>
 <string name="no_new_updates">"Обновления не найдены"</string>
 <string name="automatic_installer_title">"Автоустановка"</string>
