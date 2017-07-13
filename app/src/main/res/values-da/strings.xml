@@ -81,6 +81,8 @@
 <string name="install_success">"Appen blev installeret med succes!"</string>
 <string name="install_failure">"Fejl ved installering af appen!"</string>
 <string name="selfupdate_update">"Opdaterer %s"</string>
+
+<!-- Fuzzy -->
 <string name="selfupdate_click_to_install">"Tryk for at installere."</string>
 <string name="no_new_updates">"Ingen nye opdateringer blev fundet"</string>
 <string name="automatic_installer_title">"Automatisk Installering"</string>
