@@ -5,7 +5,7 @@
 <string name="action_settings">"Parametri"</string>
 <string name="action_log">"Registro"</string>
 <string name="action_check_for_updates">"Verifica Aggiornamenti"</string>
-<string name="tab_installed">"Installato"</string>
+<string name="tab_installed">"Installate"</string>
 <string name="tab_updates">"Aggiornamenti"</string>
 <string name="tab_search">"Ricerca"</string>
 <string name="tab_about">"A proposito"</string>
@@ -81,6 +81,8 @@
 <string name="install_success">"L'applicazione è stata installata correttamente!"</string>
 <string name="install_failure">"Errore durante l'installazione dell'app!"</string>
 <string name="selfupdate_update">"Aggiorna %s"</string>
+
+<!-- Fuzzy -->
 <string name="selfupdate_click_to_install">"Clicca per installare."</string>
 <string name="no_new_updates">"Nessun nuovo aggiornamento trovato"</string>
 <string name="automatic_installer_title">"Installazione automatica"</string>
@@ -93,4 +95,9 @@
 <string name="preferences_play_own_account_summary">"Utilizza il proprio account Google anziché un account condiviso."</string>
 <string name="get_token_error">"Si è verificato un errore nel tentativo di ottenere il token."</string>
 <string name="get_token_launch_url">"Lancio url per la verifica a due passaggi."</string>
+<string name="theme_amoled">"Robot Darth"</string>
+<string name="get_token_get_token">"OTTIENI TOKEN"</string>
+<string name="get_token_cancel">"ANNULLA"</string>
+<string name="get_token_help">"AIUTO"</string>
+<string name="snackbar_close">"CHIUDI"</string>
 </resources>
