@@ -155,6 +155,10 @@ public class VersionUtil {
         String minApi
     ) {
 	    try {
+			if (minApi.equalsIgnoreCase("o")) {
+				minApi = "26";
+			}
+
             // If minapi is higher than current api, skip this
             if (Integer.valueOf(minApi) > Build.VERSION.SDK_INT) {
                 return true;
