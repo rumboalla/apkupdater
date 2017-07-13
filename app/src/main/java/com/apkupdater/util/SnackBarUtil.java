@@ -25,7 +25,7 @@ public class SnackBarUtil {
 			}
 
 			final Snackbar bar = Snackbar.make(activity.findViewById(R.id.main_content), text, Snackbar.LENGTH_LONG);
-			bar.setAction("CLOSE", new View.OnClickListener() {
+			bar.setAction(activity.getString(R.string.snackbar_close), new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					bar.dismiss();
