@@ -1,6 +1,8 @@
-# BDD With Cucumber, Espresso and Kotlin
+BDD With Cucumber, Espresso and Kotlin
+====================
 
-##Adding dependecies to build.gradle
+Adding dependecies to build.gradle
+---------------------
 ```Gradle
 testCompile "junit:junit:4.12"
 androidTestCompile "com.android.support:support-annotations:25.4.0"
@@ -8,7 +10,8 @@ androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
 androidTestCompile "info.cukes:cucumber-android:1.2.5"
 ```
 
-##Adding source sets to build.gradle
+Adding source sets to build.gradle
+---------------------
 ```Gradle
 sourceSets {
     androidTest {
@@ -17,13 +20,15 @@ sourceSets {
 }
 ```
 
-##Configuring test runner in build.gradle
+Configuring test runner in build.gradle
+---------------------
 ```Gradle
 testApplicationId "com.apkupdater.test"
 testInstrumentationRunner "com.apkupdater.test.CucumberInstrumentation"
 ```
 
-##Adding features to src/androidTest/assets/features
+Adding features to src/androidTest/assets/features
+---------------------
 ```Gherkin
 Feature: Settings Feature
 
@@ -33,7 +38,8 @@ Scenario: Go to settings
     Then I see the settings
 ```
 
-## Implementing CucumberInstrumentation
+Implementing CucumberInstrumentation
+---------------------
 ```Java
 public class CucumberInstrumentation extends MonitoringInstrumentation {
 	private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
@@ -57,8 +63,8 @@ public class CucumberInstrumentation extends MonitoringInstrumentation {
 }
 ```
 
-##Adding steps for our features (Kotlin)
-
+Adding steps for our features (Kotlin)
+---------------------
 ```Kotlin
 @CucumberOptions(features = arrayOf("features/Settings.feature"))
 class SettingsSteps: TestCase() 
