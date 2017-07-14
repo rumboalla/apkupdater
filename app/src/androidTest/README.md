@@ -46,17 +46,14 @@ public class CucumberInstrumentation extends MonitoringInstrumentation {
 	private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
 	
 	@Override
-	public void onCreate(
-		Bundle arguments
-	) {
+	public void onCreate(Bundle arguments) {
 		super.onCreate(arguments);
 		mInstrumentationCore.create(arguments);
 		start();
 	}
 
 	@Override
-	public void onStart(
-	) {
+	public void onStart() {
 		super.onStart();
 		waitForIdleSync();
 		mInstrumentationCore.start();
