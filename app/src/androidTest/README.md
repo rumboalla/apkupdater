@@ -38,8 +38,9 @@ Scenario: Go to settings
     Then I see the settings
 ```
 
-Implementing CucumberInstrumentation
+Implementing CucumberInstrumentation (Java)
 ---------------------
+This can also be implemented with Kotlin.
 ```Java
 public class CucumberInstrumentation extends MonitoringInstrumentation {
 	private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
