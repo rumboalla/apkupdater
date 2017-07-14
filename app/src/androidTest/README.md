@@ -1,7 +1,7 @@
 BDD With Cucumber, Espresso and Kotlin
 ====================
 
-Adding dependecies to build.gradle
+Adding dependencies to build.gradle
 ---------------------
 ```Gradle
 testCompile "junit:junit:4.12"
