@@ -20,7 +20,7 @@ android:
     - 'intel-android-extra-license.+'
 
 before_install:
- - chmod +x gradlew
+  - chmod +x gradlew
  
 script:
   - ./gradlew build"
