@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
+
     defaultConfig {
         applicationId "com.apkupdater"
         minSdkVersion 9
@@ -33,8 +34,8 @@ android {
         }
     }
 
-    lintOptions{
-        disable 'MissingTranslation'
+    lintOptions {
+        abortOnError false
     }
 }
 
