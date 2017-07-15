@@ -85,4 +85,19 @@
 <!-- Fuzzy -->
 <string name="selfupdate_click_to_install">"*Click to install.*"</string>
 <string name="no_new_updates">"*No new updates were found*"</string>
+<string name="automatic_installer_title">"Automatic Installer"</string>
+<string name="automatic_installer_progress_title">"Automatic Installer %1$d/%2$d"</string>
+<string name="automatic_installing">"Installing %s"</string>
+<string name="automatic_error">"Error installing. Check log."</string>
+<string name="automatic_successfully_installed">"Successfully installed %d apps: "</string>
+<string name="automatic_failed_to_install">"Failed to install %d apps: "</string>
+<string name="preferences_play_own_account_title">"Use own Google Account"</string>
+<string name="preferences_play_own_account_summary">"Use your own Google account instead of a shared account."</string>
+<string name="get_token_error">"There was an error attempting to get the token."</string>
+<string name="get_token_launch_url">"Launching two factor url."</string>
+<string name="theme_amoled">"Darth Droid"</string>
+<string name="get_token_get_token">"GET TOKEN"</string>
+<string name="get_token_cancel">"CANCEL"</string>
+<string name="get_token_help">"HELP"</string>
+<string name="snackbar_close">"CLOSE"</string>
 </resources>
