@@ -15,7 +15,6 @@ out/
 
 # Gradle files
 .gradle/
-gradlew*
 gradle.properties
 build/
 
