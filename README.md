@@ -1,4 +1,4 @@
-# APKUpdater [![translation](https://img.shields.io/badge/translation-96%25-green.svg)](https://poeditor.com/join/project/NWTNMrPFj8)
+# APKUpdater [![Build Status](https://travis-ci.org/rumboalla/apkupdater.svg?branch=master)](https://travis-ci.org/rumboalla/apkupdater) [![translation](https://img.shields.io/badge/translation-96%25-green.svg)](https://poeditor.com/join/project/NWTNMrPFj8)
 APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide similar functionality to an app store, without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.
 
 More information can be found on this [XDA thread](https://forum.xda-developers.com/android/apps-games/app-apkupdater-t3444517).
