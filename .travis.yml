@@ -1,6 +1,8 @@
 language: android
+
 jdk:
   - oraclejdk8
+  
 android:
   components:
     - tools
@@ -8,4 +10,8 @@ android:
     - tools
     - build-tools-26.0.0
     - android-25
-script: "./gradlew test"
+    
+before_install:
+ - chmod +x gradlew
+ 
+script: "./gradlew build"
