@@ -10,7 +10,10 @@ android:
     - tools
     - build-tools-26.0.0
     - android-25
-    
+
+ licenses:
+    - 'android-sdk-license-.+'
+
 before_install:
  - chmod +x gradlew
  
