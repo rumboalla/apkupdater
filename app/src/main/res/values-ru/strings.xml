@@ -81,9 +81,7 @@
 <string name="install_success">"Приложение установлено!"</string>
 <string name="install_failure">"Сбой установки приложения!"</string>
 <string name="selfupdate_update">"Обновление %s"</string>
-
-<!-- Fuzzy -->
-<string name="selfupdate_click_to_install">"Кликните для установки"</string>
+<string name="selfupdate_click_to_install">"Нажмите для установки"</string>
 <string name="no_new_updates">"Обновления не найдены"</string>
 <string name="automatic_installer_title">"Автоустановка"</string>
 <string name="automatic_installer_progress_title">"Автоустановка %1$d/%2$d"</string>
@@ -95,4 +93,9 @@
 <string name="preferences_play_own_account_summary">"Использовать собственный аккаунт Google вместо общего."</string>
 <string name="get_token_error">"Ошибка при получении токена"</string>
 <string name="get_token_launch_url">"Получение двухфакторной ссылки"</string>
+<string name="theme_amoled">"Darth Droid AMOLED"</string>
+<string name="get_token_get_token">"Получить токен"</string>
+<string name="get_token_cancel">"Отмена"</string>
+<string name="get_token_help">"Помощь"</string>
+<string name="snackbar_close">"Закрыть"</string>
 </resources>

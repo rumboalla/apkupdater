@@ -39,6 +39,7 @@ At the moment four sources are supported:
 * Chinese (simplified): [Zhiyuan Wang](http://weibo.com/321134526)
 * Italian: [DeltaFoX](https://www.dfox.it)
 * German: [Toxx](https://goo.gl/xQGYH3)
+* Afrikaans: [RuanF](https://ruanf.co.za/)
 
 If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211).
 
