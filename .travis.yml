@@ -1,25 +1,16 @@
 language: android
-
-jdk:
-  - oraclejdk8
-  
 android:
   components:
     - tools
     - platform-tools
-    - tools
     - build-tools-26.0.0
+    - android-25
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-support
-    - android-25
-
- licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'intel-android-extra-license.+'
-
+jdk:
+  - oraclejdk8
 before_install:
   - chmod +x gradlew
- 
-script: "./gradlew build"
+script:
+  - ./gradlew build
