@@ -9,12 +9,18 @@ android:
     - platform-tools
     - tools
     - build-tools-26.0.0
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-android-support
     - android-25
 
  licenses:
+    - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
+    - 'intel-android-extra-license.+'
 
 before_install:
  - chmod +x gradlew
  
-script: "./gradlew build"
+script:
+  - ./gradlew build"
