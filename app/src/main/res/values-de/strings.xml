@@ -95,4 +95,9 @@
 <string name="preferences_play_own_account_summary">"Eigenen Google-Account anstelle des gemeinsamen Accounts benutzen"</string>
 <string name="get_token_error">"Fehler beim Einloggen!"</string>
 <string name="get_token_launch_url">"Starte Zwei-Faktoren-URL"</string>
+<string name="theme_amoled">"Darth Droid"</string>
+<string name="get_token_get_token">"Einloggen"</string>
+<string name="get_token_cancel">"Abbrechen"</string>
+<string name="get_token_help">"Hilfe?"</string>
+<string name="snackbar_close">"Schließen"</string>
 </resources>
