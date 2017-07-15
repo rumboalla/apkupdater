@@ -95,4 +95,9 @@
 <string name="preferences_play_own_account_summary">"Paylaşılan bir hesap yerine kendi Google hesabını kullan."</string>
 <string name="get_token_error">"Token alırken hata oluştu."</string>
 <string name="get_token_launch_url">"İki faktörlü url başlatılıyor."</string>
+<string name="theme_amoled">"Darth Droid"</string>
+<string name="get_token_get_token">"GET TOKEN"</string>
+<string name="get_token_cancel">"CANCEL"</string>
+<string name="get_token_help">"HELP"</string>
+<string name="snackbar_close">"CLOSE"</string>
 </resources>
