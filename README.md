@@ -1,4 +1,4 @@
-# APKUpdater
+# APKUpdater [![translation](https://img.shields.io/badge/translation-96%25-green.svg)](https://poeditor.com/join/project/NWTNMrPFj8)
 APKUpdater is a tool that simplifies the process of finding updates for your installed apps. It will provide similar functionality to an app store, without having to install the associated spyware that comes with it. This is a very useful app for those who want to run Android without an app store.
 
 More information can be found on this [XDA thread](https://forum.xda-developers.com/android/apps-games/app-apkupdater-t3444517).
@@ -38,6 +38,7 @@ At the moment four sources are supported:
 * Russian: [mihey4ik1](https://4pda.ru/forum/index.php?showtopic=783384)
 * Chinese (simplified): [Zhiyuan Wang](http://weibo.com/321134526)
 * Italian: [DeltaFoX](https://www.dfox.it)
+* German: [Toxx](https://goo.gl/xQGYH3)
 
 If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211).
 
