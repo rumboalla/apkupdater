@@ -58,7 +58,7 @@
 <string name="preferences_play_root_install_title">"Root install"</string>
 <string name="preferences_play_root_install_summary">"Install apps in the background using root. NEEDS ROOT."</string>
 <string name="preferences_play_automatic_install_title">"Automatic update installation"</string>
-<string name="preferences_play_automatic_install_summary">"All updates will be installed automatically. BETA. NEEDS ROOT."</string>
+<string name="preferences_play_automatic_install_summary">"All updates will be installed automatically. NEEDS ROOT."</string>
 <string name="notification_never">"Never"</string>
 <string name="notification_always">"Always"</string>
 <string name="notification_background">"Background"</string>
@@ -98,4 +98,5 @@
 <string name="get_token_cancel">"CANCEL"</string>
 <string name="get_token_help">"HELP"</string>
 <string name="snackbar_close">"CLOSE"</string>
+    <string name="root_not_available">Root not available.</string>
 </resources>

@@ -16,9 +16,12 @@ import com.apkupdater.event.UpdateInstalledAppsEvent;
 import com.apkupdater.model.Constants;
 import com.apkupdater.util.AlarmUtil;
 import com.apkupdater.util.MyBus;
+import com.apkupdater.util.SnackBarUtil;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+
+import eu.chainfire.libsuperuser.Shell;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -71,6 +74,22 @@ public class SettingsFragment
         p.setChecked(b);
     }
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void checkForRoot(
+		String key
+	) {
+		CheckBoxPreference p = (CheckBoxPreference) findPreference(key);
+		if (p == null) {
+			return;
+		}
+
+		if (p.isEnabled() && !Shell.SU.available()) {
+			p.setChecked(false);
+			SnackBarUtil.make(getActivity(), getString(R.string.root_not_available));
+		}
+	}
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	SharedPreferences.OnSharedPreferenceChangeListener mChanges = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -103,7 +122,11 @@ public class SettingsFragment
                         d.show(getFragmentManager(), getTag());
                     }
                     mIgnoreChange = false;
-                }
+                } else if (key.equals(getString(R.string.preferences_play_root_install_key))) {
+					checkForRoot(key);
+				} else if (key.equals(getString(R.string.preferences_play_automatic_install_key))) {
+					checkForRoot(key);
+				}
 			} catch (IllegalStateException ignored) {
 
 			}
