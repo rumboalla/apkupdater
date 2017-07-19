@@ -30,12 +30,12 @@ import com.apkupdater.model.AppState;
 import com.apkupdater.model.DownloadInfo;
 import com.apkupdater.model.LogMessage;
 import com.apkupdater.receiver.BootReceiver_;
-import com.apkupdater.service.SelfUpdateService_;
 import com.apkupdater.service.UpdaterService_;
 import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.InstalledAppUtil;
+import com.apkupdater.util.InjektUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
@@ -91,6 +91,13 @@ public class MainActivity
 		Bundle savedInstanceState
 	) {
 		super.onCreate(savedInstanceState);
+
+		// Inject Singletons
+		InjektUtil.Companion.init();
+		InjektUtil.Companion.addAppStateSingleton(mAppState);
+		InjektUtil.Companion.addMyBusSingleton(mBus);
+		InjektUtil.Companion.addLogUtilSingleton(mLog);
+		InjektUtil.Companion.addActivitySingleton(this);
 
 		// Set theme and set activity content and toolbar
 		setThemeFromOptions();
