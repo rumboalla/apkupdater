@@ -81,8 +81,7 @@ public class UpdaterFragment
 	@Bean
 	AppState mAppState;
 
-	@Bean
-    UpdaterAdapter mAdapter;
+	UpdaterAdapter mAdapter;
 
 	private int mProgressCount = 0;
 	private int mProgressMax = 0;
@@ -93,6 +92,7 @@ public class UpdaterFragment
 		Bundle savedInstanceState
 	) {
 		super.onCreate(savedInstanceState);
+		mAdapter = new UpdaterAdapter(getContext());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,7 +270,7 @@ public class UpdaterFragment
 	@AfterViews
 	void init(
 	) {
-        mAdapter.init(getActivity(), mRecyclerView, new ArrayList<Update>());
+        mAdapter.init(mRecyclerView, new ArrayList<Update>());
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		if (new UpdaterOptions(getContext()).disableAnimations()) {
 		    mRecyclerView.setItemAnimator(null);
