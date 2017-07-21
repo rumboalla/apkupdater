@@ -17,6 +17,8 @@ import com.github.salomonbrys.kodein.instance
 import com.github.yeriomin.playstoreapi.GooglePlayException
 import kotlinx.android.synthetic.main.updater_item.view.*
 import kotlin.concurrent.thread
+import android.support.v7.widget.LinearLayoutManager
+import android.test.ActivityUnitTestCase
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,6 +71,9 @@ open class UpdaterViewHolder(view: View)
 			mView?.change_log_text?.visibility = View.VISIBLE
 		}
 
+		mView?.button_bar?.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+		mView?.button_bar?.adapter = ButtonBarAdapter(mContext as Context)
+
 		configureActionButton(u)
 		setTopMargin(0)
 	}
@@ -78,25 +83,13 @@ open class UpdaterViewHolder(view: View)
 	private fun configureActionButton(
 		u : Update
 	) {
-		val action : String = getActionString(u)
-		mView?.action_one_button?.text = action
-		mView?.action_one_button?.visibility = View.VISIBLE
-		mView?.action_one_progressbar?.visibility = View.INVISIBLE
-
-		if (action == mContext?.getString(R.string.action_play)) {
-			if (u.installStatus.status == InstallStatus.STATUS_INSTALL) {
-				mView?.action_one_button?.text = getActionString(u)
-			} else if (u.installStatus.status == InstallStatus.STATUS_INSTALLED) {
-				mView?.action_one_button?.setText(R.string.action_installed)
-			} else if (u.installStatus.status == InstallStatus.STATUS_INSTALLING) {
-				mView?.action_one_progressbar?.visibility = View.VISIBLE
-				mView?.action_one_button?.visibility = View.INVISIBLE
-			}
-		}
-
-		// Choose action depending if it's INSTALL or other
-		mView?.action_one_button?.setOnClickListener { if (action == mContext?.getString(R.string.action_play)) launchInstall(u) else launchBrowser(u) }
-		mView?.action_two_button?.visibility = View.GONE
+		val text : String = getActionString(u)
+		val adapter : ButtonBarAdapter = mView?.button_bar?.adapter as ButtonBarAdapter
+		adapter.addButton(ActionButton(
+			text,
+			u.installStatus.status == InstallStatus.STATUS_INSTALLING,
+			{ if (text == mContext?.getString(R.string.action_play)) launchInstall(u) else launchBrowser(u) }
+		))
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,16 +134,22 @@ open class UpdaterViewHolder(view: View)
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private fun getActionString(
-		update : Update
+		u : Update
 	) : String {
-		if (update.url.contains("apkmirror.com")) {
+		if (u.url.contains("apkmirror.com")) {
 			return mContext?.getString(R.string.action_apkmirror)!!
-		} else if (update.url.contains("uptodown.com")) {
+		} else if (u.url.contains("uptodown.com")) {
 			return mContext?.getString(R.string.action_uptodown)!!
-		} else if (update.url.contains("apkpure.com")) {
+		} else if (u.url.contains("apkpure.com")) {
 			return mContext?.getString(R.string.action_apkpure)!!
-		} else if (update.cookie != null) {
-			return mContext?.getString(R.string.action_play)!!
+		} else if (u.cookie != null) {
+			if (u.installStatus.status == InstallStatus.STATUS_INSTALL) {
+				return mContext?.getString(R.string.action_play)!!
+			} else if (u.installStatus.status == InstallStatus.STATUS_INSTALLED) {
+				return mContext?.getString(R.string.action_installed)!!
+			} else if (u.installStatus.status == InstallStatus.STATUS_INSTALLING) {
+				return ""
+			}
 		}
 		return "ERROR"
 	}

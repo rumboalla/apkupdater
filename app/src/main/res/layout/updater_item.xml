@@ -111,44 +111,13 @@
             />
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/button_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-        >
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-            >
-                <Button
-                    android:id="@+id/action_one_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:textSize="14sp"
-                    android:textColor="?attr/colorAccent"
-                    android:text="@string/action_ignore_app"
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                />
-                <ProgressBar
-                    android:id="@+id/action_one_progressbar"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    android:visibility="gone"
-                />
-            </RelativeLayout>
-            <Button
-                android:id="@+id/action_two_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textSize="14sp"
-                android:textColor="?attr/colorAccent"
-                android:text="@string/action_evozi"
-                android:background="@android:color/transparent"
-            />
-        </LinearLayout>
+        />
     </LinearLayout>
+
+
 </com.apkupdater.view.CustomCardView>
 
