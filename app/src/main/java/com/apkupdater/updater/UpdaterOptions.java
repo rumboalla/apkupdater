@@ -8,6 +8,9 @@ import android.preference.PreferenceManager;
 
 import com.apkupdater.R;
 import com.apkupdater.model.Constants;
+import com.apkupdater.model.IgnoreVersion;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,6 +110,30 @@ public class UpdaterOptions
 	) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_use_apkpure_key), false);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public List<IgnoreVersion> getIgnoreVersionList(
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		Gson g = new Gson();
+		return g.fromJson(
+			sharedPref.getString(mContext.getString(R.string.preferences_general_ignoreversionlist_key), "[]"),
+			new TypeToken<List<IgnoreVersion>>(){}.getType()
+		);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void setIgnoreVersionList(
+		List<IgnoreVersion> l
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		sharedPref.edit().putString(
+			mContext.getString(R.string.preferences_general_ignoreversionlist_key),
+			new Gson().toJson(l)
+		).apply();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
