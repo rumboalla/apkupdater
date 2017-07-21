@@ -17,10 +17,8 @@ import com.apkupdater.event.SnackBarEvent
 import com.apkupdater.model.IgnoreVersion
 import com.apkupdater.model.InstallStatus
 import com.apkupdater.updater.UpdaterOptions
-import com.apkupdater.util.KodeinUtil
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.conf.global
-import com.github.salomonbrys.kodein.instance
+import com.apkupdater.util.InjektUtil
+import uy.kohesive.injekt.api.get
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,7 +30,7 @@ class UpdaterAdapter
     private var mUpdates: MutableList<Update>? = null
     private var mContext: Context? = null
     private var mView: RecyclerView? = null
-	private val mBus: MyBus = Kodein.global.instance()
+	private val mBus: MyBus = InjektUtil.injekt?.get()!!
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,7 +38,7 @@ class UpdaterAdapter
         context : Context
     ) {
         mContext = context
-        KodeinUtil.addUpdaterAdapterSingleton(this)
+        InjektUtil.addUpdaterAdapterSingleton(this)
         mBus.register(this)
     }
 

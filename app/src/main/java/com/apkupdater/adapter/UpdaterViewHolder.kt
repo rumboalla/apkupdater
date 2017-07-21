@@ -11,14 +11,12 @@ import com.apkupdater.R
 import com.apkupdater.activity.MainActivity
 import com.apkupdater.model.*
 import com.apkupdater.util.*
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.conf.global
-import com.github.salomonbrys.kodein.instance
 import com.github.yeriomin.playstoreapi.GooglePlayException
 import kotlinx.android.synthetic.main.updater_item.view.*
 import kotlin.concurrent.thread
 import android.support.v7.widget.LinearLayoutManager
 import com.apkupdater.updater.UpdaterOptions
+import uy.kohesive.injekt.api.get
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,10 +27,10 @@ open class UpdaterViewHolder(view: View)
 
 	protected var mView : View? = view
 	protected var mContext : Context? = view.context
-	protected val mLog : LogUtil = Kodein.global.instance()
-	protected val mBus: MyBus = Kodein.global.instance()
-	protected val mActivity : MainActivity = Kodein.global.instance()
-	protected val mAppState : AppState = Kodein.global.instance()
+	protected val mLog : LogUtil = InjektUtil.injekt?.get()!!
+	protected val mBus: MyBus = InjektUtil.injekt?.get()!!
+	protected val mActivity : MainActivity = InjektUtil.injekt?.get()!!
+	protected val mAppState : AppState = InjektUtil.injekt?.get()!!
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,7 +105,7 @@ open class UpdaterViewHolder(view: View)
 				val l = options.ignoreVersionList
 				l.add(IgnoreVersion(u.pname, u.newVersion, u.newVersionCode))
 				options.ignoreVersionList = l
-				val adapter : UpdaterAdapter = Kodein.global.instance()
+				val adapter : UpdaterAdapter = InjektUtil.injekt?.get()!!
 				adapter.removeUpdate(u)
 			}
 		))
@@ -182,7 +180,7 @@ open class UpdaterViewHolder(view: View)
 		status: Int,
 		id: Long
 	) {
-		val adapter : UpdaterAdapter = Kodein.global.instance()
+		val adapter : UpdaterAdapter = InjektUtil.injekt?.get()!!
 		app?.installStatus?.id = id
 		app?.installStatus?.status = status
 		mView?.post {
