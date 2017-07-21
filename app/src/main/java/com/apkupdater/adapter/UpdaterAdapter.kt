@@ -69,15 +69,30 @@ class UpdaterAdapter
     fun sort(
     ) {
 	    // Filter and sort updates
-	    val l = UpdaterOptions(mContext).ignoreVersionList
-	    mUpdates = mUpdates?.filter {
-		    val ignore = IgnoreVersion(it.pname, it.newVersion, it.newVersionCode)
-		    l.find { it.packageName == ignore.packageName && it.versionName == ignore.versionName && it.versionCode == ignore.versionCode } == null
-	    }?.sortedWith(compareBy(Update::isBeta).thenBy(Update::getName))?.toMutableList()
+	    mUpdates = sortUpdates(mContext as Context, mUpdates!!)
 
 	    // Make sure we go to the start of the list
         mView?.layoutManager?.scrollToPosition(0)
     }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	companion object {
+		fun sortUpdates(
+			context: Context,
+			updates: MutableList<Update>
+		) : MutableList<Update> {
+			val l = UpdaterOptions(context).ignoreVersionList
+			return updates?.filter {
+				val ignore = IgnoreVersion(it.pname, it.newVersion, it.newVersionCode)
+				l.find {
+					it.packageName == ignore.packageName
+					&& it.versionName == ignore.versionName
+					&& it.versionCode == ignore.versionCode
+				} == null
+			}?.sortedWith(compareBy(Update::isBeta).thenBy(Update::getName))?.toMutableList()
+		}
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

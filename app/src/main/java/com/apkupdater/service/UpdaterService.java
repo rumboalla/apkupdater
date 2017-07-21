@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.apkupdater.R;
+import com.apkupdater.adapter.UpdaterAdapter;
 import com.apkupdater.event.UpdateFinalProgressEvent;
 import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
@@ -282,6 +283,9 @@ public class UpdaterService
 			// Clear update progress
 			mAppState.setUpdateMax(0);
 			mAppState.setUpdateProgress(0);
+
+			// Filter updates
+			mUpdates = UpdaterAdapter.Companion.sortUpdates(getBaseContext(), mUpdates);
 
 			// Notify that the update check is over
 			mAppState.setUpdates(mUpdates);
