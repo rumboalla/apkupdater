@@ -18,7 +18,7 @@ import com.github.yeriomin.playstoreapi.GooglePlayException
 import kotlinx.android.synthetic.main.updater_item.view.*
 import kotlin.concurrent.thread
 import android.support.v7.widget.LinearLayoutManager
-import android.test.ActivityUnitTestCase
+import com.apkupdater.updater.UpdaterOptions
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -75,6 +75,7 @@ open class UpdaterViewHolder(view: View)
 		mView?.button_bar?.adapter = ButtonBarAdapter(mContext as Context)
 
 		configureActionButton(u)
+		configureIgnoreButton(u)
 		setTopMargin(0)
 	}
 
@@ -89,6 +90,26 @@ open class UpdaterViewHolder(view: View)
 			text,
 			u.installStatus.status == InstallStatus.STATUS_INSTALLING,
 			{ if (text == mContext?.getString(R.string.action_play)) launchInstall(u) else launchBrowser(u) }
+		))
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private fun configureIgnoreButton(
+		u : Update
+	) {
+		val adapter : ButtonBarAdapter = mView?.button_bar?.adapter as ButtonBarAdapter
+		adapter.addButton(ActionButton(
+			mContext?.getString(R.string.action_ignore_app)!!,
+			false,
+			{
+				val options : UpdaterOptions = UpdaterOptions(mContext)
+				val l = options.ignoreVersionList
+				l.add(IgnoreVersion(u.pname, u.newVersion, u.newVersionCode))
+				options.ignoreVersionList = l
+				val adapter : UpdaterAdapter = Kodein.global.instance()
+				adapter.removeUpdate(u)
+			}
 		))
 	}
 

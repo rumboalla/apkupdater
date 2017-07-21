@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.adapter.UpdaterAdapter;
+import com.apkupdater.event.RefreshUpdateTitle;
 import com.apkupdater.event.UpdateFinalProgressEvent;
 import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
@@ -216,6 +217,15 @@ public class UpdaterFragment
 		if (ev.getUpdate() != null) {
 			mAdapter.addUpdate(ev.getUpdate());
 		}
+		sendUpdateTitleEvent();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Subscribe
+	public void onRefreshUpdateTitle(
+		RefreshUpdateTitle ev
+	) {
 		sendUpdateTitleEvent();
 	}
 

@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.apkupdater.R
 import com.apkupdater.event.InstallAppEvent
+import com.apkupdater.event.RefreshUpdateTitle
 import com.apkupdater.model.Update
 import com.apkupdater.util.MyBus
 import com.squareup.otto.Subscribe
 import com.apkupdater.util.DownloadUtil
 import com.apkupdater.event.SnackBarEvent
+import com.apkupdater.model.IgnoreVersion
 import com.apkupdater.model.InstallStatus
+import com.apkupdater.updater.UpdaterOptions
 import com.apkupdater.util.KodeinUtil
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.conf.global
@@ -65,7 +68,14 @@ class UpdaterAdapter
 
     fun sort(
     ) {
-        mUpdates = mUpdates?.sortedWith(compareBy(Update::isBeta).thenBy(Update::getName))?.toMutableList()
+	    // Filter and sort updates
+	    val l = UpdaterOptions(mContext).ignoreVersionList
+	    mUpdates = mUpdates?.filter {
+		    val ignore = IgnoreVersion(it.pname, it.newVersion, it.newVersionCode)
+		    l.find { it.packageName == ignore.packageName && it.versionName == ignore.versionName && it.versionCode == ignore.versionCode } == null
+	    }?.sortedWith(compareBy(Update::isBeta).thenBy(Update::getName))?.toMutableList()
+
+	    // Make sure we go to the start of the list
         mView?.layoutManager?.scrollToPosition(0)
     }
 
@@ -76,10 +86,25 @@ class UpdaterAdapter
     ) {
         mUpdates?.add(update)
         sort()
-        val index = mUpdates?.indexOf(update)
-        notifyItemChanged(0)
-        notifyItemInserted(index!!)
+        val index = mUpdates?.indexOf(update) as Int
+	    notifyItemChanged(0)
+        if (index >= 0) {
+	        notifyItemInserted(index)
+        }
     }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	fun removeUpdate(
+		u : Update
+	) {
+		try {
+			val i = mUpdates?.indexOf(u) as Int
+			mUpdates?.removeAt(i)
+			notifyItemRemoved(i)
+			mBus.post(RefreshUpdateTitle())
+		} catch (e : Exception) {}
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
