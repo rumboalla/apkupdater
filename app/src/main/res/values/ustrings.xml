@@ -7,6 +7,7 @@
     <string name="preferences_general_exclude_system_apps_key" translatable="false">preferences_general_exclude_system_apps_key</string>
     <string name="preferences_general_exclude_disabled_apps_key" translatable="false">preferences_general_exclude_disabled_apps_key</string>
     <string name="preferences_general_ignorelist_key" translatable="false">preferences_general_ignorelist_key</string>
+    <string name="preferences_general_ignoreversionlist_key" translatable="false">preferences_general_ignoreversionlist_key</string>
     <string name="preferences_general_notification_key" translatable="false">preferences_general_notification_key</string>
     <string name="preferences_general_theme_key" translatable="false">preferences_general_theme_key</string>
     <string name="preferences_general_alarm_key" translatable="false">preferences_general_alarm_key</string>

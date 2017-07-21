@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.adapter.UpdaterAdapter;
+import com.apkupdater.event.RefreshUpdateTitle;
 import com.apkupdater.event.UpdateFinalProgressEvent;
 import com.apkupdater.event.UpdateProgressEvent;
 import com.apkupdater.event.UpdateStartEvent;
@@ -81,8 +82,7 @@ public class UpdaterFragment
 	@Bean
 	AppState mAppState;
 
-	@Bean
-    UpdaterAdapter mAdapter;
+	UpdaterAdapter mAdapter;
 
 	private int mProgressCount = 0;
 	private int mProgressMax = 0;
@@ -93,6 +93,7 @@ public class UpdaterFragment
 		Bundle savedInstanceState
 	) {
 		super.onCreate(savedInstanceState);
+		mAdapter = new UpdaterAdapter(getContext());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,6 +222,15 @@ public class UpdaterFragment
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	@Subscribe
+	public void onRefreshUpdateTitle(
+		RefreshUpdateTitle ev
+	) {
+		sendUpdateTitleEvent();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public void onStop() {
 		mBus.unregister(this);
@@ -270,7 +280,7 @@ public class UpdaterFragment
 	@AfterViews
 	void init(
 	) {
-        mAdapter.init(getActivity(), mRecyclerView, new ArrayList<Update>());
+        mAdapter.init(mRecyclerView, new ArrayList<Update>());
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		if (new UpdaterOptions(getContext()).disableAnimations()) {
 		    mRecyclerView.setItemAnimator(null);
