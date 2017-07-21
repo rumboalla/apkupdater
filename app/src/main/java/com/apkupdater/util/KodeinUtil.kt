@@ -5,13 +5,14 @@ package com.apkupdater.util
 import com.apkupdater.activity.MainActivity
 import com.apkupdater.adapter.UpdaterAdapter
 import com.apkupdater.model.AppState
-import uy.kohesive.injekt.api.InjektScope
-import uy.kohesive.injekt.api.addSingleton
-import uy.kohesive.injekt.registry.default.DefaultRegistrar
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.bind
+import com.github.salomonbrys.kodein.conf.global
+import com.github.salomonbrys.kodein.singleton
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class InjektUtil
+class KodeinUtil
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,13 +20,10 @@ class InjektUtil
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		var injekt : InjektScope? = null
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 		fun init(
 		) {
-			injekt = InjektScope(DefaultRegistrar())
+			Kodein.global.mutable = true
+			Kodein.global.clear()
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +31,9 @@ class InjektUtil
 		fun addAppStateSingleton(
 			appState : AppState
 		) {
-			injekt?.addSingleton(appState)
+			Kodein.global.addConfig {
+				bind<AppState>() with singleton { appState }
+			}
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,9 @@ class InjektUtil
 		fun addMyBusSingleton(
 			bus : MyBus
 		) {
-			injekt?.addSingleton(bus)
+			Kodein.global.addConfig {
+				bind<MyBus>() with singleton { bus }
+			}
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +51,9 @@ class InjektUtil
 		fun addLogUtilSingleton(
 			logger : LogUtil
 		) {
-			injekt?.addSingleton(logger)
+			Kodein.global.addConfig {
+				bind<LogUtil>() with singleton { logger }
+			}
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +61,9 @@ class InjektUtil
 		fun addActivitySingleton(
 			activity : MainActivity
 		) {
-			injekt?.addSingleton(activity)
+			Kodein.global.addConfig {
+				bind<MainActivity>() with singleton { activity }
+			}
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +71,9 @@ class InjektUtil
 		fun addUpdaterAdapterSingleton(
 			adapter : UpdaterAdapter
 		) {
-			injekt?.addSingleton(adapter)
+			Kodein.global.addConfig {
+				bind<UpdaterAdapter>() with singleton { adapter }
+			}
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////

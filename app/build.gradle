@@ -57,7 +57,8 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:3.8.0"
     compile "com.github.yeriomin:play-store-api:0.18"
     compile "eu.chainfire:libsuperuser:1.0.0.201704021214"
-    compile "uy.kohesive.injekt:injekt-core:1.16.1"
+    compile 'com.github.salomonbrys.kodein:kodein:4.0.0'
+    compile 'com.github.salomonbrys.kodein:kodein-conf:4.0.0'
 
     // Test dependencies
     testCompile "junit:junit:4.12"
