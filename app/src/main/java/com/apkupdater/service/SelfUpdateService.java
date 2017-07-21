@@ -67,7 +67,7 @@ public class SelfUpdateService
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	static public void launcSelfUpdate(
+	static public void launchSelfUpdate(
 	    Context context
     ) {
         // Self update check
