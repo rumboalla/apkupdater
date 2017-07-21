@@ -303,7 +303,7 @@ public class UpdaterService
 			mMutex.unlock();
 		} finally {
             // Self update check
-            SelfUpdateService.launcSelfUpdate(getApplicationContext());
+            SelfUpdateService.launchSelfUpdate(getApplicationContext());
         }
     }
 
