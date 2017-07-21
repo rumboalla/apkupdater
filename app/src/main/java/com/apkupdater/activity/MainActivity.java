@@ -35,7 +35,7 @@ import com.apkupdater.updater.UpdaterOptions;
 import com.apkupdater.util.AnimationUtil;
 import com.apkupdater.util.ColorUtil;
 import com.apkupdater.util.InstalledAppUtil;
-import com.apkupdater.util.InjektUtil;
+import com.apkupdater.util.KodeinUtil;
 import com.apkupdater.util.LogUtil;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.util.ServiceUtil;
@@ -93,11 +93,11 @@ public class MainActivity
 		super.onCreate(savedInstanceState);
 
 		// Inject Singletons
-		InjektUtil.Companion.init();
-		InjektUtil.Companion.addAppStateSingleton(mAppState);
-		InjektUtil.Companion.addMyBusSingleton(mBus);
-		InjektUtil.Companion.addLogUtilSingleton(mLog);
-		InjektUtil.Companion.addActivitySingleton(this);
+		KodeinUtil.Companion.init();
+		KodeinUtil.Companion.addAppStateSingleton(mAppState);
+		KodeinUtil.Companion.addMyBusSingleton(mBus);
+		KodeinUtil.Companion.addLogUtilSingleton(mLog);
+		KodeinUtil.Companion.addActivitySingleton(this);
 
 		// Set theme and set activity content and toolbar
 		setThemeFromOptions();

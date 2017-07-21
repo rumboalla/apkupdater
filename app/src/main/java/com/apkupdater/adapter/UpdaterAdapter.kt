@@ -11,13 +11,13 @@ import com.apkupdater.event.InstallAppEvent
 import com.apkupdater.model.Update
 import com.apkupdater.util.MyBus
 import com.squareup.otto.Subscribe
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.addSingleton
 import com.apkupdater.util.DownloadUtil
 import com.apkupdater.event.SnackBarEvent
 import com.apkupdater.model.InstallStatus
-import com.apkupdater.util.InjektUtil
-import uy.kohesive.injekt.api.get
+import com.apkupdater.util.KodeinUtil
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.conf.global
+import com.github.salomonbrys.kodein.instance
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ class UpdaterAdapter
     private var mUpdates: MutableList<Update>? = null
     private var mContext: Context? = null
     private var mView: RecyclerView? = null
-	private val mBus: MyBus = InjektUtil.injekt?.get()!!
+	private val mBus: MyBus = Kodein.global.instance()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +37,7 @@ class UpdaterAdapter
         context : Context
     ) {
         mContext = context
-        InjektUtil.addUpdaterAdapterSingleton(this)
+        KodeinUtil.addUpdaterAdapterSingleton(this)
         mBus.register(this)
     }
 
