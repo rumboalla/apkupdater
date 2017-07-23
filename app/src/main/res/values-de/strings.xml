@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="app_name">"APKUpdater"</string>
-<string name="app_description_html"><![CDATA[<html><body style=\"text-align:justify\"><p>APKUpdater ist ein Werkzeug um einfacher Updates von deinen installierten App\'s zu finden. Die Funktionsweise ähnelt einem klassischen App-Store - Nur ohne Spionage und personalisierter Werbung! APKUpdater ist die perfekte Alternative für alle die sich einen unabhängigen App-Store wünschen.</p><p>Eigenschaften:</p><ul><li>Updates aus mehreren Quellen</li><li>Automatische Updates</li><li>Kompatibel von Android 2.3 bis 8</li><li>Personalisierte Blacklist/Whitelist</li><li>Modernes Design mit schicken Themen</li><li>Benachrichtigungen bei Updates</li><li>Suche nach neuen App\'s</li></ul><p>Benutzte Bibliotheken:</p><ul><li><a href="https://github.com/androidannotations/androidannotations">AndroidAnnotations</a></li><li><a href="https://github.com/jhy/jsoup">Jsoup</a></li><li><a href="https://github.com/square/otto">Otto</a></li><li><a href="https://github.com/google/gson">Gson</a></li><li><a href="https://github.com/square/okhttp">OkHttp</a></li><li><a href="https://github.com/yeriomin/play-store-api">play-store-api</a></li></ul><p>Update-Quellen:</p><ul><li><a href="http://apkmirror.com">APKMirror</a></li><li><a href="https://play.google.com">Google Play</a></li><li><a href="https://apkpure.com">APKPure</a></li><li><a href="http://en.uptodown.com/">Uptodown</a></li></ul><p>Copyright &copy; 2017 Rumboalla. Lizenziert unter der <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3</a>.</p></body></html>]]></string>
+<string name="app_description_html"><html><body style=\"text-align:justify\"><p>APKUpdater ist ein Werkzeug um einfacher Updates von deinen installierten App\'s zu finden. Die Funktionsweise ähnelt einem klassischen App-Store - Nur ohne Spionage und personalisierter Werbung! APKUpdater ist die perfekte Alternative für alle die sich einen unabhängigen App-Store wünschen.</p><p>Eigenschaften:</p><ul><li>Updates aus mehreren Quellen</li><li>Automatische Updates</li><li>Kompatibel von Android 2.3 bis 8</li><li>Personalisierte Blacklist/Whitelist</li><li>Modernes Design mit schicken Themen</li><li>Benachrichtigungen bei Updates</li><li>Suche nach neuen App\'s</li></ul><p>Benutzte Bibliotheken:</p><ul><li><a href=\"https://github.com/androidannotations/androidannotations\">AndroidAnnotations</a></li><li><a href=\"https://github.com/jhy/jsoup\">Jsoup</a></li><li><a href=\"https://github.com/square/otto\">Otto</a></li><li><a href=\"https://github.com/google/gson\">Gson</a></li><li><a href=\"https://github.com/square/okhttp\">OkHttp</a></li><li><a href=\"https://github.com/yeriomin/play-store-api\">play-store-api</a></li></ul><p>Update-Quellen:</p><ul><li><a href=\"http://apkmirror.com\">APKMirror</a></li><li><a href=\"https://play.google.com\">Google Play</a></li><li><a href=\"https://apkpure.com\">APKPure</a></li><li><a href=\"http://en.uptodown.com/\">Uptodown</a></li></ul><p>Copyright &amp;copy; 2017 Rumboalla. Lizenziert unter der <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU General Public License v3</a>.</p></body></html></string>
 <string name="action_settings">"Einstellungen"</string>
 <string name="action_log">"Log"</string>
 <string name="action_check_for_updates">"Suche nach Updates"</string>
@@ -33,12 +33,12 @@
 <string name="preferences_general_skip_architecture_summary">"Versucht inkompatible Architekturen auszuschließen. Funktioniert nur mit APKMirror!"</string>
 <string name="preferences_general_skip_minapi_title">"Inkompatible API-Level ausschließen"</string>
 <string name="preferences_general_skip_minapi_summary">"Versucht inkompatible API-Level auszuschließen. Funktioniert nur mit APKMirror!"</string>
-<string name="preferences_general_exclude_system_apps_title">"System-App's ausschließen"</string>
-<string name="preferences_general_exclude_system_apps_summary">"Schließt System-App's von den Updates aus"</string>
-<string name="preferences_general_exclude_disabled_apps_title">"Deaktivierte App's ausschließen"</string>
-<string name="preferences_general_exclude_disabled_apps_summary">"Schließt deaktivierte App's von den Updates aus"</string>
+<string name="preferences_general_exclude_system_apps_title">"System-App\'s ausschließen"</string>
+<string name="preferences_general_exclude_system_apps_summary">"Schließt System-App\'s von den Updates aus"</string>
+<string name="preferences_general_exclude_disabled_apps_title">"Deaktivierte App\'s ausschließen"</string>
+<string name="preferences_general_exclude_disabled_apps_summary">"Schließt deaktivierte App\'s von den Updates aus"</string>
 <string name="preferences_general_ignorelist_title">"Blacklist"</string>
-<string name="preferences_general_ignorelist_summary">"Schließt App's von den Updates aus"</string>
+<string name="preferences_general_ignorelist_summary">"Schließt App\'s von den Updates aus"</string>
 <string name="preferences_general_ignorelist_value">"com.google.android.gms,com.google.android.gsf,com.android.vending"</string>
 <string name="preferences_general_notification_title">"Benachrichtigungen"</string>
 <string name="preferences_general_theme_title">"Thema"</string>
@@ -81,16 +81,14 @@
 <string name="install_success">"App wurde erfolgreich installiert!"</string>
 <string name="install_failure">"App-Installation fehlgeschlagen!"</string>
 <string name="selfupdate_update">"Update %s"</string>
-
-<!-- Fuzzy -->
 <string name="selfupdate_click_to_install">"Klicken = Installieren"</string>
 <string name="no_new_updates">"Keine Updates gefunden!"</string>
 <string name="automatic_installer_title">"Automatische Installation"</string>
 <string name="automatic_installer_progress_title">"Automatische Installation %1$d/%2$d"</string>
 <string name="automatic_installing">"Installiere %s"</string>
 <string name="automatic_error">"Installation fehlgeschlagen! Log beachten!"</string>
-<string name="automatic_successfully_installed">"%d App's erfolgreich installiert"</string>
-<string name="automatic_failed_to_install">"Installation von %d App's fehlgeschlagen"</string>
+<string name="automatic_successfully_installed">"%d App\'s erfolgreich installiert"</string>
+<string name="automatic_failed_to_install">"Installation von %d App\'s fehlgeschlagen"</string>
 <string name="preferences_play_own_account_title">"Eigenen Google-Account benutzen"</string>
 <string name="preferences_play_own_account_summary">"Eigenen Google-Account anstelle des gemeinsamen Accounts benutzen"</string>
 <string name="get_token_error">"Fehler beim Einloggen!"</string>
@@ -100,4 +98,5 @@
 <string name="get_token_cancel">"Abbrechen"</string>
 <string name="get_token_help">"Hilfe?"</string>
 <string name="snackbar_close">"Schließen"</string>
+    <string name="root_not_available">Kein Root-Zugriff vorhanden</string>
 </resources>
