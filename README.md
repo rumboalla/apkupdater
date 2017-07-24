@@ -40,6 +40,7 @@ At the moment four sources are supported:
 * Italian: [DeltaFoX](https://www.dfox.it)
 * German: [Toxx](https://goo.gl/xQGYH3)
 * Afrikaans: [RuanF](https://ruanf.co.za/)
+* Turkish: [Aydogan Aykanat](http://aydoganaykanat.com/)
 
 If you want to appear in the credits, let me know [here](https://github.com/rumboalla/apkupdater/issues/211).
 
