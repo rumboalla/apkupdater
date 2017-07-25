@@ -196,7 +196,7 @@ public class UpdaterFragment
 	) {
 		List<Update> updates = ev.getUpdates();
 
-		if (mAdapter.getCount() < updates.size()) {
+		if (mAdapter.getItemCount() < updates.size()) {
 			mAdapter.setUpdates(updates);
 		}
         if (updates.isEmpty()) {
@@ -256,7 +256,7 @@ public class UpdaterFragment
 
 	private void sendUpdateTitleEvent(
 	) {
-		mBus.post(new UpdaterTitleChange(getString(R.string.tab_updates) + " (" + mAdapter.getCount() + ")"));
+		mBus.post(new UpdaterTitleChange(getString(R.string.tab_updates) + " (" + mAdapter.getItemCount() + ")"));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
