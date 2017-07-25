@@ -27,10 +27,10 @@ class UpdaterAdapter
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private var mUpdates: MutableList<Update>? = null
-    private var mContext: Context? = null
-    private var mView: RecyclerView? = null
-	private val mBus: MyBus = InjektUtil.injekt?.get()!!
+    private var mUpdates : MutableList<Update>? = null
+    private var mContext : Context? = null
+    private var mView : RecyclerView? = null
+	private val mBus : MyBus = InjektUtil.injekt?.get()!!
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,6 +61,25 @@ class UpdaterAdapter
         sort()
         notifyDataSetChanged()
     }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	fun mergeUpdates(
+		updates: MutableList<Update>
+	) : MutableList<MutableList<Update>> {
+		val mergedUpdates : MutableList<MutableList<Update>> = mutableListOf()
+		val skip : MutableList<String> = mutableListOf()
+		mUpdates?.forEach {
+			if (!skip.contains(it.pname)) {
+				val l = mUpdates?.filter { cit -> it.newVersionCode == cit.newVersionCode } as MutableList<Update>
+				if (l.size > 0) {
+					mergedUpdates.add(l)
+				}
+				skip.add(it.pname)
+			}
+		}
+		return mergedUpdates
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
