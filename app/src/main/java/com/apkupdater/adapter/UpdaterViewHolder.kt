@@ -46,7 +46,7 @@ open class UpdaterViewHolder(view: View)
 		val v = if(u.newVersion == "?" && updates.updateList.size > 1) updates.updateList[1].newVersion else u.newVersion
 
 		mView?.installed_app_version?.text =
-			String.format("%1s (%2s) -> %3s (4%s)", u.version, u.versionCode, v, u.newVersionCode)
+			String.format("%s (%s) -> %s (%s)", u.version, u.versionCode, v, u.newVersionCode)
 
 		// Icon
 		mView?.installed_app_icon?.setImageDrawable(mView?.context?.packageManager?.getApplicationIcon(u.pname))
