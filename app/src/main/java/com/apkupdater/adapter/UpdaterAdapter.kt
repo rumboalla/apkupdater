@@ -16,6 +16,7 @@ import com.apkupdater.util.DownloadUtil
 import com.apkupdater.event.SnackBarEvent
 import com.apkupdater.model.IgnoreVersion
 import com.apkupdater.model.InstallStatus
+import com.apkupdater.model.MergedUpdate
 import com.apkupdater.updater.UpdaterOptions
 import com.apkupdater.util.InjektUtil
 import uy.kohesive.injekt.api.get
@@ -27,10 +28,11 @@ class UpdaterAdapter
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private var mUpdates: MutableList<Update>? = null
-    private var mContext: Context? = null
-    private var mView: RecyclerView? = null
-	private val mBus: MyBus = InjektUtil.injekt?.get()!!
+    private var mUpdates : MutableList<Update>? = null
+    private var mContext : Context? = null
+    private var mView : RecyclerView? = null
+	private val mBus : MyBus = InjektUtil.injekt?.get()!!
+	private var mMergedUpdates : MutableList<MergedUpdate> = mutableListOf()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,12 +64,31 @@ class UpdaterAdapter
         notifyDataSetChanged()
     }
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	fun mergeUpdates(
+		updates: MutableList<Update>
+	) : MutableList<MergedUpdate> {
+		val mergedUpdates : MutableList<MergedUpdate> = mutableListOf()
+		val skip : MutableList<Pair<String, Int>> = mutableListOf()
+		updates.forEach {
+			if (!skip.contains(Pair(it.pname, it.newVersionCode))) {
+				mergedUpdates.add(MergedUpdate(updates.filter {
+					cit -> it.newVersionCode == cit.newVersionCode && it.pname == cit.pname
+				}))
+				skip.add(Pair(it.pname, it.newVersionCode))
+			}
+		}
+		return mergedUpdates
+	}
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun sort(
     ) {
 	    // Filter and sort updates
 	    mUpdates = sortUpdates(mContext as Context, mUpdates!!)
+	    mMergedUpdates = mergeUpdates(mUpdates!!)
 
 	    // Make sure we go to the start of the list
         mView?.layoutManager?.scrollToPosition(0)
@@ -123,15 +144,8 @@ class UpdaterAdapter
 
     override fun getItemCount(
     ): Int {
-        return mUpdates?.size ?: 0
+        return mMergedUpdates.size
     }
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	fun getCount(
-	): Int {
-		return itemCount
-	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -139,7 +153,7 @@ class UpdaterAdapter
         holder: UpdaterViewHolder?,
         position: Int
     ) {
-        holder?.bind(this, mUpdates?.get(position))
+        holder?.bind(this, mMergedUpdates[position])
 
         if (position == 0) {
             holder?.setTopMargin(8)
