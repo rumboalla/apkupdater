@@ -73,7 +73,7 @@ class UpdaterAdapter
 		val skip : MutableList<Pair<String, Int>> = mutableListOf()
 		updates.forEach {
 			if (!skip.contains(Pair(it.pname, it.newVersionCode))) {
-				mergedUpdates.add(MergedUpdate(updates.filter { cit -> it.newVersionCode == cit.newVersionCode }))
+				mergedUpdates.add(MergedUpdate(updates.filter { cit -> it.newVersionCode == cit.newVersionCode && it.pname == cit.pname}))
 				skip.add(Pair(it.pname, it.newVersionCode))
 			}
 		}
