@@ -36,18 +36,20 @@ open class UpdaterViewHolder(view: View)
 
 	open fun bind(
 		adapter : UpdaterAdapter,
-		u : Update?
+		updates : MergedUpdate
 	) {
-		mView?.installed_app_name?.text = u?.name
-		mView?.installed_app_pname?.text = u?.pname
+		val u : Update = updates.updateList[0]
+
+		mView?.installed_app_name?.text = u.name
+		mView?.installed_app_pname?.text = u.pname
 		mView?.installed_app_version?.text =
-			String.format("%1s (%2s) -> %3s (4%s)", u?.version, u?.versionCode, u?.newVersion, u?.newVersionCode)
+			String.format("%1s (%2s) -> %3s (4%s)", u.version, u.versionCode, u.newVersion, u.newVersionCode)
 
 		// Icon
-		mView?.installed_app_icon?.setImageDrawable(mView?.context?.packageManager?.getApplicationIcon(u?.pname))
+		mView?.installed_app_icon?.setImageDrawable(mView?.context?.packageManager?.getApplicationIcon(u.pname))
 
 		// Beta icon
-		mView?.isbeta_icon?.visibility = if (u?.isBeta as Boolean) View.VISIBLE else View.GONE
+		mView?.isbeta_icon?.visibility = if (u.isBeta) View.VISIBLE else View.GONE
 		mView?.isbeta_icon?.background?.setColorFilter(
 			ColorUtil.getColorFromTheme(mContext?.theme, R.attr.colorAccent),
 			android.graphics.PorterDuff.Mode.MULTIPLY
@@ -72,7 +74,9 @@ open class UpdaterViewHolder(view: View)
 		mView?.button_bar?.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 		mView?.button_bar?.adapter = ButtonBarAdapter(mContext as Context)
 
-		configureActionButton(u)
+		updates.updateList.forEach {
+			configureActionButton(it)
+		}
 		configureIgnoreButton(u)
 		setTopMargin(0)
 	}
