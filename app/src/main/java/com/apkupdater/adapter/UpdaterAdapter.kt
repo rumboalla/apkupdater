@@ -69,9 +69,9 @@ class UpdaterAdapter
 	) : MutableList<MutableList<Update>> {
 		val mergedUpdates : MutableList<MutableList<Update>> = mutableListOf()
 		val skip : MutableList<String> = mutableListOf()
-		mUpdates?.forEach {
+		updates.forEach {
 			if (!skip.contains(it.pname)) {
-				val l = mUpdates?.filter { cit -> it.newVersionCode == cit.newVersionCode } as MutableList<Update>
+				val l = updates.filter { cit -> it.newVersionCode == cit.newVersionCode } as MutableList<Update>
 				if (l.size > 0) {
 					mergedUpdates.add(l)
 				}
