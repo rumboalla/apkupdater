@@ -10,14 +10,13 @@ import com.apkupdater.model.APKMirror.AppExistsResponseApk;
 import com.apkupdater.model.APKMirror.AppExistsResponseData;
 import com.apkupdater.model.InstalledApp;
 import com.apkupdater.model.Update;
+import com.apkupdater.util.CollectionUtil;
 import com.apkupdater.util.GenericCallback;
 import com.apkupdater.util.VersionUtil;
 import com.google.gson.Gson;
 
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -152,17 +151,13 @@ public class UpdaterAPKMirrorAPI
                     fapks.add(apk);
                 }
 
+                fapks = CollectionUtil.Companion.sortAppExistsResponseApk(fapks);
+
                 if (!fapks.isEmpty()) {
-                    // Sort them by versionCode. TODO: Maybe improve this taking into account dpi
-                    Collections.sort(fapks, new Comparator<AppExistsResponseApk>() {
-                        @Override
-                        public int compare(AppExistsResponseApk o1, AppExistsResponseApk o2) {
-                            return o1.getVersionCode().compareTo(o2.getVersionCode());
-                        }
-                    });
+                    AppExistsResponseApk apk = CollectionUtil.Companion.getFirstAppExistResponse(fapks);
 
                     // Only compare with first one.
-                    if (Integer.valueOf(fapks.get(0).getVersionCode()) > app.getVersionCode()) {
+                    if (Integer.valueOf(apk.getVersionCode()) > app.getVersionCode()) {
                         // Add the update
                         Update u = new Update(
                             app,
@@ -170,7 +165,7 @@ public class UpdaterAPKMirrorAPI
                             data.getRelease().getVersion(),
                             isBeta,
                             null,
-                            Integer.valueOf(fapks.get(0).getVersionCode())
+                            Integer.valueOf(apk.getVersionCode())
                         );
                         u.setChangeLog(data.getRelease().getWhatsNew());
                         mUpdates.add(u);
