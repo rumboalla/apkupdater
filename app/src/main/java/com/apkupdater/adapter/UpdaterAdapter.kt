@@ -60,7 +60,7 @@ class UpdaterAdapter
         updates: MutableList<Update>
     ) {
         mUpdates = updates
-        sort()
+        sort(true)
         notifyDataSetChanged()
     }
 
@@ -85,13 +85,16 @@ class UpdaterAdapter
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun sort(
+	    b : Boolean
     ) {
 	    // Filter and sort updates
 	    mUpdates = sortUpdates(mContext as Context, mUpdates!!)
 	    mMergedUpdates = mergeUpdates(mUpdates!!)
 
 	    // Make sure we go to the start of the list
-        mView?.layoutManager?.scrollToPosition(0)
+        if (b) {
+	        mView?.layoutManager?.scrollToPosition(0)
+        }
     }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,11 +122,11 @@ class UpdaterAdapter
         update: Update
     ) {
         mUpdates?.add(update)
-        sort()
+        sort(false)
         val index = mUpdates?.indexOf(update) as Int
 	    notifyItemChanged(0)
         if (index >= 0) {
-	        notifyItemInserted(index)
+	        getIndexForUpdate(update, {index -> notifyItemInserted(index)})
         }
     }
 
@@ -135,7 +138,8 @@ class UpdaterAdapter
 		try {
 			val i = mUpdates?.indexOf(u) as Int
 			mUpdates?.removeAt(i)
-			notifyItemRemoved(i)
+			sort(false)
+			getIndexForUpdate(u, {index -> notifyItemRemoved(index)})
 			mBus.post(RefreshUpdateTitle())
 		} catch (e : Exception) {}
 	}
@@ -170,6 +174,20 @@ class UpdaterAdapter
         return UpdaterViewHolder(v)
     }
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	fun getIndexForUpdate(
+		u : Update,
+		callback : (Int) -> Unit
+	) {
+		mMergedUpdates.forEachIndexed { i, it ->
+			if (it.updateList.contains(u)) {
+				callback(i)
+				return
+			}
+		}
+	}
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Subscribe
@@ -189,7 +207,7 @@ class UpdaterAdapter
 					    mBus.post(SnackBarEvent(mContext?.getString(R.string.install_failure)))
 				    }
 			    }
-			    notifyItemChanged(i)
+			    getIndexForUpdate(app, {index -> notifyItemChanged(index)})
 			    DownloadUtil.deleteDownloadedFile(mContext!!, app.installStatus.id)
 		    }
 	    }
