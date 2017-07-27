@@ -125,6 +125,10 @@ public class SelfUpdateService
             Response response = client.newCall(request).execute();
             Release r = new Gson().fromJson(response.body().string(), Release.class);
 
+		    if (r.getPrerelease() || r.getDraft()) {
+			    return;
+		    }
+
             int c = VersionUtil.compareVersion(
                 VersionUtil.getVersionFromString(getPackageManager().getPackageInfo(getPackageName(), 0).versionName),
                 VersionUtil.getVersionFromString(r.getTagName())
