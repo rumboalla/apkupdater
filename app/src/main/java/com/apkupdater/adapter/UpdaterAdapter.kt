@@ -122,7 +122,7 @@ class UpdaterAdapter
         update: Update
     ) {
         mUpdates?.add(update)
-        sort(false)
+        sort(true)
         val index = mUpdates?.indexOf(update) as Int
 	    notifyItemChanged(0)
         if (index >= 0) {
