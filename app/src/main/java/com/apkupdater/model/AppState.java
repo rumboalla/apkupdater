@@ -4,6 +4,8 @@ package com.apkupdater.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
@@ -326,6 +328,22 @@ public class AppState
 			updates = new Gson().fromJson(s, new TypeToken<List<Update>>(){}.getType());
 		} catch (Exception ignored) {
 
+		}
+
+		if (!updates.isEmpty()) {
+			PackageManager pm = context.getPackageManager();
+			List<ApplicationInfo> installedApps = pm.getInstalledApplications(0);
+			ArrayList<String> appNames = new ArrayList<>();
+			for (ApplicationInfo app : installedApps) {
+				appNames.add(app.packageName);
+			}
+
+			for (int i = updates.size() - 1; i >= 0; i--) {
+				String pName = updates.get(i).getPname();
+				if (!appNames.contains(pName)){
+					updates.remove(i); //App is no longer installed, so remove update notification
+				}
+			}
 		}
 
 		return updates;
