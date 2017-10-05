@@ -22,12 +22,21 @@
             android:elevation="0dp"
         />
 
-        <FrameLayout
-            android:id="@+id/container"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-        />
+            >
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+            />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

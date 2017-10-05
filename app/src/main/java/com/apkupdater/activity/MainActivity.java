@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +75,9 @@ public class MainActivity
 
 	@ViewById(R.id.update_button)
     FloatingActionButton mUpdateButton;
+
+	@ViewById(R.id.swipe_refresh_layout)
+	SwipeRefreshLayout mSwipeRefreshLayout;
 
 	SettingsFragment_ mSettingsFragment;
 	AboutFragment_ mAboutFragment;
@@ -165,6 +169,15 @@ public class MainActivity
 
         // Color floating action button
         colorFloatingActionButton();
+
+		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				onUpdateClick();
+				mSwipeRefreshLayout.setRefreshing(false);
+			}
+		});
+
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,11 +228,11 @@ public class MainActivity
 	) {
 		if (b) {
 		    doTransition(mSlideOut, mSettingsFragment, new Fragment[] {mMainFragment, mLogFragment, mAboutFragment});
-            setUpdateButtonVisibility(false);
+			allowUpdatesFromThisScreen(false);
 			changeToolbar(getString(R.string.action_settings), true);
 		} else {
             doTransition(mSlideIn, mMainFragment, new Fragment[] {mSettingsFragment, mLogFragment, mAboutFragment});
-            setUpdateButtonVisibility(true);
+			allowUpdatesFromThisScreen(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -233,11 +246,11 @@ public class MainActivity
 	) {
 		if (b) {
             doTransition(mSlideOut, mLogFragment, new Fragment[] {mMainFragment, mSettingsFragment, mAboutFragment});
-            setUpdateButtonVisibility(false);
+			allowUpdatesFromThisScreen(false);
 			changeToolbar(getString(R.string.action_log), true);
 		} else {
             doTransition(mSlideIn, mMainFragment, new Fragment[] {mSettingsFragment, mLogFragment, mAboutFragment});
-            setUpdateButtonVisibility(true);
+			allowUpdatesFromThisScreen(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -251,11 +264,11 @@ public class MainActivity
 	) {
 		if (b) {
             doTransition(mSlideOut, mAboutFragment, new Fragment[] {mMainFragment, mSettingsFragment, mLogFragment});
-            setUpdateButtonVisibility(false);
+			allowUpdatesFromThisScreen(false);
 			changeToolbar(getString(R.string.tab_about), true);
 		} else {
             doTransition(mSlideIn, mMainFragment, new Fragment[] {mSettingsFragment, mLogFragment, mAboutFragment});
-            setUpdateButtonVisibility(true);
+			allowUpdatesFromThisScreen(true);
 			changeToolbar(getString(R.string.app_name), false);
 		}
 
@@ -390,13 +403,30 @@ public class MainActivity
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void allowUpdatesFromThisScreen(
+			boolean allow
+	) {
+		setUpdateButtonVisibility(allow);
+		setSwipeRefreshLayoutEnabled(allow);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void setUpdateButtonVisibility(
         boolean visible
     ) {
         mUpdateButton.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void setSwipeRefreshLayoutEnabled(
+			boolean enabled
+	) {
+		mSwipeRefreshLayout.setEnabled(enabled);
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
