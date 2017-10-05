@@ -27,6 +27,8 @@
 <string name="preferences_general_skip_experimental_summary">"This will try to exclude experimental builds (alpha, beta) from the updates."</string>
 <string name="preferences_general_self_update_title">"Self update check on startup"</string>
 <string name="preferences_general_self_update_summary">"The app will check for updates of itself on startup. If an update is found, a notification will be displayed and clicking on the notification will update the app."</string>
+<string name="preferences_general_startup_update_title" translatable="false">"Check for updates on startup"</string>
+<string name="preferences_general_startup_update_summary" translatable="false">"The app will check for updates of all apps on startup."</string>
 <string name="preferences_general_disable_animations_title">"Disable animations"</string>
 <string name="preferences_general_disable_animations_summary">"This will disable all animations and transitions."</string>
 <string name="preferences_general_skip_architecture_title">"Exclude other architectures"</string>

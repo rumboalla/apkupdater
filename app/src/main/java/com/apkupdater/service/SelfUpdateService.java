@@ -71,7 +71,8 @@ public class SelfUpdateService
 	    Context context
     ) {
         // Self update check
-        if (new UpdaterOptions(context).selfUpdate()) {
+        UpdaterOptions options = new UpdaterOptions(context);
+        if (options.selfUpdate() && !options.updateOnStartup()) { //if updating everything anyway, don't launch this service
             if (!ServiceUtil.isServiceRunning(context, SelfUpdateService_.class)) {
                 SelfUpdateService_.intent(context).start();
             }

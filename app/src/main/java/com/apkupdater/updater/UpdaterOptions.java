@@ -40,13 +40,21 @@ public class UpdaterOptions
 		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_skip_experimental_key), true);
 	}
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean selfUpdate(
-    ) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_self_update_key), true);
-    }
+	public boolean selfUpdate(
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_self_update_key), true);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public boolean updateOnStartup(
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_startup_update_key), false);
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

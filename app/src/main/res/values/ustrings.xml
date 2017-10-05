@@ -1,6 +1,7 @@
 <resources>
     <string name="preferences_general_skip_experimental_key" translatable="false">preferences_general_skip_experimental_key</string>
     <string name="preferences_general_self_update_key" translatable="false">preferences_general_self_update_key</string>
+    <string name="preferences_general_startup_update_key" translatable="false">preferences_general_startup_update_key</string>
     <string name="preferences_general_disable_animations_key" translatable="false">preferences_general_disable_animations_key</string>
     <string name="preferences_general_skip_architecture_key" translatable="false">preferences_general_skip_architecture_key</string>
     <string name="preferences_general_skip_minapi_key" translatable="false">preferences_general_skip_minapi_key</string>
