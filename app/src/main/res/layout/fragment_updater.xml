@@ -64,10 +64,18 @@
         </LinearLayout>
     </com.apkupdater.view.CustomCardView>
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list_view"
-    />
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/list_view"
+        />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

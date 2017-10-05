@@ -22,20 +22,12 @@
             android:elevation="0dp"
         />
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-
-            <FrameLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-            />
-
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:visibility="visible"
+        />
 
     </LinearLayout>
 

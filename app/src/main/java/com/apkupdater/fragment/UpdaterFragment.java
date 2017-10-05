@@ -4,6 +4,7 @@ package com.apkupdater.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apkupdater.R;
+import com.apkupdater.activity.MainActivity;
 import com.apkupdater.adapter.UpdaterAdapter;
 import com.apkupdater.event.RefreshUpdateTitle;
 import com.apkupdater.event.UpdateFinalProgressEvent;
@@ -54,6 +56,9 @@ public class UpdaterFragment
 
 	@ViewById(R.id.list_view)
 	RecyclerView mRecyclerView;
+
+	@ViewById(R.id.swipe_refresh_layout)
+	SwipeRefreshLayout mSwipeRefreshLayout;
 
 	@ViewById(R.id.container)
 	LinearLayout mContainer;
@@ -293,6 +298,14 @@ public class UpdaterFragment
 		loadData();
 
 		initProgressBar();
+
+		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				((MainActivity)getActivity()).onUpdateClick();
+				mSwipeRefreshLayout.setRefreshing(false);
+			}
+		});
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
