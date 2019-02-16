@@ -78,7 +78,8 @@ public class UpdaterAPKMirrorAPI
 
         AppExistsRequest json = new AppExistsRequest(
             pnames,
-            new UpdaterOptions(context).skipExperimental() ? AppExistsRequest.excludeExperimental() : null
+            null
+            //new UpdaterOptions(context).skipExperimental() ? AppExistsRequest.excludeExperimental() : null
         );
 
         // Build the OkHttp request
