@@ -6,7 +6,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.apkupdater.activity.MainActivity"
+    tools:context="de.apkgrabber.activity.MainActivity"
     android:background="?android:attr/windowBackground"
     >
     <LinearLayout

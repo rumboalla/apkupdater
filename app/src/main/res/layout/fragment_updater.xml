@@ -19,7 +19,7 @@
         android:visibility="gone"
         android:text="@string/no_new_updates"
     />
-    <com.apkupdater.view.CustomCardView
+    <de.apkgrabber.view.CustomCardView
         android:id="@+id/loader_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             />
         </LinearLayout>
-    </com.apkupdater.view.CustomCardView>
+    </de.apkgrabber.view.CustomCardView>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

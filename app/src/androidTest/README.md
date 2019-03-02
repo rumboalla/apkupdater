@@ -23,8 +23,8 @@ sourceSets {
 Configuring test runner in build.gradle
 ---------------------
 ```Gradle
-testApplicationId "com.apkupdater.test"
-testInstrumentationRunner "com.apkupdater.test.CucumberInstrumentation"
+testApplicationId "de.apkgrabber.test"
+testInstrumentationRunner "de.apkgrabber.test.CucumberInstrumentation"
 ```
 
 Adding features to src/androidTest/assets/features

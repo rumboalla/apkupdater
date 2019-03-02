@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.apkupdater"
+    package="de.apkgrabber"
     xmlns:android="http://schemas.android.com/apk/res/android"
 >
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -45,19 +45,19 @@
 
         <receiver android:name=".receiver.AlarmReceiver_" android:exported="false">
             <intent-filter>
-                <action android:name="com.apkupdater.alarm"/>
+                <action android:name="de.apkgrabber.alarm"/>
             </intent-filter>
         </receiver>
 
         <receiver android:name=".receiver.NotificationClickReceiver_">
             <intent-filter>
-                <action android:name="com.apkupdater.notification"/>
+                <action android:name="de.apkgrabber.notification"/>
             </intent-filter>
         </receiver>
 
         <receiver android:name=".receiver.SelfUpdateNotificationReceiver_">
             <intent-filter>
-                <action android:name="com.apkupdater.selfupdatenotification"/>
+                <action android:name="de.apkgrabber.selfupdatenotification"/>
             </intent-filter>
         </receiver>
 
@@ -70,13 +70,13 @@
         <receiver android:name=".receiver.DownloadReceiver_" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-                <action android:name="com.apkupdater.DOWNLOAD_COMPLETE" />
+                <action android:name="de.apkgrabber.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.apkupdater.fileprovider"
+            android:authorities="de.apkgrabber.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
