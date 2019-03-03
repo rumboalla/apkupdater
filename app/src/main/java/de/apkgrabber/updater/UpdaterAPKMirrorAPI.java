@@ -162,7 +162,7 @@ public class UpdaterAPKMirrorAPI
                         // Add the update
                         Update u = new Update(
                             app,
-                            DownloadUrl + data.getRelease().getLink(),
+                            getImmediateDownloadUrl(apk),
                             data.getRelease().getVersion(),
                             isBeta,
                             null,
@@ -182,6 +182,12 @@ public class UpdaterAPKMirrorAPI
             mError = "Parse response failed: " + String.valueOf(e);
             mResultCode = UpdaterStatus.STATUS_ERROR;
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private String getImmediateDownloadUrl(AppExistsResponseApk apk) {
+        return DownloadUrl + apk.getLink() + "download";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,7 +7,7 @@ but don't expect weekly updates.
 # Roadmap
 * [x] Releasing APKUpdater as a new, seperate version APKGrabber to provide fixed APKMirror API break.
 * [ ] Updating the build system, as it's full of deprecation warnings.
-* [ ] Adding enhanced handling for APKMirror.
+* [x] Adding enhanced handling for APKMirror.
 
 # License
 Copyright &copy; 2017 Rumboalla.

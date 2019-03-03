@@ -111,7 +111,7 @@
             android:key="@string/preferences_general_use_play_key"
             android:summary="@string/preferences_general_use_play_summary"
             android:title="@string/preferences_general_use_play_title"
-            android:defaultValue="true"
+            android:defaultValue="false"
         />
         <CheckBoxPreference
             android:key="@string/preferences_general_use_apkmirror_key"
