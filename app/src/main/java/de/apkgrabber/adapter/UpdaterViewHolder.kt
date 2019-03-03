@@ -92,7 +92,11 @@ open class UpdaterViewHolder(view: View)
 		adapter.addButton(ActionButton(
 			text,
 			u.installStatus.status == InstallStatus.STATUS_INSTALLING,
-			{ if (text == mContext?.getString(R.string.action_play)) launchInstall(u) else launchBrowser(u) }
+            {
+                if (text == mContext?.getString(R.string.action_play)) launchInstall(u)
+                else if (text == mContext?.getString(R.string.action_apkmirror)) launchApkMirror(u)
+                else launchBrowser(u)
+            }
 		))
 	}
 
@@ -154,6 +158,20 @@ open class UpdaterViewHolder(view: View)
 	) {
 		DownloadUtil.launchBrowser(mContext, u.url)
 	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private fun launchApkMirror(
+        u : Update
+	) {
+        thread {
+            val downloadUrl = APKMirrorParser.parseDownloadUrlFromWebsite(u.url)
+            DownloadUtil.downloadFileDM(mContext,
+                    "https://www.apkmirror.com" + downloadUrl,
+                    "",
+                    u.pname + "_" + u.version)
+        }
+    }
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
