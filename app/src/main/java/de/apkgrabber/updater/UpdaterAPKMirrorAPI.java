@@ -162,7 +162,8 @@ public class UpdaterAPKMirrorAPI
                         // Add the update
                         Update u = new Update(
                             app,
-                            getImmediateDownloadUrl(apk),
+                            DownloadUrl + data.getRelease().getLink(),
+                            getDirectDownloadUrl(apk),
                             data.getRelease().getVersion(),
                             isBeta,
                             null,
@@ -186,7 +187,7 @@ public class UpdaterAPKMirrorAPI
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private String getImmediateDownloadUrl(AppExistsResponseApk apk) {
+    private String getDirectDownloadUrl(AppExistsResponseApk apk) {
         return DownloadUrl + apk.getLink() + "download";
     }
 

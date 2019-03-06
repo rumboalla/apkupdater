@@ -93,6 +93,7 @@ public class UpdaterGooglePlay
                                 Update u = new Update(
                                     app,
                                     "",
+                                    null,
                                     details.getDetails().getAppDetails().hasVersionString() ? details.getDetails().getAppDetails().getVersionString() : "?",
                                     false,
                                     "Cookie",
