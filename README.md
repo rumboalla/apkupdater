@@ -11,6 +11,6 @@ but don't expect weekly updates.
 
 # License
 Copyright &copy; 2017 Rumboalla.
-Adapted 2019 by hemker.
+Readapted 2019 by hemker.
 
 Licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
