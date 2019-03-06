@@ -120,6 +120,7 @@ open class UpdaterViewHolder(view: View)
 				options.ignoreVersionList = l
 				val adapter : UpdaterAdapter = InjektUtil.injekt?.get()!!
 				adapter.removeUpdate(u)
+				adapter.notifyDataSetChanged()
 			}
 		))
 	}
