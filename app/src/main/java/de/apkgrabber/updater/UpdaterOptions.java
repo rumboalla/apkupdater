@@ -292,6 +292,11 @@ public class UpdaterOptions
         sharedPref.edit().putString(Constants.OWN_TOKEN_KEY, id).apply();
     }
 
+    public boolean useApkMirrorDirectDownload() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPref.getBoolean(mContext.getString(R.string.preferences_apkmirror_direct_download), false);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

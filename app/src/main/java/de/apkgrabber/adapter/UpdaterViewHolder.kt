@@ -31,6 +31,7 @@ open class UpdaterViewHolder(view: View)
 	protected val mBus: MyBus = InjektUtil.injekt?.get()!!
 	protected val mActivity : MainActivity = InjektUtil.injekt?.get()!!
 	protected val mAppState : AppState = InjektUtil.injekt?.get()!!
+    protected val mUpdaterOptions : UpdaterOptions = UpdaterOptions(view.context)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,8 +94,11 @@ open class UpdaterViewHolder(view: View)
 			text,
 			u.installStatus.status == InstallStatus.STATUS_INSTALLING,
             {
-                if (text == mContext?.getString(R.string.action_play)) launchInstall(u)
-                else if (text == mContext?.getString(R.string.action_apkmirror)) launchApkMirror(u)
+                if (text == mContext?.getString(R.string.action_play))
+					launchInstall(u)
+                else if (text == mContext?.getString(R.string.action_apkmirror)
+                        && mUpdaterOptions.useApkMirrorDirectDownload())
+                    launchApkMirror(u)
                 else launchBrowser(u)
             }
 		))
@@ -165,11 +169,11 @@ open class UpdaterViewHolder(view: View)
         u : Update
 	) {
         thread {
-            val downloadUrl = APKMirrorParser.parseDownloadUrlFromWebsite(u.url)
+            val downloadUrl = APKMirrorParser.parseDownloadUrlFromWebsite(u.directDownloadUrl)
             DownloadUtil.downloadFileDM(mContext,
                     "https://www.apkmirror.com" + downloadUrl,
                     "",
-                    u.pname + "_" + u.version)
+                    u.pname + "_" + u.version + ".apk")
         }
     }
 

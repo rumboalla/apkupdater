@@ -11,6 +11,9 @@ public class Update
 	private String mVersion;
 	private String mNewVersion;
 	private String mUrl;
+
+
+    private String mDirectDownloadUrl;
 	private boolean mIsBeta;
 	private String mCookie;
 	private int mNewVersionCode;
@@ -23,6 +26,7 @@ public class Update
 	public Update(
 		InstalledApp app,
 	    String url,
+		String directDownloadUrl,
 		String version,
 		boolean isBeta,
         String cookie,
@@ -33,6 +37,7 @@ public class Update
 		setVersion(app.getVersion());
         setVersionCode(app.getVersionCode());
 		setUrl(url);
+        setDirectDownloadUrl(directDownloadUrl);
 		setNewVersion(version);
 		setIsBeta(isBeta);
 		setNewVersionCode(versionCode);
@@ -169,6 +174,14 @@ public class Update
 
     public void setChangeLog(String changeLog) {
         mChangeLog = changeLog;
+    }
+
+    public void setDirectDownloadUrl(String directDownloadUrl) {
+	    mDirectDownloadUrl = directDownloadUrl;
+    }
+
+    public String getDirectDownloadUrl() {
+	    return mDirectDownloadUrl;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
