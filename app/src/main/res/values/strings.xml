@@ -23,7 +23,6 @@
 <string name="preferences_filter_category">"Filter settings"</string>
 <string name="preferences_sources_category">"Update sources"</string>
 <string name="preferences_play_category">"Google Play Settings"</string>
-<string name="preferences_apkmirror_category">"APKMirror"</string>
 <string name="preferences_general_skip_experimental_title">"Exclude experimental builds"</string>
 <string name="preferences_general_skip_experimental_summary">"This will try to exclude experimental builds (alpha, beta) from the updates."</string>
 <string name="preferences_general_self_update_title">"Self update check on startup"</string>
@@ -60,8 +59,6 @@
 <string name="preferences_play_root_install_summary">"Install apps in the background using root. NEEDS ROOT."</string>
 <string name="preferences_play_automatic_install_title">"Automatic update installation"</string>
 <string name="preferences_play_automatic_install_summary">"All updates will be installed automatically. NEEDS ROOT."</string><string name="notification_never">"Never"</string>
-<string name="preferences_apkmirror_use_direct_download_title">"Direct APK download"</string>
-<string name="preferences_apkmirror_use_direct_download_summary">"Experimental: Downloads the APK directly</string>
 <string name="notification_always">"Always"</string>
 <string name="notification_background">"Background"</string>
 <string name="notification_if_at_least_1">"If updates are available"</string>
@@ -100,5 +97,5 @@
 <string name="get_token_cancel">"CANCEL"</string>
 <string name="get_token_help">"HELP"</string>
 <string name="snackbar_close">"CLOSE"</string>
-    <string name="root_not_available">Root not available.</string>
+<string name="root_not_available">Root not available.</string>
 </resources>

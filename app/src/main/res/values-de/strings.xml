@@ -23,7 +23,6 @@
 <string name="preferences_filter_category">"Filter"</string>
 <string name="preferences_sources_category">"Quellen"</string>
 <string name="preferences_play_category">"Google Play"</string>
-<string name="preferences_apkmirror_category">"APKMirror"</string>
 <string name="preferences_general_skip_experimental_title">"Testversionen ausschließen"</string>
 <string name="preferences_general_skip_experimental_summary">"Versucht Testversionen (Alpha, Beta) auszuschließen"</string>
 <string name="preferences_general_self_update_title">"Selbst-Update beim Start"</string>
@@ -60,8 +59,6 @@
 <string name="preferences_play_root_install_summary">"Installiert Updates durch Root-Zugriff im Hintergrund. Benötigt Root-Zugriff!"</string>
 <string name="preferences_play_automatic_install_title">"Automatische Updates"</string>
 <string name="preferences_play_automatic_install_summary">"Updates werden automatisch installiert. Beta! Benötigt Root-Zugriff!"</string>
-<string name="preferences_apkmirror_use_direct_download_title">"Direkter APK Download"</string>
-<string name="preferences_apkmirror_use_direct_download_summary">"Experimentell: Lädt die APK direkt herunter"</string>
 <string name="notification_never">"Nie"</string>
 <string name="notification_always">"Immer"</string>
 <string name="notification_background">"Im Hintergrund"</string>

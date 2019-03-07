@@ -134,18 +134,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/preferences_apkmirror_category"
-        android:key="pref_key_apkmirror_settings"
-    >
-        <CheckBoxPreference
-            android:key="@string/preferences_apkmirror_direct_download"
-            android:title="@string/preferences_apkmirror_use_direct_download_title"
-            android:summary="@string/preferences_apkmirror_use_direct_download_summary"
-            android:defaultValue="false"
-        />
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:title="@string/preferences_play_category"
         android:key="pref_key_play_settings"
     >

@@ -113,7 +113,7 @@ public class UpdaterService
 			public void run() {
 				IUpdater upd = createUpdater(type, getBaseContext(), app);
 				if (upd.getResultStatus() == UpdaterStatus.STATUS_UPDATE_FOUND) {
-					Update u = new Update(app, upd.getResultUrl(), null, upd.getResultVersion(), upd.isBeta(), upd.getResultCookie(), upd.getResultVersionCode());
+					Update u = new Update(app, upd.getResultUrl(), upd.getResultVersion(), upd.isBeta(), upd.getResultCookie(), upd.getResultVersionCode());
 					mUpdates.add(u);
 					mBus.post(new UpdateProgressEvent(u));
 				} else if (upd.getResultStatus() == UpdaterStatus.STATUS_ERROR) {
