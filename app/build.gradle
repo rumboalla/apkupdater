@@ -10,8 +10,8 @@ android {
         applicationId "de.apkgrabber"
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 29
-        versionName "1.1.6"
+        versionCode 30
+        versionName "1.1.7"
         testApplicationId "de.apkgrabber.test"
         testInstrumentationRunner "de.apkgrabber.test.CucumberInstrumentation"
         multiDexEnabled true
