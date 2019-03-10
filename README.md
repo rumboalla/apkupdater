@@ -5,9 +5,7 @@ I try to develop new features and maintain the software to stay available on lat
 but don't expect weekly updates.
 
 # Roadmap
-* [x] Releasing APKUpdater as a new, seperate version APKGrabber to provide fixed APKMirror API break.
 * [ ] Updating the build system, as it's full of deprecation warnings.
-* [x] Adding enhanced handling for APKMirror.
 
 # License
 Copyright &copy; 2017 Rumboalla.
