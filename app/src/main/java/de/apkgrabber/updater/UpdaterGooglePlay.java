@@ -3,6 +3,8 @@ package de.apkgrabber.updater;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import de.apkgrabber.model.InstalledApp;
 import de.apkgrabber.model.Update;
@@ -10,6 +12,8 @@ import de.apkgrabber.service.AutomaticInstallerService_;
 import de.apkgrabber.util.GenericCallback;
 import de.apkgrabber.util.GooglePlayUtil;
 import de.apkgrabber.util.ServiceUtil;
+
+import com.github.yeriomin.playstoreapi.AppDetails;
 import com.github.yeriomin.playstoreapi.BulkDetailsEntry;
 import com.github.yeriomin.playstoreapi.BulkDetailsResponse;
 import com.github.yeriomin.playstoreapi.DocV2;
@@ -89,11 +93,24 @@ public class UpdaterGooglePlay
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
+                            String versionString = "?";
+                            final AppDetails appDetails = details.getDetails().getAppDetails();
+                            if(appDetails.hasVersionString()) {
+                                versionString = appDetails.getVersionString();
+                            } else {
+                                try {
+                                    final PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(appDetails.getPackageName(), 0);
+                                    versionString = packageInfo.versionName;
+                                } catch (PackageManager.NameNotFoundException e) {
+                                    mError = "couldn't find version name for package " + appDetails.getPackageName();
+                                }
+                            }
+
                             try {
                                 Update u = new Update(
                                     app,
                                     "",
-                                    details.getDetails().getAppDetails().hasVersionString() ? details.getDetails().getAppDetails().getVersionString() : "?",
+                                    versionString,
                                     false,
                                     "Cookie",
                                     versionCode
