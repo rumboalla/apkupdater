@@ -9,6 +9,7 @@ import android.os.Build;
 import de.apkgrabber.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,18 +131,16 @@ public class VersionUtil {
 			return false;
 		}
 
-        String arch = "arm";
-
-        if (Build.CPU_ABI.contains("arm")) {
-            arch = "arm";
-        } else if (Build.CPU_ABI.contains("mips")) {
-            arch = "mips";
-        } else if (Build.CPU_ABI.contains("x86")) {
-            arch = "x86";
+		List<String> supportedArchitectures = new ArrayList<>();
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            supportedArchitectures = Arrays.asList(Build.SUPPORTED_ABIS);
+        } else {
+            supportedArchitectures.add(Build.CPU_ABI);
+            supportedArchitectures.add(Build.CPU_ABI2);
         }
 
         for (String a : arches) {
-            if (a.contains(arch) || a.contains("universal") || a.contains("noarch")) {
+            if (supportedArchitectures.contains(a) || a.contains("universal") || a.contains("noarch")) {
                 return false;
             }
         }
