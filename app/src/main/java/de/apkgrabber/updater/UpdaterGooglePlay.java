@@ -3,8 +3,6 @@ package de.apkgrabber.updater;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 import de.apkgrabber.model.InstalledApp;
 import de.apkgrabber.model.Update;
@@ -20,6 +18,7 @@ import com.github.yeriomin.playstoreapi.DocV2;
 import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -94,16 +93,16 @@ public class UpdaterGooglePlay
                         @Override
                         public void run() {
                             String versionString = "?";
-                            final AppDetails appDetails = details.getDetails().getAppDetails();
-                            if(appDetails.hasVersionString()) {
-                                versionString = appDetails.getVersionString();
-                            } else {
-                                try {
-                                    final PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(appDetails.getPackageName(), 0);
-                                    versionString = packageInfo.versionName;
-                                } catch (PackageManager.NameNotFoundException e) {
-                                    mError = "couldn't find version name for package " + appDetails.getPackageName();
+                            try {
+                                AppDetails appDetails = mApi.details(app.getPname())
+                                        .getDocV2()
+                                        .getDetails()
+                                        .getAppDetails();
+                                if(appDetails.hasVersionString()) {
+                                    versionString = appDetails.getVersionString();
                                 }
+                            } catch(IOException e) {
+                                mError += "failed to get version string for " + app.getPname() + "\n";
                             }
 
                             try {
