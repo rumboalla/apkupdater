@@ -30,6 +30,7 @@ import de.apkgrabber.model.AppState;
 import de.apkgrabber.model.DownloadInfo;
 import de.apkgrabber.model.LogMessage;
 import de.apkgrabber.receiver.BootReceiver_;
+import de.apkgrabber.service.SelfUpdateService;
 import de.apkgrabber.service.UpdaterService_;
 import de.apkgrabber.updater.UpdaterOptions;
 import de.apkgrabber.util.AnimationUtil;
@@ -165,6 +166,9 @@ public class MainActivity
 
         // Color floating action button
         colorFloatingActionButton();
+
+		// Self update check at launch
+        SelfUpdateService.launchSelfUpdate(getApplicationContext());
 	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
