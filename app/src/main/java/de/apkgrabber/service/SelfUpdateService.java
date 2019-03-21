@@ -8,7 +8,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
+
 
 import de.apkgrabber.R;
 import de.apkgrabber.model.AppState;
@@ -96,6 +97,7 @@ public class SelfUpdateService
         b.setAutoCancel(true);
         b.setLargeIcon(BitmapFactory.decodeResource(c.getResources(), R.mipmap.ic_launcher));
 		b.setStyle(new NotificationCompat.BigTextStyle());
+		b.setChannelId(Constants.SelfUpdaterNotificationChannelId);
 
 		// Set the click intent
         Intent intent = new Intent("de.apkgrabber.selfupdatenotification");

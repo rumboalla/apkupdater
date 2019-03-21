@@ -8,7 +8,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 
 import de.apkgrabber.R;
 import de.apkgrabber.model.AppState;
@@ -21,6 +21,7 @@ import de.apkgrabber.util.GooglePlayUtil;
 import de.apkgrabber.util.InstalledAppUtil;
 import de.apkgrabber.util.LogUtil;
 import de.apkgrabber.util.MyBus;
+
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.google.gson.Gson;
 
@@ -86,6 +87,7 @@ public class AutomaticInstallerService
         b.setAutoCancel(true);
         b.setLargeIcon(BitmapFactory.decodeResource(c.getResources(), R.mipmap.ic_launcher));
         b.setStyle(new NotificationCompat.BigTextStyle());
+        b.setChannelId(Constants.UpdaterNotificationChannelId);
 
         // Launch notification
         doNotification(b.build());
@@ -103,6 +105,7 @@ public class AutomaticInstallerService
         b.setSmallIcon(R.drawable.ic_update);
         b.setAutoCancel(true);
         b.setLargeIcon(BitmapFactory.decodeResource(c.getResources(), R.mipmap.ic_launcher));
+        b.setChannelId(Constants.AutomaticUpdateNotificationChannelId);
 
         // Launch notification
         doNotification(b.build());
@@ -145,6 +148,7 @@ public class AutomaticInstallerService
         b.setAutoCancel(true);
         b.setLargeIcon(BitmapFactory.decodeResource(c.getResources(), R.mipmap.ic_launcher));
         b.setStyle(new NotificationCompat.BigTextStyle());
+        b.setChannelId(Constants.AutomaticUpdateNotificationChannelId);
 
         // Launch notification
         doNotification(b.build());

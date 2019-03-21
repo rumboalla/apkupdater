@@ -13,6 +13,7 @@ import de.apkgrabber.event.UpdateProgressEvent;
 import de.apkgrabber.event.UpdateStartEvent;
 import de.apkgrabber.event.UpdateStopEvent;
 import de.apkgrabber.model.AppState;
+import de.apkgrabber.model.Constants;
 import de.apkgrabber.model.InstalledApp;
 import de.apkgrabber.model.LogMessage;
 import de.apkgrabber.model.Update;
@@ -29,6 +30,7 @@ import de.apkgrabber.util.GenericCallback;
 import de.apkgrabber.util.InstalledAppUtil;
 import de.apkgrabber.util.LogUtil;
 import de.apkgrabber.util.MyBus;
+import de.apkgrabber.util.NotificationHelper;
 import de.apkgrabber.util.ServiceUtil;
 import de.apkgrabber.util.VersionUtil;
 
@@ -81,7 +83,18 @@ public class UpdaterService
 		super(UpdaterService.class.getSimpleName());
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        NotificationHelper.createNotificationChannel(Constants.UpdaterNotificationChannelId,
+                "Updater", "", getBaseContext());
+        NotificationHelper.createNotificationChannel(Constants.SelfUpdaterNotificationChannelId,
+                "SelfUpdater", "", getBaseContext());
+        NotificationHelper.createNotificationChannel(Constants.AutomaticUpdateNotificationChannelId,
+                "AutomaticInstaller", "", getBaseContext());
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public IUpdater createUpdater(
 		String type,

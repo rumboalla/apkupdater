@@ -7,7 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 
 import de.apkgrabber.R;
 import de.apkgrabber.model.Constants;
@@ -90,6 +90,7 @@ public class UpdaterNotification
 		mNotificationBuilder.setProgress(0, 0, false);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title_finished));
 		mNotificationBuilder.setContentText(s);
+		mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
 		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 	}
 
@@ -105,12 +106,13 @@ public class UpdaterNotification
 		mNotificationBuilder.setProgress(0, 0, false);
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title_failed));
 		mNotificationBuilder.setContentText(null);
-		
-		// Prevent NPE
+        mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
+
+        // Prevent NPE
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
-		
+
 		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 	}
 
@@ -141,7 +143,8 @@ public class UpdaterNotification
 		mNotificationBuilder.setContentIntent(createPendingIntent());
 		mNotificationBuilder.setAutoCancel(true);
 		mNotificationBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
-		
+		mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
+
 		// Prevent NPE
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -159,8 +162,9 @@ public class UpdaterNotification
 	) {
 		mNotificationBuilder.setContentText(getNotificationProgressString(max, progress));
 		mNotificationBuilder.setProgress(max, progress, false);
-		
-		// Prevent NPE
+        mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
+
+        // Prevent NPE
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
