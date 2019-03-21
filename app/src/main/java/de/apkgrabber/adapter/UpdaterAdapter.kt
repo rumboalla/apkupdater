@@ -154,7 +154,7 @@ class UpdaterAdapter
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onBindViewHolder(
-        holder: UpdaterViewHolder?,
+        holder: UpdaterViewHolder,
         position: Int
     ) {
         holder?.bind(this, mMergedUpdates[position])
@@ -167,7 +167,7 @@ class UpdaterAdapter
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateViewHolder(
-        parent: ViewGroup?,
+        parent: ViewGroup,
         viewType: Int
     ): UpdaterViewHolder {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.updater_item, parent, false)

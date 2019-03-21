@@ -32,7 +32,7 @@ class ButtonBarAdapter
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	override fun onBindViewHolder(
-		holder: ButtonBarViewHolder?,
+		holder: ButtonBarViewHolder,
 		position: Int
 	) {
 		holder?.bind(mItems[position])
@@ -41,7 +41,7 @@ class ButtonBarAdapter
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	override fun onCreateViewHolder(
-		parent: ViewGroup?,
+		parent: ViewGroup,
 		viewType: Int
 	): ButtonBarViewHolder {
 		val v : View = LayoutInflater.from(parent?.context).inflate(R.layout.button_bar_item, parent, false)
