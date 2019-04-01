@@ -4,6 +4,7 @@ package de.apkgrabber.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import de.apkgrabber.event.UpdateStopEvent;
 import de.apkgrabber.event.UpdaterTitleChange;
 import de.apkgrabber.model.AppState;
 import de.apkgrabber.model.Update;
+import de.apkgrabber.service.UpdaterService_;
 import de.apkgrabber.updater.UpdaterOptions;
 import de.apkgrabber.util.AnimationUtil;
 import de.apkgrabber.util.ColorUtil;
@@ -54,6 +56,9 @@ public class UpdaterFragment
 
 	@ViewById(R.id.list_view)
 	RecyclerView mRecyclerView;
+
+	@ViewById(R.id.swipe_container_updates)
+	SwipeRefreshLayout swipeRefreshLayout;
 
 	@ViewById(R.id.container)
 	LinearLayout mContainer;
@@ -204,6 +209,7 @@ public class UpdaterFragment
         }
 
 		sendUpdateTitleEvent();
+        swipeRefreshLayout.setRefreshing(false);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,6 +279,7 @@ public class UpdaterFragment
 			mAdapter.setUpdates(updates);
 			sendUpdateTitleEvent();
 		}
+
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -289,10 +296,19 @@ public class UpdaterFragment
         }
 		mRecyclerView.setAdapter(mAdapter);
 
+		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				UpdaterService_.intent(getContext()).start();
+			}
+		});
+
 		// Load data
 		loadData();
 
 		initProgressBar();
+
+
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
