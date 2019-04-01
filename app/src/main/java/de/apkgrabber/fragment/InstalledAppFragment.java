@@ -3,10 +3,12 @@ package de.apkgrabber.fragment;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 
+import android.util.Log;
 import de.apkgrabber.R;
 import de.apkgrabber.adapter.InstalledAppAdapter;
 import de.apkgrabber.event.InstalledAppTitleChange;
@@ -30,12 +32,15 @@ import java.util.List;
 
 @EFragment(R.layout.fragment_installed_apps)
 public class InstalledAppFragment
-	extends Fragment
+		extends Fragment
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@ViewById(R.id.list_view)
 	RecyclerView mRecyclerView;
+
+	@ViewById(R.id.swipe_container)
+	SwipeRefreshLayout swipeRefreshLayout;
 
 	@Bean
 	InstalledAppUtil mInstalledAppUtil;
@@ -50,6 +55,14 @@ public class InstalledAppFragment
 	) {
 		mBus.register(this);
 		updateInstalledApps(new UpdateInstalledAppsEvent());
+
+		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				updateInstalledApps(new UpdateInstalledAppsEvent());
+				Log.d("InstalledAppFragmnet","refreshing...");
+			}
+		});
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,12 +77,13 @@ public class InstalledAppFragment
 
 	@Subscribe
 	public void updateInstalledApps(
-		UpdateInstalledAppsEvent ev
+			UpdateInstalledAppsEvent ev
 	) {
 		mInstalledAppUtil.getInstalledAppsAsync(getContext(), new GenericCallback<List<InstalledApp>>() {
 			@Override
 			public void onResult(List<InstalledApp> items) {
 				setListAdapter(items);
+				swipeRefreshLayout.setRefreshing(false);
 			}
 		});
 	}
@@ -78,18 +92,18 @@ public class InstalledAppFragment
 
 	@UiThread(propagation = UiThread.Propagation.REUSE)
 	protected void setListAdapter(
-		List<InstalledApp> items
+			List<InstalledApp> items
 	) {
 		if (mRecyclerView == null || mBus == null) {
 			return;
 		}
 
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        if (new UpdaterOptions(getContext()).disableAnimations()) {
-            mRecyclerView.setItemAnimator(null);
-        } else {
-            ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        }
+		if (new UpdaterOptions(getContext()).disableAnimations()) {
+			mRecyclerView.setItemAnimator(null);
+		} else {
+			((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+		}
 		mRecyclerView.setAdapter(new InstalledAppAdapter(getContext(), mRecyclerView, items));
 		mBus.post(new InstalledAppTitleChange(getString(R.string.tab_installed) + " (" + items.size() + ")"));
 	}
