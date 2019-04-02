@@ -14,7 +14,7 @@ public class NotificationHelper {
             channel.setDescription(description);
             channel.enableLights(true);
             channel.setLightColor(Color.RED);
-            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            channel.setVibrationPattern(new long[]{100});
             ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
                     .createNotificationChannel(channel);
         }
