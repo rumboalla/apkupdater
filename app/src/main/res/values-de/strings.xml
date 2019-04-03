@@ -100,4 +100,8 @@
 <string name="get_token_cancel">"Abbrechen"</string>
 <string name="get_token_help">"Hilfe?"</string>
 <string name="snackbar_close">"Schließen"</string>
+    <string name="preferences_general_refresh_update_list_after_installation_summary">Aktualisiere die Updateliste wenn eine Installation abgeschlossen ist
+    </string>
+    <string name="preferences_general_refresh_update_list_after_installation_title">Aktualisiere Updateliste nach Installation
+    </string>
 </resources>
