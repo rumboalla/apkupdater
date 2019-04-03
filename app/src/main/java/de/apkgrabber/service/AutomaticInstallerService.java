@@ -7,9 +7,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
+import android.support.v7.preference.PreferenceManager;
 import de.apkgrabber.R;
 import de.apkgrabber.model.AppState;
 import de.apkgrabber.model.Constants;
@@ -54,12 +56,17 @@ public class AutomaticInstallerService
 
 	private int Status = 0;
 
+	private SharedPreferences sharedPreferences;
+
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public AutomaticInstallerService(
 	) {
 		super(AutomaticInstallerService.class.getSimpleName());
+        sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+
 	}
 
 	private void doNotification(
@@ -204,6 +211,12 @@ public class AutomaticInstallerService
                 }
             }
             doFinalNotification(success, failure);
+            Boolean switchPref = sharedPreferences.getBoolean
+                    (getApplicationContext().getString(R.string.preferences_general_self_update_key), true);
+            if(switchPref) {
+                UpdaterService_.intent(getApplicationContext()).start();
+                mLogger.log("installApps", "Auto refreshing update list, since update was installed.", LogMessage.SEVERITY_INFO);
+            }
         } catch (Exception e) {
 	        doErrorNotification();
 	        mLogger.log("installApps", String.valueOf(e), LogMessage.SEVERITY_ERROR);
