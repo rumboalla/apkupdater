@@ -333,6 +333,17 @@ public class UpdaterService
 		checkForUpdates();
 	}
 
+	static public void checkForAppUpdates(
+			Context context
+	) {
+		// app updates check
+		if (new UpdaterOptions(context).checkUpdatesOnStartup()) {
+			if (!ServiceUtil.isServiceRunning(context, UpdaterService_.class)) {
+				UpdaterService_.intent(context).start();
+			}
+		}
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

@@ -48,6 +48,14 @@ public class UpdaterOptions
         return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_self_update_key), true);
     }
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public boolean checkUpdatesOnStartup(
+	) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_update_on_startup_key), false);
+	}
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public boolean automaticInstall(

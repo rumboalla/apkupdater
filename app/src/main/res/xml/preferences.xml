@@ -66,6 +66,12 @@
             android:defaultValue="true"
         />
         <CheckBoxPreference
+            android:key="@string/preferences_general_update_on_startup_key"
+            android:summary="@string/preferences_general_update_on_startup_summary"
+            android:title="@string/preferences_general_update_on_startup_title"
+            android:defaultValue="false"
+            />
+        <CheckBoxPreference
                 android:key="@string/preferences_general_refresh_update_list_after_installation"
                 android:summary="@string/preferences_general_refresh_update_list_after_installation_summary"
                 android:title="@string/preferences_general_refresh_update_list_after_installation_title"

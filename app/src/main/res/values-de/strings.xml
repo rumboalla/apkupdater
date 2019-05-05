@@ -27,6 +27,8 @@
 <string name="preferences_general_skip_experimental_summary">"Versucht Testversionen (Alpha, Beta) auszuschließen"</string>
 <string name="preferences_general_self_update_title">"Selbst-Update beim Start"</string>
 <string name="preferences_general_self_update_summary">"APKGrabber wird beim Start nach Updates suchen. Falls ein Update gefunden wurde, wird eine Benachrichtigung angezeigt"</string>
+<string name="preferences_general_update_on_startup_title">"Suche nach Updates beim Start"</string>
+<string name="preferences_general_update_on_startup_summary">"Sucht beim Start nach Updates für installierte Apps."</string>
 <string name="preferences_general_disable_animations_title">"Animationen deaktivieren"</string>
 <string name="preferences_general_disable_animations_summary">"Alle Animationen und Effekte werden deaktiviert"</string>
 <string name="preferences_general_skip_architecture_title">"Inkompatible Architekturen ausschließen"</string>
