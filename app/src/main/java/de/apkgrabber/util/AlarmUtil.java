@@ -83,6 +83,7 @@ public class AlarmUtil
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
+		calendar.set(Calendar.MINUTE, 0);
 		if (calendar.getTimeInMillis() < System.currentTimeMillis()     // Add a day if alarm is in the past
             || Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == hour // Add a day if we are setting an alarm for the current hour
         ) {

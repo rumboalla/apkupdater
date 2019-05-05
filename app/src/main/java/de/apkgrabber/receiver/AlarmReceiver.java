@@ -5,6 +5,7 @@ package de.apkgrabber.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import de.apkgrabber.service.UpdaterService;
 import de.apkgrabber.service.UpdaterService_;
@@ -24,7 +25,12 @@ public class AlarmReceiver
 		Context context,
 		Intent intent
 	) {
-		UpdaterService_.intent(context).extra(UpdaterService.isFromAlarmExtra, true).start();
+	    Intent updaterIntent = new Intent(context, UpdaterService.class).putExtra(UpdaterService.isFromAlarmExtra, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(updaterIntent);
+        } else {
+            context.startService(updaterIntent);
+        }
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
