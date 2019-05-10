@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import de.apkgrabber.R;
 import de.apkgrabber.model.Constants;
+import de.apkgrabber.receiver.NotificationClickReceiver_;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -149,7 +150,7 @@ public class UpdaterNotification
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
-		
+
 		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
 		updateNotification(mMaxApps, 0);
 	}
@@ -178,6 +179,7 @@ public class UpdaterNotification
 	) {
 		Intent intent = new Intent("de.apkgrabber.notification");
 		intent.setFlags(0);
+		intent.setClass(mContext, NotificationClickReceiver_.class);
 		return PendingIntent.getBroadcast(mContext, 0, intent, 0);
 	}
 

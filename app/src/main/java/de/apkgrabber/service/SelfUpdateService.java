@@ -16,6 +16,7 @@ import de.apkgrabber.model.AppState;
 import de.apkgrabber.model.Constants;
 import de.apkgrabber.model.GitHub.Release;
 import de.apkgrabber.model.LogMessage;
+import de.apkgrabber.receiver.SelfUpdateNotificationReceiver_;
 import de.apkgrabber.updater.UpdaterOptions;
 import de.apkgrabber.util.InstalledAppUtil;
 import de.apkgrabber.util.LogUtil;
@@ -102,6 +103,7 @@ public class SelfUpdateService
 		// Set the click intent
         Intent intent = new Intent("de.apkgrabber.selfupdatenotification");
         intent.setFlags(0);
+        intent.setClass(c, SelfUpdateNotificationReceiver_.class);
         intent.putExtra("url", apkUrl);
         intent.putExtra("versionName", newVersion);
         b.setContentIntent(PendingIntent.getBroadcast(c, new Random().nextInt(), intent, 0));
