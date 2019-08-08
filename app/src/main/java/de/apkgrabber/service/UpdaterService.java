@@ -3,8 +3,13 @@ package de.apkgrabber.service;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import de.apkgrabber.R;
 import de.apkgrabber.adapter.UpdaterAdapter;
@@ -92,6 +97,12 @@ public class UpdaterService
                 "SelfUpdater", "", getBaseContext());
         NotificationHelper.createNotificationChannel(Constants.AutomaticUpdateNotificationChannelId,
                 "AutomaticInstaller", "", getBaseContext());
+
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Constants.UpdaterNotificationChannelId);
+			Notification notification = notificationBuilder.build();
+			startForeground(1, notification);
+		}
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
