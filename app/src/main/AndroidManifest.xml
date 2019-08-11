@@ -21,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeBlue"
         android:banner="@drawable/banner"
+        android:usesCleartextTraffic="true"
     >
         <activity
             android:name=".activity.MainActivity_"

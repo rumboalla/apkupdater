@@ -93,7 +93,14 @@ open class UpdaterViewHolder(view: View)
 			text,
 			u.installStatus.status == InstallStatus.STATUS_INSTALLING,
             {
-                if (text == mContext?.getString(R.string.action_play)) launchInstall(u) else launchBrowser(u)
+                if (text == mContext?.getString(R.string.action_play)) {
+					launchInstall(u)
+				} else if(text == mContext?.getString(R.string.action_aptoide)) {
+					val splits = u.url.split("/")
+					directDownload(u, splits.last())
+				} else {
+					launchBrowser(u)
+				}
             }
 		))
 	}
@@ -156,6 +163,10 @@ open class UpdaterViewHolder(view: View)
 		u : Update
 	) {
 		DownloadUtil.launchBrowser(mContext, u.url)
+	}
+
+	private fun directDownload(u : Update, name : String) {
+		DownloadUtil.downloadFile(mContext, u.url, "", name)
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

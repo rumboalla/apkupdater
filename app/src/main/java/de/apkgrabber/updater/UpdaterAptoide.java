@@ -50,8 +50,7 @@ public class UpdaterAptoide
 			final String versionName = file.get("vername").asText();
 			final int versionCode = file.get("vercode").asInt();
 			final String apkUrl = file.get("path").asText();
-
-			// If version is old, report update
+			
 			if (compareVersions(mCurrentVersion, versionName) == -1) {
 				mResultUrl = apkUrl;
 				mResultVersion = versionName;
