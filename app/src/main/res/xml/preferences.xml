@@ -143,6 +143,12 @@
             android:title="@string/preferences_general_use_uptodown_title"
             android:defaultValue="false"
         />
+        <CheckBoxPreference
+            android:key="@string/preferences_general_use_aptoide_key"
+            android:summary="@string/preferences_general_use_aptoide_summary"
+            android:title="@string/preferences_general_use_aptoide_title"
+            android:defaultValue="false"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -25,6 +25,7 @@ import de.apkgrabber.model.Update;
 import de.apkgrabber.updater.IUpdater;
 import de.apkgrabber.updater.UpdaterAPKMirrorAPI;
 import de.apkgrabber.updater.UpdaterAPKPure;
+import de.apkgrabber.updater.UpdaterAptoide;
 import de.apkgrabber.updater.UpdaterGooglePlay;
 import de.apkgrabber.updater.UpdaterNotification;
 import de.apkgrabber.updater.UpdaterOptions;
@@ -119,6 +120,8 @@ public class UpdaterService
 				return new UpdaterAPKPure(context, app.getPname(), app.getVersion());
 			case "Uptodown":
 				return new UpdaterUptodown(context, app.getPname(), app.getVersion());
+			case "Aptoide":
+				return new UpdaterAptoide(context, app.getPname(), app.getVersion());
 			default:
 				return null;
 		}
@@ -192,7 +195,7 @@ public class UpdaterService
 			}
 
 			// Check if we have at least one update source
-			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure() && !options.useGooglePlay()) {
+			if (!options.useAPKMirror() && !options.useUptodown() && !options.useAPKPure() && !options.useGooglePlay() && !options.useAptoide()) {
 				mBus.post(new UpdateStopEvent(getBaseContext().getString(R.string.update_no_sources)));
 				mMutex.unlock();
 				return;
@@ -279,6 +282,12 @@ public class UpdaterService
                     appCount++;
                     updateSource(executor, "APKPure", app, errors);
                 }
+
+                if (options.useAptoide()) {
+					appCount++;
+					updateSource(executor, "Aptoide", app, errors);
+				}
+
             }
 
             mAppState.setUpdateMax(appCount);

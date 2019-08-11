@@ -54,6 +54,8 @@
 <string name="preferences_general_use_uptodown_summary">"Sucht nach Updates bei Uptodown. Langsam, benötigt viele Anfragen!"</string>
 <string name="preferences_general_use_apkpure_title">"Updates von APKPure"</string>
 <string name="preferences_general_use_apkpure_summary">"Sucht nach Updates von APKPure. Langsamer, benötigt zwei Anfragen!"</string>
+<string name="preferences_general_use_aptoide_title">"Updates von Aptoide"</string>
+<string name="preferences_general_use_aptoide_summary">"Sucht nach Updates bei Aptoide"</string>
 <string name="preferences_general_wifi_only_title">"Nur WLAN"</string>
 <string name="preferences_general_wifi_only_summary">"Sucht nur bei aktiver WLAN-Verbindung nach Updates"</string>
 <string name="preferences_general_update_hour_title">"Zeit für Updates"</string>

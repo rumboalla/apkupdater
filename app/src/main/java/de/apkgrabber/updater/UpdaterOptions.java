@@ -120,6 +120,11 @@ public class UpdaterOptions
 		return sharedPref.getBoolean(mContext.getString(R.string.preferences_general_use_apkpure_key), false);
 	}
 
+	public boolean useAptoide() {
+		SharedPreferences sharedPred = PreferenceManager.getDefaultSharedPreferences(mContext);
+		return sharedPred.getBoolean(mContext.getString(R.string.preferences_general_use_aptoide_key), false);
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public List<IgnoreVersion> getIgnoreVersionList(
