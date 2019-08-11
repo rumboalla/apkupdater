@@ -54,6 +54,8 @@
     <string name="preferences_general_use_uptodown_summary">"This will check for updates on Uptodown. Slow, needs many requests."</string>
     <string name="preferences_general_use_apkpure_title">"Updates from APKPure"</string>
     <string name="preferences_general_use_apkpure_summary">"This will check for updates on APKPure.com. Needs 2 requests per app, so it's slower."</string>
+    <string name="preferences_general_use_aptoide_title">"Updates from Aptoide"</string>
+    <string name="preferences_general_use_aptoide_summary">"This will check for updates on Aptoide."</string>
     <string name="preferences_general_wifi_only_title">"Wi-Fi only"</string>
     <string name="preferences_general_wifi_only_summary">"Only check for updates when connected to a Wi-Fi network."</string>
     <string name="preferences_general_update_hour_title">"Update hour"</string>

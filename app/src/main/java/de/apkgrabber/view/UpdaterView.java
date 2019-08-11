@@ -81,7 +81,10 @@ public class UpdaterView
 			action = mContext.getString(R.string.action_uptodown);
 		} else if (update.getUrl().contains("apkpure.com")) {
 			action = mContext.getString(R.string.action_apkpure);
+		} else if(update.getUrl().contains("aptoide.com")) {
+			action = mContext.getString(R.string.action_aptoide);
 		}
+
 		mActionOneButton.setText(action);
 
 		try {

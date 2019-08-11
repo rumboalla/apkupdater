@@ -37,6 +37,11 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    packagingOptions {
+        // Allow the compilation process to choose the dependencies for us.
+        pickFirst "**"
+    }
 }
 
 dependencies {
@@ -58,6 +63,7 @@ dependencies {
     compile "com.github.yeriomin:play-store-api:0.18"
     compile "eu.chainfire:libsuperuser:1.0.0.201704021214"
     compile "uy.kohesive.injekt:injekt-core:1.16.1"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.9"
 
     // Test dependencies
     testCompile "junit:junit:4.12"

@@ -169,6 +169,8 @@ open class UpdaterViewHolder(view: View)
 			return mContext?.getString(R.string.action_uptodown)!!
 		} else if (u.url.contains("apkpure.com")) {
 			return mContext?.getString(R.string.action_apkpure)!!
+		} else if (u.url.contains("aptoide.com")) {
+			return mContext?.getString(R.string.action_aptoide)!!
 		} else if (u.cookie != null) {
 			if (u.installStatus.status == InstallStatus.STATUS_INSTALL) {
 				return mContext?.getString(R.string.action_play)!!

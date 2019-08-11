@@ -18,6 +18,7 @@
     <string name="preferences_general_use_play_key" translatable="false">preferences_general_use_play_key</string>
     <string name="preferences_general_use_uptodown_key" translatable="false">preferences_general_use_uptodown_key</string>
     <string name="preferences_general_use_apkpure_key" translatable="false">preferences_general_use_apkpure_key</string>
+    <string name="preferences_general_use_aptoide_key" translatable="false">preferences_general_use_aptoide_key</string>
     <string name="preferences_general_wifi_only_key" translatable="false">preferences_general_wifi_only_key</string>
     <string name="preferences_general_update_hour_key" translatable="false">preferences_general_update_hour_key</string>
     <string name="preferences_play_root_install_key" translatable="false">preferences_play_root_install_key</string>
@@ -30,6 +31,7 @@
     <string name="action_apkmirror" translatable="false">APKMIRROR</string>
     <string name="action_apkpure" translatable="false">APKPURE</string>
     <string name="action_uptodown" translatable="false">UPTODOWN</string>
+    <string name="action_aptoide" translatable="false">APTOIDE</string>
     <string name="action_evozi" translatable="false">EVOZI</string>
     <string name="update_hour_zero" translatable="false">00:00</string>
     <string name="update_hour_one" translatable="false">01:00</string>
