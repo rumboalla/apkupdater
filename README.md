@@ -5,7 +5,8 @@ I try to develop new features and maintain the software to stay available on lat
 but don't expect weekly updates.
 
 # Roadmap
-* [ ] Implementing Aptoide as a source.
+* [ ] Implementing more sources.
+  - [x] Aptoide
 * [ ] Updating the build system, as it's full of deprecation warnings.
 
 # License
