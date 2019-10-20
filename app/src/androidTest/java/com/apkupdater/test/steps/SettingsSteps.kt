@@ -5,17 +5,17 @@ package com.apkupdater.test.steps
 import org.junit.Before
 import org.junit.Rule
 
-import android.support.test.rule.ActivityTestRule
+import androidx.test.rule.ActivityTestRule
 
 import cucumber.api.CucumberOptions
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
 import com.apkupdater.R
 
 import com.apkupdater.activity.MainActivity_

@@ -3,7 +3,7 @@ package com.apkupdater.adapter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import com.apkupdater.util.*
 import com.github.yeriomin.playstoreapi.GooglePlayException
 import kotlinx.android.synthetic.main.updater_item.view.*
 import kotlin.concurrent.thread
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.apkupdater.updater.UpdaterOptions
 import uy.kohesive.injekt.api.get
 
@@ -74,8 +74,9 @@ open class UpdaterViewHolder(view: View)
 			mView?.change_log_text?.visibility = View.VISIBLE
 		}
 
-		mView?.button_bar?.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-		mView?.button_bar?.adapter = ButtonBarAdapter(mContext as Context)
+		mView?.button_bar?.layoutManager =
+			LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+		mView?.button_bar?.adapter = ButtonBarAdapter()
 
 		updates.updateList.forEach { configureActionButton(it) }
 		configureIgnoreButton(u)

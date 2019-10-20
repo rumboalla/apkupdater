@@ -5,9 +5,9 @@ package com.apkupdater.fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.CheckBoxPreference;
+import androidx.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
-import android.support.v7.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceFragmentCompat;
 
 import com.apkupdater.R;
 import com.apkupdater.activity.MainActivity_;

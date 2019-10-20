@@ -3,7 +3,7 @@ package com.apkupdater.util;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,7 +33,7 @@ public class SnackBarUtil {
 			}).show();
 			View view = bar.getView();
 			view.setBackgroundColor(ColorUtil.getColorFromTheme(activity.getTheme(), R.attr.colorPrimary));
-			TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+			TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
 			tv.setTextColor(ColorUtil.getColorFromContext(activity, android.R.attr.textColorPrimary));
 		} catch (NullPointerException e) {
 			e.printStackTrace();

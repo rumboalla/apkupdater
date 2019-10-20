@@ -4,7 +4,7 @@ package com.apkupdater.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,13 +13,10 @@ import com.apkupdater.model.LogMessage;
 import com.apkupdater.util.MyBus;
 import com.apkupdater.view.LogView;
 import com.apkupdater.view.LogView_;
-import com.squareup.otto.Subscribe;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.androidannotations.annotations.UiThread;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

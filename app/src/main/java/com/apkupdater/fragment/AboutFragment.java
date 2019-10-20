@@ -3,8 +3,8 @@ package com.apkupdater.fragment;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.ViewCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;

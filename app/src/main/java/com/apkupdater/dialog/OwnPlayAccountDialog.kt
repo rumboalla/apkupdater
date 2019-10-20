@@ -4,8 +4,8 @@ package com.apkupdater.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AlertDialog
 import android.view.ContextThemeWrapper
 import android.view.View
 import com.apkupdater.R
@@ -96,7 +96,7 @@ class OwnPlayAccountDialog
                 if (!pair.first.isNullOrEmpty() && !pair.second.isNullOrEmpty()) {
                     options.ownGsfId = pair.first
                     options.ownToken = pair.second
-                    targetFragment.onActivityResult(Constants.OwnPlayAccountRequestCode, ResultSuccess, null)
+                    targetFragment?.onActivityResult(Constants.OwnPlayAccountRequestCode, ResultSuccess, null)
                     dismiss()
                 } else {
                     throw Exception("No gsfid or token.")
@@ -104,13 +104,13 @@ class OwnPlayAccountDialog
             } catch (ex: AuthException) {
                 mView?.post {
                     mView?.progress_bar?.visibility = View.GONE
-                    mView?.error_text?.text = context.getString(R.string.get_token_launch_url)
+                    mView?.error_text?.text = context?.getString(R.string.get_token_launch_url)
                 }
                 mView?.postDelayed( {DownloadUtil.launchBrowser(context, ex.twoFactorUrl) }, 1000)
             } catch (e : Exception) {
                 mView?.post {
                     mView?.progress_bar?.visibility = View.GONE
-                    mView?.error_text?.text = context.getString(R.string.get_token_error)
+                    mView?.error_text?.text = context?.getString(R.string.get_token_error)
                 }
             }
         }
@@ -122,7 +122,7 @@ class OwnPlayAccountDialog
     private fun onNegativeButtonClick(
         view : View
     ) {
-        targetFragment.onActivityResult(Constants.OwnPlayAccountRequestCode, ResultFailure, null)
+        targetFragment?.onActivityResult(Constants.OwnPlayAccountRequestCode, ResultFailure, null)
         dismiss()
     }
 
@@ -131,7 +131,7 @@ class OwnPlayAccountDialog
     private fun getContentView(
     ) : View
     {
-        mView = activity.layoutInflater?.inflate(R.layout.dialog_own_play, null, false)
+        mView = activity?.layoutInflater?.inflate(R.layout.dialog_own_play, null, false)
         return mView as View
     }
 

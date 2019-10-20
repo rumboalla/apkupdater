@@ -3,7 +3,7 @@ package com.apkupdater.adapter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.apkupdater.R
@@ -47,8 +47,8 @@ class UpdaterAdapter
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun init(
-        view: RecyclerView,
-        updates: MutableList<Update>
+		view: RecyclerView,
+		updates: MutableList<Update>
     ) {
         mView = view
         setUpdates(updates)
@@ -154,23 +154,23 @@ class UpdaterAdapter
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onBindViewHolder(
-        holder: UpdaterViewHolder?,
+        holder: UpdaterViewHolder,
         position: Int
     ) {
-        holder?.bind(this, mMergedUpdates[position])
+        holder.bind(this, mMergedUpdates[position])
 
         if (position == 0) {
-            holder?.setTopMargin(8)
+            holder.setTopMargin(8)
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateViewHolder(
-        parent: ViewGroup?,
+        parent: ViewGroup,
         viewType: Int
     ): UpdaterViewHolder {
-        val v = LayoutInflater.from(parent?.context).inflate(R.layout.updater_item, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.updater_item, parent, false)
         return UpdaterViewHolder(v)
     }
 

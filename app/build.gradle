@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.apkupdater"
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 29
         versionName "1.5.11"
@@ -48,10 +48,10 @@ dependencies {
     // Compile dependencies
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.androidannotations:androidannotations-api:$aa_version"
-    implementation "com.android.support:appcompat-v7:25.4.0"
-    implementation "com.android.support:design:25.4.0"
-    implementation "com.android.support:preference-v7:25.4.0"
-    implementation "com.android.support:cardview-v7:25.4.0"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.preference:preference:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
     implementation "org.jsoup:jsoup:1.10.2"
     implementation "com.squareup:otto:1.3.8"
     implementation "com.google.code.gson:gson:2.8.5"
@@ -62,7 +62,8 @@ dependencies {
 
     // Test dependencies
     testImplementation "junit:junit:4.12"
-    androidTestImplementation "com.android.support:support-annotations:28.0.0"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
+    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation "info.cukes:cucumber-android:1.2.5"
 }

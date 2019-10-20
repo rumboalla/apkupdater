@@ -4,7 +4,7 @@ package com.apkupdater.util;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.transition.AutoTransition;
+import androidx.transition.AutoTransition;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
 import android.transition.Slide;
@@ -30,7 +30,7 @@ public class AnimationUtil
         } else if (Build.VERSION.SDK_INT >= 21) {
             TransitionManager.beginDelayedTransition(v);
         } else if (Build.VERSION.SDK_INT >= 14){
-            android.support.transition.TransitionManager.beginDelayedTransition(v);
+            androidx.transition.TransitionManager.beginDelayedTransition(v);
         } {
             // No animation
         }
@@ -47,7 +47,7 @@ public class AnimationUtil
         } else if (Build.VERSION.SDK_INT >= 21) {
             TransitionManager.beginDelayedTransition(v, new Slide());
         } else if (Build.VERSION.SDK_INT >= 14){
-            android.support.transition.TransitionManager.beginDelayedTransition(v); // Support v26 will add Slide
+            androidx.transition.TransitionManager.beginDelayedTransition(v); // Support v26 will add Slide
         } {
             // No animation
         }
@@ -71,7 +71,7 @@ public class AnimationUtil
             );
 
         } else if (Build.VERSION.SDK_INT >= 14){
-            android.support.transition.TransitionManager.beginDelayedTransition(v, new AutoTransition().setDuration(250));
+            androidx.transition.TransitionManager.beginDelayedTransition(v, new AutoTransition().setDuration(250));
         } {
             // No animation
         }

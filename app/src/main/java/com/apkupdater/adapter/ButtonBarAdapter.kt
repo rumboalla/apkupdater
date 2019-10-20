@@ -2,8 +2,7 @@ package com.apkupdater.adapter
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,38 +12,28 @@ import kotlinx.android.synthetic.main.button_bar_item.view.*
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ButtonBarAdapter
-	: RecyclerView.Adapter<ButtonBarAdapter.ButtonBarViewHolder>
+class ButtonBarAdapter : RecyclerView.Adapter<ButtonBarAdapter.ButtonBarViewHolder>()
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private var mItems: MutableList<ActionButton> = mutableListOf()
-	private var mContext: Context
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	constructor(
-		context : Context
-	) {
-		mContext = context
-	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	override fun onBindViewHolder(
-		holder: ButtonBarViewHolder?,
+		holder: ButtonBarViewHolder,
 		position: Int
 	) {
-		holder?.bind(mItems[position])
+		holder.bind(mItems[position])
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	override fun onCreateViewHolder(
-		parent: ViewGroup?,
+		parent: ViewGroup,
 		viewType: Int
 	): ButtonBarViewHolder {
-		val v : View = LayoutInflater.from(parent?.context).inflate(R.layout.button_bar_item, parent, false)
+		val v : View = LayoutInflater.from(parent.context).inflate(R.layout.button_bar_item, parent, false)
 		return ButtonBarViewHolder(v)
 	}
 

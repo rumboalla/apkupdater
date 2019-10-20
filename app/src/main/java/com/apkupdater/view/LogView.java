@@ -3,15 +3,14 @@ package com.apkupdater.view;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.apkupdater.R;
 import com.apkupdater.model.LogMessage;
-import com.apkupdater.util.ColorUtil;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
