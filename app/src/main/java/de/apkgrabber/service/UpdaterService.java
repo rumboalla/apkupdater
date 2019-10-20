@@ -3,13 +3,10 @@ package de.apkgrabber.service;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
 
 import de.apkgrabber.R;
 import de.apkgrabber.adapter.UpdaterAdapter;
@@ -99,10 +96,10 @@ public class UpdaterService
         NotificationHelper.createNotificationChannel(Constants.AutomaticUpdateNotificationChannelId,
                 "AutomaticInstaller", "", getBaseContext());
 
+		mNotification = new UpdaterNotification(getBaseContext(), 0);
+
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Constants.UpdaterNotificationChannelId);
-			Notification notification = notificationBuilder.build();
-			startForeground(1, notification);
+			startForeground(Constants.UpdaterNotificationId, mNotification.startUpdate());
 		}
     }
 
@@ -149,7 +146,6 @@ public class UpdaterService
 				} else {
 					mBus.post(new UpdateProgressEvent(null));
 				}
-
 				mAppState.increaseUpdateProgress();
 				mNotification.increaseProgress(mUpdates.size());
 			}
@@ -203,7 +199,6 @@ public class UpdaterService
 
 			mAppState.clearUpdates();
 			mAppState.setUpdateProgress(0);
-			mNotification = new UpdaterNotification(getBaseContext(), 0);
 
 			// Retrieve installed apps
 			List<InstalledApp> installedApps = mInstalledAppUtil.getInstalledApps(getBaseContext());

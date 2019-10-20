@@ -2,6 +2,7 @@ package de.apkgrabber.updater;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -44,7 +45,7 @@ public class UpdaterNotification
 			return;
 		}
 
-		createNotification();
+		setUpNotificationBuilder();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +93,9 @@ public class UpdaterNotification
 		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title_finished));
 		mNotificationBuilder.setContentText(s);
 		mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
-		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
+		mNotificationBuilder.setOngoing(false);
+		mNotificationBuilder.setAutoCancel(true);
+		mNotificationManager.notify(2 * Constants.UpdaterNotificationId, mNotificationBuilder.build());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,23 +139,16 @@ public class UpdaterNotification
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void createNotification(
+	public Notification startUpdate(
 	) {
-		mNotificationBuilder = new NotificationCompat.Builder(mContext);
-		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title));
-		mNotificationBuilder.setSmallIcon(R.drawable.ic_update);
-		mNotificationBuilder.setContentIntent(createPendingIntent());
-		mNotificationBuilder.setAutoCancel(true);
-		mNotificationBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
-		mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
+		setUpNotificationBuilder();
 
 		// Prevent NPE
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 
-		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
-		updateNotification(mMaxApps, 0);
+		return mNotificationBuilder.build();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,8 +165,19 @@ public class UpdaterNotification
 		if (mNotificationManager == null) {
 			mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		}
-		
+
 		mNotificationManager.notify(Constants.UpdaterNotificationId, mNotificationBuilder.build());
+	}
+
+	private void setUpNotificationBuilder() {
+		mNotificationBuilder = new NotificationCompat.Builder(mContext);
+		mNotificationBuilder.setContentTitle(mContext.getString(R.string.notification_update_title));
+		mNotificationBuilder.setSmallIcon(R.drawable.ic_update);
+		mNotificationBuilder.setContentIntent(createPendingIntent());
+		mNotificationBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
+		mNotificationBuilder.setChannelId(Constants.UpdaterNotificationChannelId);
+		mNotificationBuilder.setOngoing(true);
+		mNotificationBuilder.setOnlyAlertOnce(true);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
