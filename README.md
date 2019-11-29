@@ -24,3 +24,7 @@ APKUpdater is an open source tool that simplifies the process of finding updates
 * Android TV support.
 * More themes.
 * More options.
+
+# License
+Copyright &copy; 2019 Rumboalla.  
+Licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
