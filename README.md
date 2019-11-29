@@ -14,8 +14,8 @@ APKUpdater is an open source tool that simplifies the process of finding updates
 * [APK for Beta version (2.0.0-beta1)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0-beta1/apkupdater-2.0.0-beta1.apk)
 
 # Screenshots
-![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) | ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
-![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) | ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
+![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
+![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
 
 # Roadmap
 * Update Sources: F-Droid, Google Play.
