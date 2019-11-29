@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="General Settings" app:iconSpaceReserved="false">
+        <ListPreference
+            app:key="@string/settings_theme"
+            app:title="Theme"
+            app:entries="@array/settings_theme_entries"
+            app:entryValues="@array/settings_theme_values"
+            app:defaultValue="2"
+            app:summary="%s"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_apkmirror"
+            app:title="APKMirror"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_aptoide"
+            app:title="Aptoide"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_check_for_updates"
+            app:title="Daily check for updates"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Apps" app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            app:key="@string/settings_exclude_system"
+            app:title="Exclude System Apps"
+            app:summary=""
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_exclude_disabled"
+            app:title="Exclude Disabled Apps"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="APKMirror" app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            app:key="@string/settings_exclude_min_api"
+            app:title="Exclude Incompatible API"
+            app:summary=""
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_exclude_arch"
+            app:title="Exclude Architecture"
+            app:summary=""
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_exclude_experimental"
+            app:title="Exclude Experimental"
+            app:summary=""
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+    </PreferenceCategory>
+
+</PreferenceScreen>

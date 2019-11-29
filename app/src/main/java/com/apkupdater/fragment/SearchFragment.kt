@@ -1,0 +1,124 @@
+package com.apkupdater.fragment
+
+import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
+import com.apkupdater.R
+import com.apkupdater.model.AppSearch
+import com.apkupdater.repository.SearchRepository
+import com.apkupdater.util.InstallUtil
+import com.apkupdater.util.adapter.BindAdapter
+import com.apkupdater.util.getAccentColor
+import com.apkupdater.util.ifNotEmpty
+import com.apkupdater.util.ioScope
+import com.apkupdater.util.launchUrl
+import com.apkupdater.util.observe
+import com.apkupdater.viewmodel.MainViewModel
+import com.apkupdater.viewmodel.SearchViewModel
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_apps.recycler_view
+import kotlinx.android.synthetic.main.fragment_search.text
+import kotlinx.android.synthetic.main.view_apps.view.action_one
+import kotlinx.android.synthetic.main.view_apps.view.icon
+import kotlinx.android.synthetic.main.view_apps.view.name
+import kotlinx.android.synthetic.main.view_apps.view.packageName
+import kotlinx.android.synthetic.main.view_apps.view.progress
+import kotlinx.android.synthetic.main.view_apps.view.source
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+
+class SearchFragment : Fragment() {
+
+	private val searchViewModel: SearchViewModel by sharedViewModel()
+	private val mainViewModel: MainViewModel by sharedViewModel()
+	private val searchRepository: SearchRepository by inject()
+	private val installer: InstallUtil by inject()
+
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+		inflater.inflate(R.layout.fragment_search, container, false)
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		// RecyclerView
+		recycler_view.layoutManager = LinearLayoutManager(context)
+		val adapter = BindAdapter(R.layout.view_apps, onBind)
+		recycler_view.adapter = adapter
+		(recycler_view.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+		searchViewModel.items.observe(this) {
+			it?.let {
+				adapter.items = it
+				mainViewModel.searchBadge.postValue(it.size)
+			}
+		}
+
+		// Search
+		text.setOnEditorActionListener { text, id, event ->
+			if (id == EditorInfo.IME_ACTION_SEARCH) {
+				searchViewModel.search.postValue(text.text.toString())
+				val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+				imm.hideSoftInputFromWindow(text.windowToken, 0)
+				true
+			} else {
+				false
+			}
+		}
+
+		searchViewModel.search.observe(this) { search(it) }
+	}
+
+	private fun search(text: String) = ioScope.launch {
+		mainViewModel.loading.postValue(true)
+		searchRepository.getSearchResultsAsync(text).await().fold(
+			onSuccess = { searchViewModel.items.postValue(it) },
+			onFailure = {
+				mainViewModel.snackbar.postValue(it.message)
+				Log.e("SearchFragment", it.message, it)
+			}
+		)
+	}.invokeOnCompletion { mainViewModel.loading.postValue(false) }
+
+	private val onBind = { view: View, app: AppSearch ->
+		app.iconurl.ifNotEmpty { Picasso.get().load(it).placeholder(ColorDrawable(Color.BLACK)).error(ColorDrawable(Color.RED)).into(view.icon) }
+		view.name.text = app.name
+		view.packageName.text = app.developer
+
+		if (app.loading) {
+			view.progress.visibility = View.VISIBLE
+			view.action_one.visibility = View.INVISIBLE
+		} else {
+			view.progress.visibility = View.INVISIBLE
+			view.action_one.visibility = View.VISIBLE
+			view.action_one.text = getString(R.string.action_install)
+			view.action_one.setOnClickListener { if (app.url.endsWith("apk")) downloadAndInstall(app) else launchUrl(app.url) }
+		}
+		view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
+		view.source.setImageResource(app.source)
+	}
+
+	private fun downloadAndInstall(app: AppSearch) = ioScope.launch {
+		activity?.let { activity ->
+			searchViewModel.setLoading(app.id, true)
+			installer.downloadAsync(activity, app.url) { _, _ -> searchViewModel.setLoading(app.id, true) }.await().fold(
+				onSuccess = { installer.install(activity, it, app.id) },
+				onFailure = {
+					searchViewModel.setLoading(app.id, false)
+					mainViewModel.snackbar.postValue(it.message)
+				}
+			)
+		}
+	}
+
+}

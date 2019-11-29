@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="normal_margin">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="title_text">18sp</dimen>
+    <dimen name="action_text">16sp</dimen>
+    <dimen name="badge_offset">4dp</dimen>
+</resources>

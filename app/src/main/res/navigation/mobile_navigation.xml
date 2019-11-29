@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_apps"
+>
+
+    <fragment
+        android:id="@+id/navigation_apps"
+        android:name="com.apkupdater.fragment.AppsFragment"
+        android:label="@string/title_apps"
+        tools:layout="@layout/fragment_apps"
+    />
+
+    <fragment
+        android:id="@+id/navigation_updates"
+        android:name="com.apkupdater.fragment.UpdatesFragment"
+        android:label="@string/title_updates"
+        tools:layout="@layout/fragment_updates"
+    />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.apkupdater.fragment.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search"
+    />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.apkupdater.fragment.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_search"
+    />
+
+</navigation>

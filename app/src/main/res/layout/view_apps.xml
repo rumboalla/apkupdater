@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/small_margin"
+    android:layout_marginLeft="@dimen/small_margin"
+    android:layout_marginTop="@dimen/small_margin"
+    android:layout_marginBottom="0dp"
+>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
+    >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/source"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/source_description"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/normal_margin"
+            app:layout_constraintTop_toTopOf="@id/action_one"
+            app:layout_constraintBottom_toBottomOf="@id/action_one"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:src="@drawable/ic_apps_black_24dp"
+        />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:contentDescription="@string/icon_description"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:src="@drawable/ic_apps_black_24dp"
+        />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/App.Style.Text.Title"
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/normal_margin"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Test App"
+        />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/App.Style.Text.Body1"
+            android:id="@+id/packageName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="@dimen/normal_margin"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/icon"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="com.test.app" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/App.Style.Text.Body2"
+            android:id="@+id/version"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="@dimen/normal_margin"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/icon"
+            app:layout_constraintTop_toBottomOf="@id/packageName"
+            tools:text="1.1.1 (111)"
+        />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/App.Style.Text.Action"
+            android:id="@+id/action_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/action_ignore"
+            android:padding="@dimen/small_margin"
+            android:layout_marginRight="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/action_ignore"
+        />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="@dimen/small_margin"
+            android:visibility="invisible"
+            app:layout_constraintRight_toRightOf="@id/action_one"
+            app:layout_constraintTop_toTopOf="@id/action_one"
+            app:layout_constraintBottom_toBottomOf="@id/action_one"
+            app:layout_constraintLeft_toLeftOf="@id/action_one"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
