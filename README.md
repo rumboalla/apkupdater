@@ -2,8 +2,8 @@
 APKUpdater is an open source tool that simplifies the process of finding updates for your installed apps. It will provide similar functionality to an app store, making it a very useful app for those who want to run Android without Google Play.
 
 # Features
-* **Update Sources**: Find updates from APKMirror, Aptoide.
-* **Search Sources**: Find new apps to install from APKMirror, Aptoide.
+* **Update Sources**: Find updates from **APKMirror**, **Aptoide**.
+* **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**.
 * Schedule **background update checks** and receive a **notification** when updates are found.
 * Supports **Android 4.0.3** to **Android 10**.
 * **Material Design 2** with **multiple theme** support.
