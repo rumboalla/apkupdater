@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+File localProps = file("../local.properties")
+
 android {
 
     compileSdkVersion 29
@@ -20,7 +22,7 @@ android {
     signingConfigs {
         release {
             Properties props = new Properties()
-            props.load(new FileInputStream(file("../local.properties")))
+            props.load(new FileInputStream(localProps))
             storeFile file(props['keystore.file'])
             storePassword props['keystore.password']
             keyAlias props['keystore.keyalias']
@@ -30,7 +32,9 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if (localProps.exists()) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
