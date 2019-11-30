@@ -10,9 +10,7 @@
     <string name="source_description">Source Icon</string>
 
     // Self Update
-    <string name="selfupdate_found">A new version of the app is available. Do you want to install it?</string>
-    <string translatable="false" name="selfupdate_ok">@android:string/ok</string>
-    <string translatable="false" name="selfupdate_cancel">@android:string/cancel</string>
+    <string name="selfupdate_found_title">Update found!</string>
 
     // App install
     <string name="app_install_success">App installed.</string>
