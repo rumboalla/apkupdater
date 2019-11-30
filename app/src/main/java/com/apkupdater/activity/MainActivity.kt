@@ -37,9 +37,17 @@ class MainActivity : AppCompatActivity() {
 	private val viewModel: MainViewModel by viewModel()
 	private val updatesViewModel: UpdatesViewModel by viewModel()
 	private val searchViewModel: SearchViewModel by viewModel()
+
 	private val updatesRepository: UpdatesRepository by inject()
 	private val prefs: AppPreferences by inject()
 	private val alarmUtil: AlarmUtil by inject()
+
+	private val controller by lazy { findNavController(R.id.nav_host_fragment) }
+
+	override fun onNewIntent(intent: Intent?) {
+		super.onNewIntent(intent)
+		intent?.let { goToUpdates(it) }
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -53,9 +61,14 @@ class MainActivity : AppCompatActivity() {
 		setTheme()
 		setContentView(R.layout.activity_main)
 
+		// Aptoide filter
+		aptoideFilters = AptoideUtils.getFilters(this)
+
 		// Navigation
-		val controller = findNavController(R.id.nav_host_fragment)
 		nav_view.setupWithNavController(controller)
+
+		// Notification
+		goToUpdates(intent)
 
 		// Badges
 		viewModel.appsBadge.observe(this) { addBadge(R.id.navigation_apps, it) }
@@ -74,7 +87,11 @@ class MainActivity : AppCompatActivity() {
 		// Snackbar
 		viewModel.snackbar.observe(this) { snackBar(it) }
 
-		// Notification
+		// SelfUpdate
+		checkForSelfUpdate()
+	}
+
+	private fun goToUpdates(intent: Intent) {
 		if (intent.action == getString(R.string.notification_update_action)){
 			prefs.updates().ifNotEmpty {
 				updatesViewModel.items.postValue(it)
@@ -82,12 +99,6 @@ class MainActivity : AppCompatActivity() {
 			}
 			controller.navigate(R.id.navigation_updates)
 		}
-
-		// Aptoide filter
-		aptoideFilters = AptoideUtils.getFilters(this)
-
-		// SelfUpdate
-		checkForSelfUpdate()
 	}
 
 	private fun checkForSelfUpdate() = ioScope.launch {
