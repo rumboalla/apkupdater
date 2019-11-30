@@ -42,6 +42,10 @@
     <string translatable="false" name="prefs_updates">updates</string>
 
     // Settings
+    <string name="settings_general_title">General</string>
+    <string name="settings_apps_title">Apps</string>
+    <string name="settings_updates_title">Updates</string>
+
     <string translatable="false" name="settings_exclude_system_key">excludeSystem</string>
     <string name="settings_exclude_system_title">Exclude System Apps</string>
 
@@ -57,29 +61,38 @@
     <string translatable="false" name="settings_exclude_experimental_key">excludeExperimental</string>
     <string name="settings_exclude_experimental_title">Exclude Experimental Apps</string>
 
-    <string translatable="false" name="settings_check_for_updates_key">checkForUpdates</string>
-    <string name="settings_check_for_updates_title">Daily check for updates</string>
-
     <string translatable="false" name="settings_source_apkmirror_key">APKMirror</string>
 
     <string translatable="false" name="settings_source_aptoide_key">Aptoide</string>
 
+    <string translatable="false" name="settings_check_for_updates_key">checkForUpdates</string>
+    <string name="settings_check_for_updates_title">Daily check for updates</string>
+    <string-array name="settings_check_for_updates_entries">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Every 12 hours</item>
+        <item>Every 6 hours</item>
+        <item>Never</item>
+    </string-array>
+
+
+    <string name="settings_theme_title">Theme</string>
     <string translatable="false" name="settings_theme_key">theme</string>
-    <string name="settings_theme_dark_blue">Dark Blue</string>
-    <string name="settings_theme_light_blue">Light Blue</string>
-    <string name="settings_theme_dark_orange">Dark Orange</string>
-    <string name="settings_theme_light_orange">Light Orange</string>
     <string-array name="settings_theme_entries">
-        <item>@string/settings_theme_dark_blue</item>
-        <item>@string/settings_theme_light_blue</item>
-        <item>@string/settings_theme_dark_orange</item>
-        <item>@string/settings_theme_light_orange</item>
+        <item>Dark Blue</item>
+        <item>Light Blue</item>
+        <item>Dark Orange</item>
+        <item>Light Orange</item>
+        <item>Dark Green</item>
+        <item>Light Green</item>
     </string-array>
     <string-array name="settings_theme_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
 </resources>

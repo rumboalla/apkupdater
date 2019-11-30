@@ -36,6 +36,24 @@
         <item name="badgeStyle">@style/App.Style.Widget.Badge</item>
     </style>
 
+    <style name="AppThemeDarkGreen" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/colorGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/colorGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorGreenAccent</item>
+        <item name="colorControlHighlight">?attr/colorPrimaryDark</item>
+        <item name="materialCardViewStyle">@style/App.Style.Widget.CardView</item>
+        <item name="badgeStyle">@style/App.Style.Widget.Badge</item>
+    </style>
+
+    <style name="AppThemeLightGreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/colorGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorGreenAccent</item>
+        <item name="colorControlHighlight">?attr/colorPrimaryDark</item>
+        <item name="materialCardViewStyle">@style/App.Style.Widget.CardView</item>
+        <item name="badgeStyle">@style/App.Style.Widget.Badge</item>
+    </style>
+
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog"/>
 
     <style name="App.Style.Widget.Badge" parent="Widget.MaterialComponents.Badge">

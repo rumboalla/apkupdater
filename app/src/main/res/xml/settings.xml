@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="General Settings" app:iconSpaceReserved="false">
+    <PreferenceCategory app:title="@string/settings_general_title" app:iconSpaceReserved="false">
         <ListPreference
             app:key="@string/settings_theme_key"
-            app:title="Theme"
+            app:title="@string/settings_theme_title"
             app:entries="@array/settings_theme_entries"
             app:entryValues="@array/settings_theme_values"
             app:defaultValue="2"
             app:summary="%s"
-            app:iconSpaceReserved="false"
-        />
-        <SwitchPreferenceCompat
-            app:key="@string/settings_source_apkmirror_key"
-            app:title="APKMirror"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-        />
-        <SwitchPreferenceCompat
-            app:key="@string/settings_source_aptoide_key"
-            app:title="Aptoide"
-            app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
@@ -30,7 +18,7 @@
             app:iconSpaceReserved="false"
         />
     </PreferenceCategory>
-    <PreferenceCategory app:title="Apps" app:iconSpaceReserved="false">
+    <PreferenceCategory app:title="@string/settings_apps_title" app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
             app:key="@string/settings_exclude_system_key"
             app:title="@string/settings_exclude_system_title"
@@ -46,7 +34,19 @@
         />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="APKMirror" app:iconSpaceReserved="false">
+    <PreferenceCategory app:title="@string/settings_updates_title" app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_apkmirror_key"
+            app:title="APKMirror"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_aptoide_key"
+            app:title="Aptoide"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
         <SwitchPreferenceCompat
             app:key="@string/settings_exclude_min_api_key"
             app:title="@string/settings_exclude_min_api_title"
