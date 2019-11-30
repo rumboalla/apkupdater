@@ -37,4 +37,12 @@
     <string name="settings_update_hour_title">"Hora de la actualización"</string>
     <string name="settings_theme_title">"Tema"</string>
     <string name="selfupdate_found_title">"¡Actualización encontrada!"</string>
+    <string name="settings_check_for_updates_daily">"Daily"</string>
+    <string name="settings_check_for_updates_weekly">"Weekly"</string>
+    <string name="settings_check_for_updates_hourly">"Hourly"</string>
+    <string name="settings_check_for_updates_twelve">"Every 12 hours"</string>
+    <string name="settings_check_for_updates_six">"Every 6 hours"</string>
+    <string name="settings_check_for_updates_never">"Never"</string>
+    <string name="settings_theme_dark_green">"Dark Green"</string>
+    <string name="settings_theme_light_green">"Light Green"</string>
 </resources>
