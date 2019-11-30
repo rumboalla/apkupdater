@@ -13,6 +13,10 @@ APKUpdater is an open source tool that simplifies the process of finding updates
 # Download
 * [APK for Beta version (2.0.0-beta1)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0-beta1/apkupdater-2.0.0-beta1.apk)
 
+# Translations
+If you want to help with translations  
+[![Translate](https://poeditor.com/public/images/logo_small.png)](https://poeditor.com/join/project/NWTNMrPFj8)
+
 # Screenshots
 ![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
 ![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
