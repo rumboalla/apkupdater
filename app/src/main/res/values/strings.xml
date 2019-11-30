@@ -68,24 +68,36 @@
 
     <string translatable="false" name="settings_check_for_updates_key">checkForUpdatesNew</string>
     <string name="settings_check_for_updates_title">Check for updates</string>
+    <string name="settings_check_for_updates_daily">Daily</string>
+    <string name="settings_check_for_updates_weekly">Weekly</string>
+    <string name="settings_check_for_updates_hourly">Hourly</string>
+    <string name="settings_check_for_updates_twelve">Every 12 hours</string>
+    <string name="settings_check_for_updates_six">Every 6 hours</string>
+    <string name="settings_check_for_updates_never">Never</string>
     <string-array name="settings_check_for_updates_entries">
-        <item>Daily</item>
-        <item>Weekly</item>
-        <item>Hourly</item>
-        <item>Every 12 hours</item>
-        <item>Every 6 hours</item>
-        <item>Never</item>
+        <item>@string/settings_check_for_updates_daily</item>
+        <item>@string/settings_check_for_updates_weekly</item>
+        <item>@string/settings_check_for_updates_hourly</item>
+        <item>@string/settings_check_for_updates_twelve</item>
+        <item>@string/settings_check_for_updates_six</item>
+        <item>@string/settings_check_for_updates_never</item>
     </string-array>
 
     <string name="settings_theme_title">Theme</string>
     <string translatable="false" name="settings_theme_key">theme</string>
+    <string name="settings_theme_dark_blue">Dark Blue</string>
+    <string name="settings_theme_light_blue">Light Blue</string>
+    <string name="settings_theme_dark_orange">Dark Orange</string>
+    <string name="settings_theme_light_orange">Light Orange</string>
+    <string name="settings_theme_dark_green">Dark Green</string>
+    <string name="settings_theme_light_green">Light Green</string>
     <string-array name="settings_theme_entries">
-        <item>Dark Blue</item>
-        <item>Light Blue</item>
-        <item>Dark Orange</item>
-        <item>Light Orange</item>
-        <item>Dark Green</item>
-        <item>Light Green</item>
+        <item>@string/settings_theme_dark_blue</item>
+        <item>@string/settings_theme_light_blue</item>
+        <item>@string/settings_theme_dark_orange</item>
+        <item>@string/settings_theme_light_blue</item>
+        <item>@string/settings_theme_dark_green</item>
+        <item>@string/settings_theme_light_green</item>
     </string-array>
 
     <string-array name="settings_values">
