@@ -20,8 +20,9 @@ import kotlin.coroutines.suspendCoroutine
 class SelfUpdateRepository: KoinComponent {
 
 	private val installer: InstallUtil by inject()
-	private val url = "http://rumboalla.github.io/apkupdater/version.json"
 	private val prefs: AppPreferences by inject()
+
+	private val url = "http://rumboalla.github.io/apkupdater/version.json"
 	private val interval = 24 * 60 * 60 * 1000
 
 	fun checkForUpdatesAsync(activity: Activity) = ioScope.catchingAsync {
@@ -47,4 +48,4 @@ class SelfUpdateRepository: KoinComponent {
 
 }
 
-data class SelfUpdateResponse(val version: Int = 0, val apk: String = "")
+data class SelfUpdateResponse(val version: Int = 0, val apk: String = "", val changelog: String = "")
