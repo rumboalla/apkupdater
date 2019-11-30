@@ -3,7 +3,7 @@
 
     <PreferenceCategory app:title="General Settings" app:iconSpaceReserved="false">
         <ListPreference
-            app:key="@string/settings_theme"
+            app:key="@string/settings_theme_key"
             app:title="Theme"
             app:entries="@array/settings_theme_entries"
             app:entryValues="@array/settings_theme_values"
@@ -12,35 +12,35 @@
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
-            app:key="@string/settings_source_apkmirror"
+            app:key="@string/settings_source_apkmirror_key"
             app:title="APKMirror"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
-            app:key="@string/settings_source_aptoide"
+            app:key="@string/settings_source_aptoide_key"
             app:title="Aptoide"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
-            app:key="@string/settings_check_for_updates"
-            app:title="Daily check for updates"
+            app:key="@string/settings_check_for_updates_key"
+            app:title="@string/settings_check_for_updates_title"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
     </PreferenceCategory>
     <PreferenceCategory app:title="Apps" app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
-            app:key="@string/settings_exclude_system"
-            app:title="Exclude System Apps"
+            app:key="@string/settings_exclude_system_key"
+            app:title="@string/settings_exclude_system_title"
             app:summary=""
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
-            app:key="@string/settings_exclude_disabled"
-            app:title="Exclude Disabled Apps"
+            app:key="@string/settings_exclude_disabled_key"
+            app:title="@string/settings_exclude_disabled_title"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
@@ -48,22 +48,22 @@
 
     <PreferenceCategory app:title="APKMirror" app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
-            app:key="@string/settings_exclude_min_api"
-            app:title="Exclude Incompatible API"
+            app:key="@string/settings_exclude_min_api_key"
+            app:title="@string/settings_exclude_min_api_title"
             app:summary=""
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
-            app:key="@string/settings_exclude_arch"
-            app:title="Exclude Architecture"
+            app:key="@string/settings_exclude_arch_key"
+            app:title="@string/settings_exclude_arch_title"
             app:summary=""
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
-            app:key="@string/settings_exclude_experimental"
-            app:title="Exclude Experimental"
+            app:key="@string/settings_exclude_experimental_key"
+            app:title="@string/settings_exclude_experimental_title"
             app:summary=""
             app:defaultValue="true"
             app:iconSpaceReserved="false"

@@ -1,20 +1,30 @@
 <resources>
-    <string name="app_name">APKUpdater</string>
+    <string translatable="false" name="app_name">APKUpdater</string>
     <string name="title_apps">Apps</string>
     <string name="title_updates">Updates</string>
     <string name="title_search">Search</string>
     <string name="title_settings">Settings</string>
-    <string name="version_version_code">%1$s (%2$d)</string>
-    <string name="update_version_version_code">%1$s (%2$d) -> %3$s (%4$d)</string>
+    <string translatable="false" name="version_version_code">%1$s (%2$d)</string>
+    <string translatable="false" name="update_version_version_code">%1$s (%2$d) -> %3$s (%4$d)</string>
     <string name="icon_description">App Icon</string>
     <string name="source_description">Source Icon</string>
+
+    // Self Update
+    <string name="selfupdate_found">A new version of the app is available. Do you want to install it?</string>
+    <string name="selfupdate_ok">@android:string/ok</string>
+    <string name="selfupdate_cancel">@android:string/cancel</string>
+
+    // App install
+    <string name="app_install_success">App installed.</string>
+    <string name="app_install_failure">Install failed: %1$s</string>
+    <string name="app_install_cancelled">Cancelled</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
     <string name="notification_channel_description">Channel for update notifications.</string>
-    <string name="notification_channel_id">updateChannel</string>
+    <string translatable="false" name="notification_channel_id">updateChannel</string>
     <string name="notification_update_title">Updates</string>
-    <string name="notification_update_action">updates</string>
+    <string translatable="false" name="notification_update_action">updates</string>
     <plurals name="notification_update_description">
         <item quantity="zero">No updates found.</item>
         <item quantity="one">Found %1$d update.</item>
@@ -28,19 +38,33 @@
     <string name="action_close">CLOSE</string>
 
     // Prefs
-    <string name="prefs_ignored_apps">ignoredApps</string>
-    <string name="prefs_updates">updates</string>
+    <string translatable="false" name="prefs_ignored_apps">ignoredApps</string>
+    <string translatable="false" name="prefs_updates">updates</string>
 
     // Settings
-    <string name="settings_exclude_system">excludeSystem</string>
-    <string name="settings_exclude_disabled">excludeDisabled</string>
-    <string name="settings_exclude_min_api">excludeMinApi</string>
-    <string name="settings_exclude_arch">excludeArch</string>
-    <string name="settings_exclude_experimental">excludeExperimental</string>
-    <string name="settings_check_for_updates">checkForUpdates</string>
-    <string name="settings_source_apkmirror">APKMirror</string>
-    <string name="settings_source_aptoide">Aptoide</string>
-    <string name="settings_theme">theme</string>
+    <string translatable="false" name="settings_exclude_system_key">excludeSystem</string>
+    <string name="settings_exclude_system_title">Exclude System Apps</string>
+
+    <string translatable="false" name="settings_exclude_disabled_key">excludeDisabled</string>
+    <string name="settings_exclude_disabled_title">Exclude Disabled Apps</string>
+
+    <string translatable="false" name="settings_exclude_min_api_key">excludeMinApi</string>
+    <string name="settings_exclude_min_api_title">Exclude Incompatible API Level</string>
+
+    <string translatable="false" name="settings_exclude_arch_key">excludeArch</string>
+    <string name="settings_exclude_arch_title">Exclude Incompatible Architectures</string>
+
+    <string translatable="false" name="settings_exclude_experimental_key">excludeExperimental</string>
+    <string name="settings_exclude_experimental_title">Exclude Experimental Apps</string>
+
+    <string translatable="false" name="settings_check_for_updates_key">checkForUpdates</string>
+    <string name="settings_check_for_updates_title">Daily check for updates</string>
+
+    <string translatable="false" name="settings_source_apkmirror_key">APKMirror</string>
+
+    <string translatable="false" name="settings_source_aptoide_key">Aptoide</string>
+
+    <string translatable="false" name="settings_theme_key">theme</string>
     <string name="settings_theme_dark_blue">Dark Blue</string>
     <string name="settings_theme_light_blue">Light Blue</string>
     <string name="settings_theme_dark_orange">Dark Orange</string>

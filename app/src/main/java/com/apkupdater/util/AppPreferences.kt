@@ -20,39 +20,39 @@ class AppPreferences(context: Context, prefs: KryptoPrefs): KryptoContext(prefs)
 class PreferenceFragmentPrefs(private val context: Context, private val prefs: SharedPreferences) {
 
 	var excludeSystem
-		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_system), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_system), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_system_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_system_key), value).apply()
 
 	var excludeDisabled
-		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_disabled), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_disabled), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_disabled_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_disabled_key), value).apply()
 
 	var excludeMinApi
-		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_min_api), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_min_api), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_min_api_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_min_api_key), value).apply()
 
 	var excludeArch
-		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_arch), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_arch), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_arch_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_arch_key), value).apply()
 
 	var excludeExperimental
-		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_experimental), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_experimental), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_experimental_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_experimental_key), value).apply()
 
 	var checkForUpdates
-		get() = prefs.getBoolean(context.getString(R.string.settings_check_for_updates), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_check_for_updates), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_check_for_updates_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_check_for_updates_key), value).apply()
 
 	var theme
-		get() = prefs.getString(context.getString(R.string.settings_theme), "2")
-		set(value) = prefs.edit().putString(context.getString(R.string.settings_theme), value).apply()
+		get() = prefs.getString(context.getString(R.string.settings_theme_key), "2")
+		set(value) = prefs.edit().putString(context.getString(R.string.settings_theme_key), value).apply()
 
 	var apkMirror
-		get() = prefs.getBoolean(context.getString(R.string.settings_source_apkmirror), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_apkmirror), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_source_apkmirror_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_apkmirror_key), value).apply()
 
 	var aptoide
-		get() = prefs.getBoolean(context.getString(R.string.settings_source_aptoide), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_aptoide), value).apply()
+		get() = prefs.getBoolean(context.getString(R.string.settings_source_aptoide_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_aptoide_key), value).apply()
 
 }

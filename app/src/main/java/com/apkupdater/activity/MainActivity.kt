@@ -135,12 +135,12 @@ class MainActivity : AppCompatActivity() {
 		if (resultCode == Activity.RESULT_OK) {
 			searchViewModel.remove(requestCode)
 			updatesViewModel.remove(requestCode)
-			viewModel.snackbar.postValue("App installed.")
+			viewModel.snackbar.postValue(getString(R.string.app_install_success))
 		} else {
 			updatesViewModel.setLoading(requestCode, false)
 			searchViewModel.setLoading(requestCode, false)
-			val reason = if (data == null) "Cancelled" else data.extras?.get(data.extras?.keySet()?.first())
-			viewModel.snackbar.postValue("Install failed: $reason")
+			val reason = if (data == null) getString(R.string.app_install_cancelled) else data.extras?.get(data.extras?.keySet()?.first())
+			viewModel.snackbar.postValue(getString(R.string.app_install_failure, reason))
 		}
 
 		super.onActivityResult(requestCode, resultCode, data)

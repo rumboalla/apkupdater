@@ -38,9 +38,9 @@ class SelfUpdateRepository: KoinComponent {
 
 	private suspend fun showDialog(activity: Activity) = suspendCoroutine<Boolean> {
 		AlertDialog.Builder(activity, R.style.AlertDialogTheme)
-			.setMessage("A new version of the app is available. Do you want to install it?")
-			.setPositiveButton("OK") { _, _: Int -> it.resume(true) }
-			.setNegativeButton("CANCEL") { _, _ -> it.resume(false) }
+			.setMessage(activity.getString(R.string.selfupdate_found))
+			.setPositiveButton(activity.getString(R.string.selfupdate_ok)) { _, _: Int -> it.resume(true) }
+			.setNegativeButton(activity.getString(R.string.selfupdate_cancel)) { _, _ -> it.resume(false) }
 			.create()
 			.show()
 	}

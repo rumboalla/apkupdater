@@ -15,12 +15,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 		setPreferencesFromResource(R.xml.settings, rootKey)
 
-		findPreference<SwitchPreferenceCompat>(getString(R.string.settings_check_for_updates))?.setOnPreferenceChangeListener { _, _ ->
+		findPreference<SwitchPreferenceCompat>(getString(R.string.settings_check_for_updates_key))?.setOnPreferenceChangeListener { _, _ ->
 			context?.let { alarmUtil.setupAlarm(it) }
 			true
 		}
 
-		findPreference<ListPreference>(getString(R.string.settings_theme))?.setOnPreferenceChangeListener { _, _ ->
+		findPreference<ListPreference>(getString(R.string.settings_theme_key))?.setOnPreferenceChangeListener { _, _ ->
 			activity?.recreate()
 			true
 		}
