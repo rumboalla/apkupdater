@@ -6,7 +6,6 @@
     <string name="title_settings">"Configuración"</string>
     <string name="icon_description">"Icono de la aplicación"</string>
     <string name="source_description">"Icono de la fuente"</string>
-    <string name="selfupdate_found">"Una nueva versión de la aplicación está disponible. ¿Desea instalarla?"</string>
     <string name="app_install_success">"Aplicación instalada"</string>
     <string name="app_install_failure">"Instalación fallada: %1$"</string>
     <string name="app_install_cancelled">"Cancelado"</string>
