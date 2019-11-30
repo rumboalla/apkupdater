@@ -1,3 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="title_apps">"Aplicaciones"</string>
+    <string name="title_updates">"Actualizaciones"</string>
+    <string name="title_search">"Busqueda"</string>
+    <string name="title_settings">"Configuración"</string>
+    <string name="icon_description">"Icono de la aplicación"</string>
+    <string name="source_description">"Icono de la fuente"</string>
+    <string name="selfupdate_found">"Una nueva versión de la aplicación está disponible. ¿Desea instalarla?"</string>
+    <string name="app_install_success">"Aplicación instalada"</string>
+    <string name="app_install_failure">"Instalación fallada: %1$"</string>
+    <string name="app_install_cancelled">"Cancelado"</string>
+    <string name="notification_channel_name">"Actualizaciones"</string>
+    <string name="notification_channel_description">"Canal para las notificaciones de las actualizaciones"</string>
+    <string name="notification_update_title">"Actualizaciones"</string>
+    <plurals name="notification_update_description">
+        <item quantity="one">"Encontrada %1$d actualización"</item>
+        <item quantity="other">"Encontrada %1$d actualizaciones"</item>
+    </plurals>
+    <string name="action_ignore">"Ignorar"</string>
+    <string name="action_unignore">"No ignorar"</string>
+    <string name="action_install">"Instalar"</string>
+    <string name="action_close">"Cerrar"</string>
+    <string name="settings_exclude_system_title">"Excluir aplicaciones del sistema"</string>
+    <string name="settings_exclude_disabled_title">"Excluir aplicaciones deshabilitadas"</string>
+    <string name="settings_exclude_min_api_title">"Excluir nivel de API Incompatible"</string>
+    <string name="settings_exclude_arch_title">"Excluir arquitecturas incompatibles"</string>
+    <string name="settings_exclude_experimental_title">"Excluir aplicaciones experimentales"</string>
+    <string name="settings_check_for_updates_title">"Comprobar actualizaciones"</string>
+    <string name="settings_theme_dark_blue">"Azul oscuro"</string>
+    <string name="settings_theme_light_blue">"Azul ligero"</string>
+    <string name="settings_theme_dark_orange">"Naranja oscuro"</string>
+    <string name="settings_theme_light_orange">"Naranja ligero"</string>
+    <string name="settings_general_title">"General"</string>
+    <string name="settings_apps_title">"Aplicaciones"</string>
+    <string name="settings_updates_title">"Actualizaciones"</string>
+    <string name="settings_update_hour_title">"Hora de la actualización"</string>
+    <string name="settings_theme_title">"Tema"</string>
+    <string name="selfupdate_found_title">"¡Actualización encontrada!"</string>
 </resources>
