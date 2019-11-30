@@ -48,7 +48,7 @@
         />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/settings_updates_title" app:iconSpaceReserved="false">
+    <PreferenceCategory app:title="@string/settings_update_sources_title" app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
             app:key="@string/settings_source_apkmirror_key"
             app:title="APKMirror"
@@ -61,6 +61,9 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_update_options_title" app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
             app:key="@string/settings_exclude_min_api_key"
             app:title="@string/settings_exclude_min_api_title"

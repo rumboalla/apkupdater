@@ -42,7 +42,8 @@
     // Settings
     <string name="settings_general_title">General</string>
     <string name="settings_apps_title">Apps</string>
-    <string name="settings_updates_title">Updates</string>
+    <string name="settings_update_sources_title">Update Sources</string>
+    <string name="settings_update_options_title">Update Options</string>
 
     <string translatable="false" name="settings_exclude_system_key">excludeSystem</string>
     <string name="settings_exclude_system_title">Exclude System Apps</string>
