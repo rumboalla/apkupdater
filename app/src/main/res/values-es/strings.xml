@@ -32,7 +32,6 @@
     <string name="settings_theme_light_orange">"Naranja ligero"</string>
     <string name="settings_general_title">"General"</string>
     <string name="settings_apps_title">"Aplicaciones"</string>
-    <string name="settings_updates_title">"Actualizaciones"</string>
     <string name="settings_update_hour_title">"Hora de la actualización"</string>
     <string name="settings_theme_title">"Tema"</string>
     <string name="selfupdate_found_title">"¡Actualización encontrada!"</string>
@@ -44,4 +43,6 @@
     <string name="settings_check_for_updates_never">"Never"</string>
     <string name="settings_theme_dark_green">"Dark Green"</string>
     <string name="settings_theme_light_green">"Light Green"</string>
+    <string name="settings_update_sources_title">"Update Sources"</string>
+    <string name="settings_update_options_title">"Update Options"</string>
 </resources>
