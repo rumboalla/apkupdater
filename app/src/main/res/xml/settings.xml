@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory app:title="@string/settings_general_title" app:iconSpaceReserved="false">
         <ListPreference
             app:key="@string/settings_theme_key"
             app:title="@string/settings_theme_title"
             app:entries="@array/settings_theme_entries"
-            app:entryValues="@array/settings_theme_values"
+            app:entryValues="@array/settings_values"
             app:defaultValue="2"
             app:summary="%s"
             app:iconSpaceReserved="false"
         />
-        <SwitchPreferenceCompat
+        <ListPreference
             app:key="@string/settings_check_for_updates_key"
             app:title="@string/settings_check_for_updates_title"
-            app:defaultValue="true"
+            android:entries="@array/settings_check_for_updates_entries"
+            app:entryValues="@array/settings_values"
+            app:defaultValue="0"
+            app:summary="%s"
+            app:iconSpaceReserved="false"
+        />
+        <SeekBarPreference
+            app:key="@string/settings_update_hour_key"
+            app:title="@string/settings_update_hour_title"
+            app:showSeekBarValue="true"
+            app:seekBarIncrement="1"
+            app:defaultValue="12"
+            android:max="23"
+            app:min="0"
             app:iconSpaceReserved="false"
         />
     </PreferenceCategory>

@@ -13,9 +13,11 @@ class AlarmUtil(private val context: Context, private val prefs: AppPreferences)
 	private val alarmManager get() = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 	private var pendingIntent: PendingIntent? = null
 
-	fun setupAlarm(context: Context) = if (prefs.settings.checkForUpdates && pendingIntent == null) enableAlarm(context) else cancelAlarm()
+	fun setupAlarm(context: Context) = if (isEnabled()) enableAlarm(context) else cancelAlarm()
 
-	private fun enableAlarm(context: Context, hour: Int = 12, interval: Long = AlarmManager.INTERVAL_DAY) {
+	private fun cancelAlarm() = pendingIntent?.let { alarmManager.cancel(it) }
+
+	private fun enableAlarm(context: Context, hour: Int = prefs.settings.updateHour, interval: Long = getInterval()) {
 		pendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, AlarmReceiver::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
 		val now = System.currentTimeMillis()
@@ -23,11 +25,20 @@ class AlarmUtil(private val context: Context, private val prefs: AppPreferences)
 			timeInMillis = now
 			set(Calendar.HOUR_OF_DAY, hour)
 		}
-		if (now > time.timeInMillis) time.add(Calendar.DAY_OF_MONTH, 1)
+		while (now > time.timeInMillis) time.add(Calendar.MILLISECOND, interval.toInt())
 
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.timeInMillis, interval, pendingIntent)
 	}
 
-	private fun cancelAlarm() = pendingIntent?.let { alarmManager.cancel(it) }
+	private fun getInterval() = when(prefs.settings.checkForUpdates) {
+		"0" -> AlarmManager.INTERVAL_DAY
+		"1" -> AlarmManager.INTERVAL_DAY * 7
+		"2" -> AlarmManager.INTERVAL_HOUR
+		"3" -> AlarmManager.INTERVAL_HOUR * 12
+		"4" -> AlarmManager.INTERVAL_HOUR * 6
+		else -> Long.MAX_VALUE
+	}
+
+	private fun isEnabled() = prefs.settings.checkForUpdates != "5"
 
 }

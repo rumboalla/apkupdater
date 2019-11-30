@@ -40,8 +40,12 @@ class PreferenceFragmentPrefs(private val context: Context, private val prefs: S
 		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_experimental_key), value).apply()
 
 	var checkForUpdates
-		get() = prefs.getBoolean(context.getString(R.string.settings_check_for_updates_key), true)
-		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_check_for_updates_key), value).apply()
+		get() = prefs.getString(context.getString(R.string.settings_check_for_updates_key), "0")
+		set(value) = prefs.edit().putString(context.getString(R.string.settings_check_for_updates_key), value).apply()
+
+	var updateHour
+		get() = prefs.getInt(context.getString(R.string.settings_update_hour_key), 12)
+		set(value) = prefs.edit().putInt(context.getString(R.string.settings_update_hour_key), value).apply()
 
 	var theme
 		get() = prefs.getString(context.getString(R.string.settings_theme_key), "2")

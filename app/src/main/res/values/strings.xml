@@ -11,8 +11,8 @@
 
     // Self Update
     <string name="selfupdate_found">A new version of the app is available. Do you want to install it?</string>
-    <string name="selfupdate_ok">@android:string/ok</string>
-    <string name="selfupdate_cancel">@android:string/cancel</string>
+    <string translatable="false" name="selfupdate_ok">@android:string/ok</string>
+    <string translatable="false" name="selfupdate_cancel">@android:string/cancel</string>
 
     // App install
     <string name="app_install_success">App installed.</string>
@@ -61,20 +61,23 @@
     <string translatable="false" name="settings_exclude_experimental_key">excludeExperimental</string>
     <string name="settings_exclude_experimental_title">Exclude Experimental Apps</string>
 
+    <string translatable="false" name="settings_update_hour_key">updateHour</string>
+    <string name="settings_update_hour_title">Update Hour</string>
+
     <string translatable="false" name="settings_source_apkmirror_key">APKMirror</string>
 
     <string translatable="false" name="settings_source_aptoide_key">Aptoide</string>
 
-    <string translatable="false" name="settings_check_for_updates_key">checkForUpdates</string>
-    <string name="settings_check_for_updates_title">Daily check for updates</string>
+    <string translatable="false" name="settings_check_for_updates_key">checkForUpdatesNew</string>
+    <string name="settings_check_for_updates_title">Check for updates</string>
     <string-array name="settings_check_for_updates_entries">
         <item>Daily</item>
         <item>Weekly</item>
+        <item>Hourly</item>
         <item>Every 12 hours</item>
         <item>Every 6 hours</item>
         <item>Never</item>
     </string-array>
-
 
     <string name="settings_theme_title">Theme</string>
     <string translatable="false" name="settings_theme_key">theme</string>
@@ -86,7 +89,8 @@
         <item>Dark Green</item>
         <item>Light Green</item>
     </string-array>
-    <string-array name="settings_theme_values">
+
+    <string-array name="settings_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
