@@ -11,4 +11,4 @@ data class AppSearch(
 	val source: Int = 0,
 	override val id: Int = crc16(url),
 	var loading: Boolean = false
-): Id
+): Id { companion object }

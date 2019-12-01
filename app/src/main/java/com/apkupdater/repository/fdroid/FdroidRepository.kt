@@ -5,7 +5,9 @@ import com.apkupdater.R
 import com.apkupdater.model.AppInstalled
 import com.apkupdater.model.AppSearch
 import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.fdroid.FdroidApp
 import com.apkupdater.model.fdroid.FdroidData
+import com.apkupdater.model.fdroid.FdroidPackage
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.InstallUtil
 import com.apkupdater.util.ioScope
@@ -30,30 +32,32 @@ class FdroidRepository: KoinComponent {
 	private val baseUrl = "https://f-droid.org/repo/"
 	private val index = "index-v1.jar"
 
+	private var lastCheck = 0L
 	private var data: FdroidData? = null
 
 	@Suppress("BlockingMethodInNonBlockingContext")
 	fun getDataAsync() = ioScope.async {
-		// TODO: Limit this by time
+		if (data == null || System.currentTimeMillis() - lastCheck > 3600000) {
+			// Head request so we get only the headers
+			val last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
+			lastCheck = System.currentTimeMillis()
 
-		// Head request so we get only the headers
-		val last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
+			// Check if last changed
+			var refresh = false
+			if (last != prefs.lastFdroid()) {
+				// Download new file
+				installer.downloadAsync(context, "$baseUrl$index", file)
+				prefs.lastFdroid(last)
+				refresh = true
+			}
 
-		// Check if last changed
-		if (last != prefs.lastFdroid()) {
-			// Download new file
-			installer.downloadAsync(context, "$baseUrl$index", file)
-			prefs.lastFdroid(last)
+			// Read the json from inside jar
+			if (data == null || refresh) {
+				val jar = JarFile(file)
+				val stream = jar.getInputStream(jar.getEntry("index-v1.json"))
+				data = Gson().fromJson<FdroidData>(JsonReader(InputStreamReader(stream, "UTF-8")), FdroidData::class.java)
+			}
 		}
-
-		// Read the json from inside jar
-		if (data == null) {
-			val jar = JarFile(file)
-			val entry = jar.getEntry("index-v1.json")
-			val stream = jar.getInputStream(entry)
-			data = Gson().fromJson<FdroidData>(JsonReader(InputStreamReader(stream, "UTF-8")), FdroidData::class.java)
-		}
-
 		data
 	}
 
@@ -63,23 +67,38 @@ class FdroidRepository: KoinComponent {
 
 			apps.mapNotNull { app ->
 				data?.packages?.get(app.packageName)?.first()?.let { pack ->
-					if (pack.versionCode > app.versionCode) {
-						AppUpdate(app.name, app.packageName, pack.versionName, pack.versionCode, app.version, app.versionCode, "$baseUrl${pack.apkName}", R.drawable.fdroid_logo)
-					} else null
+					if (pack.versionCode > app.versionCode) AppUpdate.from(app, pack) else null
 				}
 			}.sortedBy { it.name }.toList()
 		}.onFailure { Result.failure<List<AppUpdate>>(it) }.onSuccess { Result.success(it) }
 	}
 
+	// TODO: Filter arch, beta, minapi
 	fun searchAsync(text: String) = ioScope.async {
 		runCatching {
-			getDataAsync().await()?.apps?.mapNotNull { app ->
-				if (/*app.description.contains(text) || */app.packageName.contains(text))
-					AppSearch(app.name, "$baseUrl${app.packageName}_${app.suggestedVersionCode}.apk", "${baseUrl}icons-640/${app.icon}", app.packageName, R.drawable.fdroid_logo)
-				else null
-				// TODO: Filter arch, beta, minapi
-			}?.shuffled()?.take(10)?.sortedBy { it.name } ?: emptyList()
+			getDataAsync().await()?.apps.orEmpty().mapNotNull { app ->
+				if (app.description.contains(text) || app.packageName.contains(text)) AppSearch.from(app) else null
+			}.shuffled().take(10).sortedBy { it.name }
 		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
 	}
+
+	private fun AppUpdate.Companion.from(app: AppInstalled, pack: FdroidPackage) = AppUpdate(
+		app.name,
+		app.packageName,
+		pack.versionName,
+		pack.versionCode,
+		app.version,
+		app.versionCode,
+		"$baseUrl${pack.apkName}",
+		R.drawable.fdroid_logo
+	)
+
+	private fun AppSearch.Companion.from(app: FdroidApp) = AppSearch(
+		app.name,
+		"$baseUrl${app.packageName}_${app.suggestedVersionCode}.apk",
+		"${baseUrl}icons-640/${app.icon}",
+		app.packageName,
+		R.drawable.fdroid_logo
+	)
 
 }
