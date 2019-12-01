@@ -28,6 +28,8 @@ android {
                 storePassword props['keystore.password']
                 keyAlias props['keystore.keyalias']
                 keyPassword props['keystore.keypassword']
+                v1SigningEnabled true
+                v2SigningEnabled true
             }
         }
     }
