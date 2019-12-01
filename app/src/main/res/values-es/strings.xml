@@ -7,7 +7,7 @@
     <string name="icon_description">"Icono de la aplicación"</string>
     <string name="source_description">"Icono de la fuente"</string>
     <string name="app_install_success">"Aplicación instalada"</string>
-    <string name="app_install_failure">"Instalación fallada: %1$"</string>
+    <string name="app_install_failure">"Instalación fallada: %1$s"</string>
     <string name="app_install_cancelled">"Cancelado"</string>
     <string name="notification_channel_name">"Actualizaciones"</string>
     <string name="notification_channel_description">"Canal para las notificaciones de las actualizaciones"</string>
@@ -35,14 +35,14 @@
     <string name="settings_update_hour_title">"Hora de la actualización"</string>
     <string name="settings_theme_title">"Tema"</string>
     <string name="selfupdate_found_title">"¡Actualización encontrada!"</string>
-    <string name="settings_check_for_updates_daily">"Daily"</string>
-    <string name="settings_check_for_updates_weekly">"Weekly"</string>
-    <string name="settings_check_for_updates_hourly">"Hourly"</string>
-    <string name="settings_check_for_updates_twelve">"Every 12 hours"</string>
-    <string name="settings_check_for_updates_six">"Every 6 hours"</string>
-    <string name="settings_check_for_updates_never">"Never"</string>
-    <string name="settings_theme_dark_green">"Dark Green"</string>
-    <string name="settings_theme_light_green">"Light Green"</string>
-    <string name="settings_update_sources_title">"Update Sources"</string>
-    <string name="settings_update_options_title">"Update Options"</string>
+    <string name="settings_check_for_updates_daily">"Diaria"</string>
+    <string name="settings_check_for_updates_weekly">"Semanal"</string>
+    <string name="settings_check_for_updates_hourly">"Cada hora"</string>
+    <string name="settings_check_for_updates_twelve">"Cada 12 horas"</string>
+    <string name="settings_check_for_updates_six">"Cada 6 horas"</string>
+    <string name="settings_check_for_updates_never">"Nunca"</string>
+    <string name="settings_theme_dark_green">"Verde Oscuro"</string>
+    <string name="settings_theme_light_green">"Verde Claro"</string>
+    <string name="settings_update_sources_title">"Fuentes"</string>
+    <string name="settings_update_options_title">"Opciones de actualización"</string>
 </resources>
