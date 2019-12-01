@@ -41,7 +41,7 @@ android {
     }
 
     lintOptions {
-        disable 'ExtraTranslation'
+        disable 'ExtraTranslation', 'MissingTranslation'
     }
 
     kotlinOptions { jvmTarget = "1.8" }
