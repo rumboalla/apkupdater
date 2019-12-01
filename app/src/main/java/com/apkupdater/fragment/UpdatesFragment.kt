@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.AppUpdate
+import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.InstallUtil
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.getAccentColor
@@ -35,6 +36,7 @@ class UpdatesFragment : Fragment() {
 	private val updatesViewModel: UpdatesViewModel by sharedViewModel()
 	private val mainViewModel: MainViewModel by sharedViewModel()
 	private val installer: InstallUtil by inject()
+	private val prefs: AppPreferences by inject()
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
 		inflater.inflate(R.layout.fragment_updates, container, false)
@@ -73,15 +75,20 @@ class UpdatesFragment : Fragment() {
 	}
 
 	private fun downloadAndInstall(app: AppUpdate) = ioScope.launch {
-		activity?.let { activity ->
+		runCatching {
 			updatesViewModel.setLoading(app.id, true)
-			installer.downloadAsync(activity, app.url) { _, _ -> updatesViewModel.setLoading(app.id, true) }.await().fold(
-				onSuccess = { installer.install(activity, it, app.id) },
-				onFailure = {
-					updatesViewModel.setLoading(app.id, false)
-					mainViewModel.snackbar.postValue(it.message)
-				}
-			)
+			val file = installer.downloadAsync(requireActivity(), app.url) { _, _ -> updatesViewModel.setLoading(app.id, true) }
+			if(installer.install(requireActivity(), file, app.id)) {
+				updatesViewModel.setLoading(app.id, false)
+				updatesViewModel.remove(app.id)
+				mainViewModel.snackbar.postValue(getString(R.string.app_install_success))
+			} else if (prefs.settings.rootInstall) {
+				updatesViewModel.setLoading(app.id, false)
+				mainViewModel.snackbar.postValue(getString(R.string.app_install_failure, null))
+			}
+		}.onFailure {
+			updatesViewModel.setLoading(app.id, false)
+			mainViewModel.snackbar.postValue(it.message)
 		}
 	}
 

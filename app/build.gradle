@@ -75,6 +75,7 @@ dependencies {
     implementation 'com.github.rumboalla.fuel:fuel:-SNAPSHOT'
     implementation 'com.github.rumboalla.fuel:fuel-gson:-SNAPSHOT'
     implementation 'com.startapp:inapp-sdk:4.3.0'
+    implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
 
     testImplementation 'junit:junit:4.12'
 

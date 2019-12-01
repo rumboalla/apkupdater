@@ -59,4 +59,8 @@ class PreferenceFragmentPrefs(private val context: Context, private val prefs: S
 		get() = prefs.getBoolean(context.getString(R.string.settings_source_aptoide_key), true)
 		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_aptoide_key), value).apply()
 
+	var rootInstall
+		get() = prefs.getBoolean(context.getString(R.string.settings_root_install_key), false)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_root_install_key), value).apply()
+
 }

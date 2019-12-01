@@ -44,6 +44,7 @@
     <string name="settings_apps_title">Apps</string>
     <string name="settings_update_sources_title">Update Sources</string>
     <string name="settings_update_options_title">Update Options</string>
+    <string translatable="false" name="settings_root_options_title">Root</string>
 
     <string translatable="false" name="settings_exclude_system_key">excludeSystem</string>
     <string name="settings_exclude_system_title">Exclude System Apps</string>
@@ -59,6 +60,9 @@
 
     <string translatable="false" name="settings_exclude_experimental_key">excludeExperimental</string>
     <string name="settings_exclude_experimental_title">Exclude Experimental Apps</string>
+
+    <string translatable="false" name="settings_root_install_key">rootInstall</string>
+    <string name="settings_root_install_title">Root Install</string>
 
     <string translatable="false" name="settings_update_hour_key">updateHour</string>
     <string name="settings_update_hour_title">Update Hour</string>

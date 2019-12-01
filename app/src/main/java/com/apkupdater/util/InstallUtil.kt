@@ -8,13 +8,17 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.ProgressCallback
-import kotlinx.coroutines.async
+import eu.chainfire.libsuperuser.Shell
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.io.File
 import java.util.UUID
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class InstallUtil {
+class InstallUtil: KoinComponent {
+
+	private val prefs: AppPreferences by inject()
 
 	private val fileProvider = "com.apkupdater.fileprovider"
 	private val downloadDir = "downloads"
@@ -35,6 +39,7 @@ class InstallUtil {
 		}
 	}
 
+	@Suppress("DEPRECATION")
 	private fun getInstallIntent(activity: Activity, file: File): Intent {
 		return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			Intent(Intent.ACTION_INSTALL_PACKAGE).apply {
@@ -50,18 +55,20 @@ class InstallUtil {
 		}
 	}
 
-	fun install(activity: Activity, file: File, id: Int) = activity.startActivityForResult(getInstallIntent(activity, file), id)
-
-	fun downloadAsync(activity: Activity, url: String, progress: ProgressCallback) = ioScope.async {
-		clearOldFiles(activity)
-		val file = getFile(activity)
-		Fuel.download(url).fileDestination { _, _ -> file }.progress(progress).response().third.fold(
-			success = { Result.success(file) },
-			failure = { Result.failure(it) }
-		)
+	private fun rootInstall(file: File): Boolean {
+		return Shell.Pool.SU.run("pm install -r ${file.absolutePath}") == 0
 	}
 
-	suspend fun downloadAsync2(activity: Activity, url: String, progress: ProgressCallback) = suspendCoroutine<File> {
+	fun install(activity: Activity, file: File, id: Int): Boolean {
+		return if (prefs.settings.rootInstall) {
+			rootInstall(file)
+		} else {
+			activity.startActivityForResult(getInstallIntent(activity, file), id)
+			false
+		}
+	}
+
+	suspend fun downloadAsync(activity: Activity, url: String, progress: ProgressCallback) = suspendCoroutine<File> {
 		val file = getFile(activity)
 		clearOldFiles(activity)
 		Fuel.download(url).fileDestination { _, _ -> file }.progress(progress).response().third.get()

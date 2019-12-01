@@ -31,7 +31,7 @@ class SelfUpdateRepository: KoinComponent {
 			if (response.version > activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode) {
 				if (withContext(Dispatchers.Main) { showDialog(activity, response) }) {
 					prefs.selfUpdateCheck(System.currentTimeMillis())
-					installer.install(activity, installer.downloadAsync2(activity, response.apk) { _, _ -> }, 0)
+					installer.install(activity, installer.downloadAsync(activity, response.apk) { _, _ -> }, 0)
 				}
 			}
 		}

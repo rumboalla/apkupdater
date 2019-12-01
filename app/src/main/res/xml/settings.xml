@@ -87,4 +87,13 @@
         />
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/settings_root_options_title" app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            app:key="@string/settings_root_install_key"
+            app:title="@string/settings_root_install_title"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+        />
+    </PreferenceCategory>
+
 </PreferenceScreen>
