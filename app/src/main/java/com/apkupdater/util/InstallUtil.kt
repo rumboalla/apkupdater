@@ -68,9 +68,8 @@ class InstallUtil: KoinComponent {
 		}
 	}
 
-	suspend fun downloadAsync(activity: Activity, url: String, progress: ProgressCallback) = suspendCoroutine<File> {
-		val file = getFile(activity)
-		clearOldFiles(activity)
+	suspend fun downloadAsync(context: Context, url: String, file: File = getFile(context), progress: ProgressCallback = { _, _ -> }) = suspendCoroutine<File> {
+		clearOldFiles(context)
 		Fuel.download(url).fileDestination { _, _ -> file }.progress(progress).response().third.get()
 		it.resume(file)
 	}

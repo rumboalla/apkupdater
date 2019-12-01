@@ -14,6 +14,7 @@ class AppPreferences(context: Context, prefs: KryptoPrefs): KryptoContext(prefs)
 	val updates = json(context.getString(R.string.prefs_updates), emptyList<AppUpdate>())
 	val settings = PreferenceFragmentPrefs(context, prefs.sharedPreferences())
 	val selfUpdateCheck = long("selfUpdateCheck", 0)
+	val lastFdroid = string("lastFdroid", "")
 
 }
 
@@ -58,6 +59,10 @@ class PreferenceFragmentPrefs(private val context: Context, private val prefs: S
 	var aptoide
 		get() = prefs.getBoolean(context.getString(R.string.settings_source_aptoide_key), true)
 		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_aptoide_key), value).apply()
+
+	var fdroid
+		get() = prefs.getBoolean(context.getString(R.string.settings_source_fdroid_key), true)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_source_fdroid_key), value).apply()
 
 	var rootInstall
 		get() = prefs.getBoolean(context.getString(R.string.settings_root_install_key), false)

@@ -32,6 +32,28 @@
             app:iconSpaceReserved="false"
         />
     </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_update_sources_title" app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_apkmirror_key"
+            app:title="@string/settings_source_apkmirror_key"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_aptoide_key"
+            app:title="@string/settings_source_aptoide_key"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_fdroid_key"
+            app:title="@string/settings_source_fdroid_key"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/settings_apps_title" app:iconSpaceReserved="false">
         <SwitchPreferenceCompat
             app:key="@string/settings_exclude_system_key"
@@ -43,21 +65,6 @@
         <SwitchPreferenceCompat
             app:key="@string/settings_exclude_disabled_key"
             app:title="@string/settings_exclude_disabled_title"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-        />
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/settings_update_sources_title" app:iconSpaceReserved="false">
-        <SwitchPreferenceCompat
-            app:key="@string/settings_source_apkmirror_key"
-            app:title="APKMirror"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-        />
-        <SwitchPreferenceCompat
-            app:key="@string/settings_source_aptoide_key"
-            app:title="Aptoide"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
