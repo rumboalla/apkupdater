@@ -1,9 +1,9 @@
 package com.apkupdater.repository.fdroid
 
 import android.content.Context
-import android.content.pm.PackageInfo
 import com.apkupdater.R
 import com.apkupdater.model.AppInstalled
+import com.apkupdater.model.AppSearch
 import com.apkupdater.model.AppUpdate
 import com.apkupdater.model.fdroid.FdroidData
 import com.apkupdater.util.AppPreferences
@@ -20,20 +20,22 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.jar.JarFile
 
-class FdroidUpdater: KoinComponent {
+class FdroidRepository: KoinComponent {
 
 	private val prefs: AppPreferences by inject()
 	private val installer: InstallUtil by inject()
 	private val context: Context by inject()
 
 	private val file = File(context.cacheDir, "fdroid")
-	private val baseUrl = " https://f-droid.org/repo/"
+	private val baseUrl = "https://f-droid.org/repo/"
 	private val index = "index-v1.jar"
 
 	private var data: FdroidData? = null
 
 	@Suppress("BlockingMethodInNonBlockingContext")
 	fun getDataAsync() = ioScope.async {
+		// TODO: Limit this by time
+
 		// Head request so we get only the headers
 		val last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
 
@@ -55,7 +57,7 @@ class FdroidUpdater: KoinComponent {
 		data
 	}
 
-	fun updateAsync(apps: Sequence<AppInstalled>) = ioScope.async{
+	fun updateAsync(apps: Sequence<AppInstalled>) = ioScope.async {
 		runCatching {
 			getDataAsync().await()
 
@@ -67,6 +69,17 @@ class FdroidUpdater: KoinComponent {
 				}
 			}.sortedBy { it.name }.toList()
 		}.onFailure { Result.failure<List<AppUpdate>>(it) }.onSuccess { Result.success(it) }
+	}
+
+	fun searchAsync(text: String) = ioScope.async {
+		runCatching {
+			getDataAsync().await()?.apps?.mapNotNull { app ->
+				if (/*app.description.contains(text) || */app.packageName.contains(text))
+					AppSearch(app.name, "$baseUrl${app.packageName}_${app.suggestedVersionCode}.apk", "${baseUrl}icons-640/${app.icon}", app.packageName, R.drawable.fdroid_logo)
+				else null
+				// TODO: Filter arch, beta, minapi
+			}?.shuffled()?.take(10)?.sortedBy { it.name } ?: emptyList()
+		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
 	}
 
 }

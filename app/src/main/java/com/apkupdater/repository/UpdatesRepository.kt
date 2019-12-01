@@ -4,7 +4,7 @@ import android.content.pm.PackageManager
 import com.apkupdater.model.AppUpdate
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
 import com.apkupdater.repository.aptoide.AptoideUpdater
-import com.apkupdater.repository.fdroid.FdroidUpdater
+import com.apkupdater.repository.fdroid.FdroidRepository
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.ioScope
 import kotlinx.coroutines.async
@@ -19,7 +19,7 @@ class UpdatesRepository: KoinComponent {
 	private val apkMirrorUpdater: ApkMirrorUpdater by inject()
 	private val aptoideUpdater: AptoideUpdater by inject()
 	private val appsRepository: AppsRepository by inject()
-	private val fdroidUpdater: FdroidUpdater by inject()
+	private val fdroidRepository: FdroidRepository by inject()
 
 	fun getUpdatesAsync() = ioScope.async {
 		val mutex = Mutex()
@@ -31,7 +31,7 @@ class UpdatesRepository: KoinComponent {
 		val installedApps = appsRepository.getAppsFiltered(apps)
 		val apkMirror = if (prefs.settings.apkMirror) apkMirrorUpdater.updateAsync(installedApps) else null
 		val aptoide = if (prefs.settings.aptoide) aptoideUpdater.updateAsync(apps) else null
-		val fdroid = if (prefs.settings.fdroid) fdroidUpdater.updateAsync(installedApps) else null
+		val fdroid = if (prefs.settings.fdroid) fdroidRepository.updateAsync(installedApps) else null
 
 		listOfNotNull(apkMirror, aptoide, fdroid).forEach {
 			it.await().fold(

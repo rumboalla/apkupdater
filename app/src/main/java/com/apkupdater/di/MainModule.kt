@@ -7,7 +7,7 @@ import com.apkupdater.repository.apkmirror.ApkMirrorSearch
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
 import com.apkupdater.repository.aptoide.AptoideSearch
 import com.apkupdater.repository.aptoide.AptoideUpdater
-import com.apkupdater.repository.fdroid.FdroidUpdater
+import com.apkupdater.repository.fdroid.FdroidRepository
 import com.apkupdater.util.AlarmUtil
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.InstallUtil
@@ -31,7 +31,7 @@ val mainModule = module {
 
 	single { ApkMirrorUpdater(get()) }
 	single { AptoideUpdater(get()) }
-	single { FdroidUpdater() }
+	single { FdroidRepository() }
 
 	single { ApkMirrorSearch() }
 	single { AptoideSearch() }
