@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -140,8 +142,10 @@ class MainActivity : AppCompatActivity() {
 		}
 	}
 
-	private fun snackBar(text: String) =
-		Snackbar.make(container, text, Snackbar.LENGTH_LONG).apply { setAction(getString(R.string.action_close)) { dismiss() } }.show()
+	private fun snackBar(text: String) = Snackbar.make(container, text, Snackbar.LENGTH_LONG).apply {
+		setAction(getString(R.string.action_close)) { dismiss() }
+		(view.layoutParams as FrameLayout.LayoutParams).gravity = Gravity.TOP
+	}.show()
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
