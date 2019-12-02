@@ -73,6 +73,8 @@
 
     <string translatable="false" name="settings_source_fdroid_key">F-Droid</string>
 
+    <string translatable="false" name="settings_source_googleplay_key">Google Play</string>
+
     <string translatable="false" name="settings_check_for_updates_key">checkForUpdatesNew</string>
     <string name="settings_check_for_updates_title">Check for updates</string>
     <string name="settings_check_for_updates_daily">Daily</string>

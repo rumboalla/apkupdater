@@ -52,6 +52,12 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_source_googleplay_key"
+            app:title="@string/settings_source_googleplay_key"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/settings_apps_title" app:iconSpaceReserved="false">

@@ -23,13 +23,14 @@ class GooglePlayRepository: KoinComponent {
 	private val dispenserUrl = "http://auroraoss.com:8080"
 
 	private val context: Context by inject()
-	val api: GooglePlayAPI by lazy { getApi(context) }
+	private val api: GooglePlayAPI by lazy { getApi(context) }
 
 	fun updateAsync(apps: Sequence<AppInstalled>) = ioScope.async {
 		runCatching {
 			val details = api.bulkDetails(apps.map { it.packageName }.toList())
 			val updates = mutableListOf<AppUpdate>()
 
+			// TODO: Filter experimental?
 			details.entryList.forEach { entry ->
 				runCatching {
 					apps.getApp(entry.doc.details.appDetails.packageName)?.let { app ->
@@ -37,10 +38,8 @@ class GooglePlayRepository: KoinComponent {
 							updates.add(AppUpdate.from(app, entry.doc.details.appDetails))
 						}
 					}
-					null
 				}.onFailure { Log.e("GooglePlayRepository", it.message, it) }
 			}
-
 
 			updates
 		}.fold(

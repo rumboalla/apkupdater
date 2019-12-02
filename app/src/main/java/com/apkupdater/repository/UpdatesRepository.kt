@@ -31,7 +31,7 @@ class UpdatesRepository: KoinComponent {
 		val apps = appsRepository.getPackageInfosFiltered(PackageManager.GET_SIGNATURES)
 		val installedApps = appsRepository.getAppsFiltered(apps)
 
-		val googlePlay = googlePlayRepository.updateAsync(installedApps)
+		val googlePlay = if (prefs.settings.googlePlay) googlePlayRepository.updateAsync(installedApps) else null
 		val apkMirror = if (prefs.settings.apkMirror) apkMirrorUpdater.updateAsync(installedApps) else null
 		val aptoide = if (prefs.settings.aptoide) aptoideUpdater.updateAsync(apps) else null
 		val fdroid = if (prefs.settings.fdroid) fdroidRepository.updateAsync(installedApps) else null
