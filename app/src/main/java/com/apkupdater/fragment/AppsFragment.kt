@@ -12,7 +12,7 @@ import com.apkupdater.repository.AppsRepository
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.viewmodel.MainViewModel
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.observe
 import kotlinx.android.synthetic.main.fragment_apps.recycler_view
@@ -33,7 +33,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 class AppsFragment : Fragment() {
 
 	private val repository: AppsRepository by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 	private val appsViewModel: AppsViewModel by viewModel()
 	private val mainViewModel: MainViewModel by sharedViewModel()
 

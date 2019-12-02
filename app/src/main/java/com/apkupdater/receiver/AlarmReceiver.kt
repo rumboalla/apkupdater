@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.apkupdater.repository.UpdatesRepository
-import com.apkupdater.util.AppPreferences
-import com.apkupdater.util.NotificationUtil
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.app.NotificationUtil
 import com.kryptoprefs.invoke
 import kotlinx.coroutines.runBlocking
 import org.koin.core.KoinComponent
@@ -16,7 +16,7 @@ class AlarmReceiver : BroadcastReceiver(), KoinComponent {
 
 	private val updatesRepository: UpdatesRepository by inject()
 	private val notificationUtil: NotificationUtil by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 
 	override fun onReceive(context: Context, intent: Intent?) = runBlocking {
 		updatesRepository.getUpdatesAsync().await().fold(

@@ -5,7 +5,8 @@ import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
 import com.apkupdater.repository.aptoide.AptoideUpdater
 import com.apkupdater.repository.fdroid.FdroidRepository
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.repository.googleplay.GooglePlayRepository
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.sync.Mutex
@@ -15,20 +16,22 @@ import org.koin.core.inject
 
 class UpdatesRepository: KoinComponent {
 
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 	private val apkMirrorUpdater: ApkMirrorUpdater by inject()
 	private val aptoideUpdater: AptoideUpdater by inject()
 	private val appsRepository: AppsRepository by inject()
 	private val fdroidRepository: FdroidRepository by inject()
+	private val googlePlayRepository: GooglePlayRepository by inject()
 
 	fun getUpdatesAsync() = ioScope.async {
 		val mutex = Mutex()
 		val updates = mutableListOf<AppUpdate>()
 		val errors = mutableListOf<Throwable>()
 
-
 		val apps = appsRepository.getPackageInfosFiltered(PackageManager.GET_SIGNATURES)
 		val installedApps = appsRepository.getAppsFiltered(apps)
+
+		val googlePlay = googlePlayRepository.updateAsync(installedApps)
 		val apkMirror = if (prefs.settings.apkMirror) apkMirrorUpdater.updateAsync(installedApps) else null
 		val aptoide = if (prefs.settings.aptoide) aptoideUpdater.updateAsync(apps) else null
 		val fdroid = if (prefs.settings.fdroid) fdroidRepository.updateAsync(installedApps) else null

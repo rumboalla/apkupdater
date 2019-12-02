@@ -9,8 +9,8 @@ import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.fdroid.FdroidApp
 import com.apkupdater.model.fdroid.FdroidData
 import com.apkupdater.model.fdroid.FdroidPackage
-import com.apkupdater.util.AppPreferences
-import com.apkupdater.util.InstallUtil
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.ioScope
 import com.apkupdater.util.orZero
 import com.github.kittinunf.fuel.Fuel
@@ -26,7 +26,7 @@ import java.util.jar.JarFile
 
 class FdroidRepository: KoinComponent {
 
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 	private val installer: InstallUtil by inject()
 	private val context: Context by inject()
 

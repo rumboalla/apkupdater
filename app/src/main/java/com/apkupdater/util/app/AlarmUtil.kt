@@ -1,4 +1,4 @@
-package com.apkupdater.util
+package com.apkupdater.util.app
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -8,7 +8,7 @@ import com.apkupdater.receiver.AlarmReceiver
 import org.koin.core.KoinComponent
 import java.util.Calendar
 
-class AlarmUtil(private val context: Context, private val prefs: AppPreferences): KoinComponent {
+class AlarmUtil(private val context: Context, private val prefs: AppPrefs): KoinComponent {
 
 	private val alarmManager get() = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 	private var pendingIntent: PendingIntent? = null

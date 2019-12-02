@@ -6,7 +6,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.apkupdater.R
-import com.apkupdater.util.AlarmUtil
+import com.apkupdater.util.app.AlarmUtil
 import com.apkupdater.viewmodel.MainViewModel
 import eu.chainfire.libsuperuser.Shell
 import org.koin.android.ext.android.inject

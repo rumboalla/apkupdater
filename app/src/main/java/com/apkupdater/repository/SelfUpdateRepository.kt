@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import com.apkupdater.R
 import com.apkupdater.model.selfupdate.SelfUpdateResponse
-import com.apkupdater.util.AppPreferences
-import com.apkupdater.util.InstallUtil
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.catchingAsync
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel
@@ -21,7 +21,7 @@ import kotlin.coroutines.suspendCoroutine
 class SelfUpdateRepository: KoinComponent {
 
 	private val installer: InstallUtil by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 
 	private val url = "http://rumboalla.github.io/apkupdater/version.json"
 	private val interval = 60 * 60 * 1000

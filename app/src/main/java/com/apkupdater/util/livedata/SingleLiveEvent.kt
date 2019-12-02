@@ -1,4 +1,4 @@
-package com.apkupdater.util
+package com.apkupdater.util.livedata
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData

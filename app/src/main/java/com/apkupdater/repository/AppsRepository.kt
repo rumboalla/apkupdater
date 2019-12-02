@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import com.apkupdater.model.ui.AppInstalled
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.name
 import com.kryptoprefs.invoke
 
-class AppsRepository(private val context: Context, private val prefs: AppPreferences) {
+class AppsRepository(private val context: Context, private val prefs: AppPrefs) {
 
 	private val excludeSystem get() = prefs.settings.excludeSystem
 	private val excludeDisabled get() = prefs.settings.excludeDisabled

@@ -9,7 +9,7 @@ import com.apkupdater.model.aptoide.App
 import com.apkupdater.model.aptoide.ListAppUpdatesResponse
 import com.apkupdater.model.aptoide.ListAppsUpdatesRequest
 import com.apkupdater.repository.aptoide.AptoideUtils.computeSha1WithColon
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.jsonBody
@@ -27,7 +27,7 @@ class AptoideUpdater(private val context: Context): KoinComponent {
 	private val baseUrl = "https://ws75.aptoide.com/api/7/"
 	private val appUpdates = "listAppsUpdates"
 	private val source = R.drawable.aptoide_logo
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 	private val exclude get() = if(prefs.settings.excludeExperimental) "alpha,beta" else ""
 
 	private fun listAppUpdates(request: ListAppsUpdatesRequest) = Fuel

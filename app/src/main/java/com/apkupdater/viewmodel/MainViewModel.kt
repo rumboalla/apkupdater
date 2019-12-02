@@ -2,7 +2,7 @@ package com.apkupdater.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.apkupdater.util.SingleLiveEvent
+import com.apkupdater.util.livedata.SingleLiveEvent
 
 class MainViewModel : ViewModel() {
 

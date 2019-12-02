@@ -8,10 +8,11 @@ import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
 import com.apkupdater.repository.aptoide.AptoideSearch
 import com.apkupdater.repository.aptoide.AptoideUpdater
 import com.apkupdater.repository.fdroid.FdroidRepository
-import com.apkupdater.util.AlarmUtil
-import com.apkupdater.util.AppPreferences
-import com.apkupdater.util.InstallUtil
-import com.apkupdater.util.NotificationUtil
+import com.apkupdater.repository.googleplay.GooglePlayRepository
+import com.apkupdater.util.app.AlarmUtil
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.app.InstallUtil
+import com.apkupdater.util.app.NotificationUtil
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -23,15 +24,16 @@ import org.koin.dsl.module
 
 val mainModule = module {
 
-	single { AppPreferences(get(), KryptoBuilder.nocrypt(get(), "${androidContext().packageName}_preferences")) }
+	single { AppPrefs(get(), KryptoBuilder.nocrypt(get(), "${androidContext().packageName}_preferences")) }
 
 	single { AppsRepository(get(), get()) }
 	single { UpdatesRepository() }
 	single { SearchRepository() }
+	single { FdroidRepository() }
+	single { GooglePlayRepository() }
 
 	single { ApkMirrorUpdater(get()) }
 	single { AptoideUpdater(get()) }
-	single { FdroidRepository() }
 
 	single { ApkMirrorSearch() }
 	single { AptoideSearch() }

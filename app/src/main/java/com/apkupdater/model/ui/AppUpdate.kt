@@ -6,7 +6,7 @@ import com.apkupdater.model.apkmirror.AppExistsResponseApk
 import com.apkupdater.model.apkmirror.AppExistsResponseData
 import com.apkupdater.model.aptoide.App
 import com.apkupdater.util.adapter.Id
-import com.apkupdater.util.crc16
+import com.apkupdater.util.crc.crc16
 import com.apkupdater.util.name
 import kotlin.random.Random
 

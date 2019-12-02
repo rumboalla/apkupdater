@@ -1,7 +1,7 @@
 package com.apkupdater.model.ui
 
 import com.apkupdater.util.adapter.Id
-import com.apkupdater.util.crc16
+import com.apkupdater.util.crc.crc16
 
 data class AppSearch(
 	val name: String,

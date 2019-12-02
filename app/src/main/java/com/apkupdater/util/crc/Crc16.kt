@@ -1,4 +1,4 @@
-package com.apkupdater.util
+package com.apkupdater.util.crc
 
 
 fun crc16(text: String): Int {

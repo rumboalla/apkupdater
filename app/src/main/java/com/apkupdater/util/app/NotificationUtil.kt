@@ -1,4 +1,4 @@
-package com.apkupdater.util
+package com.apkupdater.util.app
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.repository.SearchRepository
-import com.apkupdater.util.AppPreferences
-import com.apkupdater.util.InstallUtil
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.getAccentColor
 import com.apkupdater.util.ifNotEmpty
@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
 	private val mainViewModel: MainViewModel by sharedViewModel()
 	private val searchRepository: SearchRepository by inject()
 	private val installer: InstallUtil by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
 		inflater.inflate(R.layout.fragment_search, container, false)

@@ -17,6 +17,7 @@ android {
         versionName "2.0.0-beta3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -46,7 +47,15 @@ android {
         disable 'ExtraTranslation', 'MissingTranslation'
     }
 
-    kotlinOptions { jvmTarget = "1.8" }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
@@ -66,6 +75,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.preference:preference:1.1.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.koin:koin-android:2.0.1'
@@ -78,6 +88,7 @@ dependencies {
     implementation 'com.github.rumboalla.fuel:fuel-gson:-SNAPSHOT'
     implementation 'com.startapp:inapp-sdk:4.3.0'
     implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
+    implementation 'com.github.whyorean:playstore-api-v2:2.4'
 
     testImplementation 'junit:junit:4.12'
 

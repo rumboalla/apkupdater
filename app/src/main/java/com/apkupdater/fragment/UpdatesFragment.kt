@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppUpdate
-import com.apkupdater.util.AppPreferences
-import com.apkupdater.util.InstallUtil
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.getAccentColor
 import com.apkupdater.util.ioScope
@@ -36,7 +36,7 @@ class UpdatesFragment : Fragment() {
 	private val updatesViewModel: UpdatesViewModel by sharedViewModel()
 	private val mainViewModel: MainViewModel by sharedViewModel()
 	private val installer: InstallUtil by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
 		inflater.inflate(R.layout.fragment_updates, container, false)

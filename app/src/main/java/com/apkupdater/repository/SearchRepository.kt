@@ -4,7 +4,7 @@ import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.repository.apkmirror.ApkMirrorSearch
 import com.apkupdater.repository.aptoide.AptoideSearch
 import com.apkupdater.repository.fdroid.FdroidRepository
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.sync.Mutex
@@ -17,7 +17,7 @@ class SearchRepository: KoinComponent {
 	private val apkMirrorSearch: ApkMirrorSearch by inject()
 	private val aptoideSearch: AptoideSearch by inject()
 	private val fdroidRepository: FdroidRepository by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 
 	fun getSearchResultsAsync(text: String) = ioScope.async {
 		val mutex = Mutex()

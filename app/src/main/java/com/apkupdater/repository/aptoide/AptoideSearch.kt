@@ -4,7 +4,7 @@ import com.apkupdater.R
 import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.model.aptoide.ListSearchAppsRequest
 import com.apkupdater.model.aptoide.ListSearchAppsResponse
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.jsonBody
@@ -18,7 +18,7 @@ class AptoideSearch: KoinComponent {
 	private val baseUrl = "https://ws75.aptoide.com/api/7/"
 	private val appUpdates = "listSearchApps"
 	private val source = R.drawable.aptoide_logo
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 	private val exclude get() = if(prefs.settings.excludeExperimental) "alpha,beta" else ""
 	private val limit = "10"
 

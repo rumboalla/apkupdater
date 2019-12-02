@@ -14,8 +14,8 @@ import com.apkupdater.model.aptoide.aptoideFilters
 import com.apkupdater.repository.SelfUpdateRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.repository.aptoide.AptoideUtils
-import com.apkupdater.util.AlarmUtil
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AlarmUtil
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.getAccentColor
 import com.apkupdater.util.ifNotEmpty
 import com.apkupdater.util.ioScope
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 	private val searchViewModel: SearchViewModel by viewModel()
 
 	private val updatesRepository: UpdatesRepository by inject()
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 	private val alarmUtil: AlarmUtil by inject()
 
 	private val controller by lazy { findNavController(R.id.nav_host_fragment) }

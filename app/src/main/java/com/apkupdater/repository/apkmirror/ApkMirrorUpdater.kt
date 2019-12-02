@@ -6,7 +6,7 @@ import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.apkmirror.AppExistsRequest
 import com.apkupdater.model.apkmirror.AppExistsResponse
-import com.apkupdater.util.AppPreferences
+import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.extensions.authentication
@@ -20,7 +20,7 @@ import kotlinx.coroutines.sync.withLock
 import org.koin.core.KoinComponent
 import java.util.Locale
 
-class ApkMirrorUpdater(private val prefs: AppPreferences): KoinComponent {
+class ApkMirrorUpdater(private val prefs: AppPrefs): KoinComponent {
 
 	private val baseUrl = "https://www.apkmirror.com"
 	private val appExists = "/wp-json/apkm/v1/app_exists/"

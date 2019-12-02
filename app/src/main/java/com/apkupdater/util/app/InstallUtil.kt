@@ -1,4 +1,4 @@
-package com.apkupdater.util
+package com.apkupdater.util.app
 
 import android.app.Activity
 import android.content.Context
@@ -18,7 +18,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class InstallUtil: KoinComponent {
 
-	private val prefs: AppPreferences by inject()
+	private val prefs: AppPrefs by inject()
 
 	private val fileProvider = "com.apkupdater.fileprovider"
 	private val downloadDir = "downloads"
