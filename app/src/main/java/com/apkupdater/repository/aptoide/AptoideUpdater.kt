@@ -8,7 +8,7 @@ import com.apkupdater.model.aptoide.ApksData
 import com.apkupdater.model.aptoide.App
 import com.apkupdater.model.aptoide.ListAppUpdatesResponse
 import com.apkupdater.model.aptoide.ListAppsUpdatesRequest
-import com.apkupdater.repository.aptoide.AptoideUtils.computeSha1WithColon
+import com.apkupdater.util.aptoide.AptoideUtils.computeSha1WithColon
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel

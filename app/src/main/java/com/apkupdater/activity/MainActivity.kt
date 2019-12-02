@@ -13,7 +13,7 @@ import com.apkupdater.R
 import com.apkupdater.model.aptoide.aptoideFilters
 import com.apkupdater.repository.SelfUpdateRepository
 import com.apkupdater.repository.UpdatesRepository
-import com.apkupdater.repository.aptoide.AptoideUtils
+import com.apkupdater.util.aptoide.AptoideUtils
 import com.apkupdater.util.app.AlarmUtil
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.getAccentColor

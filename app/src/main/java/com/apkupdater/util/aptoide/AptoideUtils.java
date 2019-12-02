@@ -1,4 +1,4 @@
-package com.apkupdater.repository.aptoide;
+package com.apkupdater.util.aptoide;
 
 import android.app.Activity;
 import android.app.ActivityManager;
