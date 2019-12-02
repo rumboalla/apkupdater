@@ -14,7 +14,7 @@ It provides similar functionality to an app store, but instead of depending on a
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level.
 
 # Download
-* [APK for Beta version (2.0.0-beta3)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0-beta3/app-release.apk)
+* [APK for Beta version (2.0.0-beta4)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0-beta4/app-release.apk)
 
 # Translations
 If you want to help with translations  
