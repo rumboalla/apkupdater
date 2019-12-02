@@ -3,6 +3,7 @@ package com.apkupdater.repository
 import android.app.Activity
 import android.app.AlertDialog
 import com.apkupdater.R
+import com.apkupdater.model.selfupdate.SelfUpdateResponse
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.InstallUtil
 import com.apkupdater.util.catchingAsync
@@ -48,5 +49,3 @@ class SelfUpdateRepository: KoinComponent {
 	}
 
 }
-
-data class SelfUpdateResponse(val version: Int = 0, val apk: String = "", val changelog: String = "")
