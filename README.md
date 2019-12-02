@@ -6,8 +6,10 @@ APKUpdater is an open source tool that simplifies the process of finding updates
 * **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**.
 * Schedule **background update checks** and receive a **notification** when updates are found.
 * Supports **Android 4.0.3** to **Android 10**.
+* Supports **Android TV**.
 * **Material Design 2** with **multiple theme** support.
 * **Direct install** of updates for sources that support it.
+* **Root install** of updates.
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level.
 
 # Download
@@ -22,12 +24,8 @@ If you want to help with translations
 ![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
 
 # Roadmap
-* Update Sources: F-Droid, Google Play.
-* Search Sources: F-Droid, Google Play.
-* Root support.
-* Android TV support.
-* More themes.
-* More options.
+* Update Sources: Google Play.
+* Search Sources: Google Play.
 
 # License
 Copyright &copy; 2019 Rumboalla.  
