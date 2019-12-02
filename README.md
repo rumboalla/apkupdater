@@ -1,5 +1,5 @@
 # APKUpdater [![](https://github.com/rumboalla/apkupdater/workflows/Android%20Build/badge.svg)](https://github.com/rumboalla/apkupdater/actions?query=workflow%3A%22Android+Build%22)
-**APKUpdater** is an open source tool that simplifies the process of **finding updates** for your installed apps.
+**APKUpdater** is an open source tool that simplifies the process of **finding updates** for your installed apps.  
 It provides similar functionality to an app store, but instead of depending on a single source, it aggregates the results from **APKMirror**, **Aptoide**, **F-Droid** and **Google Play**.
 
 # Features
