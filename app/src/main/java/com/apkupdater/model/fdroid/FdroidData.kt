@@ -10,7 +10,7 @@ data class FdroidPackage(
 	val versionCode: Int = 0,
 	val versionName: String = "",
 	val minSdkVersion: Int = 0,
-	val arches: List<String> = emptyList()
+	val nativecode: List<String> = emptyList()
 )
 
 data class FdroidApp(

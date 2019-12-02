@@ -1,6 +1,7 @@
 package com.apkupdater.repository.fdroid
 
 import android.content.Context
+import android.os.Build
 import com.apkupdater.R
 import com.apkupdater.model.AppInstalled
 import com.apkupdater.model.AppSearch
@@ -11,6 +12,7 @@ import com.apkupdater.model.fdroid.FdroidPackage
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.InstallUtil
 import com.apkupdater.util.ioScope
+import com.apkupdater.util.orZero
 import com.github.kittinunf.fuel.Fuel
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
@@ -34,6 +36,14 @@ class FdroidRepository: KoinComponent {
 
 	private var lastCheck = 0L
 	private var data: FdroidData? = null
+
+	private val arch: List<String> by lazy {
+		if (Build.VERSION.SDK_INT >= 21) {
+			Build.SUPPORTED_ABIS.toList()
+		} else {
+			listOfNotNull(Build.CPU_ABI, Build.CPU_ABI2)
+		}
+	}
 
 	@Suppress("BlockingMethodInNonBlockingContext")
 	fun getDataAsync() = ioScope.async {
@@ -65,21 +75,39 @@ class FdroidRepository: KoinComponent {
 		runCatching {
 			getDataAsync().await()
 
-			apps.mapNotNull { app ->
-				data?.packages?.get(app.packageName)?.first()?.let { pack ->
-					if (pack.versionCode > app.versionCode) AppUpdate.from(app, pack) else null
-				}
+			apps.mapNotNull { app -> if (prefs.settings.excludeExperimental && isExperimental(data?.apps?.find { it.packageName == app.packageName }?: FdroidApp())) null else app }
+				.mapNotNull { app -> if (prefs.settings.excludeMinApi && data?.packages?.get(app.packageName)?.first()?.minSdkVersion.orZero() > Build.VERSION.SDK_INT) null else app }
+				.mapNotNull { app -> if (prefs.settings.excludeArch && isIncompatibleArch(data?.packages?.get(app.packageName)?.first())) null else app }
+				.mapNotNull { app -> data?.packages?.get(app.packageName)?.first()?.let { pack -> if (pack.versionCode > app.versionCode) AppUpdate.from(app, pack) else null }
 			}.sortedBy { it.name }.toList()
 		}.onFailure { Result.failure<List<AppUpdate>>(it) }.onSuccess { Result.success(it) }
 	}
 
-	// TODO: Filter arch, beta, minapi
 	fun searchAsync(text: String) = ioScope.async {
 		runCatching {
-			getDataAsync().await()?.apps.orEmpty().mapNotNull { app ->
-				if (app.description.contains(text) || app.packageName.contains(text)) AppSearch.from(app) else null
-			}.shuffled().take(10).sortedBy { it.name }
+			val data = getDataAsync().await()
+
+			data?.apps.orEmpty()
+				.filter { app -> app.description.contains(text, true) || app.packageName.contains(text, true) }
+				.mapNotNull { app -> if (prefs.settings.excludeExperimental && isExperimental(app)) null else app }
+				.mapNotNull { app -> if (prefs.settings.excludeMinApi && data?.packages?.get(app.packageName)?.first()?.minSdkVersion.orZero() > Build.VERSION.SDK_INT) null else app }
+				.mapNotNull { app -> if (prefs.settings.excludeArch && isIncompatibleArch(data?.packages?.get(app.packageName)?.first())) null else app }
+				.map { app -> AppSearch.from(app) }
+				.shuffled().take(10).sortedBy { it.name }
+
 		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
+	}
+
+	private fun isIncompatibleArch(pack: FdroidPackage?): Boolean {
+		pack?.let { return !(it.nativecode.isEmpty() || it.nativecode.intersect(arch).isNotEmpty()) }
+		return false
+	}
+
+	private fun isExperimental(app: FdroidApp): Boolean {
+		if (app.suggestedVersionName.contains("-alpha", true) || app.suggestedVersionName.contains("-beta", true)
+			|| app.packageName.endsWith(".alpha") || app.packageName.endsWith(".beta")
+			|| app.name.contains("(alpha)", true) || app.name.contains("(beta)", true)) return true
+		return false
 	}
 
 	private fun AppUpdate.Companion.from(app: AppInstalled, pack: FdroidPackage) = AppUpdate(

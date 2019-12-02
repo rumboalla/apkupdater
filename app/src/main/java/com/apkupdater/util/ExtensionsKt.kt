@@ -36,3 +36,5 @@ fun String.ifNotEmpty(block: (String) -> Unit) = if (isNotEmpty()) block(this) e
 val Int.dp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 val Int.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+fun Int?.orZero() = this ?: 0
