@@ -23,10 +23,6 @@ If you want to help with translations
 ![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
 ![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
 
-# Roadmap
-* Update Sources: Google Play.
-* Search Sources: Google Play.
-
 # License
 Copyright &copy; 2019 Rumboalla.  
 Licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
