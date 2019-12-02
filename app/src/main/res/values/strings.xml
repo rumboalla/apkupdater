@@ -102,7 +102,7 @@
         <item>@string/settings_theme_dark_blue</item>
         <item>@string/settings_theme_light_blue</item>
         <item>@string/settings_theme_dark_orange</item>
-        <item>@string/settings_theme_light_blue</item>
+        <item>@string/settings_theme_light_orange</item>
         <item>@string/settings_theme_dark_green</item>
         <item>@string/settings_theme_light_green</item>
     </string-array>
