@@ -13,7 +13,7 @@ APKUpdater is an open source tool that simplifies the process of finding updates
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level.
 
 # Download
-* [APK for Beta version (2.0.0-beta1)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0-beta1/apkupdater-2.0.0-beta1.apk)
+* [APK for Beta version (2.0.0-beta3)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0-beta3/apkupdater-2.0.0-beta3.apk)
 
 # Translations
 If you want to help with translations  
