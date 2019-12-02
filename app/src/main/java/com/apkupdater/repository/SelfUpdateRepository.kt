@@ -28,9 +28,9 @@ class SelfUpdateRepository: KoinComponent {
 	fun checkForUpdatesAsync(activity: Activity) = ioScope.catchingAsync {
 		if (System.currentTimeMillis() - prefs.selfUpdateCheck() > interval) {
 			val response = Fuel.get(url).responseObject<SelfUpdateResponse>().third.get()
+			prefs.selfUpdateCheck(System.currentTimeMillis())
 			if (response.version > activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode) {
 				if (withContext(Dispatchers.Main) { showDialog(activity, response) }) {
-					prefs.selfUpdateCheck(System.currentTimeMillis())
 					installer.install(activity, installer.downloadAsync(activity, response.apk) { _, _ -> }, 0)
 				}
 			}
