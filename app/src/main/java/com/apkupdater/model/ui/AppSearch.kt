@@ -9,6 +9,8 @@ data class AppSearch(
 	val iconurl: String = "",
 	val developer: String = "",
 	val source: Int = 0,
+	val packageName: String = "",
+	val versionCode: Int = 0,
 	override val id: Int = crc16(url),
 	var loading: Boolean = false
 ): Id { companion object }

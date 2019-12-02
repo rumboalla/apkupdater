@@ -5,17 +5,21 @@ import android.content.res.Resources
 import android.util.Log
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppInstalled
+import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.util.aurora.NativeDeviceInfoProvider
 import com.apkupdater.util.aurora.OkHttpClientAdapter
 import com.apkupdater.util.ioScope
 import com.apkupdater.util.orZero
 import com.dragons.aurora.playstoreapiv2.AppDetails
+import com.dragons.aurora.playstoreapiv2.DocV2
 import com.dragons.aurora.playstoreapiv2.GooglePlayAPI
 import com.dragons.aurora.playstoreapiv2.PlayStoreApiBuilder
+import com.dragons.aurora.playstoreapiv2.SearchIterator
 import kotlinx.coroutines.async
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+
 
 @Suppress("BlockingMethodInNonBlockingContext")
 class GooglePlayRepository: KoinComponent {
@@ -42,10 +46,13 @@ class GooglePlayRepository: KoinComponent {
 			}
 
 			updates
-		}.fold(
-			onSuccess = { Result.success(it) },
-			onFailure = { Result.failure(it) }
-		)
+		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
+	}
+
+	fun searchAsync(text: String) = ioScope.async {
+		runCatching {
+			SearchIterator(api, text).next()?.toList().orEmpty().map { AppSearch.from(it) }.shuffled().take(10).sortedBy { it.name }.toList()
+		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
 	}
 
 	fun getDownloadUrl(packageName: String, versionCode: Int): String {
@@ -64,6 +71,16 @@ class GooglePlayRepository: KoinComponent {
 		tokenDispenserUrl = dispenserUrl
 		deviceInfoProvider = getProvider(context)
 	}.build()
+
+	private fun AppSearch.Companion.from(doc: DocV2) = AppSearch(
+		doc.title,
+		"play",
+		doc.imageList.find { image -> image.imageType == GooglePlayAPI.IMAGE_TYPE_APP_ICON }?.imageUrl.orEmpty(),
+		doc.details.appDetails.packageName,
+		R.drawable.googleplay_logo,
+		doc.details.appDetails.packageName,
+		doc.details.appDetails.versionCode
+	)
 
 	private fun AppUpdate.Companion.from(app: AppInstalled, entry: AppDetails) = AppUpdate(
 		app.name,

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.repository.SearchRepository
+import com.apkupdater.repository.googleplay.GooglePlayRepository
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.adapter.BindAdapter
@@ -45,6 +46,7 @@ class SearchFragment : Fragment() {
 	private val searchViewModel: SearchViewModel by sharedViewModel()
 	private val mainViewModel: MainViewModel by sharedViewModel()
 	private val searchRepository: SearchRepository by inject()
+	private val googlePlayRepository: GooglePlayRepository by inject()
 	private val installer: InstallUtil by inject()
 	private val prefs: AppPrefs by inject()
 
@@ -104,7 +106,7 @@ class SearchFragment : Fragment() {
 			view.progress.visibility = View.INVISIBLE
 			view.action_one.visibility = View.VISIBLE
 			view.action_one.text = getString(R.string.action_install)
-			view.action_one.setOnClickListener { if (app.url.endsWith("apk")) downloadAndInstall(app) else launchUrl(app.url) }
+			view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play")  downloadAndInstall(app) else launchUrl(app.url) }
 		}
 		view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
 		view.source.setImageResource(app.source)
@@ -113,7 +115,8 @@ class SearchFragment : Fragment() {
 	private fun downloadAndInstall(app: AppSearch) = ioScope.launch {
 		runCatching {
 			searchViewModel.setLoading(app.id, true)
-			val file = installer.downloadAsync(requireActivity(), app.url) { _, _ -> searchViewModel.setLoading(app.id, true) }
+			val url = if (app.url == "play") googlePlayRepository.getDownloadUrl(app.packageName, app.versionCode) else app.url
+			val file = installer.downloadAsync(requireActivity(), url) { _, _ -> searchViewModel.setLoading(app.id, true) }
 			if(installer.install(requireActivity(), file, app.id)) {
 				searchViewModel.setLoading(app.id, false)
 				searchViewModel.remove(app.id)
