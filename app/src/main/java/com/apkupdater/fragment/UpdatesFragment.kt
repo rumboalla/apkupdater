@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppUpdate
+import com.apkupdater.repository.googleplay.GooglePlayRepository
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.adapter.BindAdapter
@@ -37,6 +38,7 @@ class UpdatesFragment : Fragment() {
 	private val mainViewModel: MainViewModel by sharedViewModel()
 	private val installer: InstallUtil by inject()
 	private val prefs: AppPrefs by inject()
+	private val googlePlayRepository: GooglePlayRepository by inject()
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
 		inflater.inflate(R.layout.fragment_updates, container, false)
@@ -68,7 +70,7 @@ class UpdatesFragment : Fragment() {
 			view.progress.visibility = View.INVISIBLE
 			view.action_one.visibility = View.VISIBLE
 			view.action_one.text = getString(R.string.action_install)
-			view.action_one.setOnClickListener { if (app.url.endsWith("apk")) downloadAndInstall(app) else launchUrl(app.url) }
+			view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play") downloadAndInstall(app) else launchUrl(app.url) }
 		}
 		view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
 		view.source.setImageResource(app.source)
@@ -77,7 +79,8 @@ class UpdatesFragment : Fragment() {
 	private fun downloadAndInstall(app: AppUpdate) = ioScope.launch {
 		runCatching {
 			updatesViewModel.setLoading(app.id, true)
-			val file = installer.downloadAsync(requireActivity(), app.url) { _, _ -> updatesViewModel.setLoading(app.id, true) }
+			val url = if (app.url == "play") googlePlayRepository.getDownloadUrl(app.packageName, app.versionCode) else app.url
+			val file = installer.downloadAsync(requireActivity(), url) { _, _ -> updatesViewModel.setLoading(app.id, true) }
 			if(installer.install(requireActivity(), file, app.id)) {
 				updatesViewModel.setLoading(app.id, false)
 				updatesViewModel.remove(app.id)

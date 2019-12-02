@@ -36,7 +36,7 @@ class UpdatesRepository: KoinComponent {
 		val aptoide = if (prefs.settings.aptoide) aptoideUpdater.updateAsync(apps) else null
 		val fdroid = if (prefs.settings.fdroid) fdroidRepository.updateAsync(installedApps) else null
 
-		listOfNotNull(apkMirror, aptoide, fdroid).forEach {
+		listOfNotNull(apkMirror, aptoide, fdroid, googlePlay).forEach {
 			it.await().fold(
 				onSuccess = { mutex.withLock { updates.addAll(it) } },
 				onFailure = { mutex.withLock { errors.add(it) } }
