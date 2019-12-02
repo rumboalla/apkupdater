@@ -3,9 +3,9 @@ package com.apkupdater.repository.fdroid
 import android.content.Context
 import android.os.Build
 import com.apkupdater.R
-import com.apkupdater.model.AppInstalled
-import com.apkupdater.model.AppSearch
-import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.ui.AppInstalled
+import com.apkupdater.model.ui.AppSearch
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.fdroid.FdroidApp
 import com.apkupdater.model.fdroid.FdroidData
 import com.apkupdater.model.fdroid.FdroidPackage
@@ -110,23 +110,25 @@ class FdroidRepository: KoinComponent {
 		return false
 	}
 
-	private fun AppUpdate.Companion.from(app: AppInstalled, pack: FdroidPackage) = AppUpdate(
-		app.name,
-		app.packageName,
-		pack.versionName,
-		pack.versionCode,
-		app.version,
-		app.versionCode,
-		"$baseUrl${pack.apkName}",
-		R.drawable.fdroid_logo
-	)
+	private fun AppUpdate.Companion.from(app: AppInstalled, pack: FdroidPackage) =
+		AppUpdate(
+			app.name,
+			app.packageName,
+			pack.versionName,
+			pack.versionCode,
+			app.version,
+			app.versionCode,
+			"$baseUrl${pack.apkName}",
+			R.drawable.fdroid_logo
+		)
 
-	private fun AppSearch.Companion.from(app: FdroidApp) = AppSearch(
-		app.name,
-		"$baseUrl${app.packageName}_${app.suggestedVersionCode}.apk",
-		"${baseUrl}icons-640/${app.icon}",
-		app.packageName,
-		R.drawable.fdroid_logo
-	)
+	private fun AppSearch.Companion.from(app: FdroidApp) =
+		AppSearch(
+			app.name,
+			"$baseUrl${app.packageName}_${app.suggestedVersionCode}.apk",
+			"${baseUrl}icons-640/${app.icon}",
+			app.packageName,
+			R.drawable.fdroid_logo
+		)
 
 }

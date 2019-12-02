@@ -1,4 +1,4 @@
-package com.apkupdater.model
+package com.apkupdater.model.ui
 
 import com.apkupdater.util.adapter.Id
 

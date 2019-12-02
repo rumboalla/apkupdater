@@ -1,7 +1,7 @@
 package com.apkupdater.repository
 
 import android.content.pm.PackageManager
-import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
 import com.apkupdater.repository.aptoide.AptoideUpdater
 import com.apkupdater.repository.fdroid.FdroidRepository

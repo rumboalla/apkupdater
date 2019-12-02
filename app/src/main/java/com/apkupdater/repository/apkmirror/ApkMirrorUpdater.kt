@@ -2,8 +2,8 @@ package com.apkupdater.repository.apkmirror
 
 import android.os.Build
 import com.apkupdater.R
-import com.apkupdater.model.AppInstalled
-import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.ui.AppInstalled
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.apkmirror.AppExistsRequest
 import com.apkupdater.model.apkmirror.AppExistsResponse
 import com.apkupdater.util.AppPreferences

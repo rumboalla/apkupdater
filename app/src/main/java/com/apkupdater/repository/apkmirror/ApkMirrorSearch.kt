@@ -1,7 +1,7 @@
 package com.apkupdater.repository.apkmirror
 
 import com.apkupdater.R
-import com.apkupdater.model.AppSearch
+import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.util.ioScope
 import kotlinx.coroutines.async
 import org.jsoup.Jsoup

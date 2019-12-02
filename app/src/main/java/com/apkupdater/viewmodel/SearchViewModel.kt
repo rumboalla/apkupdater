@@ -2,7 +2,7 @@ package com.apkupdater.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.apkupdater.model.AppSearch
+import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.util.SingleLiveEvent
 
 class SearchViewModel : ViewModel() {

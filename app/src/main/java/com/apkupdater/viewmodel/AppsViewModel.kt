@@ -2,7 +2,7 @@ package com.apkupdater.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.apkupdater.model.AppInstalled
+import com.apkupdater.model.ui.AppInstalled
 
 class AppsViewModel : ViewModel() {
 

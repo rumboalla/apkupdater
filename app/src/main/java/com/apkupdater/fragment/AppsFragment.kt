@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apkupdater.R
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.viewmodel.AppsViewModel
-import com.apkupdater.model.AppInstalled
+import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.adapter.BindAdapter

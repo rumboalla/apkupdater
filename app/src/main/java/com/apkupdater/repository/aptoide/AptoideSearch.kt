@@ -1,7 +1,7 @@
 package com.apkupdater.repository.aptoide
 
 import com.apkupdater.R
-import com.apkupdater.model.AppSearch
+import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.model.aptoide.ListSearchAppsRequest
 import com.apkupdater.model.aptoide.ListSearchAppsResponse
 import com.apkupdater.util.AppPreferences
@@ -35,7 +35,13 @@ class AptoideSearch: KoinComponent {
 	}
 
 	private fun parseData(response: ListSearchAppsResponse) = response.datalist.list.map{ app ->
-		AppSearch(app.name, app.file.path, app.icon?.replace("http:", "https:") ?: "", app.packageName, source)
+		AppSearch(
+			app.name,
+			app.file.path,
+			app.icon?.replace("http:", "https:") ?: "",
+			app.packageName,
+			source
+		)
 	}
 
 }

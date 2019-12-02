@@ -1,6 +1,6 @@
 package com.apkupdater.repository
 
-import com.apkupdater.model.AppSearch
+import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.repository.apkmirror.ApkMirrorSearch
 import com.apkupdater.repository.aptoide.AptoideSearch
 import com.apkupdater.repository.fdroid.FdroidRepository

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
-import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.InstallUtil
 import com.apkupdater.util.adapter.BindAdapter

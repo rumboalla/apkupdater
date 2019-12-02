@@ -3,7 +3,7 @@ package com.apkupdater.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.apkupdater.R
-import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.ui.AppUpdate
 import com.kryptoprefs.context.KryptoContext
 import com.kryptoprefs.gson.json
 import com.kryptoprefs.preferences.KryptoPrefs

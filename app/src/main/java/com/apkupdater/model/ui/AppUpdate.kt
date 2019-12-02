@@ -1,4 +1,4 @@
-package com.apkupdater.model
+package com.apkupdater.model.ui
 
 import android.content.Context
 import android.content.pm.PackageInfo
@@ -25,27 +25,29 @@ data class AppUpdate(
 ): Id {
 	companion object {
 
-		fun from(context: Context, info: PackageInfo, app: App, source: Int): AppUpdate = AppUpdate(
-			info.name(context),
-			app.packageName,
-			app.file.vername,
-			app.file.vercode.toInt(),
-			info.versionName,
-			info.versionCode,
-			app.file.path,
-			source
-		)
+		fun from(context: Context, info: PackageInfo, app: App, source: Int): AppUpdate =
+			AppUpdate(
+				info.name(context),
+				app.packageName,
+				app.file.vername,
+				app.file.vercode.toInt(),
+				info.versionName,
+				info.versionCode,
+				app.file.path,
+				source
+			)
 
-		fun from(app: AppInstalled, data: AppExistsResponseData, apk: AppExistsResponseApk, url: String, source: Int): AppUpdate = AppUpdate(
-			app.name,
-			data.pname,
-			data.release.version,
-			apk.versionCode,
-			app.version,
-			app.versionCode,
-			url,
-			source
-		)
+		fun from(app: AppInstalled, data: AppExistsResponseData, apk: AppExistsResponseApk, url: String, source: Int): AppUpdate =
+			AppUpdate(
+				app.name,
+				data.pname,
+				data.release.version,
+				apk.versionCode,
+				app.version,
+				app.versionCode,
+				url,
+				source
+			)
 
 	}
 }

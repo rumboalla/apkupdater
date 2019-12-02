@@ -3,7 +3,7 @@ package com.apkupdater.repository.aptoide
 import android.content.Context
 import android.content.pm.PackageInfo
 import com.apkupdater.R
-import com.apkupdater.model.AppUpdate
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.aptoide.ApksData
 import com.apkupdater.model.aptoide.App
 import com.apkupdater.model.aptoide.ListAppUpdatesResponse

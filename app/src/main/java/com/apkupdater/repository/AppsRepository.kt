@@ -3,7 +3,7 @@ package com.apkupdater.repository
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
-import com.apkupdater.model.AppInstalled
+import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.util.AppPreferences
 import com.apkupdater.util.name
 import com.kryptoprefs.invoke
@@ -22,11 +22,25 @@ class AppsRepository(private val context: Context, private val prefs: AppPrefere
 	fun getPackageInfosFiltered(options: Int = 0) = getPackageInfos(options).filter { !ignoredApps.contains(it.packageName) }
 
 	fun getApps(options: Int = 0) = getPackageInfos(options).mapIndexed { i, app ->
-		AppInstalled(i, app.name(context), app.packageName, app.versionName ?: "", app.versionCode, ignoredApps.contains(app.packageName))
+		AppInstalled(
+			i,
+			app.name(context),
+			app.packageName,
+			app.versionName ?: "",
+			app.versionCode,
+			ignoredApps.contains(app.packageName)
+		)
 	}.sortedBy { it.name }.sortedBy { it.ignored }.toList()
 
 	fun getAppsFiltered(apps: Sequence<PackageInfo>) = apps.mapIndexed { i, app ->
-		AppInstalled(i, app.name(context), app.packageName, app.versionName ?: "", app.versionCode, ignoredApps.contains(app.packageName))
+		AppInstalled(
+			i,
+			app.name(context),
+			app.packageName,
+			app.versionName ?: "",
+			app.versionCode,
+			ignoredApps.contains(app.packageName)
+		)
 	}.sortedBy { it.name }.sortedBy { it.ignored }
 
 }
