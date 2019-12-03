@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
 		nav_view.getBadge(id)?.verticalOffset = resources.getDimensionPixelSize(R.dimen.badge_offset)
 	}.onFailure { e ->
 		viewModel.snackbar.postValue(e.message)
-		Log.e("addBadge", e.message, e)
+		Log.e("MainActivity", "addBadge", e)
 	}.getOrNull()
 
 	private fun setTheme() {

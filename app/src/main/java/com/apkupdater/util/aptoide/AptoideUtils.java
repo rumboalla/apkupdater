@@ -22,27 +22,31 @@ import java.util.Locale;
 public class AptoideUtils {
 
 	public static String getFilters(Activity context) {
+		try {
+			String filters = "maxSdk="
+					+ Build.VERSION.SDK_INT
+					+ "&maxScreen="
+					+ getScreenSize(Resources.getSystem())
+					+ "&maxGles="
+					+ ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getDeviceConfigurationInfo().getGlEsVersion()
+					+ "&myCPU="
+					+ getAbis()
+					+ "&leanback="
+					+ hasLeanback(context)
+					+ "&myDensity="
+					+ getDensityDpi(context.getWindowManager());
+			//+ (getSupportedOpenGlExtensionsManager().equals("") ? ""
+			//: "&myGLTex=" + getSupportedOpenGlExtensionsManager());
 
-		String filters = "maxSdk="
-				+  Build.VERSION.SDK_INT
-				+ "&maxScreen="
-				+ getScreenSize(Resources.getSystem())
-				+ "&maxGles="
-				+ ((ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE)).getDeviceConfigurationInfo().getGlEsVersion()
-				+ "&myCPU="
-				+ getAbis()
-				+ "&leanback="
-				+ hasLeanback(context)
-				+ "&myDensity="
-				+ getDensityDpi(context.getWindowManager());
-				//+ (getSupportedOpenGlExtensionsManager().equals("") ? ""
-				//: "&myGLTex=" + getSupportedOpenGlExtensionsManager());
-
-		return Base64.encodeToString(filters.getBytes(), 0)
-				.replace("=", "")
-				.replace("/", "*")
-				.replace("+", "_")
-				.replace("\n", "");
+			return Base64.encodeToString(filters.getBytes(), 0)
+					.replace("=", "")
+					.replace("/", "*")
+					.replace("+", "_")
+					.replace("\n", "");
+		} catch (Exception e) {
+			Log.e("AptoideUtils", "getFilters", e);
+			return "";
+		}
 	}
 
 	public enum Size {
@@ -122,7 +126,7 @@ public class AptoideUtils {
 			md.update(bytes, 0, bytes.length);
 			return md.digest();
 		} catch (NoSuchAlgorithmException e) {
-			Log.e("computeSha1", e.getMessage(), e);
+			Log.e("AptoideUtils", "computeSha1", e);
 		}
 
 		return new byte[0];

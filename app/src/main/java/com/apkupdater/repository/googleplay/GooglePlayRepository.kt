@@ -20,7 +20,6 @@ import kotlinx.coroutines.async
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-
 @Suppress("BlockingMethodInNonBlockingContext")
 class GooglePlayRepository: KoinComponent {
 
@@ -42,7 +41,7 @@ class GooglePlayRepository: KoinComponent {
 							updates.add(AppUpdate.from(app, entry.doc.details.appDetails))
 						}
 					}
-				}.onFailure { Log.e("GooglePlayRepository", it.message, it) }
+				}.onFailure { Log.e("GooglePlayRepository", "updateAsync", it) }
 			}
 
 			updates

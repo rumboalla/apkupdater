@@ -24,7 +24,7 @@ class AlarmReceiver : BroadcastReceiver(), KoinComponent {
 				prefs.updates(it)
 				notificationUtil.showUpdateNotification(it.size)
 			},
-			onFailure = { Log.e("AlarmReceiver", it.message, it) }
+			onFailure = { Log.e("AlarmReceiver", "onReceive", it) }
 		)
 	}
 

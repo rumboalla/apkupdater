@@ -89,7 +89,7 @@ class SearchFragment : Fragment() {
 			onSuccess = { searchViewModel.items.postValue(it) },
 			onFailure = {
 				mainViewModel.snackbar.postValue(it.message)
-				Log.e("SearchFragment", it.message, it)
+				Log.e("SearchFragment", "search", it)
 			}
 		)
 	}.invokeOnCompletion { mainViewModel.loading.postValue(false) }
