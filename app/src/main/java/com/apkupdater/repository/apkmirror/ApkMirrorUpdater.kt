@@ -1,11 +1,12 @@
 package com.apkupdater.repository.apkmirror
 
 import android.os.Build
+import com.apkupdater.BuildConfig
 import com.apkupdater.R
-import com.apkupdater.model.ui.AppInstalled
-import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.apkmirror.AppExistsRequest
 import com.apkupdater.model.apkmirror.AppExistsResponse
+import com.apkupdater.model.ui.AppInstalled
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.koin.core.KoinComponent
-import java.util.Locale
+import java.util.*
 
 class ApkMirrorUpdater(private val prefs: AppPrefs): KoinComponent {
 
@@ -26,7 +27,7 @@ class ApkMirrorUpdater(private val prefs: AppPrefs): KoinComponent {
 	private val appExists = "/wp-json/apkm/v1/app_exists/"
 	private val user = "api-apkupdater"
 	private val token = "rm5rcfruUjKy04sMpyMPJXW8"
-	private val userAgent = "APKUpdater-v1.5.11"
+	private val userAgent = "APKUpdater-v" + BuildConfig.VERSION_NAME
 	private val source = R.drawable.apkmirror_logo
 	private val excludeExperimental get() = prefs.settings.excludeExperimental
 	private val excludeArch get() = prefs.settings.excludeArch
