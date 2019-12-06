@@ -13,9 +13,9 @@ import com.apkupdater.R
 import com.apkupdater.model.aptoide.aptoideFilters
 import com.apkupdater.repository.SelfUpdateRepository
 import com.apkupdater.repository.UpdatesRepository
-import com.apkupdater.util.aptoide.AptoideUtils
 import com.apkupdater.util.app.AlarmUtil
 import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.aptoide.AptoideUtils
 import com.apkupdater.util.getAccentColor
 import com.apkupdater.util.ifNotEmpty
 import com.apkupdater.util.ioScope
@@ -46,11 +46,6 @@ class MainActivity : AppCompatActivity() {
 
 	private val controller by lazy { findNavController(R.id.nav_host_fragment) }
 
-	override fun onNewIntent(intent: Intent?) {
-		super.onNewIntent(intent)
-		intent?.let { goToUpdates(it) }
-	}
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
@@ -68,9 +63,6 @@ class MainActivity : AppCompatActivity() {
 
 		// Navigation
 		nav_view.setupWithNavController(controller)
-
-		// Notification
-		goToUpdates(intent)
 
 		// Badges
 		viewModel.appsBadge.observe(this) { addBadge(R.id.navigation_apps, it) }
@@ -91,15 +83,33 @@ class MainActivity : AppCompatActivity() {
 
 		// SelfUpdate
 		checkForSelfUpdate()
+
+		onNewIntent(intent)
+	}
+
+	override fun onNewIntent(intent: Intent?) {
+		intent?.let {
+			goToUpdates(it)
+			goToSearch(it)
+		}
+		super.onNewIntent(intent)
 	}
 
 	private fun goToUpdates(intent: Intent) {
-		if (intent.action == getString(R.string.notification_update_action)){
+		if (intent.action == getString(R.string.notification_update_action)) {
 			prefs.updates().ifNotEmpty {
 				updatesViewModel.items.postValue(it)
 				viewModel.updatesBadge.postValue(it.size)
 			}
 			controller.navigate(R.id.navigation_updates)
+		}
+	}
+
+	private fun goToSearch(intent: Intent) {
+		val packageName = intent.data?.getQueryParameter("id")
+		if (!packageName.isNullOrEmpty()) {
+			controller.navigate(R.id.navigation_search)
+			searchViewModel.search.postValue(packageName)
 		}
 	}
 
