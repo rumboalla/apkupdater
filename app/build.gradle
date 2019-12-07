@@ -89,7 +89,7 @@ dependencies {
     implementation 'com.startapp:inapp-sdk:4.3.0'
     implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
     implementation 'com.github.whyorean:playstore-api-v2:2.4'
-    implementation 'ch.acra:acra-http:5.1.3'
+    implementation 'ch.acra:acra-http:5.4.0'
 
     testImplementation 'junit:junit:4.12'
 

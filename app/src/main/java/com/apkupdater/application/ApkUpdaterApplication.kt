@@ -1,6 +1,6 @@
 package com.apkupdater.application
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.apkupdater.di.mainModule
 import org.acra.ACRA
 import org.acra.BuildConfig
@@ -13,7 +13,7 @@ import org.koin.core.context.startKoin
 
 @AcraCore(buildConfigClass = BuildConfig::class)
 @AcraHttpSender(httpMethod = HttpSender.Method.POST, uri = "https://collector.tracepot.com/8ead3e03")
-class ApkUpdaterApplication : Application() {
+class ApkUpdaterApplication : MultiDexApplication() {
 
 	override fun onCreate() {
 		super.onCreate()
