@@ -30,7 +30,6 @@ class SelfUpdateRepository: KoinComponent {
 		if (System.currentTimeMillis() - prefs.selfUpdateCheck() > interval) {
 			val r = Fuel.get(url).responseString().third.get()
 			val o = Gson().fromJson<SelfUpdateResponse>(r, SelfUpdateResponse::class.java)
-
 			prefs.selfUpdateCheck(System.currentTimeMillis())
 			if (o.version > activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode) {
 				if (withContext(Dispatchers.Main) { showDialog(activity, o) }) {
