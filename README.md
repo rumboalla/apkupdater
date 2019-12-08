@@ -11,6 +11,7 @@ It provides similar functionality to an app store, but instead of depending on a
 * **Material Design 2** with **multiple theme** support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates.
+* **Languages**: English, Spanish, Chinese.
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level.
 
 # Download
@@ -23,6 +24,10 @@ If you want to help with translations
 # Screenshots
 ![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
 ![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
+
+# Other Projects
+* [CoolRs](https://github.com/rumboalla/coolrs): A collection of Android RenderScript effecs. 
+* [KryptoPrefs](https://github.com/rumboalla/KryptoPrefs): Kotlin library for handling encrypted SharedPreferences.
 
 # License
 Copyright &copy; 2019 Rumboalla.  
