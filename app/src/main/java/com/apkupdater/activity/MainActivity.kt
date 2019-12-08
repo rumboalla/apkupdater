@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 			"3" -> setTheme(R.style.AppThemeLightOrange)
 			"4" -> setTheme(R.style.AppThemeDarkGreen)
 			"5" -> setTheme(R.style.AppThemeLightGreen)
-			else -> setTheme(R.style.AppThemeDarkBlue)
+			else -> setTheme(R.style.AppThemeDarkOrange)
 		}
 	}
 
