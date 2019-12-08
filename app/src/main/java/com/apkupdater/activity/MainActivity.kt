@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
 		swipe_layout.setColorSchemeColors(getAccentColor(), getAccentColor(), getAccentColor())
 		swipe_layout.setOnRefreshListener { checkForUpdates() }
 		viewModel.loading.observe(this) { swipe_layout.isRefreshing = it }
-		checkForUpdates()
 
 		// Schedule alarm
 		alarmUtil.setupAlarm(applicationContext)
@@ -81,10 +80,11 @@ class MainActivity : AppCompatActivity() {
 		// Snackbar
 		viewModel.snackbar.observe(this) { snackBar(it) }
 
-		// SelfUpdate
-		checkForSelfUpdate()
-
 		onNewIntent(intent)
+
+		// Updates
+		checkForSelfUpdate()
+		checkForUpdates()
 	}
 
 	override fun onNewIntent(intent: Intent?) {

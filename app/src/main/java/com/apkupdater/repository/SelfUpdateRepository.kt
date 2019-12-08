@@ -9,7 +9,7 @@ import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.catchingAsync
 import com.apkupdater.util.ioScope
 import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.gson.responseObject
+import com.google.gson.Gson
 import com.kryptoprefs.invoke
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,11 +28,13 @@ class SelfUpdateRepository: KoinComponent {
 
 	fun checkForUpdatesAsync(activity: Activity) = ioScope.catchingAsync {
 		if (System.currentTimeMillis() - prefs.selfUpdateCheck() > interval) {
-			val response = Fuel.get(url).responseObject<SelfUpdateResponse>().third.get()
+			val r = Fuel.get(url).responseString().third.get()
+			val o = Gson().fromJson<SelfUpdateResponse>(r, SelfUpdateResponse::class.java)
+
 			prefs.selfUpdateCheck(System.currentTimeMillis())
-			if (response.version > activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode) {
-				if (withContext(Dispatchers.Main) { showDialog(activity, response) }) {
-					installer.install(activity, installer.downloadAsync(activity, response.apk) { _, _ -> }, 0)
+			if (o.version > activity.packageManager.getPackageInfo(activity.packageName, 0).versionCode) {
+				if (withContext(Dispatchers.Main) { showDialog(activity, o) }) {
+					installer.install(activity, installer.downloadAsync(activity, o.apk) { _, _ -> }, 0)
 				}
 			}
 		}
