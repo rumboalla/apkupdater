@@ -48,39 +48,47 @@ class FdroidRepository: KoinComponent {
 
 	@Suppress("BlockingMethodInNonBlockingContext")
 	fun getDataAsync() = ioScope.async {
-		if (data == null || System.currentTimeMillis() - lastCheck > 3600000) {
-			// Head request so we get only the headers
-			var last = ""
-			try {
-				last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
-			} catch (e: Exception) {
-				Log.e("FdroidRepository", "getDataAsync", e)
-			}
+        runCatching {
+            if (data == null || System.currentTimeMillis() - lastCheck > 3600000) {
+                // Head request so we get only the headers
+                var last = ""
+                try {
+                    last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
+                } catch (e: Exception) {
 
-			lastCheck = System.currentTimeMillis()
+                }
 
-			// Check if last changed
-			var refresh = false
-			if (last != prefs.lastFdroid()) {
-				// Download new file
-				installer.downloadAsync(context, "$baseUrl$index", file)
-				prefs.lastFdroid(last)
-				refresh = true
-			}
+                lastCheck = System.currentTimeMillis()
 
-			// Read the json from inside jar
-			if (data == null || refresh) {
-				val jar = JarFile(file)
-				val stream = jar.getInputStream(jar.getEntry("index-v1.json"))
-				data = Gson().fromJson<FdroidData>(JsonReader(InputStreamReader(stream, "UTF-8")), FdroidData::class.java)
-			}
-		}
-		data
+                // Check if last changed
+                var refresh = false
+                if (last != prefs.lastFdroid()) {
+                    // Download new file
+                    installer.downloadAsync(context, "$baseUrl$index", file)
+                    prefs.lastFdroid(last)
+                    refresh = true
+                }
+
+                // Read the json from inside jar
+                if (data == null || refresh) {
+                    val jar = JarFile(file)
+                    val stream = jar.getInputStream(jar.getEntry("index-v1.json"))
+                    data = Gson().fromJson<FdroidData>(JsonReader(InputStreamReader(stream, "UTF-8")), FdroidData::class.java)
+                }
+            }
+            data
+        }.fold(
+            onSuccess = { it },
+            onFailure = {
+                Log.e("FdroidRepository", "getDataAsync", it)
+                null
+            }
+        )
 	}
 
 	fun updateAsync(apps: Sequence<AppInstalled>) = ioScope.async {
 		runCatching {
-			getDataAsync().await()
+			if (getDataAsync().await() == null) throw NullPointerException("updateAsync: data is null")
 
 			apps.mapNotNull { app -> if (prefs.settings.excludeExperimental && isExperimental(data?.apps?.find { it.packageName == app.packageName }?: FdroidApp())) null else app }
 				.mapNotNull { app -> if (prefs.settings.excludeMinApi && data?.packages?.get(app.packageName)?.first()?.minSdkVersion.orZero() > Build.VERSION.SDK_INT) null else app }
