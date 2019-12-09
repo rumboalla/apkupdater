@@ -2,13 +2,14 @@ package com.apkupdater.repository.fdroid
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import com.apkupdater.R
-import com.apkupdater.model.ui.AppInstalled
-import com.apkupdater.model.ui.AppSearch
-import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.model.fdroid.FdroidApp
 import com.apkupdater.model.fdroid.FdroidData
 import com.apkupdater.model.fdroid.FdroidPackage
+import com.apkupdater.model.ui.AppInstalled
+import com.apkupdater.model.ui.AppSearch
+import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.ioScope
@@ -49,7 +50,13 @@ class FdroidRepository: KoinComponent {
 	fun getDataAsync() = ioScope.async {
 		if (data == null || System.currentTimeMillis() - lastCheck > 3600000) {
 			// Head request so we get only the headers
-			val last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
+			var last = ""
+			try {
+				last = Fuel.head("$baseUrl$index").response().second.headers["Last-Modified"].first()
+			} catch (e: Exception) {
+				Log.e("FdroidRepository", "getDataAsync", e)
+			}
+
 			lastCheck = System.currentTimeMillis()
 
 			// Check if last changed
