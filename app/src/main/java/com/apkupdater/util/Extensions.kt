@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -38,3 +40,12 @@ val Int.dp: Int get() = (this / Resources.getSystem().displayMetrics.density).to
 val Int.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 fun Int?.orZero() = this ?: 0
+
+fun Context.getAppIconDrawable(packageName: String): Drawable? {
+    return try {
+        this.packageManager.getApplicationIcon(packageName)
+    } catch (e: Exception) {
+        Log.e("getAppIconDrawable", packageName, e)
+        null
+    }
+}

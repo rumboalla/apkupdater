@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.googleplay.GooglePlayRepository
+import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
-import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.getAccentColor
+import com.apkupdater.util.getAppIconDrawable
 import com.apkupdater.util.ioScope
 import com.apkupdater.util.launchUrl
 import com.apkupdater.util.observe
@@ -61,7 +62,7 @@ class UpdatesFragment : Fragment() {
 		view.name.text = app.name
 		view.packageName.text = app.packageName
 		view.version.text = getString(R.string.update_version_version_code, app.oldVersion, app.oldCode, app.version, app.versionCode)
-		view.icon.setImageDrawable(view.context.packageManager.getApplicationIcon(app.packageName))
+		view.icon.setImageDrawable(view.context.getAppIconDrawable(app.packageName))
 		view.action_one.text = getString(R.string.action_install)
 		if (app.loading) {
 			view.progress.visibility = View.VISIBLE
@@ -87,11 +88,11 @@ class UpdatesFragment : Fragment() {
 				mainViewModel.snackbar.postValue(getString(R.string.app_install_success))
 			} else if (prefs.settings.rootInstall) {
 				updatesViewModel.setLoading(app.id, false)
-				mainViewModel.snackbar.postValue(getString(R.string.app_install_failure, null))
+				mainViewModel.snackbar.postValue(getString(R.string.app_install_failure))
 			}
 		}.onFailure {
 			updatesViewModel.setLoading(app.id, false)
-			mainViewModel.snackbar.postValue(it.message)
+			mainViewModel.snackbar.postValue(it.message ?: "downloadAndInstall error.")
 		}
 	}
 

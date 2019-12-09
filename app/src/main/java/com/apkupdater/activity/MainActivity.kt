@@ -115,14 +115,14 @@ class MainActivity : AppCompatActivity() {
 
 	private fun checkForSelfUpdate() = ioScope.launch {
 		SelfUpdateRepository().checkForUpdatesAsync(this@MainActivity).await()
-			.onFailure { viewModel.snackbar.postValue(it.message) }
+			.onFailure { viewModel.snackbar.postValue(it.message ?: "Check for self update error.") }
 	}
 
 	private fun checkForUpdates() = ioScope.launch {
 		viewModel.loading.postValue(true)
 
 		updatesRepository.getUpdatesAsync().await()
-			.onFailure { viewModel.snackbar.postValue(it.message) }
+			.onFailure { viewModel.snackbar.postValue(it.message ?: "getUpdatesAsync error.") }
 			.onSuccess {
 				updatesViewModel.items.postValue(it)
 				viewModel.updatesBadge.postValue(it.size)
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 		if (num > 0) nav_view.getOrCreateBadge(id).number = num
 		nav_view.getBadge(id)?.verticalOffset = resources.getDimensionPixelSize(R.dimen.badge_offset)
 	}.onFailure { e ->
-		viewModel.snackbar.postValue(e.message)
+		viewModel.snackbar.postValue(e.message ?: "SnackBar error.")
 		Log.e("MainActivity", "addBadge", e)
 	}.getOrNull()
 

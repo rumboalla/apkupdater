@@ -8,27 +8,28 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apkupdater.R
-import com.apkupdater.repository.AppsRepository
-import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.model.ui.AppInstalled
-import com.apkupdater.viewmodel.MainViewModel
-import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.repository.AppsRepository
 import com.apkupdater.util.adapter.BindAdapter
+import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.getAppIconDrawable
 import com.apkupdater.util.observe
-import kotlinx.android.synthetic.main.fragment_apps.recycler_view
-import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.apkupdater.viewmodel.AppsViewModel
+import com.apkupdater.viewmodel.MainViewModel
 import com.kryptoprefs.invoke
+import kotlinx.android.synthetic.main.fragment_apps.recycler_view
+import kotlinx.android.synthetic.main.view_apps.view.action_one
 import kotlinx.android.synthetic.main.view_apps.view.container
 import kotlinx.android.synthetic.main.view_apps.view.icon
-import kotlinx.android.synthetic.main.view_apps.view.action_one
 import kotlinx.android.synthetic.main.view_apps.view.name
 import kotlinx.android.synthetic.main.view_apps.view.packageName
 import kotlinx.android.synthetic.main.view_apps.view.version
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AppsFragment : Fragment() {
 
@@ -56,7 +57,7 @@ class AppsFragment : Fragment() {
 		view.name.text = app.name
 		view.packageName.text = app.packageName
 		view.version.text = view.context.getString(R.string.version_version_code, app.version, app.versionCode)
-		view.icon.setImageDrawable(view.context.packageManager.getApplicationIcon(app.packageName))
+		view.icon.setImageDrawable(view.context.getAppIconDrawable(app.packageName))
 		view.action_one.text = getString(if (app.ignored) R.string.action_unignore else R.string.action_ignore)
 		view.action_one.setOnClickListener { onIgnoreClick(app) }
 		view.container.alpha = if (app.ignored) 0.4f else 1.0f

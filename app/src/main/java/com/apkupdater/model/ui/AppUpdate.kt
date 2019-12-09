@@ -31,7 +31,7 @@ data class AppUpdate(
 				app.packageName,
 				app.file.vername,
 				app.file.vercode.toInt(),
-				info.versionName,
+				info.versionName ?: "null",
 				info.versionCode,
 				app.file.path,
 				source

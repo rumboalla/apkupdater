@@ -18,9 +18,9 @@ import com.apkupdater.R
 import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.googleplay.GooglePlayRepository
+import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
-import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.getAccentColor
 import com.apkupdater.util.ifNotEmpty
 import com.apkupdater.util.ioScope
@@ -88,7 +88,7 @@ class SearchFragment : Fragment() {
 		searchRepository.getSearchResultsAsync(text).await().fold(
 			onSuccess = { searchViewModel.items.postValue(it) },
 			onFailure = {
-				mainViewModel.snackbar.postValue(it.message)
+				mainViewModel.snackbar.postValue(it.message ?: "search error.")
 				Log.e("SearchFragment", "search", it)
 			}
 		)
@@ -123,11 +123,11 @@ class SearchFragment : Fragment() {
 				mainViewModel.snackbar.postValue(getString(R.string.app_install_success))
 			} else if (prefs.settings.rootInstall) {
 				searchViewModel.setLoading(app.id, false)
-				mainViewModel.snackbar.postValue(getString(R.string.app_install_failure, null))
+				mainViewModel.snackbar.postValue(getString(R.string.app_install_failure))
 			}
 		}.onFailure {
 			searchViewModel.setLoading(app.id, false)
-			mainViewModel.snackbar.postValue(it.message)
+			mainViewModel.snackbar.postValue(it.message ?: "downloadAndInstall failure.")
 		}
 	}
 
