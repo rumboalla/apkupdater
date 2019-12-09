@@ -21,7 +21,9 @@ fun PackageInfo.name(context: Context) = applicationInfo.loadLabel(context.packa
 
 fun <T> LiveData<T>.observe(owner: LifecycleOwner, block: (T) -> Unit) = observe(owner, Observer { block(it) })
 
-fun Fragment.launchUrl(url: String) = startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) })
+fun Fragment.launchUrl(url: String) = runCatching { startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) }) }
+    .onFailure { Log.e("Extensions", "launchUrl", it) }
+    .getOrNull()
 
 val ioScope = CoroutineScope(Dispatchers.IO)
 

@@ -50,9 +50,7 @@ class MainActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 
 		// Ads
-		StartAppSDK.init(this, "210024990", false)
-		StartAppSDK.setUserConsent (this, "pas", System.currentTimeMillis(), false)
-		StartAppAd.disableSplash()
+		initAds()
 
 		// Theme and layout
 		setTheme()
@@ -86,6 +84,12 @@ class MainActivity : AppCompatActivity() {
 		checkForSelfUpdate()
 		checkForUpdates()
 	}
+
+	private fun initAds() = runCatching {
+		StartAppSDK.init(this, "210024990", false)
+		StartAppSDK.setUserConsent (this, "pas", System.currentTimeMillis(), false)
+		StartAppAd.disableSplash()
+	}.onFailure { Log.e("MainActivity", "initAds", it) }.getOrNull()
 
 	override fun onNewIntent(intent: Intent?) {
 		intent?.let {
