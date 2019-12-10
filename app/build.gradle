@@ -13,8 +13,8 @@ android {
         applicationId "com.apkupdater"
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 36
-        versionName "2.0.0-beta7"
+        versionCode 37
+        versionName "2.0.0-beta8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
         multiDexEnabled true
