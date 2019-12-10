@@ -108,8 +108,8 @@ class SearchFragment : Fragment() {
 			view.action_one.text = getString(R.string.action_install)
 			view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play")  downloadAndInstall(app) else launchUrl(app.url) }
 		}
+		Glide.with(view).load(app.source).into(view.source)
 		view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
-		view.source.setImageResource(app.source)
 	}
 
 	private fun downloadAndInstall(app: AppSearch) = ioScope.launch {

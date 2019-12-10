@@ -76,7 +76,7 @@ class UpdatesFragment : Fragment() {
                 view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play") downloadAndInstall(app) else launchUrl(app.url) }
             }
             view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
-            view.source.setImageResource(app.source)
+			Glide.with(view).load(app.source).into(view.source)
             Glide.with(view).load(iconUri(app.packageName, view.context.packageManager.getApplicationInfo(app.packageName, 0).icon)).into(view.icon)
         }.onFailure { Log.e("UpdatesFragment", "onBind", it) }.let { Unit }
 	}
