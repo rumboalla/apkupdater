@@ -2,6 +2,7 @@ package com.apkupdater.fragment
 
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,11 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.googleplay.GooglePlayRepository
-import com.apkupdater.util.iconUri
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
 import com.apkupdater.util.getAccentColor
+import com.apkupdater.util.iconUri
 import com.apkupdater.util.ioScope
 import com.apkupdater.util.launchUrl
 import com.apkupdater.util.observe
@@ -60,22 +61,24 @@ class UpdatesFragment : Fragment() {
 	}
 
 	private val onBind = { view: View, app: AppUpdate ->
-		view.name.text = app.name
-		view.packageName.text = app.packageName
-		view.version.text = getString(R.string.update_version_version_code, app.oldVersion, app.oldCode, app.version, app.versionCode)
-		Glide.with(view).load(iconUri(app.packageName, view.context.packageManager.getApplicationInfo(app.packageName, 0).icon)).into(view.icon)
-		view.action_one.text = getString(R.string.action_install)
-		if (app.loading) {
-			view.progress.visibility = View.VISIBLE
-			view.action_one.visibility = View.INVISIBLE
-		} else {
-			view.progress.visibility = View.INVISIBLE
-			view.action_one.visibility = View.VISIBLE
-			view.action_one.text = getString(R.string.action_install)
-			view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play") downloadAndInstall(app) else launchUrl(app.url) }
-		}
-		view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
-		view.source.setImageResource(app.source)
+        runCatching {
+            view.name.text = app.name
+            view.packageName.text = app.packageName
+            view.version.text = getString(R.string.update_version_version_code, app.oldVersion, app.oldCode, app.version, app.versionCode)
+            view.action_one.text = getString(R.string.action_install)
+            if (app.loading) {
+                view.progress.visibility = View.VISIBLE
+                view.action_one.visibility = View.INVISIBLE
+            } else {
+                view.progress.visibility = View.INVISIBLE
+                view.action_one.visibility = View.VISIBLE
+                view.action_one.text = getString(R.string.action_install)
+                view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play") downloadAndInstall(app) else launchUrl(app.url) }
+            }
+            view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
+            view.source.setImageResource(app.source)
+            Glide.with(view).load(iconUri(app.packageName, view.context.packageManager.getApplicationInfo(app.packageName, 0).icon)).into(view.icon)
+        }.onFailure { Log.e("UpdatesFragment", "onBind", it) }.let { Unit }
 	}
 
 	private fun downloadAndInstall(app: AppUpdate) = ioScope.launch {
