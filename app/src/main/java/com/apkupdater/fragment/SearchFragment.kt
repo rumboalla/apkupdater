@@ -28,7 +28,7 @@ import com.apkupdater.util.launchUrl
 import com.apkupdater.util.observe
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_apps.recycler_view
 import kotlinx.android.synthetic.main.fragment_search.text
 import kotlinx.android.synthetic.main.view_apps.view.action_one
@@ -95,7 +95,7 @@ class SearchFragment : Fragment() {
 	}.invokeOnCompletion { mainViewModel.loading.postValue(false) }
 
 	private val onBind = { view: View, app: AppSearch ->
-		app.iconurl.ifNotEmpty { Picasso.get().load(it).placeholder(ColorDrawable(Color.BLACK)).error(ColorDrawable(Color.RED)).into(view.icon) }
+		app.iconurl.ifNotEmpty { Glide.with(view).load(it).placeholder(ColorDrawable(Color.BLACK)).error(ColorDrawable(Color.RED)).into(view.icon) }
 		view.name.text = app.name
 		view.packageName.text = app.developer
 

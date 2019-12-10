@@ -12,10 +12,10 @@ import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.app.AppPrefs
-import com.apkupdater.util.getAppIconDrawable
 import com.apkupdater.util.observe
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
+import com.bumptech.glide.Glide
 import com.kryptoprefs.invoke
 import kotlinx.android.synthetic.main.fragment_apps.recycler_view
 import kotlinx.android.synthetic.main.view_apps.view.action_one
@@ -57,7 +57,7 @@ class AppsFragment : Fragment() {
 		view.name.text = app.name
 		view.packageName.text = app.packageName
 		view.version.text = view.context.getString(R.string.version_version_code, app.version, app.versionCode)
-		view.icon.setImageDrawable(view.context.getAppIconDrawable(app.packageName))
+		Glide.with(view).load(app.iconUri).into(view.icon)
 		view.action_one.text = getString(if (app.ignored) R.string.action_unignore else R.string.action_ignore)
 		view.action_one.setOnClickListener { onIgnoreClick(app) }
 		view.container.alpha = if (app.ignored) 0.4f else 1.0f

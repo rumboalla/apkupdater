@@ -83,13 +83,14 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs:0.4.3'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs-gson:0.4.3'
-    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.rumboalla.fuel:fuel:-SNAPSHOT'
     implementation 'com.github.rumboalla.fuel:fuel-gson:-SNAPSHOT'
     implementation 'com.startapp:inapp-sdk:4.3.0'
     implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
     implementation 'com.github.whyorean:playstore-api-v2:2.4'
     implementation 'ch.acra:acra-http:5.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
 
     testImplementation 'junit:junit:4.12'
 

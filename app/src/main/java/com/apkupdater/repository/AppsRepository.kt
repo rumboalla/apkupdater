@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo
 import android.util.Log
 import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.iconUri
 import com.apkupdater.util.name
 import com.kryptoprefs.invoke
 
@@ -34,6 +35,7 @@ class AppsRepository(private val context: Context, private val prefs: AppPrefs) 
 			app.packageName,
 			app.versionName ?: "",
 			app.versionCode,
+			iconUri(app.packageName, app.applicationInfo.icon),
 			ignoredApps.contains(app.packageName)
 		)
 	}.sortedBy { it.name }.sortedBy { it.ignored }.toList()
@@ -45,6 +47,7 @@ class AppsRepository(private val context: Context, private val prefs: AppPrefs) 
 			app.packageName,
 			app.versionName ?: "",
 			app.versionCode,
+			iconUri(app.packageName, app.applicationInfo.icon),
 			ignoredApps.contains(app.packageName)
 		)
 	}.sortedBy { it.name }.sortedBy { it.ignored }
