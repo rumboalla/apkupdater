@@ -52,6 +52,9 @@
     <string translatable="false" name="settings_exclude_disabled_key">excludeDisabled</string>
     <string name="settings_exclude_disabled_title">Exclude Disabled Apps</string>
 
+    <string translatable="false" name="settings_exclude_store_key">excludeStore</string>
+    <string name="settings_exclude_store_title">Exclude Apps installed by an App Store</string>
+
     <string translatable="false" name="settings_exclude_min_api_key">excludeMinApi</string>
     <string name="settings_exclude_min_api_title">Exclude Incompatible API Level</string>
 

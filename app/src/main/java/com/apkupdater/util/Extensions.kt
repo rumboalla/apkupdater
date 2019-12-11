@@ -43,3 +43,5 @@ val Int.px: Int get() = (this * Resources.getSystem().displayMetrics.density).to
 fun Int?.orZero() = this ?: 0
 
 fun iconUri(packageName: String, id: Int): Uri = Uri.parse("android.resource://$packageName/$id")
+
+fun Boolean?.orFalse() = this ?: false

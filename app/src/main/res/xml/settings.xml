@@ -74,6 +74,12 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_exclude_store_key"
+            app:title="@string/settings_exclude_store_title"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+        />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/settings_update_options_title" app:iconSpaceReserved="false">

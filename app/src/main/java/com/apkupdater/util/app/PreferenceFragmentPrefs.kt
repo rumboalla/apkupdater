@@ -14,6 +14,10 @@ class PreferenceFragmentPrefs(private val context: Context, private val prefs: S
 		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_disabled_key), true)
 		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_disabled_key), value).apply()
 
+	var excludeStore
+		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_store_key), false)
+		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_store_key), value).apply()
+
 	var excludeMinApi
 		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_min_api_key), true)
 		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_min_api_key), value).apply()
