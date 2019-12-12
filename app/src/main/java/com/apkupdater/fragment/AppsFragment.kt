@@ -24,9 +24,7 @@ import kotlinx.android.synthetic.main.view_apps.view.icon
 import kotlinx.android.synthetic.main.view_apps.view.name
 import kotlinx.android.synthetic.main.view_apps.view.packageName
 import kotlinx.android.synthetic.main.view_apps.view.version
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -71,8 +69,7 @@ class AppsFragment : Fragment() {
 	}
 
 	private fun updateApps() = lifecycle.coroutineScope.launch {
-		val apps = repository.getApps()
-		withContext(Dispatchers.Main) { appsViewModel.items.value =  apps }
+		appsViewModel.items.postValue(repository.getApps())
 	}
 
 }
