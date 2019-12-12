@@ -6,12 +6,16 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.ProgressCallback
 import eu.chainfire.libsuperuser.Shell
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okio.buffer
+import okio.sink
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.File
+import java.io.IOException
 import java.util.UUID
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -70,8 +74,15 @@ class InstallUtil: KoinComponent {
 
 	suspend fun downloadAsync(context: Context, url: String, file: File = getFile(context), progress: ProgressCallback = { _, _ -> }) = suspendCoroutine<File> {
 		clearOldFiles(context)
-		Fuel.download(url).fileDestination { _, _ -> file }.progress(progress).response().third.get()
+		get(url, file)
 		it.resume(file)
+	}
+
+	fun get(url: String, file: File): File {
+		val response = OkHttpClient.Builder().followRedirects(true).build().newCall(Request.Builder().url(url).build()).execute()
+		if (!response.isSuccessful) throw IOException("Response not successful: ${response.code}")
+		file.sink().buffer().apply { writeAll(response.body!!.source()) }.close()
+		return file
 	}
 
 }

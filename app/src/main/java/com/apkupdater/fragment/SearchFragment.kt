@@ -115,7 +115,7 @@ class SearchFragment : Fragment() {
 	private fun downloadAndInstall(app: AppSearch) = ioScope.launch {
 		runCatching {
 			searchViewModel.setLoading(app.id, true)
-			val url = if (app.url == "play") googlePlayRepository.getDownloadUrl(app.packageName, app.versionCode) else app.url
+			val url = if (app.url == "play") googlePlayRepository.getDownloadUrl(app.packageName, app.versionCode, 0) else app.url
 			val file = installer.downloadAsync(requireActivity(), url) { _, _ -> searchViewModel.setLoading(app.id, true) }
 			if(installer.install(requireActivity(), file, app.id)) {
 				searchViewModel.setLoading(app.id, false)

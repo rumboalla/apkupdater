@@ -84,7 +84,7 @@ class UpdatesFragment : Fragment() {
 	private fun downloadAndInstall(app: AppUpdate) = ioScope.launch {
 		runCatching {
 			updatesViewModel.setLoading(app.id, true)
-			val url = if (app.url == "play") googlePlayRepository.getDownloadUrl(app.packageName, app.versionCode) else app.url
+			val url = if (app.url == "play") googlePlayRepository.getDownloadUrl(app.packageName, app.versionCode, app.oldCode) else app.url
 			val file = installer.downloadAsync(requireActivity(), url) { _, _ -> updatesViewModel.setLoading(app.id, true) }
 			if(installer.install(requireActivity(), file, app.id)) {
 				updatesViewModel.setLoading(app.id, false)

@@ -54,9 +54,9 @@ class GooglePlayRepository: KoinComponent {
 		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
 	}
 
-	fun getDownloadUrl(packageName: String, versionCode: Int): String {
+	fun getDownloadUrl(packageName: String, versionCode: Int, oldVersionCode: Int): String {
 		val p = api.purchase(packageName, versionCode, 1)
-		val d = api.delivery(packageName, versionCode, 1, p.downloadToken)
+		val d = api.delivery(packageName, oldVersionCode, versionCode, 1, p.downloadToken)
 		return d.appDeliveryData.downloadUrl
 	}
 
