@@ -62,7 +62,7 @@ class FdroidRepository: KoinComponent {
 
                 // Check if last changed
                 var refresh = false
-                if (last != prefs.lastFdroid()) {
+                if (last != prefs.lastFdroid() || data == null) {
                     // Download new file
                     installer.downloadAsync(context, "$baseUrl$index", file)
                     prefs.lastFdroid(last)
