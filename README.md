@@ -11,11 +11,11 @@ It provides similar functionality to an app store, but instead of depending on a
 * **Material Design 2** with **multiple theme** support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates.
-* **Languages**: English, Spanish, Chinese.
+* **Languages**: English, Spanish, Chinese, Turkish.
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level.
 
 # Download
-* [Stable release (2.0.0)](https://github.com/rumboalla/apkupdater/releases/download/2.0.0/app-release.apk)
+* [Stable release (2.0.1)](https://github.com/rumboalla/apkupdater/releases/download/2.0.1/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Translations
