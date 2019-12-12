@@ -12,7 +12,7 @@ It provides similar functionality to an app store, but instead of depending on a
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates.
 * **Languages**: English, Spanish, Chinese, Turkish.
-* App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level.
+* App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level. Exclude apps installed by an App Store.
 
 # Download
 * [Stable release (2.0.1)](https://github.com/rumboalla/apkupdater/releases/download/2.0.1/app-release.apk)
