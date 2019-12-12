@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_apps">"Uygulamalar"</string>
+    <string name="title_updates">"Güncellemeler"</string>
+    <string name="title_search">"Ara"</string>
+    <string name="title_settings">"Ayarlar"</string>
+    <string name="icon_description">"Uyg. Ikonu"</string>
+    <string name="source_description">"Kaynak Ikonu"</string>
+    <string name="app_install_success">"Yüklendi"</string>
+    <string name="app_install_failure">"Yükleme hatası: %1$s"</string>
+    <string name="app_install_cancelled">"İptal edildi"</string>
+    <string name="notification_channel_name">"Güncellemeler"</string>
+    <string name="notification_channel_description">"Güncelleme bildirim kanalı."</string>
+    <string name="notification_update_title">"Güncellemeler"</string>
+    <plurals name="notification_update_description">
+        <item quantity="one">"%1$d güncelleme bulundu."</item>
+        <item quantity="other">"%1$d güncelleme bulundu."</item>
+    </plurals>
+    <string name="action_ignore">"Yoksay"</string>
+    <string name="action_unignore">"Yoksayma"</string>
+    <string name="action_install">"Yükle"</string>
+    <string name="action_close">"Kapat"</string>
+    <string name="settings_exclude_system_title">"Sistem uygulamalarını hariç tut"</string>
+    <string name="settings_exclude_disabled_title">"Kapatılmış uygulamaları hariç tut"</string>
+    <string name="settings_exclude_min_api_title">"Uyuşmayan API seviyesini hariç tut."</string>
+    <string name="settings_exclude_arch_title">"Uyuşmayan yapıları hariç tut."</string>
+    <string name="settings_exclude_experimental_title">"Deneysel uygulamaları hariç tut."</string>
+    <string name="settings_check_for_updates_title">"Güncellemeleri kontrol et."</string>
+    <string name="settings_theme_dark_blue">"Koyu Mavi"</string>
+    <string name="settings_theme_light_blue">"Açık Mavi"</string>
+    <string name="settings_theme_dark_orange">"Koyu Turuncu"</string>
+    <string name="settings_theme_light_orange">"Açık Turuncu"</string>
+    <string name="settings_general_title">"Genel"</string>
+    <string name="settings_apps_title">"Uygulamalar"</string>
+    <string name="settings_update_hour_title">"Güncelleme Saati"</string>
+    <string name="settings_theme_title">"Tema"</string>
+    <string name="selfupdate_found_title">"Güncelleme bulundu!"</string>
+    <string name="settings_check_for_updates_daily">"Günlük"</string>
+    <string name="settings_check_for_updates_weekly">"Haftalık"</string>
+    <string name="settings_check_for_updates_hourly">"Saatlik"</string>
+    <string name="settings_check_for_updates_twelve">"Her 12 saatte"</string>
+    <string name="settings_check_for_updates_six">"Her 6 saatte"</string>
+    <string name="settings_check_for_updates_never">"Hiçbir zaman"</string>
+    <string name="settings_theme_dark_green">"Koyu Yeşil"</string>
+    <string name="settings_theme_light_green">"Açık Yeşil"</string>
+    <string name="settings_update_sources_title">"Güncelleme Kaynakları"</string>
+    <string name="settings_update_options_title">"Güncelleme Seçenekleri"</string>
+    <string name="settings_root_install_title">"Root Yükleme"</string>
+    <string name="settings_exclude_store_title">"Uygulama Mağazasına göre uygulamaları hariç tut."</string>
+</resources>
