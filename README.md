@@ -11,7 +11,7 @@ It provides similar functionality to an app store, but instead of depending on a
 * **Material Design 2** with **multiple theme** support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates.
-* **Languages**: English, Spanish, Chinese, Turkish.
+* **Languages**: English, Spanish, Chinese, Turkish, Arabic.
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level. Exclude apps installed by an App Store.
 
 # Download
