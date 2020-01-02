@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_apps">"Apps"</string>
+    <string name="title_updates">"MàJs"</string>
+    <string name="title_search">"Recherche"</string>
+    <string name="title_settings">"Paramètres"</string>
+    <string name="icon_description">"Icône d'appli"</string>
+    <string name="source_description">"Icône de source"</string>
+    <string name="app_install_success">"Appli installée"</string>
+    <string name="app_install_failure">"Installation échouée : %1$s"</string>
+    <string name="app_install_cancelled">"Installation annulée"</string>
+    <string name="notification_channel_name">"MàJs"</string>
+    <string name="notification_channel_description">"Canal pour la notification de MàJ"</string>
+    <string name="notification_update_title">"MàJs"</string>
+    <plurals name="notification_update_description">
+        <item quantity="one">"%1$d MàJ trouvée"</item>
+        <item quantity="other">"%1$d MàJs trouvées"</item>
+    </plurals>
+    <string name="action_ignore">"EXCLURE"</string>
+    <string name="action_unignore">"INCLURE"</string>
+    <string name="action_install">"INSTALLER"</string>
+    <string name="action_close">"FERMER"</string>
+    <string name="settings_exclude_system_title">"Exclure les apps système"</string>
+    <string name="settings_exclude_disabled_title">"Exclure les apps désactivés"</string>
+    <string name="settings_exclude_min_api_title">"Exclure les niveaux API incompatibles"</string>
+    <string name="settings_exclude_arch_title">"Exclure les architectures incompatibles"</string>
+    <string name="settings_exclude_experimental_title">"Exclure les Apps expérimentales"</string>
+    <string name="settings_check_for_updates_title">"Chercher les MàJs"</string>
+    <string name="settings_theme_dark_blue">"Sombre bleu"</string>
+    <string name="settings_theme_light_blue">"Clair bleu"</string>
+    <string name="settings_theme_dark_orange">"Sombre orange"</string>
+    <string name="settings_theme_light_orange">"Clair orange"</string>
+    <string name="settings_general_title">"Général"</string>
+    <string name="settings_apps_title">"Apps"</string>
+    <string name="settings_update_hour_title">"Heure de MàJ"</string>
+    <string name="settings_theme_title">"Thème"</string>
+    <string name="selfupdate_found_title">"MàJ trouvée !"</string>
+    <string name="settings_check_for_updates_daily">"Quotidienne"</string>
+    <string name="settings_check_for_updates_weekly">"Hebdomadaire"</string>
+    <string name="settings_check_for_updates_hourly">"Horaire"</string>
+    <string name="settings_check_for_updates_twelve">"Semi-quotidienne"</string>
+    <string name="settings_check_for_updates_six">"Toutes les 6 heures"</string>
+    <string name="settings_check_for_updates_never">"Jamais"</string>
+    <string name="settings_theme_dark_green">"Sombre vert"</string>
+    <string name="settings_theme_light_green">"Clair vert"</string>
+    <string name="settings_update_sources_title">"Sources de MàJ"</string>
+    <string name="settings_update_options_title">"Options de MàJ"</string>
+    <string name="settings_root_install_title">"Installation root"</string>
+    <string name="settings_exclude_store_title">"Exclure les apps installées par un app store"</string>
+</resources>
