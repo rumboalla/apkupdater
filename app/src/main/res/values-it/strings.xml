@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_apps">"App"</string>
+    <string name="title_updates">"Aggiornamenti"</string>
+    <string name="title_search">"Cerca"</string>
+    <string name="title_settings">"Impostazioni"</string>
+    <string name="icon_description">"Icon app"</string>
+    <string name="source_description">"Icona fonte"</string>
+    <string name="app_install_success">"App installata."</string>
+    <string name="app_install_failure">"Installazione fallita: %1$s"</string>
+    <string name="app_install_cancelled">"Annullato"</string>
+    <string name="notification_channel_name">"Aggiornamenti"</string>
+    <string name="notification_channel_description">"Canale per notifiche aggiornamenti."</string>
+    <string name="notification_update_title">"Aggiornamenti"</string>
+    <plurals name="notification_update_description">
+        <item quantity="one">"Trovato %1$d aggiornamento."</item>
+        <item quantity="other">"Trovati %1$d aggiornamenti."</item>
+    </plurals>
+    <string name="action_ignore">"IGNORA"</string>
+    <string name="action_unignore">"NON IGNORARE"</string>
+    <string name="action_install">"INSTALLA"</string>
+    <string name="action_close">"CHIUDI"</string>
+    <string name="settings_exclude_system_title">"Escludi app di sistema"</string>
+    <string name="settings_exclude_disabled_title">"Escludi app disattivate"</string>
+    <string name="settings_exclude_min_api_title">"Escludi livelli API non compatibili"</string>
+    <string name="settings_exclude_arch_title">"Escludi architetture non compatibili"</string>
+    <string name="settings_exclude_experimental_title">"Escludi app sperimentali"</string>
+    <string name="settings_check_for_updates_title">"Controlla aggiornamenti"</string>
+    <string name="settings_theme_dark_blue">"Blu scuro"</string>
+    <string name="settings_theme_light_blue">"Blu chiaro"</string>
+    <string name="settings_theme_dark_orange">"Arancione scuro"</string>
+    <string name="settings_theme_light_orange">"Arancione chiaro"</string>
+    <string name="settings_general_title">"Generali"</string>
+    <string name="settings_apps_title">"App"</string>
+    <string name="settings_update_hour_title">"Orario aggiornamento"</string>
+    <string name="settings_theme_title">"Tema"</string>
+    <string name="selfupdate_found_title">"Aggiornamento trovato!"</string>
+    <string name="settings_check_for_updates_daily">"Quotidiano"</string>
+    <string name="settings_check_for_updates_weekly">"Settimanale"</string>
+    <string name="settings_check_for_updates_hourly">"Ogni ora"</string>
+    <string name="settings_check_for_updates_twelve">"Ogni 12 ore"</string>
+    <string name="settings_check_for_updates_six">"Ogni 6 ore"</string>
+    <string name="settings_check_for_updates_never">"Mai"</string>
+    <string name="settings_theme_dark_green">"Verde scuro"</string>
+    <string name="settings_theme_light_green">"Verde chiaro"</string>
+    <string name="settings_update_sources_title">"Fonti di aggiornamento"</string>
+    <string name="settings_update_options_title">"Opzioni di aggiornamento"</string>
+    <string name="settings_root_install_title">"Installazione root"</string>
+    <string name="settings_exclude_store_title">"Escludi app installate da un App Store"</string>
+</resources>
