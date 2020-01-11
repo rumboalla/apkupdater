@@ -1,2 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_apps">"Aplikasi"</string>
+    <string name="title_updates">"Pembaruan"</string>
+    <string name="title_search">"Cari"</string>
+    <string name="title_settings">"Pengaturan"</string>
+    <string name="icon_description">"Ikon Aplikasi"</string>
+    <string name="source_description">"Ikon Sumber"</string>
+    <string name="app_install_success">"Aplikasi terpasang."</string>
+    <string name="app_install_failure">"Gagal menginstal: %1$s"</string>
+    <string name="app_install_cancelled">"Dibatalkan"</string>
+    <string name="notification_channel_name">"Pembaruan"</string>
+    <string name="notification_channel_description">"Saluran untuk memperbarui pemberitahuan."</string>
+    <string name="notification_update_title">"Pembaruan"</string>
+    <plurals name="notification_update_description">
+        <item quantity="other">"Ditemukan %1$d pembaruan."</item>
+    </plurals>
+    <string name="action_ignore">"MENGABAIKAN"</string>
+    <string name="action_unignore">"UNIGNORE"</string>
+    <string name="action_install">"INSTALL"</string>
+    <string name="action_close">"MENUTUP"</string>
+    <string name="settings_exclude_system_title">"Kecualikan Aplikasi Sistem"</string>
+    <string name="settings_exclude_disabled_title">"Kecualikan Aplikasi yang Dinonaktifkan"</string>
+    <string name="settings_exclude_min_api_title">"Kecualikan Tingkat API yang Tidak Kompatibel"</string>
+    <string name="settings_exclude_arch_title">"Kecualikan Arsitektur yang Tidak Kompatibel"</string>
+    <string name="settings_exclude_experimental_title">"Kecualikan Aplikasi Eksperimental"</string>
+    <string name="settings_check_for_updates_title">"Periksa pembaruan"</string>
+    <string name="settings_theme_dark_blue">"Biru tua"</string>
+    <string name="settings_theme_light_blue">"Biru muda"</string>
+    <string name="settings_theme_dark_orange">"Oren tua"</string>
+    <string name="settings_theme_light_orange">"Oranye terang"</string>
+    <string name="settings_general_title">"Umum"</string>
+    <string name="settings_apps_title">"Aplikasi"</string>
+    <string name="settings_update_hour_title">"Perbarui Jam"</string>
+    <string name="settings_theme_title">"Tema"</string>
+    <string name="selfupdate_found_title">"Pembaruan ditemukan!"</string>
+    <string name="settings_check_for_updates_daily">"Harian"</string>
+    <string name="settings_check_for_updates_weekly">"Mingguan"</string>
+    <string name="settings_check_for_updates_hourly">"Per jam"</string>
+    <string name="settings_check_for_updates_twelve">"Setiap 12 jam"</string>
+    <string name="settings_check_for_updates_six">"Setiap 6 jam"</string>
+    <string name="settings_check_for_updates_never">"Tidak pernah"</string>
+    <string name="settings_theme_dark_green">"Hijau tua"</string>
+    <string name="settings_theme_light_green">"Hijau muda"</string>
+    <string name="settings_update_sources_title">"Perbarui Sumber"</string>
+    <string name="settings_update_options_title">"Opsi Pembaruan"</string>
+    <string name="settings_root_install_title">"Instal Root"</string>
+    <string name="settings_exclude_store_title">"Kecualikan Aplikasi yang diinstal oleh App Store"</string>
+</resources>
