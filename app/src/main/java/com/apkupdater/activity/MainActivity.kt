@@ -25,8 +25,6 @@ import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.kryptoprefs.invoke
-import com.startapp.android.publish.adsCommon.StartAppAd
-import com.startapp.android.publish.adsCommon.StartAppSDK
 import kotlinx.android.synthetic.main.activity_main.container
 import kotlinx.android.synthetic.main.activity_main.nav_view
 import kotlinx.android.synthetic.main.activity_main.swipe_layout
@@ -48,9 +46,6 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-
-		// Ads
-		initAds()
 
 		// Theme and layout
 		setTheme()
@@ -84,12 +79,6 @@ class MainActivity : AppCompatActivity() {
 		checkForSelfUpdate()
 		checkForUpdates()
 	}
-
-	private fun initAds() = runCatching {
-		StartAppSDK.init(this, "210024990", false)
-		StartAppSDK.setUserConsent (this, "pas", System.currentTimeMillis(), false)
-		StartAppAd.disableSplash()
-	}.onFailure { Log.e("MainActivity", "initAds", it) }.getOrNull()
 
 	override fun onNewIntent(intent: Intent?) {
 		intent?.let {
