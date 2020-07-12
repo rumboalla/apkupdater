@@ -12,25 +12,16 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.googleplay.GooglePlayRepository
+import com.apkupdater.util.*
 import com.apkupdater.util.adapter.BindAdapter
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.app.InstallUtil
-import com.apkupdater.util.getAccentColor
-import com.apkupdater.util.iconUri
-import com.apkupdater.util.ioScope
-import com.apkupdater.util.launchUrl
-import com.apkupdater.util.observe
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_apps.recycler_view
-import kotlinx.android.synthetic.main.view_apps.view.action_one
-import kotlinx.android.synthetic.main.view_apps.view.icon
-import kotlinx.android.synthetic.main.view_apps.view.name
-import kotlinx.android.synthetic.main.view_apps.view.packageName
-import kotlinx.android.synthetic.main.view_apps.view.progress
-import kotlinx.android.synthetic.main.view_apps.view.source
-import kotlinx.android.synthetic.main.view_apps.view.version
+import com.kryptoprefs.invoke
+import kotlinx.android.synthetic.main.fragment_apps.*
+import kotlinx.android.synthetic.main.view_apps.view.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -75,10 +66,21 @@ class UpdatesFragment : Fragment() {
                 view.action_one.text = getString(R.string.action_install)
                 view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play") downloadAndInstall(app) else launchUrl(app.url) }
             }
+			view.action_two.visibility = View.VISIBLE
+			view.action_two.text = getString(R.string.action_ignore)
+			view.action_two.setOnClickListener { onIgnoreClick(app) }
             view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
 			Glide.with(view).load(app.source).into(view.source)
             Glide.with(view).load(iconUri(app.packageName, view.context.packageManager.getApplicationInfo(app.packageName, 0).icon)).into(view.icon)
         }.onFailure { Log.e("UpdatesFragment", "onBind", it) }.let { Unit }
+	}
+
+	private val onIgnoreClick = { app: AppUpdate ->
+		val ignoredApps = prefs.ignoredApps().toMutableList()
+		if (!ignoredApps.contains(app.packageName))
+			ignoredApps.add(app.packageName)
+		prefs.ignoredApps(ignoredApps)
+		updatesViewModel.remove(app.id)
 	}
 
 	private fun downloadAndInstall(app: AppUpdate) = ioScope.launch {

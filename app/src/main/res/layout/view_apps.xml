@@ -111,6 +111,26 @@
             tools:text="@string/action_ignore"
         />
 
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/App.Style.Text.Action"
+            android:id="@+id/action_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/action_install"
+            android:padding="@dimen/small_margin"
+            android:layout_marginRight="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:focusable="true"
+            android:clickable="true"
+            app:layout_constraintRight_toLeftOf="@id/action_one"
+            app:layout_constraintTop_toBottomOf="@id/icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/action_install"
+            android:visibility="gone"
+            />
+
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="48dp"
