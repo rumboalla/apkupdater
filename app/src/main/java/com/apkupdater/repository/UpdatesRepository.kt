@@ -1,5 +1,6 @@
 package com.apkupdater.repository
 
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
@@ -8,6 +9,7 @@ import com.apkupdater.repository.fdroid.FdroidRepository
 import com.apkupdater.repository.googleplay.GooglePlayRepository
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
+import com.g00fy2.versioncompare.Version
 import kotlinx.coroutines.async
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -43,7 +45,15 @@ class UpdatesRepository: KoinComponent {
 			)
 		}
 
+		if (prefs.settings.compareVersionName) filterUpdates(updates, apps)
+
 		if (errors.isEmpty()) Result.success(updates.sortedBy { it.name }) else Result.failure(errors.first())
+	}
+
+	private fun filterUpdates(updates: MutableList<AppUpdate>, apps: Sequence<PackageInfo>) {
+		updates.retainAll { update ->
+			Version(update.version).isHigherThan(apps.find { apk -> apk.packageName == update.packageName }?.versionName)
+		}
 	}
 
 }

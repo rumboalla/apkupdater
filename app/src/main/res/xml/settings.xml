@@ -104,6 +104,13 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
         />
+        <SwitchPreferenceCompat
+            app:key="@string/settings_compare_version_name_key"
+            app:title="@string/settings_compare_version_name_title"
+            app:summary=""
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/settings_root_options_title" app:iconSpaceReserved="false">
