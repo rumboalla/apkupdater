@@ -18,7 +18,7 @@ class AlarmReceiver : BroadcastReceiver(), KoinComponent {
 	private val notificationUtil: NotificationUtil by inject()
 	private val prefs: AppPrefs by inject()
 
-	override fun onReceive(context: Context, intent: Intent?) = runBlocking {
+	override fun onReceive(context: Context, intent: Intent?): Unit = runBlocking {
 		updatesRepository.getUpdatesAsync().await().fold(
 			onSuccess = {
 				prefs.updates(it)
