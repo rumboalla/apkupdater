@@ -47,8 +47,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.startapp.android.publish.adsCommon.activities.OverlayActivity" android:theme="@android:style/Theme.Translucent" android:configChanges="orientation|keyboardHidden|screenSize" />
-
         <receiver android:name="com.apkupdater.receiver.AlarmReceiver" android:enabled="true"/>
 
         <receiver android:name="com.apkupdater.receiver.BootReceiver" android:exported="true" android:enabled="true">
