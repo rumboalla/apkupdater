@@ -64,6 +64,9 @@
     <string translatable="false" name="settings_exclude_experimental_key">excludeExperimental</string>
     <string name="settings_exclude_experimental_title">Exclude Experimental Apps</string>
 
+    <string translatable="false" name="settings_compare_version_name_key">compareVersionName</string>
+    <string name="settings_compare_version_name_title">Compare Version Name</string>
+
     <string translatable="false" name="settings_root_install_key">rootInstall</string>
     <string name="settings_root_install_title">Root Install</string>
 
