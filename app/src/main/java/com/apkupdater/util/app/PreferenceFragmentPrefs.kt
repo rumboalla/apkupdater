@@ -30,6 +30,10 @@ class PreferenceFragmentPrefs(private val context: Context, private val prefs: S
 		get() = prefs.getBoolean(context.getString(R.string.settings_exclude_experimental_key), true)
 		set(value) = prefs.edit().putBoolean(context.getString(R.string.settings_exclude_experimental_key), value).apply()
 
+	var compareVersionName
+		get() = prefs.getBoolean("compareVersionName", true)
+		set(value) = prefs.edit().putBoolean("compareVersionName", value).apply()
+
 	var checkForUpdates
 		get() = prefs.getString(context.getString(R.string.settings_check_for_updates_key), "0")
 		set(value) = prefs.edit().putString(context.getString(R.string.settings_check_for_updates_key), value).apply()
