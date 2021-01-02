@@ -110,7 +110,7 @@
             app:summary=""
             app:defaultValue="true"
             app:iconSpaceReserved="false"
-            />
+        />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/settings_root_options_title" app:iconSpaceReserved="false">
