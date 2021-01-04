@@ -11,7 +11,7 @@ It provides similar functionality to an app store, but instead of depending on a
 * **Material Design 2** with **multiple theme** support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates.
-* **Languages**: English, Spanish, Chinese, Turkish, Arabic, French, Indonesian, Italian.
+* **Languages**: English, Spanish, Chinese, Turkish, Arabic, French, Indonesian, Italian, Brazilian Portuguese.
 * App ignore list. Filter updates by architecture. Filter experimental apps. Filter apps by API level. Exclude apps installed by an App Store.
 
 # Download
@@ -19,8 +19,7 @@ It provides similar functionality to an app store, but instead of depending on a
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Translations
-If you want to help with translations  
-[![Translate](https://poeditor.com/public/images/logo_small.png)](https://poeditor.com/join/project/NWTNMrPFj8)
+If you want to help with translations, use [![Translate](https://poeditor.com/public/images/logo_small.png)](https://poeditor.com/join/project/NWTNMrPFj8) or send a [Pull Request](https://github.com/rumboalla/apkupdater/pulls)
 
 # Screenshots
 ![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
