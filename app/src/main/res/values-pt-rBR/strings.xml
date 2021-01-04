@@ -1,0 +1,98 @@
+<resources>
+    <string name="title_apps">Apps</string>
+    <string name="title_updates">Atualizações</string>
+    <string name="title_search">Pesquisar</string>
+    <string name="title_settings">Configurações</string>    
+    <string name="icon_description">Ícone do App</string>
+    <string name="source_description">Ícone da fonte</string>
+
+    // Self Update
+    <string name="selfupdate_found_title">Atualização encontrada!</string>
+
+    // App install
+    <string name="app_install_success">App instalado.</string>
+    <string name="app_install_failure">Instalação falhou: %1$s</string>
+    <string name="app_install_cancelled">Cancelado</string>
+
+    // Notifications
+    <string name="notification_channel_name">Atualizações</string>
+    <string name="notification_channel_description">Canal para notificações de atualização.</string>    
+    <string name="notification_update_title">Atualizações</string> 
+    <plurals name="notification_update_description">
+        <item quantity="zero">Nenhuma atualização encontrada.</item>
+        <item quantity="one">Encontrada %1$d atualização.</item>
+        <item quantity="other">Encontradas %1$d atualizações.</item>
+    </plurals>
+
+    // Actions
+    <string name="action_ignore">IGNORAR</string>
+    <string name="action_unignore">NÃO IGNORAR</string>
+    <string name="action_install">INSTALAR</string>
+    <string name="action_close">FECHAR</string>
+    
+    // Settings
+    <string name="settings_general_title">Geral</string>
+    <string name="settings_apps_title">Apps</string>
+    <string name="settings_update_sources_title">Atualizar as fontes</string>
+    <string name="settings_update_options_title">Atualizar as opções</string>    
+    
+    <string name="settings_exclude_system_title">Excluir aplicativos do sistema</string>
+
+    <string name="settings_exclude_disabled_title">Excluir aplicativos desativados</string>
+
+    <string name="settings_exclude_store_title">Excluir aplicativos instalados via Lojas</string>
+
+    <string name="settings_exclude_min_api_title">Excluir apps com APIs incompatíveis</string>
+
+    <string name="settings_exclude_arch_title">Excluir arquiteturas incompatíveis</string>
+
+    <string name="settings_exclude_experimental_title">Excluir aplicativos experimentais</string>
+
+    <string name="settings_compare_version_name_title">Compare nome da versão</string>
+
+    <string name="settings_root_install_title">Instalação Root</string>
+
+    <string name="settings_update_hour_title">Hora de atualização</string>
+    
+    <string name="settings_check_for_updates_title">Verificar por atualizações em segundo plano</string>
+    <string name="settings_check_for_updates_daily">Diariamente</string>
+    <string name="settings_check_for_updates_weekly">Semanalmente</string>
+    <string name="settings_check_for_updates_hourly">De hora em hora</string>
+    <string name="settings_check_for_updates_twelve">A cada 12 horas</string>
+    <string name="settings_check_for_updates_six">A cada 6 horas</string>
+    <string name="settings_check_for_updates_never">Nunca</string>
+    <string-array name="settings_check_for_updates_entries">
+        <item>@string/settings_check_for_updates_daily</item>
+        <item>@string/settings_check_for_updates_weekly</item>
+        <item>@string/settings_check_for_updates_hourly</item>
+        <item>@string/settings_check_for_updates_twelve</item>
+        <item>@string/settings_check_for_updates_six</item>
+        <item>@string/settings_check_for_updates_never</item>
+    </string-array>
+
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_dark_blue">Azul escuro</string>
+    <string name="settings_theme_light_blue">Azul claro</string>
+    <string name="settings_theme_dark_orange">Laranja escura</string>
+    <string name="settings_theme_light_orange">Laranja claro</string>
+    <string name="settings_theme_dark_green">Verde escuro</string>
+    <string name="settings_theme_light_green">Verde claro</string>
+    <string-array name="settings_theme_entries">
+        <item>@string/settings_theme_dark_blue</item>
+        <item>@string/settings_theme_light_blue</item>
+        <item>@string/settings_theme_dark_orange</item>
+        <item>@string/settings_theme_light_orange</item>
+        <item>@string/settings_theme_dark_green</item>
+        <item>@string/settings_theme_light_green</item>
+    </string-array>
+
+    <string-array name="settings_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+</resources>
