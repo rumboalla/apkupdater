@@ -100,16 +100,16 @@ class FdroidRepository: KoinComponent {
 
 	fun searchAsync(text: String) = ioScope.async {
 		runCatching {
-			val data = getDataAsync().await()
-
-			data?.apps.orEmpty()
+			getDataAsync().await()?.apps.orEmpty()
+				.asSequence()
 				.filter { app -> app.description.contains(text, true) || app.packageName.contains(text, true) }
 				.mapNotNull { app -> if (prefs.settings.excludeExperimental && isExperimental(app)) null else app }
 				.mapNotNull { app -> if (prefs.settings.excludeMinApi && data?.packages?.get(app.packageName)?.first()?.minSdkVersion.orZero() > Build.VERSION.SDK_INT) null else app }
 				.mapNotNull { app -> if (prefs.settings.excludeArch && isIncompatibleArch(data?.packages?.get(app.packageName)?.first())) null else app }
+				.sortedByDescending { app -> app.lastUpdated }
+				.take(10)
 				.map { app -> AppSearch.from(app) }
-				.shuffled().take(10).sortedBy { it.name }
-
+				.toList()
 		}.fold(onSuccess = { Result.success(it) }, onFailure = { Result.failure(it) })
 	}
 

@@ -19,5 +19,7 @@ data class FdroidApp(
 	val name: String = "",
 	val icon: String = "",
 	val suggestedVersionCode: String = "",
-	val suggestedVersionName: String = ""
+	val suggestedVersionName: String = "",
+	val added: Long = 0L,
+	val lastUpdated: Long = 0L
 )
