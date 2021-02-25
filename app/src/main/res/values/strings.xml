@@ -75,6 +75,8 @@
 
     <string translatable="false" name="settings_source_apkmirror_key">APKMirror</string>
 
+    <string translatable="false" name="settings_source_apkpure_key">APKPure</string>
+
     <string translatable="false" name="settings_source_aptoide_key">Aptoide</string>
 
     <string translatable="false" name="settings_source_fdroid_key">F-Droid</string>
