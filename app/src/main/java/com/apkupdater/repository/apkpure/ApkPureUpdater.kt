@@ -1,101 +1,103 @@
 package com.apkupdater.repository.apkpure
 
 import android.os.Build
-import com.apkupdater.BuildConfig
 import com.apkupdater.R
-import com.apkupdater.model.apkmirror.AppExistsRequest
-import com.apkupdater.model.apkmirror.AppExistsResponse
+import com.apkupdater.model.apkpure.VerInfo
 import com.apkupdater.model.ui.AppInstalled
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.util.app.AppPrefs
+import com.apkupdater.util.ifNotEmpty
 import com.apkupdater.util.ioScope
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.core.extensions.authentication
-import com.github.kittinunf.fuel.gson.jsonBody
-import com.github.kittinunf.fuel.gson.responseObject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import org.koin.core.KoinComponent
-import java.util.*
 
-class ApkPureUpdater(private val prefs: AppPrefs): KoinComponent {
+class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 
-	private val baseUrl = "https://www.apkmirror.com"
-	private val appExists = "/wp-json/apkm/v1/app_exists/"
-	private val user = "api-apkupdater"
-	private val token = "rm5rcfruUjKy04sMpyMPJXW8"
-	private val userAgent = "APKUpdater-v" + BuildConfig.VERSION_NAME
-	private val source = R.drawable.apkmirror_logo
-	private val excludeExperimental get() = prefs.settings.excludeExperimental
+	private val baseUrl = "https://apkpure.com"
+	private val searchQuery = "/search?q="
+	private val versionsUrl = "/versions"
+	private val source = R.drawable.apkpure_logo
 	private val excludeArch get() = prefs.settings.excludeArch
 	private val excludeMinApi get() = prefs.settings.excludeMinApi
+	private val arch get() = Build.CPU_ABI
+	private val api get() = Build.VERSION.SDK_INT
 
-	private val arch = when {
-		Build.CPU_ABI.contains("mips") -> "mips"
-		Build.CPU_ABI.contains("x86") -> "x86"
-		Build.CPU_ABI.contains("arm") -> "arm"
-		else -> "arm"
+	private fun getApkPackageLink(name: String): String {
+		val doc = Jsoup.connect("$baseUrl$searchQuery$name").get()
+		doc.select("dl > dt > a[href*=$name]")?.let { return it.attr("href") }
+		return ""
 	}
 
-	private fun post(apps: List<AppInstalled>) = Fuel
-		.post(baseUrl + appExists)
-		.header("User-Agent", userAgent)
-		.authentication().basic(user, token)
-		.jsonBody(AppExistsRequest(apps.map { it.packageName }, if(excludeExperimental) listOf("alpha", "beta") else emptyList()))
-		.responseObject<AppExistsResponse>()
+	private fun getAbsoluteVersionsLink(packageLink: String): String {
+		return baseUrl + packageLink + versionsUrl
+	}
+
+	private fun getVariantsPage(element: Element): Document {
+		return Jsoup.connect(baseUrl + element.select("div.ver > ul.ver-wrap > li > a").attr("href")).get()
+	}
+
+	private fun hasVariants(element: Element): Boolean {
+		return element.select("div.ver > ul.ver-wrap > li > a").attr("title").contains("build variant")
+	}
+
+	private fun crawlUpdates(verInfos: MutableList<VerInfo>, app: AppInstalled) {
+		getApkPackageLink(app.packageName).ifNotEmpty { packageLink ->
+			val element = Jsoup.connect(getAbsoluteVersionsLink(packageLink)).ignoreHttpErrors(true).get()
+			if(!element.getElementsByTag("title").text().contains("404")) {
+				if (hasVariants(element)) {
+					getVariantsPage(element).select("div.ver-info").forEach { variant ->
+						verInfos.add(VerInfo(variant, app.packageName))
+					}
+				} else {
+					val verInfo = VerInfo(element.select("div.ver > ul.ver-wrap > li > div.ver-info").first(), app.packageName)
+					verInfos.add(verInfo)
+				}
+			}
+		}
+	}
 
 	fun updateAsync(apps: Sequence<AppInstalled>) = ioScope.async {
 		val updates = mutableListOf<AppUpdate>()
-		val errors = mutableListOf<Throwable>()
+		val verInfos = mutableListOf<VerInfo>()
 		val jobs = mutableListOf<Job>()
 		val mutex = Mutex()
-		apps.chunked(100).forEach { chunk ->
+
+		apps.forEach { app ->
 			launch {
-				post(chunk).third.fold(
-					success = { updates.addAll(parseData(it, chunk)) },
-					failure = { errors.add(it) }
-				)
+				crawlUpdates(verInfos, app)
 			}.let { mutex.withLock { jobs.add(it) } }
 		}
 		jobs.forEach { it.join() }
-		if (errors.isEmpty()) Result.success(updates.filter { it.version != it.oldVersion }) else Result.failure(errors.first())
-	}
 
-	private fun parseData(response: AppExistsResponse, apps: List<AppInstalled>) = response.data.mapNotNull { data ->
-		data.apks.mapNotNull {
-			when {
-				!excludeArch -> it
-				it.arches.isEmpty() -> it
-				it.arches.contains("universal") || it.arches.contains("noarch") -> it
-				it.arches.find { a -> a.contains(arch) }?.length ?: 0 > 0 -> it
-				else -> null
+		verInfos.filter {
+			!excludeArch || it.architectures.contains(arch)
+		}.filter {
+			!excludeMinApi || it.minApiLevel <= api
+		}.forEach { verInfo ->
+			apps.find { app -> app.packageName == verInfo.packageName }?.let {
+				app -> updates.add(AppUpdate.from(app, verInfo))
 			}
-		}.mapNotNull {
-			when {
-				!excludeMinApi -> it
-				minApiToInt(it.minapi) < Build.VERSION.SDK_INT -> it
-				else -> null
-			}
-		}.filter { it.versionCode > apps.find { app -> app.packageName == data.pname }?.versionCode ?: 0 }
-		.takeIf { it.isNotEmpty() }?.reduce { a, b ->
-			when {
-				a.arches.contains(Build.CPU_ABI) -> a
-				a.arches.find { ar -> ar.contains(arch) }?.length ?: 0 > 0 -> a
-				else -> b
-			}
-		}?.let {
-			apps.find { a -> a.packageName == data.pname }?.let { app -> AppUpdate.from(app, data, it, baseUrl + it.link, source) }
 		}
+
+		Result.success(updates)
 	}
 
-	private fun minApiToInt(api: String): Int = when {
-		api.toLowerCase(Locale.US) == "q" -> 29
-		api.toLowerCase(Locale.US) == "p" -> 28
-		api.toLowerCase(Locale.US) == "o" -> 26
-		else -> api.toIntOrNull() ?: 0
-	}
-
+	private fun AppUpdate.Companion.from(app: AppInstalled, verInfo: VerInfo) =
+			AppUpdate(
+					app.name,
+					app.packageName,
+					verInfo.versionName,
+					verInfo.versionCode,
+					app.version,
+					app.versionCode,
+					"$baseUrl${verInfo.downloadLink}",
+					R.drawable.apkpure_logo
+			)
 }

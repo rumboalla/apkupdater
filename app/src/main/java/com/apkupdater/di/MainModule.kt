@@ -6,6 +6,7 @@ import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.repository.apkmirror.ApkMirrorSearch
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
 import com.apkupdater.repository.apkpure.ApkPureSearch
+import com.apkupdater.repository.apkpure.ApkPureUpdater
 import com.apkupdater.repository.aptoide.AptoideSearch
 import com.apkupdater.repository.aptoide.AptoideUpdater
 import com.apkupdater.repository.fdroid.FdroidRepository
@@ -34,6 +35,7 @@ val mainModule = module {
 	single { GooglePlayRepository() }
 
 	single { ApkMirrorUpdater(get()) }
+	single { ApkPureUpdater(get()) }
 	single { AptoideUpdater(get()) }
 
 	single { ApkMirrorSearch() }

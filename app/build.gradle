@@ -25,7 +25,7 @@ android {
             Properties props = new Properties()
             if(file(localProps).exists()) {
                 props.load(new FileInputStream(file(localProps)))
-                storeFile file(props['keystore.file'])
+                //storeFile file(props['keystore.file'])
                 storePassword props['keystore.password']
                 keyAlias props['keystore.keyalias']
                 keyPassword props['keystore.keypassword']
@@ -79,7 +79,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.koin:koin-android:2.0.1'
     implementation 'org.koin:koin-android-viewmodel:2.0.1'
-    implementation 'org.jsoup:jsoup:1.12.1'
+    implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs:0.4.3'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs-gson:0.4.3'
     implementation 'com.github.rumboalla.fuel:fuel:-SNAPSHOT'
