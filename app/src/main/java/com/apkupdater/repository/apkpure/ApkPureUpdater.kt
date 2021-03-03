@@ -47,18 +47,27 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 		return element.select("div.ver > ul.ver-wrap > li > a").attr("title").contains("build variant")
 	}
 
+	private fun resolveVersionsPage(packageLink: String): Pair<Boolean, Element> {
+		val element = Jsoup.connect(getAbsoluteVersionsLink(packageLink)).ignoreHttpErrors(true).get()
+		return Pair(!element.getElementsByTag("title").text().contains("404"), element)
+	}
+
+	private fun crawlVersionsPage(element: Element, verInfos: MutableList<VerInfo>, app: AppInstalled) {
+		if (hasVariants(element)) {
+			getVariantsPage(element).select("div.ver-info").forEach { variant ->
+				verInfos.add(VerInfo(variant, app.packageName))
+			}
+		} else {
+			val verInfo = VerInfo(element.select("div.ver > ul.ver-wrap > li > div.ver-info").first(), app.packageName)
+			verInfos.add(verInfo)
+		}
+	}
+
 	private fun crawlUpdates(verInfos: MutableList<VerInfo>, app: AppInstalled) {
 		getApkPackageLink(app.packageName).ifNotEmpty { packageLink ->
-			val element = Jsoup.connect(getAbsoluteVersionsLink(packageLink)).ignoreHttpErrors(true).get()
-			if(!element.getElementsByTag("title").text().contains("404")) {
-				if (hasVariants(element)) {
-					getVariantsPage(element).select("div.ver-info").forEach { variant ->
-						verInfos.add(VerInfo(variant, app.packageName))
-					}
-				} else {
-					val verInfo = VerInfo(element.select("div.ver > ul.ver-wrap > li > div.ver-info").first(), app.packageName)
-					verInfos.add(verInfo)
-				}
+			val (gotVersionsPage, element) = resolveVersionsPage(packageLink)
+			if (gotVersionsPage) {
+				crawlVersionsPage(element, verInfos, app)
 			}
 		}
 	}
@@ -98,6 +107,6 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 					app.version,
 					app.versionCode,
 					"$baseUrl${verInfo.downloadLink}",
-					R.drawable.apkpure_logo
+					source
 			)
 }
