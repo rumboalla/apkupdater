@@ -25,7 +25,7 @@ android {
             Properties props = new Properties()
             if(file(localProps).exists()) {
                 props.load(new FileInputStream(file(localProps)))
-                //storeFile file(props['keystore.file'])
+                storeFile file(props['keystore.file'])
                 storePassword props['keystore.password']
                 keyAlias props['keystore.keyalias']
                 keyPassword props['keystore.keypassword']
