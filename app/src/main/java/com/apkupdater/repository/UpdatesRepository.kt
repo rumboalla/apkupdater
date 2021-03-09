@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.apkupdater.model.ui.AppUpdate
 import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
+import com.apkupdater.repository.apkpure.ApkPureUpdater
 import com.apkupdater.repository.aptoide.AptoideUpdater
 import com.apkupdater.repository.fdroid.FdroidRepository
 import com.apkupdater.repository.googleplay.GooglePlayRepository
@@ -20,6 +21,7 @@ class UpdatesRepository: KoinComponent {
 
 	private val prefs: AppPrefs by inject()
 	private val apkMirrorUpdater: ApkMirrorUpdater by inject()
+	private val apkPureUpdater: ApkPureUpdater by inject()
 	private val aptoideUpdater: AptoideUpdater by inject()
 	private val appsRepository: AppsRepository by inject()
 	private val fdroidRepository: FdroidRepository by inject()
@@ -35,10 +37,11 @@ class UpdatesRepository: KoinComponent {
 
 		val googlePlay = if (prefs.settings.googlePlay) googlePlayRepository.updateAsync(installedApps) else null
 		val apkMirror = if (prefs.settings.apkMirror) apkMirrorUpdater.updateAsync(installedApps) else null
+		val apkPure = if (prefs.settings.apkPure) apkPureUpdater.updateAsync(installedApps) else null
 		val aptoide = if (prefs.settings.aptoide) aptoideUpdater.updateAsync(apps) else null
 		val fdroid = if (prefs.settings.fdroid) fdroidRepository.updateAsync(installedApps) else null
 
-		listOfNotNull(apkMirror, aptoide, fdroid, googlePlay).forEach {
+		listOfNotNull(apkMirror, apkPure, aptoide, fdroid, googlePlay).forEach {
 			it.await().fold(
 				onSuccess = { mutex.withLock { updates.addAll(it) } },
 				onFailure = { mutex.withLock { errors.add(it) } }

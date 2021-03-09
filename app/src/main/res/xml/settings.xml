@@ -41,6 +41,12 @@
             app:iconSpaceReserved="false"
         />
         <SwitchPreferenceCompat
+            app:key="@string/settings_source_apkpure_key"
+            app:title="@string/settings_source_apkpure_key"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            />
+        <SwitchPreferenceCompat
             app:key="@string/settings_source_aptoide_key"
             app:title="@string/settings_source_aptoide_key"
             app:defaultValue="true"
