@@ -10,7 +10,7 @@ import org.koin.core.KoinComponent
 class ApkMirrorSearch: KoinComponent {
 
 	private val baseUrl = "https://www.apkmirror.com"
-	private val searchQuery = "/?post_type=app_release&searchtype=app&s="
+	private val searchQuery = "/?post_type=app_release&searchtype=apk&s="
 	private val source = R.drawable.apkmirror_logo
 
 	private fun search(text: String): List<AppSearch> {
