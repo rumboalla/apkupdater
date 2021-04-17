@@ -23,6 +23,7 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 	private val baseUrl = "https://apkpure.com"
 	private val searchQuery = "/search?q="
 	private val versionsUrl = "/versions"
+	private val userAgent = "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 	private val source = R.drawable.apkpure_logo
 	private val excludeArch get() = prefs.settings.excludeArch
 	private val excludeMinApi get() = prefs.settings.excludeMinApi
@@ -30,7 +31,9 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 	private val api get() = Build.VERSION.SDK_INT
 
 	private fun getApkPackageLink(name: String): String {
-		val doc = Jsoup.connect("$baseUrl$searchQuery$name").get()
+		val doc = Jsoup.connect("$baseUrl$searchQuery$name")
+				.userAgent(userAgent)
+				.get()
 		doc.select("dl > dt > a[href*=$name]")?.let { return it.attr("href") }
 		return ""
 	}
@@ -40,7 +43,9 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 	}
 
 	private fun getVariantsPage(element: Element): Document {
-		return Jsoup.connect(baseUrl + element.select("div.ver > ul.ver-wrap > li > a").attr("href")).get()
+		return Jsoup.connect(baseUrl + element.select("div.ver > ul.ver-wrap > li > a").attr("href"))
+				.userAgent(userAgent)
+				.get()
 	}
 
 	private fun hasVariants(element: Element): Boolean {
@@ -48,7 +53,9 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 	}
 
 	private fun resolveVersionsPage(packageLink: String): Pair<Boolean, Element> {
-		val element = Jsoup.connect(getAbsoluteVersionsLink(packageLink)).ignoreHttpErrors(true).get()
+		val element = Jsoup.connect(getAbsoluteVersionsLink(packageLink)).ignoreHttpErrors(true)
+				.userAgent(userAgent)
+				.get()
 		return Pair(!element.getElementsByTag("title").text().contains("404"), element)
 	}
 
@@ -90,8 +97,8 @@ class ApkPureUpdater(private val prefs: AppPrefs) : KoinComponent {
 		}.filter {
 			!excludeMinApi || it.minApiLevel <= api
 		}.forEach { verInfo ->
-			apps.find { app -> app.packageName == verInfo.packageName }?.let {
-				app -> updates.add(AppUpdate.from(app, verInfo))
+			apps.find { app -> app.packageName == verInfo.packageName }?.let { app ->
+				updates.add(AppUpdate.from(app, verInfo))
 			}
 		}
 
