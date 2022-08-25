@@ -1,0 +1,129 @@
+<resources>
+    <string translatable="false" name="app_name">APKUpdater</string>
+    <string name="title_apps">Appok</string>
+    <string name="title_updates">Frissítések</string>
+    <string name="title_search">Keresés</string>
+    <string name="title_settings">Beállítások</string>
+    <string translatable="false" name="version_version_code">%1$s (%2$d)</string>
+    <string translatable="false" name="update_version_version_code">%1$s (%2$d) -> %3$s (%4$d)</string>
+    <string name="icon_description">App Ikon</string>
+    <string name="source_description">Forrás Ikon</string>
+
+    // Self Update
+    <string name="selfupdate_found_title">Frissitést találtunk!</string>
+
+    // App install
+    <string name="app_install_success">App telepítve.</string>
+    <string name="app_install_failure">A telepítés nem sikerült: %1$s</string>
+    <string name="app_install_cancelled">Törölt</string>
+
+    // Notifications
+    <string name="notification_channel_name">Frissítések</string>
+    <string name="notification_channel_description">A frissítési értesítések csatornája.</string>
+    <string translatable="false" name="notification_channel_id">updateChannel</string>
+    <string name="notification_update_title">Frissítések</string>
+    <string translatable="false" name="notification_update_action">updates</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Nem találtunk frissítést.</item>
+        <item quantity="one">%1$d frissítést találtunk.</item>
+        <item quantity="other">%1$d frissítést találtunk.</item>
+    </plurals>
+
+    // Actions
+    <string name="action_ignore">IGNORÁLÁS</string>
+    <string name="action_unignore">NEM IGNORÁL</string>
+    <string name="action_install">TELEPÍTÉS</string>
+    <string name="action_close">BEZÁRÁS</string>
+
+    // Prefs
+    <string translatable="false" name="prefs_ignored_apps">ignoredApps</string>
+    <string translatable="false" name="prefs_updates">updates</string>
+
+    // Settings
+    <string name="settings_general_title">Általános</string>
+    <string name="settings_apps_title">Appok</string>
+    <string name="settings_update_sources_title">Források Frissítése</string>
+    <string name="settings_update_options_title">Frissítési Opciók</string>
+    <string translatable="false" name="settings_root_options_title">Root</string>
+
+    <string translatable="false" name="settings_exclude_system_key">excludeSystem</string>
+    <string name="settings_exclude_system_title">Rendszer Appok Kizárása</string>
+
+    <string translatable="false" name="settings_exclude_disabled_key">excludeDisabled</string>
+    <string name="settings_exclude_disabled_title">Letiltott Appok Kizárása</string>
+
+    <string translatable="false" name="settings_exclude_store_key">excludeStore</string>
+    <string name="settings_exclude_store_title">Az App Store által telepített alkalmazások kizárása</string>
+
+    <string translatable="false" name="settings_exclude_min_api_key">excludeMinApi</string>
+    <string name="settings_exclude_min_api_title">Inkompatibilis API-szint kizárása</string>
+
+    <string translatable="false" name="settings_exclude_arch_key">excludeArch</string>
+    <string name="settings_exclude_arch_title">Inkompatibilis architektúrák kizárása</string>
+
+    <string translatable="false" name="settings_exclude_experimental_key">excludeExperimental</string>
+    <string name="settings_exclude_experimental_title">Kísérleti alkalmazások kizárása</string>
+
+    <string translatable="false" name="settings_compare_version_name_key">compareVersionName</string>
+    <string name="settings_compare_version_name_title">Verziónév összehasonlítása</string>
+
+    <string translatable="false" name="settings_root_install_key">rootInstall</string>
+    <string name="settings_root_install_title">Root Telepítés</string>
+
+    <string translatable="false" name="settings_update_hour_key">updateHour</string>
+    <string name="settings_update_hour_title">Frissítés Óra</string>
+
+    <string translatable="false" name="settings_source_apkmirror_key">APKMirror</string>
+
+    <string translatable="false" name="settings_source_apkpure_key">APKPure</string>
+
+    <string translatable="false" name="settings_source_aptoide_key">Aptoide</string>
+
+    <string translatable="false" name="settings_source_fdroid_key">F-Droid</string>
+
+    <string translatable="false" name="settings_source_googleplay_key">Google Play</string>
+
+    <string translatable="false" name="settings_check_for_updates_key">checkForUpdatesNew</string>
+    <string name="settings_check_for_updates_title">Frissítések háttérellenőrzése</string>
+    <string name="settings_check_for_updates_daily">Naponta</string>
+    <string name="settings_check_for_updates_weekly">Hetente</string>
+    <string name="settings_check_for_updates_hourly">Óránként</string>
+    <string name="settings_check_for_updates_twelve">Minden 12 órában</string>
+    <string name="settings_check_for_updates_six">Minden 6 órában</string>
+    <string name="settings_check_for_updates_never">Soha</string>
+    <string-array name="settings_check_for_updates_entries">
+        <item>@string/settings_check_for_updates_daily</item>
+        <item>@string/settings_check_for_updates_weekly</item>
+        <item>@string/settings_check_for_updates_hourly</item>
+        <item>@string/settings_check_for_updates_twelve</item>
+        <item>@string/settings_check_for_updates_six</item>
+        <item>@string/settings_check_for_updates_never</item>
+    </string-array>
+
+    <string name="settings_theme_title">Téma</string>
+    <string translatable="false" name="settings_theme_key">theme</string>
+    <string name="settings_theme_dark_blue">Sötét Kék</string>
+    <string name="settings_theme_light_blue">Világos Kék</string>
+    <string name="settings_theme_dark_orange">Sötét Narancssárga</string>
+    <string name="settings_theme_light_orange">Világos Narancssárga</string>
+    <string name="settings_theme_dark_green">Sötét Zöld</string>
+    <string name="settings_theme_light_green">Világos Zöld</string>
+    <string-array name="settings_theme_entries">
+        <item>@string/settings_theme_dark_blue</item>
+        <item>@string/settings_theme_light_blue</item>
+        <item>@string/settings_theme_dark_orange</item>
+        <item>@string/settings_theme_light_orange</item>
+        <item>@string/settings_theme_dark_green</item>
+        <item>@string/settings_theme_light_green</item>
+    </string-array>
+
+    <string-array name="settings_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+</resources>
