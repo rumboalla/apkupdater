@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.apkupdater.R
+import com.apkupdater.databinding.ActivityMainBinding
 import com.apkupdater.model.aptoide.aptoideFilters
 import com.apkupdater.repository.SelfUpdateRepository
 import com.apkupdater.repository.UpdatesRepository
@@ -25,9 +26,6 @@ import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.kryptoprefs.invoke
-import kotlinx.android.synthetic.main.activity_main.container
-import kotlinx.android.synthetic.main.activity_main.nav_view
-import kotlinx.android.synthetic.main.activity_main.swipe_layout
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -37,25 +35,24 @@ class MainActivity : AppCompatActivity() {
 	private val viewModel: MainViewModel by viewModel()
 	private val updatesViewModel: UpdatesViewModel by viewModel()
 	private val searchViewModel: SearchViewModel by viewModel()
-
 	private val updatesRepository: UpdatesRepository by inject()
 	private val prefs: AppPrefs by inject()
 	private val alarmUtil: AlarmUtil by inject()
-
 	private val controller by lazy { findNavController(R.id.nav_host_fragment) }
+	private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		// Theme and layout
 		setTheme()
-		setContentView(R.layout.activity_main)
+		setContentView(binding.root)
 
 		// Aptoide filter
 		aptoideFilters = AptoideUtils.getFilters(this)
 
 		// Navigation
-		nav_view.setupWithNavController(controller)
+		binding.navView.setupWithNavController(controller)
 
 		// Badges
 		viewModel.appsBadge.observe(this) { addBadge(R.id.navigation_apps, it) }
@@ -63,9 +60,9 @@ class MainActivity : AppCompatActivity() {
 		viewModel.searchBadge.observe(this) { addBadge(R.id.navigation_search, it) }
 
 		// Swipe to refresh
-		swipe_layout.setColorSchemeColors(getAccentColor(), getAccentColor(), getAccentColor())
-		swipe_layout.setOnRefreshListener { checkForUpdates() }
-		viewModel.loading.observe(this) { swipe_layout.isRefreshing = it }
+		binding.swipeLayout.setColorSchemeColors(getAccentColor(), getAccentColor(), getAccentColor())
+		binding.swipeLayout.setOnRefreshListener { checkForUpdates() }
+		viewModel.loading.observe(this) { binding.swipeLayout.isRefreshing = it }
 
 		// Schedule alarm
 		alarmUtil.setupAlarm(applicationContext)
@@ -125,9 +122,9 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun addBadge(id: Int, num: Int) = runCatching {
-		nav_view.removeBadge(id)	// Remove badge, otherwise weird things happen when switching themes
-		if (num > 0) nav_view.getOrCreateBadge(id).number = num
-		nav_view.getBadge(id)?.verticalOffset = resources.getDimensionPixelSize(R.dimen.badge_offset)
+		binding.navView.removeBadge(id)	// Remove badge, otherwise weird things happen when switching themes
+		if (num > 0) binding.navView.getOrCreateBadge(id).number = num
+		binding.navView.getBadge(id)?.verticalOffset = resources.getDimensionPixelSize(R.dimen.badge_offset)
 	}.onFailure { e ->
 		viewModel.snackbar.postValue(e.message ?: "SnackBar error.")
 		Log.e("MainActivity", "addBadge", e)
@@ -145,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 		}
 	}
 
-	private fun snackBar(text: String) = Snackbar.make(container, text, Snackbar.LENGTH_LONG).apply {
+	private fun snackBar(text: String) = Snackbar.make(binding.container, text, Snackbar.LENGTH_LONG).apply {
 		setAction(getString(R.string.action_close)) { dismiss() }
 		(view.layoutParams as FrameLayout.LayoutParams).gravity = Gravity.TOP
 	}.show()

@@ -10,7 +10,7 @@ import com.apkupdater.repository.fdroid.FdroidRepository
 import com.apkupdater.repository.googleplay.GooglePlayRepository
 import com.apkupdater.util.app.AppPrefs
 import com.apkupdater.util.ioScope
-import com.g00fy2.versioncompare.Version
+import io.github.g00fy2.versioncompare.Version
 import kotlinx.coroutines.async
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

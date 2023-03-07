@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.apkupdater.R
+import com.apkupdater.databinding.FragmentSearchBinding
+import com.apkupdater.databinding.ViewAppsBinding
 import com.apkupdater.model.ui.AppSearch
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.googleplay.GooglePlayRepository
@@ -29,14 +31,6 @@ import com.apkupdater.util.observe
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_apps.recycler_view
-import kotlinx.android.synthetic.main.fragment_search.text
-import kotlinx.android.synthetic.main.view_apps.view.action_one
-import kotlinx.android.synthetic.main.view_apps.view.icon
-import kotlinx.android.synthetic.main.view_apps.view.name
-import kotlinx.android.synthetic.main.view_apps.view.packageName
-import kotlinx.android.synthetic.main.view_apps.view.progress
-import kotlinx.android.synthetic.main.view_apps.view.source
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -49,18 +43,19 @@ class SearchFragment : Fragment() {
 	private val googlePlayRepository: GooglePlayRepository by inject()
 	private val installer: InstallUtil by inject()
 	private val prefs: AppPrefs by inject()
+	private val binding by lazy { FragmentSearchBinding.inflate(layoutInflater) }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-		inflater.inflate(R.layout.fragment_search, container, false)
+		binding.root
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
 		// RecyclerView
-		recycler_view.layoutManager = LinearLayoutManager(context)
+		binding.recyclerView.layoutManager = LinearLayoutManager(context)
 		val adapter = BindAdapter(R.layout.view_apps, onBind)
-		recycler_view.adapter = adapter
-		(recycler_view.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+		binding.recyclerView.adapter = adapter
+		(binding.recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 		searchViewModel.items.observe(this) {
 			it?.let {
 				adapter.items = it
@@ -69,7 +64,7 @@ class SearchFragment : Fragment() {
 		}
 
 		// Search
-		text.setOnEditorActionListener { text, id, event ->
+		binding.text.setOnEditorActionListener { text, id, event ->
 			if (id == EditorInfo.IME_ACTION_SEARCH) {
 				searchViewModel.search.postValue(text.text.toString())
 				val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -95,21 +90,22 @@ class SearchFragment : Fragment() {
 	}.invokeOnCompletion { mainViewModel.loading.postValue(false) }
 
 	private val onBind = { view: View, app: AppSearch ->
-		app.iconurl.ifNotEmpty { Glide.with(view).load(it).placeholder(ColorDrawable(Color.BLACK)).error(ColorDrawable(Color.RED)).into(view.icon) }
-		view.name.text = app.name
-		view.packageName.text = app.developer
+		val viewBinding = ViewAppsBinding.bind(view)
+		app.iconurl.ifNotEmpty { Glide.with(view).load(it).placeholder(ColorDrawable(Color.BLACK)).error(ColorDrawable(Color.RED)).into(viewBinding.icon) }
+		viewBinding.name.text = app.name
+		viewBinding.packageName.text = app.developer
 
 		if (app.loading) {
-			view.progress.visibility = View.VISIBLE
-			view.action_one.visibility = View.INVISIBLE
+			viewBinding.progress.visibility = View.VISIBLE
+			viewBinding.actionOne.visibility = View.INVISIBLE
 		} else {
-			view.progress.visibility = View.INVISIBLE
-			view.action_one.visibility = View.VISIBLE
-			view.action_one.text = getString(R.string.action_install)
-			view.action_one.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play")  downloadAndInstall(app) else launchUrl(app.url) }
+			viewBinding.progress.visibility = View.INVISIBLE
+			viewBinding.actionOne.visibility = View.VISIBLE
+			viewBinding.actionOne.text = getString(R.string.action_install)
+			viewBinding.actionOne.setOnClickListener { if (app.url.endsWith("apk") || app.url == "play")  downloadAndInstall(app) else launchUrl(app.url) }
 		}
-		Glide.with(view).load(app.source).into(view.source)
-		view.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
+		Glide.with(view).load(app.source).into(viewBinding.source)
+		viewBinding.source.setColorFilter(view.context.getAccentColor(), PorterDuff.Mode.MULTIPLY)
 	}
 
 	private fun downloadAndInstall(app: AppSearch) = ioScope.launch {
