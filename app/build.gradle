@@ -30,6 +30,11 @@ android {
 
     signingConfigs {
         release {
+            storeFile signingConfigs.debug.storeFile
+            storePassword signingConfigs.debug.storePassword
+            keyAlias signingConfigs.debug.keyAlias
+            keyPassword signingConfigs.debug.keyPassword
+
             if(file(localProps).exists()) {
                 Properties props = new Properties()
                 props.load(new FileInputStream(file(localProps)))
@@ -44,11 +49,6 @@ android {
                     keyPassword props['keystore.keypassword']
                     v1SigningEnabled true
                     v2SigningEnabled true
-                } else {
-                    storeFile signingConfigs.debug.storeFile
-                    storePassword signingConfigs.debug.storePassword
-                    keyAlias signingConfigs.debug.keyAlias
-                    keyPassword signingConfigs.debug.keyPassword
                 }
             }
         }
