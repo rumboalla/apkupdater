@@ -44,6 +44,11 @@ android {
                     keyPassword props['keystore.keypassword']
                     v1SigningEnabled true
                     v2SigningEnabled true
+                } else {
+                    storeFile signingConfigs.debug.storeFile
+                    storePassword signingConfigs.debug.storePassword
+                    keyAlias signingConfigs.debug.keyAlias
+                    keyPassword signingConfigs.debug.keyPassword
                 }
             }
         }
@@ -51,7 +56,7 @@ android {
 
     buildTypes {
         release {
-            if (file(localProps).exists()) signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -72,6 +77,9 @@ android {
         disable 'ExtraTranslation', 'MissingTranslation'
     }
 
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

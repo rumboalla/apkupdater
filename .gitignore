@@ -1,4 +1,3 @@
-*.iml
 .gradle
 /local.properties
 .DS_Store
