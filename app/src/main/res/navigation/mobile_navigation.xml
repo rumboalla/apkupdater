@@ -10,7 +10,6 @@
         android:id="@+id/navigation_apps"
         android:name="com.apkupdater.fragment.AppsFragment"
         android:label="@string/title_apps"
-        tools:layout="@layout/fragment_apps"
     />
 
     <fragment
