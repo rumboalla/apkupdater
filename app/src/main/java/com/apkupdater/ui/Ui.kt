@@ -1,6 +1,7 @@
 package com.apkupdater.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,17 +12,19 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.apkupdater.model.ui.AppInstalled
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import com.apkupdater.model.ui.Action
+import com.apkupdater.model.ui.AppsItem
+import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun BodyText(text: String) = Text(
     text,
     style = MaterialTheme.typography.body2,
     maxLines = 1,
-    color = MaterialTheme.colors.onBackground
+    color = MaterialTheme.colors.onBackground,
+    overflow = TextOverflow.Ellipsis
 )
 
 @Composable
@@ -29,7 +32,8 @@ fun TitleText(text: String) = Text(
     text,
     style = MaterialTheme.typography.h6,
     maxLines = 1,
-    color = MaterialTheme.colors.onBackground
+    color = MaterialTheme.colors.onBackground,
+    overflow = TextOverflow.Ellipsis
 )
 
 @Composable
@@ -42,6 +46,13 @@ fun ActionText(text: String) = Text(
 )
 
 @Composable
+fun ErrorIcon() = Image(
+    painter = painterResource(android.R.mipmap.sym_def_app_icon),
+    contentDescription = "App Default Icon",
+    modifier = Modifier.size(64.dp)
+)
+
+@Composable
 fun SourceIcon(icon: Int) = Icon(
     painter = painterResource(icon),
     contentDescription = "Source Icon",
@@ -50,18 +61,17 @@ fun SourceIcon(icon: Int) = Icon(
 )
 
 @Composable
-fun CustomCard(alpha: Float, content: @Composable () -> Unit) = Card(
+fun CustomCard(alpha: Float = 1f, content: @Composable () -> Unit) = Card(
     content = content,
     shape = RoundedCornerShape(8.dp),
     border = BorderStroke(1.dp, MaterialTheme.colors.primary),
+    elevation = 0.dp,
     backgroundColor = Color.Transparent,
     modifier = Modifier
         .padding(top = 8.dp, start = 8.dp, end = 8.dp)
         .fillMaxSize()
         .alpha(alpha)
 )
-
-data class Action(val name: String, val callback: () -> Unit)
 
 @Composable
 fun ActionRow(actionOne: Action? = null, actionTwo: Action? = null, icon: Int? = null) = Row(
@@ -81,10 +91,9 @@ fun ActionRow(actionOne: Action? = null, actionTwo: Action? = null, icon: Int? =
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun AppInfo(app: AppInstalled) = Row {
-    GlideImage(modifier = Modifier.size(64.dp), model = app.iconUri, contentDescription = "App Icon")
+fun AppInfo(app: AppsItem) = Row {
+    GlideImage(modifier = Modifier.size(64.dp), imageModel = { app.iconUri }, failure = { ErrorIcon() })
     Spacer(modifier = Modifier.padding(8.dp))
     Column {
         TitleText(app.name)

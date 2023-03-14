@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -17,10 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
-import com.apkupdater.R
-import com.apkupdater.model.ui.AppInstalled
+import com.apkupdater.model.ui.Action
+import com.apkupdater.model.ui.AppsItem
+import com.apkupdater.model.ui.model
 import com.apkupdater.repository.AppsRepository
-import com.apkupdater.ui.Action
 import com.apkupdater.ui.ActionRow
 import com.apkupdater.ui.AppInfo
 import com.apkupdater.ui.CustomCard
@@ -47,13 +49,13 @@ class AppsFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		appsViewModel.items.observe<List<AppInstalled>>(this) {
+		appsViewModel.items.observe<List<AppsItem>>(this) {
 			mainViewModel.appsBadge.postValue(it.size)
 		}
 		updateApps()
 	}
 
-	private val onIgnoreClick = { app: AppInstalled ->
+	private val onIgnoreClick = { app: AppsItem ->
 		val ignoredApps = prefs.ignoredApps().toMutableList()
 		if (ignoredApps.contains(app.packageName)) ignoredApps.remove(app.packageName) else ignoredApps.add(app.packageName)
 		prefs.ignoredApps(ignoredApps)
@@ -61,7 +63,7 @@ class AppsFragment : Fragment() {
 	}
 
 	private fun updateApps() = lifecycle.coroutineScope.launch {
-		appsViewModel.items.postValue(repository.getApps())
+		appsViewModel.items.postValue(repository.getApps().map { it.model })
 	}
 	@Preview
 	@Composable
@@ -69,21 +71,16 @@ class AppsFragment : Fragment() {
 		val state = appsViewModel.items.observeAsState()
 
 		LazyColumn {
-			items(state.value.orEmpty()) {
-				AppCard(
-					it,
-					if (it.ignored) 0.4f else 1.0f,
-					stringResource(if (it.ignored) R.string.action_unignore else R.string.action_ignore)
-				)
-			}
+			items(state.value.orEmpty()) { AppCard(it) }
+			item { Spacer(modifier = Modifier.size(60.dp)) }
 		}
 	}
 
 	@Composable
-	fun AppCard(app: AppInstalled, alpha: Float = 1f, action: String) = CustomCard(alpha) {
+	fun AppCard(app: AppsItem) = CustomCard(app.alpha) {
 		Column(modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 0.dp)) {
 			AppInfo(app)
-			ActionRow(actionOne = Action(action) { onIgnoreClick(app) })
+			ActionRow(actionOne = Action(stringResource(app.action)) { onIgnoreClick(app) })
 		}
 	}
 
