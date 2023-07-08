@@ -1,47 +1,43 @@
 package com.apkupdater.util
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageInfo
-import android.content.res.Resources
-import android.net.Uri
-import android.util.Log
-import android.util.TypedValue
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+
+// A clickable modifier that will disable the default ripple
+fun Modifier.clickableNoRipple(onClick: () -> Unit) =
+	clickable(MutableInteractionSource(), null, onClick = onClick)
+
+// Launches a coroutine and executes it inside the mutex
+fun CoroutineScope.launchWithMutex(
+	mutex: Mutex,
+	context: CoroutineContext = EmptyCoroutineContext,
+	block: suspend CoroutineScope.() -> Unit
+) = launch(context) {
+	mutex.withLock {
+		block()
+	}
+}
+
+fun <T> MutableList<T>.update(newItems: List<T>) {
+	clear()
+	addAll(newItems)
+}
+
+inline fun <T> List<T>.ifNotEmpty(block: (List<T>) -> Unit) {
+	if (isNotEmpty()) block(this)
+}
+
+fun Boolean?.orFalse() = this ?: false
 
 fun PackageInfo.name(context: Context) = applicationInfo.loadLabel(context.packageManager).toString()
 
-fun <T> LiveData<T>.observe(owner: LifecycleOwner, block: (T) -> Unit) = observe(owner, Observer { block(it) })
-
-fun Fragment.launchUrl(url: String) = runCatching { startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) }) }
-    .onFailure { Log.e("Extensions", "launchUrl", it) }
-    .getOrNull()
-
-val ioScope = CoroutineScope(Dispatchers.IO)
-
-val uiScope = CoroutineScope(Dispatchers.Main)
-
-fun <T> CoroutineScope.catchingAsync(block: suspend () -> T): Deferred<Result<T>> = ioScope.async { runCatching { block() } }
-
-fun Context.getAccentColor() = TypedValue().apply { theme.resolveAttribute(resources.getIdentifier("colorAccent", "attr", packageName), this, true) }.data
-
-fun <T: Collection<*>> T.ifNotEmpty(block: (T) -> Unit) = if (isNotEmpty()) block(this) else Unit
-
-fun String.ifNotEmpty(block: (String) -> Unit) = if (isNotEmpty()) block(this) else Unit
-
-val Int.dp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
-
-val Int.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
-
-fun Int?.orZero() = this ?: 0
-
-fun iconUri(packageName: String, id: Int): Uri = Uri.parse("android.resource://$packageName/$id")
-
-fun Boolean?.orFalse() = this ?: false
+fun Context.getAppIcon(packageName: String) = packageManager.getApplicationIcon(packageName)

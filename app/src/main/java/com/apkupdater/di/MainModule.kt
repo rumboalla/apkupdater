@@ -1,54 +1,48 @@
 package com.apkupdater.di
 
-import com.apkupdater.repository.AppsRepository
-import com.apkupdater.repository.SearchRepository
-import com.apkupdater.repository.UpdatesRepository
-import com.apkupdater.repository.apkmirror.ApkMirrorSearch
-import com.apkupdater.repository.apkmirror.ApkMirrorUpdater
-import com.apkupdater.repository.apkpure.ApkPureSearch
-import com.apkupdater.repository.apkpure.ApkPureUpdater
-import com.apkupdater.repository.aptoide.AptoideSearch
-import com.apkupdater.repository.aptoide.AptoideUpdater
-import com.apkupdater.repository.fdroid.FdroidRepository
-import com.apkupdater.repository.googleplay.GooglePlayRepository
-import com.apkupdater.util.app.AlarmUtil
-import com.apkupdater.util.app.AppPrefs
-import com.apkupdater.util.app.InstallUtil
-import com.apkupdater.util.app.NotificationUtil
-import com.apkupdater.viewmodel.AppsViewModel
-import com.apkupdater.viewmodel.MainViewModel
-import com.apkupdater.viewmodel.SearchViewModel
-import com.apkupdater.viewmodel.UpdatesViewModel
+import com.google.gson.GsonBuilder
 import com.kryptoprefs.preferences.KryptoBuilder
+import com.apkupdater.R
+import com.apkupdater.prefs.Prefs
+import com.apkupdater.repository.AppsRepository
+import com.apkupdater.service.ApkMirrorService
+import com.apkupdater.viewmodel.AppsViewModel
+import com.apkupdater.viewmodel.BottomBarViewModel
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 val mainModule = module {
 
-	single { AppPrefs(get(), KryptoBuilder.nocrypt(get(), "${androidContext().packageName}_preferences")) }
+	single { GsonBuilder().create() }
+
+	single { Cache(androidContext().cacheDir, 5 * 1024 * 1024) }
+
+	single { OkHttpClient.Builder().cache(get()).build() }
+
+	single {
+		Retrofit.Builder()
+			.client(get())
+			.baseUrl("TODO")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+	}
+
+	single { get<Retrofit>().create(ApkMirrorService::class.java) }
 
 	single { AppsRepository(get(), get()) }
-	single { UpdatesRepository() }
-	single { SearchRepository() }
-	single { FdroidRepository() }
-	single { GooglePlayRepository() }
 
-	single { ApkMirrorUpdater(get()) }
-	single { ApkPureUpdater(get()) }
-	single { AptoideUpdater(get()) }
+	single { KryptoBuilder.hybrid(get(), androidContext().getString(R.string.app_name)) }
 
-	single { ApkMirrorSearch() }
-	single { ApkPureSearch() }
-	single { AptoideSearch() }
+	single { Prefs(get()) }
 
-	single { NotificationUtil(get()) }
-	single { AlarmUtil(get(), get()) }
-	single { InstallUtil() }
+	viewModel { AppsViewModel(get(), get()) }
 
-	viewModel { AppsViewModel() }
-	viewModel { UpdatesViewModel() }
-	viewModel { MainViewModel() }
-	viewModel { SearchViewModel() }
+	viewModel { BottomBarViewModel() }
 
 }

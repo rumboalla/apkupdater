@@ -16,6 +16,7 @@ It provides similar functionality to an app store, but instead of depending on a
 
 # Download
 * [Stable release (2.0.5)](https://github.com/rumboalla/apkupdater/releases/download/2.0.5/app-release.apk)
+* [Alpha Preview release (3.0.0-alpha-01)](https://github.com/rumboalla/apkupdater/releases/download/2.0.5/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Translations

@@ -2,58 +2,50 @@ package com.apkupdater.repository
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
-import android.util.Log
-import com.apkupdater.model.ui.AppInstalled
-import com.apkupdater.util.app.AppPrefs
-import com.apkupdater.util.iconUri
-import com.apkupdater.util.name
+import android.content.pm.PackageManager
+import android.os.Build
+import com.apkupdater.data.AppInstalled
+import com.apkupdater.prefs.Prefs
+import com.apkupdater.transform.toAppInstalled
 import com.apkupdater.util.orFalse
-import com.kryptoprefs.invoke
+import kotlinx.coroutines.flow.flow
 
-class AppsRepository(private val context: Context, private val prefs: AppPrefs) {
+class AppsRepository(
+	private val context: Context,
+	private val prefs: Prefs
+) {
 
-	private val excludeSystem get() = prefs.settings.excludeSystem
-	private val excludeDisabled get() = prefs.settings.excludeDisabled
-	private val excludeStore get() = prefs.settings.excludeStore
-	private val ignoredApps get() = prefs.ignoredApps()
+	private fun excludeSystem() = prefs.excludeSystem.get()
+	private fun excludeDisabled() = prefs.excludeDisabled.get()
+	private fun excludeStore() = prefs.excludeStore.get()
+	private fun ignoredApps() = prefs.ignoredApps.get()
 
-	private fun getPackageInfos(options: Int = 0): Sequence<PackageInfo> = runCatching {
-		return context.packageManager.getInstalledPackages(options).asSequence()
-			.filter { !excludeSystem || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
-			.filter { !excludeSystem || it.applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
-			.filter { !excludeDisabled || it.applicationInfo.enabled }
-			.filter { !excludeStore || !isAppStore(context.packageManager.getInstallerPackageName(it.packageName)) }
-	}.getOrElse {
-		Log.e("AppsRepository", "getPackageInfos", it)
-		return sequenceOf()
+	suspend fun getApps() = flow<Result<List<AppInstalled>>> {
+		runCatching {
+			val apps = context.packageManager.getInstalledPackages(PackageManager.MATCH_ALL)
+				.asSequence()
+				.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
+				.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
+				.filter { !excludeDisabled() || it.applicationInfo.enabled }
+				.filter { !excludeStore() || !isAppStore(getInstallerPackageName(it.packageName)) }
+				.map { it.toAppInstalled(context, ignoredApps()) }
+				.sortedBy { it.name }
+				.sortedBy { it.ignored }
+				.toList()
+			emit(Result.success(apps))
+		}.getOrElse {
+			emit(Result.failure(it))
+		}
 	}
 
-	fun getPackageInfosFiltered(options: Int = 0) = getPackageInfos(options).filter { !ignoredApps.contains(it.packageName) }
-
-	fun getApps(options: Int = 0) = getPackageInfos(options).mapIndexed { i, app ->
-		AppInstalled(
-			i,
-			app.name(context),
-			app.packageName,
-			app.versionName ?: "",
-			app.versionCode,
-			iconUri(app.packageName, app.applicationInfo.icon),
-			ignoredApps.contains(app.packageName)
-		)
-	}.sortedBy { it.name }.sortedBy { it.ignored }.toList()
-
-	fun getAppsFiltered(apps: Sequence<PackageInfo>) = apps.mapIndexed { i, app ->
-		AppInstalled(
-			i,
-			app.name(context),
-			app.packageName,
-			app.versionName ?: "",
-			app.versionCode,
-			iconUri(app.packageName, app.applicationInfo.icon),
-			ignoredApps.contains(app.packageName)
-		)
-	}.sortedBy { it.name }.sortedBy { it.ignored }
+	@Suppress("DEPRECATION")
+	private fun getInstallerPackageName(packageName: String): String {
+		return if (Build.VERSION.SDK_INT < 30) {
+			context.packageManager.getInstallerPackageName(packageName).orEmpty()
+		} else {
+			context.packageManager.getInstallSourceInfo(packageName).installingPackageName.orEmpty()
+		}
+	}
 
 	// Checks if Play Store or Amazon Store
 	private fun isAppStore(name: String?) = name?.contains("com.android.vending").orFalse() || name?.contains("com.amazon").orFalse()
