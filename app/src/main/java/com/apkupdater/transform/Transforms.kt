@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.net.Uri
 import android.os.Build
-import com.apkupdater.data.AppInstalled
+import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.util.name
 
 

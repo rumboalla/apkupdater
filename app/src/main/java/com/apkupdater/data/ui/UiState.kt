@@ -1,4 +1,4 @@
-package com.apkupdater.data
+package com.apkupdater.data.ui
 
 
 sealed class UiState {

@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.apkupdater.R
-import com.apkupdater.data.AppInstalled
+import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.util.clickableNoRipple
 import com.apkupdater.util.getAppIcon
 
@@ -143,6 +143,7 @@ fun HugeText(text: String, modifier: Modifier = Modifier, maxLines: Int = 1) = T
 	modifier = modifier,
 	textAlign = TextAlign.Center
 )
+
 fun getNumCells(orientation: Int) = if(orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4
 
 @Composable

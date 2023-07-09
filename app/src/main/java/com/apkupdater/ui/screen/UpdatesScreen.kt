@@ -6,9 +6,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.apkupdater.R
+import com.apkupdater.viewmodel.UpdatesViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdatesScreen() {
+fun UpdatesScreen(viewModel: UpdatesViewModel = koinViewModel()) {
 	TopAppBar(title = { Text(stringResource(R.string.tab_updates)) })
 }

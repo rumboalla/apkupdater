@@ -1,4 +1,4 @@
-package com.apkupdater.data
+package com.apkupdater.data.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

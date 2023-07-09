@@ -1,7 +1,7 @@
 package com.apkupdater.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.apkupdater.data.Screen
+import com.apkupdater.data.ui.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class BottomBarViewModel : ViewModel() {

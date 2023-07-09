@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apkupdater.R
-import com.apkupdater.data.UiState
+import com.apkupdater.data.ui.UiState
 import com.apkupdater.ui.component.AppItem
 import com.apkupdater.ui.component.ExcludeSystemIcon
 import com.apkupdater.ui.component.HugeText

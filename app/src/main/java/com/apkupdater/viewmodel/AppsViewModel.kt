@@ -3,7 +3,7 @@ package com.apkupdater.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apkupdater.data.UiState
+import com.apkupdater.data.ui.UiState
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.util.launchWithMutex
@@ -36,12 +36,12 @@ class AppsViewModel(
 		}
 	}
 
-	fun onSystemClick() {
+	fun onSystemClick() = viewModelScope.launchWithMutex(mutex, Dispatchers.Default) {
 		prefs.excludeSystem.put(!prefs.excludeSystem.get())
 		refresh(false)
 	}
 
-	fun ignore(packageName: String) {
+	fun ignore(packageName: String) = viewModelScope.launchWithMutex(mutex, Dispatchers.Default) {
 		val ignored = prefs.ignoredApps.get().toMutableList()
 		if (ignored.contains(packageName)) {
 			ignored.remove(packageName)

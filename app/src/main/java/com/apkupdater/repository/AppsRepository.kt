@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
-import com.apkupdater.data.AppInstalled
+import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.transform.toAppInstalled
 import com.apkupdater.util.orFalse
@@ -48,6 +48,7 @@ class AppsRepository(
 	}
 
 	// Checks if Play Store or Amazon Store
-	private fun isAppStore(name: String?) = name?.contains("com.android.vending").orFalse() || name?.contains("com.amazon").orFalse()
+	private fun isAppStore(name: String?) = name?.contains("com.android.vending").orFalse()
+		|| name?.contains("com.amazon").orFalse()
 
 }
