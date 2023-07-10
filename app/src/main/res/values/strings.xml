@@ -8,5 +8,6 @@
     <string name="ignored_cd">Ignore App</string>
     <string name="refresh_cd">Refresh Icon</string>
     <string name="exclude_system_cd">Exclude System Apps</string>
+    <string name="install_cd">Install App</string>
     <string name="app_cd">App Icon</string>
 </resources>

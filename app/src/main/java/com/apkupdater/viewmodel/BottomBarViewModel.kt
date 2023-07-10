@@ -17,6 +17,8 @@ class BottomBarViewModel : ViewModel() {
 
 	fun changeAppsBadge(number: String) = changeBadge(Screen.Apps.route, number)
 
+	fun changeUpdatesBadge(number: String) = changeBadge(Screen.Updates.route, number)
+
 	private fun changeBadge(route: String, number: String) {
 		val newBadges = badges.value.toMutableMap()
 		newBadges[route] = number

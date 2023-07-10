@@ -7,7 +7,8 @@ import com.kryptoprefs.preferences.KryptoPrefs
 
 class Prefs(prefs: KryptoPrefs): KryptoContext(prefs) {
 	val ignoredApps = json("ignoredApps", emptyList<String>())
-	val excludeSystem get() = boolean("excludeSystem", false)
-	val excludeDisabled get() = boolean("excludeDisabled", true)
-	val excludeStore get() = boolean("excludeStore", false)
+	val excludeSystem = boolean("excludeSystem", true)
+	val excludeDisabled = boolean("excludeDisabled", true)
+	val excludeStore = boolean("excludeStore", false)
+	val portraitColumns  = int("portraitColumns", 2)
 }

@@ -27,6 +27,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -55,8 +56,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.apkupdater.R
 import com.apkupdater.data.ui.AppInstalled
+import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.clickableNoRipple
 import com.apkupdater.util.getAppIcon
+import org.koin.androidx.compose.get
 
 
 @Composable
@@ -83,6 +87,15 @@ fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modif
 )
 
 @Composable
+fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
+	painter = painterResource(R.drawable.ic_install),
+	contentDescription = stringResource(R.string.install_cd),
+	modifier = Modifier
+		.clickableNoRipple(onClick)
+		.then(modifier)
+)
+
+@Composable
 fun RefreshIcon(modifier: Modifier = Modifier, onClick: () -> Unit = {}) = Icon(
 	painter = painterResource(id = R.drawable.ic_refresh),
 	contentDescription = stringResource(R.string.refresh_cd),
@@ -100,7 +113,7 @@ fun ExcludeSystemIcon(excludeSystem: Boolean) {
 @Composable
 fun LoadingImage(
 	url: String,
-	height: Dp = 195.dp,
+	height: Dp = 120.dp,
 	color: Color = Color.Transparent
 ) = AsyncImage(
 	model = ImageRequest.Builder(LocalContext.current).data(LocalContext.current.getAppIcon(url)).crossfade(true).build(),
@@ -144,11 +157,17 @@ fun HugeText(text: String, modifier: Modifier = Modifier, maxLines: Int = 1) = T
 	textAlign = TextAlign.Center
 )
 
-fun getNumCells(orientation: Int) = if(orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4
+@Composable
+fun getNumColumns(orientation: Int): Int {
+	val prefs = get<Prefs>()
+	return if(orientation == Configuration.ORIENTATION_PORTRAIT)
+		prefs.portraitColumns.get()
+	else 4
+}
 
 @Composable
 fun InstalledGrid(content: LazyGridScope.() -> Unit) = LazyVerticalGrid(
-	columns =  GridCells.Fixed(getNumCells(LocalConfiguration.current.orientation)),
+	columns =  GridCells.Fixed(getNumColumns(LocalConfiguration.current.orientation)),
 	contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
 	verticalArrangement = Arrangement.spacedBy(8.dp),
 	horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -162,15 +181,38 @@ fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 	IgnoreIcon(
 		app.ignored,
 		{  onIgnore(app.packageName) },
-		Modifier.align(Alignment.TopEnd).padding(4.dp)
+		Modifier
+			.align(Alignment.TopEnd)
+			.padding(4.dp)
 	)
 }
 
 @Composable
-fun AppItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Column(
+fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
+	LoadingImage(app.packageName)
+	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
+	InstallIcon(
+		{  onInstall(app.link) },
+		Modifier
+			.align(Alignment.TopEnd)
+			.padding(4.dp)
+	)
+}
+
+@Composable
+fun InstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Column(
 	modifier = Modifier.alpha(if (app.ignored) 0.5f else 1f)
 ) {
 	AppImage(app, onIgnore)
+	Column(Modifier.padding(top = 4.dp)) {
+		ScrollableText { SmallText(app.packageName) }
+		TitleText(app.name)
+	}
+}
+
+@Composable
+fun UpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
+	UpdateImage(app, onInstall)
 	Column(Modifier.padding(top = 4.dp)) {
 		ScrollableText { SmallText(app.packageName) }
 		TitleText(app.name)
@@ -209,4 +251,18 @@ fun BadgeText(number: String) {
 			Text(number)
 		}
 	}
+}
+
+@Composable
+fun DefaultErrorScreen() = Box(Modifier.fillMaxSize()) {
+	HugeText(
+		stringResource(R.string.something_went_wrong),
+		Modifier.align(Alignment.Center),
+		2
+	)
+}
+
+@Composable
+fun DefaultLoadingScreen() = Box(Modifier.fillMaxSize()) {
+	CircularProgressIndicator(Modifier.align(Alignment.Center))
 }

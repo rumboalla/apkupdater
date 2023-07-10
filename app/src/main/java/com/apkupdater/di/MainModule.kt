@@ -9,6 +9,7 @@ import com.apkupdater.repository.AppsRepository
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.BottomBarViewModel
+import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -51,5 +52,7 @@ val mainModule = module {
 	viewModel { BottomBarViewModel() }
 
 	viewModel { UpdatesViewModel(get(), get(), get()) }
+
+	viewModel { SettingsViewModel(get()) }
 
 }

@@ -8,7 +8,9 @@ import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.transform.toAppInstalled
 import com.apkupdater.util.orFalse
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+
 
 class AppsRepository(
 	private val context: Context,
@@ -21,21 +23,19 @@ class AppsRepository(
 	private fun ignoredApps() = prefs.ignoredApps.get()
 
 	suspend fun getApps() = flow<Result<List<AppInstalled>>> {
-		runCatching {
-			val apps = context.packageManager.getInstalledPackages(PackageManager.MATCH_ALL)
-				.asSequence()
-				.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
-				.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
-				.filter { !excludeDisabled() || it.applicationInfo.enabled }
-				.filter { !excludeStore() || !isAppStore(getInstallerPackageName(it.packageName)) }
-				.map { it.toAppInstalled(context, ignoredApps()) }
-				.sortedBy { it.name }
-				.sortedBy { it.ignored }
-				.toList()
-			emit(Result.success(apps))
-		}.getOrElse {
-			emit(Result.failure(it))
-		}
+		val apps = context.packageManager.getInstalledPackages(PackageManager.MATCH_ALL)
+			.asSequence()
+			.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
+			.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
+			.filter { !excludeDisabled() || it.applicationInfo.enabled }
+			.filter { !excludeStore() || !isAppStore(getInstallerPackageName(it.packageName)) }
+			.map { it.toAppInstalled(context, ignoredApps()) }
+			.sortedBy { it.name }
+			.sortedBy { it.ignored }
+			.toList()
+		emit(Result.success(apps))
+	}.catch {
+		emit(Result.failure(it))
 	}
 
 	@Suppress("DEPRECATION")
