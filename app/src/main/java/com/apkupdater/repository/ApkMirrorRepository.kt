@@ -29,7 +29,7 @@ class ApkMirrorRepository(
 
     suspend fun getUpdates(apps: List<AppInstalled>) = flow {
         apps.chunked(100)
-            .map { appExists(getPackageNames(apps)) }
+            .map { appExists(getPackageNames(it)) }
             .combine { all -> emit(parseUpdates(all.flatMap { it }, apps)) }
             .collect()
     }
@@ -37,18 +37,20 @@ class ApkMirrorRepository(
     private fun appExists(apps: List<String>) = flow {
         emit(service.appExists(AppExistsRequest(apps)).data)
     }.catch {
+        emit(emptyList())
         Log.e("ApkMirrorRepository", "Error getting updates.", it)
     }
 
     private fun parseUpdates(updates: List<AppExistsResponseData>, apps: List<AppInstalled>)
     = updates
         .filter { it.exists == true }
-        .map { data ->
+        .mapNotNull { data ->
             data.apks
                 .mapNotNull { filterArch(it) }
                 .filter { it.versionCode > getVersionCode(apps, data.pname) }
-                .map { it.toAppUpdate(getApp(apps, data.pname)!!) }
-        }.flatten()
+                .maxByOrNull { it.versionCode }
+                ?.toAppUpdate(getApp(apps, data.pname)!!)
+        }
 
     private fun getVersionCode(apps: List<AppInstalled>, packageName: String) = apps
         .find { it.packageName == packageName }?.versionCode ?: 0
