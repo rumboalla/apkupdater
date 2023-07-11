@@ -7,6 +7,7 @@ import android.os.Build
 import com.apkupdater.data.apkmirror.AppExistsResponseApk
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.util.getSignatureHash
 import com.apkupdater.util.name
 
 
@@ -17,7 +18,8 @@ fun PackageInfo.toAppInstalled(context: Context, ignored: List<String>) = AppIns
 	versionName.orEmpty(),
 	if (Build.VERSION.SDK_INT >= 28) longVersionCode else versionCode.toLong(),
 	iconUri(packageName, applicationInfo.icon),
-	ignored.contains(packageName)
+	ignored.contains(packageName),
+	getSignatureHash()
 )
 
 fun AppExistsResponseApk.toAppUpdate(app: AppInstalled) = AppUpdate(

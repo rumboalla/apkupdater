@@ -9,5 +9,7 @@ class SettingsViewModel(
 
 	fun setPortraitColumns(n: Int) = prefs.portraitColumns.put(n)
 	fun getPortraitColumns() = prefs.portraitColumns.get()
+	fun setLandscapeColumns(n: Int) = prefs.landscapeColumns.put(n)
+	fun getLandscapeColumns() = prefs.landscapeColumns.get()
 
 }

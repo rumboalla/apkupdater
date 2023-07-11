@@ -13,6 +13,7 @@ import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -27,7 +28,17 @@ val mainModule = module {
 
 	single { Cache(androidContext().cacheDir, 5 * 1024 * 1024) }
 
-	single { OkHttpClient.Builder().cache(get()).build() }
+	single {
+		HttpLoggingInterceptor().apply {
+			level = HttpLoggingInterceptor.Level.BODY
+		}
+	}
+
+	single { OkHttpClient.Builder()
+		.cache(get())
+		//.addInterceptor(get<HttpLoggingInterceptor>())
+		.build()
+	}
 
 	single(named("apkmirror")) {
 		Retrofit.Builder()

@@ -6,6 +6,10 @@ import com.apkupdater.data.apkmirror.AppExistsRequest
 import com.apkupdater.data.apkmirror.AppExistsResponseApk
 import com.apkupdater.data.apkmirror.AppExistsResponseData
 import com.apkupdater.data.ui.AppInstalled
+import com.apkupdater.data.ui.getApp
+import com.apkupdater.data.ui.getPackageNames
+import com.apkupdater.data.ui.getSignature
+import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.transform.toAppUpdate
@@ -29,7 +33,7 @@ class ApkMirrorRepository(
 
     suspend fun getUpdates(apps: List<AppInstalled>) = flow {
         apps.chunked(100)
-            .map { appExists(getPackageNames(it)) }
+            .map { appExists(it.getPackageNames()) }
             .combine { all -> emit(parseUpdates(all.flatMap { it }, apps)) }
             .collect()
     }
@@ -46,21 +50,18 @@ class ApkMirrorRepository(
         .filter { it.exists == true }
         .mapNotNull { data ->
             data.apks
+                .filter { filterSignature(it, apps.getSignature(data.pname))}
                 .mapNotNull { filterArch(it) }
-                .filter { it.versionCode > getVersionCode(apps, data.pname) }
+                .filter { it.versionCode > apps.getVersionCode(data.pname) }
                 .maxByOrNull { it.versionCode }
-                ?.toAppUpdate(getApp(apps, data.pname)!!)
+                ?.toAppUpdate(apps.getApp(data.pname)!!)
         }
 
-    private fun getVersionCode(apps: List<AppInstalled>, packageName: String) = apps
-        .find { it.packageName == packageName }?.versionCode ?: 0
-
-    private fun getPackageNames(apps: List<AppInstalled>) = apps
-        .filter { !it.ignored }
-        .map { it.packageName }
-
-    private fun getApp(apps: List<AppInstalled>, packageName: String) = apps
-        .find { it.packageName == packageName }
+    private fun filterSignature(apk: AppExistsResponseApk, signature: String?) = when {
+        apk.signaturesSha1 == null || apk.signaturesSha1.isEmpty() -> true
+        apk.signaturesSha1.contains(signature) -> true
+        else -> false
+    }
 
     private fun filterArch(app: AppExistsResponseApk) = when {
         app.arches.isEmpty() -> app

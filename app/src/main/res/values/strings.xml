@@ -10,4 +10,6 @@
     <string name="exclude_system_cd">Exclude System Apps</string>
     <string name="install_cd">Install App</string>
     <string name="app_cd">App Icon</string>
+    <string name="setting_portrait_columns">Portrait columns</string>
+    <string name="setting_landscape_columns">Landscape columns</string>
 </resources>

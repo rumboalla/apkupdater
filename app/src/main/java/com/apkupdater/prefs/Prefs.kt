@@ -11,4 +11,6 @@ class Prefs(prefs: KryptoPrefs): KryptoContext(prefs) {
 	val excludeDisabled = boolean("excludeDisabled", true)
 	val excludeStore = boolean("excludeStore", false)
 	val portraitColumns  = int("portraitColumns", 2)
+	val landscapeColumns  = int("landscapeColumns", 4)
+
 }
