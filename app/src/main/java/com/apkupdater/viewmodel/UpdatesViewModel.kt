@@ -25,7 +25,7 @@ class UpdatesViewModel(
 
 	fun state(): StateFlow<UpdatesUiState> = state
 
-	private fun refresh(load: Boolean = true) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+	fun refresh(load: Boolean = true) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
 		if (load) state.value = UpdatesUiState.Loading
 		appsRepository.getApps().collect { response ->
 			response.onSuccess { apps ->

@@ -3,6 +3,7 @@ package com.apkupdater.ui.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.ui.component.DefaultErrorScreen
 import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
+import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.component.UpdateItem
 import com.apkupdater.viewmodel.BottomBarViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
@@ -39,9 +41,14 @@ fun UpdatesScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdatesTopBar() = TopAppBar(
+fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
 	title = {
 		Text(stringResource(R.string.tab_updates))
+	},
+	actions = {
+		IconButton(onClick = { viewModel.refresh() }) {
+			RefreshIcon()
+		}
 	}
 )
 
@@ -58,7 +65,7 @@ fun UpdatesScreenSuccess(
 ) = Column {
 	val uriHandler = LocalUriHandler.current
 
-	UpdatesTopBar()
+	UpdatesTopBar(viewModel)
 	InstalledGrid {
 		items(updates) { update ->
 			UpdateItem(update) {

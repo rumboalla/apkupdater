@@ -33,6 +33,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -102,12 +103,10 @@ fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
 )
 
 @Composable
-fun RefreshIcon(modifier: Modifier = Modifier, onClick: () -> Unit = {}) = Icon(
+fun RefreshIcon(modifier: Modifier = Modifier) = Icon(
 	painter = painterResource(id = R.drawable.ic_refresh),
 	contentDescription = stringResource(R.string.refresh_cd),
-	modifier = Modifier
-		.clickable(MutableInteractionSource(), null) { onClick() }
-		.then(modifier)
+	modifier = Modifier.then(modifier)
 )
 
 @Composable
@@ -281,9 +280,7 @@ fun SliderSetting(
 	text: String,
 	valueRange: ClosedFloatingPointRange<Float>,
 	steps: Int
-) = Box(
-	Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 16.dp)
-) {
+) = Box(Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 16.dp)) {
 	var position by remember { mutableStateOf(getValue()) }
 	Text(text, Modifier.align(Alignment.CenterStart))
 	Row(Modifier.align(Alignment.CenterEnd)) {
@@ -300,3 +297,22 @@ fun SliderSetting(
 		)
 	}
 }
+
+@Composable
+fun SwitchSetting(
+	getValue: () -> Boolean,
+	setValue: (Boolean) -> Unit,
+	text: String
+) = Box (Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 16.dp)) {
+	var value by remember { mutableStateOf(getValue()) }
+	Text(text, Modifier.align(Alignment.CenterStart))
+	Switch(
+		checked = value,
+		onCheckedChange = {
+			value = it
+			setValue(it)
+		},
+		modifier = Modifier.align(Alignment.CenterEnd)
+	)
+}
+

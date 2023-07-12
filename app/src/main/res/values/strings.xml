@@ -12,4 +12,6 @@
     <string name="app_cd">App Icon</string>
     <string name="setting_portrait_columns">Portrait columns</string>
     <string name="setting_landscape_columns">Landscape columns</string>
+    <string name="ignore_alpha">Ignore Alpha</string>
+    <string name="ignore_beta">Ignore Beta</string>
 </resources>

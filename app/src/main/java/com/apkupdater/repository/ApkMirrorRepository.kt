@@ -39,7 +39,7 @@ class ApkMirrorRepository(
     }
 
     private fun appExists(apps: List<String>) = flow {
-        emit(service.appExists(AppExistsRequest(apps)).data)
+        emit(service.appExists(AppExistsRequest(apps, buildIgnoreList())).data)
     }.catch {
         emit(emptyList())
         Log.e("ApkMirrorRepository", "Error getting updates.", it)
@@ -68,6 +68,11 @@ class ApkMirrorRepository(
         app.arches.contains("universal") || app.arches.contains("noarch") -> app
         app.arches.find { a -> a.contains(arch) } != null -> app
         else -> null
+    }
+
+    private fun buildIgnoreList() = mutableListOf<String>().apply {
+        if (prefs.ignoreAlpha.get()) add("alpha")
+        if (prefs.ignoreBeta.get()) add("beta")
     }
 
 }

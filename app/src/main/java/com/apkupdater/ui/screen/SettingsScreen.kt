@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apkupdater.R
 import com.apkupdater.ui.component.SliderSetting
+import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.component.TitleText
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -35,6 +36,16 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 		6
 	)
 	TitleText("ApkMirror", Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
+	SwitchSetting(
+		{ viewModel.getIgnoreAlpha() },
+		{ viewModel.setIgnoreAlpha(it) },
+		stringResource(R.string.ignore_alpha)
+	)
+	SwitchSetting(
+		{ viewModel.getIgnoreBeta() },
+		{ viewModel.setIgnoreBeta(it) },
+		stringResource(R.string.ignore_beta)
+	)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
