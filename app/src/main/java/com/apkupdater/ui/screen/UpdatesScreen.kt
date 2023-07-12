@@ -47,7 +47,7 @@ fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
 	},
 	actions = {
 		IconButton(onClick = { viewModel.refresh() }) {
-			RefreshIcon()
+			RefreshIcon(stringResource(R.string.refresh_updates))
 		}
 	}
 )

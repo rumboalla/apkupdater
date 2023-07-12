@@ -57,7 +57,7 @@ fun AppsTopBar(viewModel: AppsViewModel, state: AppsUiState.Success) = TopAppBar
 	colors = TopAppBarDefaults.topAppBarColors(),
 	actions = {
 		IconButton(onClick = { viewModel.refresh() }) {
-			RefreshIcon()
+			RefreshIcon(stringResource(R.string.refresh_apps))
 		}
 		IconButton(onClick = { viewModel.onSystemClick() }) {
 			ExcludeSystemIcon(state.excludeSystem)

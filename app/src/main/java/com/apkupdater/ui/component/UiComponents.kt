@@ -8,9 +8,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +30,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -102,17 +101,33 @@ fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
 		.then(modifier)
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RefreshIcon(modifier: Modifier = Modifier) = Icon(
-	painter = painterResource(id = R.drawable.ic_refresh),
-	contentDescription = stringResource(R.string.refresh_cd),
-	modifier = Modifier.then(modifier)
-)
+fun RefreshIcon(
+	text: String,
+	modifier: Modifier = Modifier
+) = PlainTooltipBox(tooltip = { Text(text) }) {
+	Icon(
+		painter = painterResource(id = R.drawable.ic_refresh),
+		contentDescription = text,
+		modifier = Modifier.tooltipAnchor().then(modifier)
+	)
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExcludeSystemIcon(excludeSystem: Boolean) {
+fun ExcludeSystemIcon(excludeSystem: Boolean) = PlainTooltipBox(
+	tooltip = {
+		val id = if (excludeSystem) R.string.include_system_apps else R.string.exclude_system_apps
+		Text(stringResource(id))
+	}
+) {
 	val icon = if (excludeSystem) R.drawable.ic_system_off else R.drawable.ic_system
-	Icon(painterResource(icon), stringResource(R.string.exclude_system_cd))
+	Icon(
+		painterResource(icon),
+		stringResource(R.string.exclude_system_apps),
+		Modifier.tooltipAnchor()
+	)
 }
 
 @Composable

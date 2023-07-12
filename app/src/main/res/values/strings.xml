@@ -6,8 +6,10 @@
     <string name="tab_settings">Settings</string>
     <string name="something_went_wrong">"Something went wrong\n\uD83E\uDD26"</string>
     <string name="ignored_cd">Ignore App</string>
-    <string name="refresh_cd">Refresh Icon</string>
-    <string name="exclude_system_cd">Exclude System Apps</string>
+    <string name="refresh_apps">Refresh App List</string>
+    <string name="refresh_updates">Look for Updates</string>
+    <string name="exclude_system_apps">Exclude System Apps</string>
+    <string name="include_system_apps">Include System Apps</string>
     <string name="install_cd">Install App</string>
     <string name="app_cd">App Icon</string>
     <string name="setting_portrait_columns">Portrait columns</string>
