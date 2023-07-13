@@ -1,7 +1,6 @@
 package com.apkupdater.ui.component
 
  import android.content.res.Configuration
- import android.graphics.drawable.Drawable
  import android.net.Uri
  import androidx.compose.animation.core.AnimationSpec
  import androidx.compose.animation.core.FastOutSlowInEasing
@@ -156,14 +155,14 @@ fun LoadingImage(
 )
 
 @Composable
-fun LoadingImageDrawable(
-	drawable: Drawable,
+fun LoadingImageApp(
+	packageName: String,
 	height: Dp = 120.dp,
 	color: Color = Color.Transparent
 ) = AsyncImage(
 	model = ImageRequest
 		.Builder(LocalContext.current)
-		.data(drawable)
+		.data(LocalContext.current.getAppIcon(packageName))
 		.crossfade(true)
 		.build(),
 	contentDescription = stringResource(R.string.app_cd),
@@ -226,7 +225,7 @@ fun InstalledGrid(content: LazyGridScope.() -> Unit) = LazyVerticalGrid(
 
 @Composable
 fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
-	LoadingImageDrawable(LocalContext.current.getAppIcon(app.packageName))
+	LoadingImageApp(app.packageName)
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	IgnoreIcon(
 		app.ignored,
@@ -237,7 +236,7 @@ fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 
 @Composable
 fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
-	LoadingImageDrawable(LocalContext.current.getAppIcon(app.packageName))
+	LoadingImageApp(app.packageName)
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	InstallIcon(
 		{  onInstall(app.link) },
@@ -251,7 +250,7 @@ fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 	if (app.versionCode != 0L)
 		TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	InstallIcon(
-		{  onInstall(app.link) },
+		{ onInstall(app.link) },
 		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
 }
