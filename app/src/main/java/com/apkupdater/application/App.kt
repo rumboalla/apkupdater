@@ -27,7 +27,7 @@ class App : Application(), ImageLoaderFactory, KoinComponent {
 	override fun newImageLoader() = ImageLoader
 		.Builder(this)
 		.okHttpClient(get<OkHttpClient>())
-		.logger(DebugLogger())
+		//.logger(DebugLogger())
 		.build()
 
 }

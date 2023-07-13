@@ -63,7 +63,8 @@ class ApkMirrorRepository(
         }
         emit(result)
     }.catch {
-        //TODO
+        emit(emptyList())
+        Log.e("ApkMirrorRepository", "Error searching.", it)
     }
 
     private fun appExists(apps: List<String>) = flow {

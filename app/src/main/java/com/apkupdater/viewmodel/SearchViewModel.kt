@@ -2,10 +2,9 @@ package com.apkupdater.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apkupdater.data.ui.UpdatesUiState
+import com.apkupdater.data.ui.SearchUiState
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
-import com.apkupdater.repository.AppsRepository
 import com.apkupdater.util.launchWithMutex
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,21 +12,19 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
 
 class SearchViewModel(
-    private val appsRepository: AppsRepository,
     private val apkMirrorRepository: ApkMirrorRepository,
     private val prefs: Prefs
 ) : ViewModel() {
 
     private val mutex = Mutex()
-    private val state = MutableStateFlow<UpdatesUiState>(UpdatesUiState.Success(emptyList()))
+    private val state = MutableStateFlow<SearchUiState>(SearchUiState.Success(false, emptyList()))
 
-    init {  }
+    fun state(): StateFlow<SearchUiState> = state
 
-    fun state(): StateFlow<UpdatesUiState> = state
-
-    fun search(text: String, load: Boolean = true) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+    fun search(text: String) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+        state.value = SearchUiState.Success(true, emptyList())
         apkMirrorRepository.search(text).collect {
-            state.value = UpdatesUiState.Success(it)
+            state.value = SearchUiState.Success(false, it)
         }
     }
 

@@ -77,6 +77,6 @@ val mainModule = module {
 
 	viewModel { SettingsViewModel(get()) }
 
-	viewModel { SearchViewModel(get(), get(), get()) }
+	viewModel { SearchViewModel(get(), get()) }
 
 }
