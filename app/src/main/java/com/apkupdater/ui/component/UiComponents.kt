@@ -248,7 +248,8 @@ fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 @Composable
 fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 	LoadingImage(app.iconUri)
-	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
+	if (app.versionCode != 0L)
+		TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	InstallIcon(
 		{  onInstall(app.link) },
 		Modifier.align(Alignment.TopEnd).padding(4.dp)
