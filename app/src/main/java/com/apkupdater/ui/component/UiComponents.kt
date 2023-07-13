@@ -1,6 +1,7 @@
 package com.apkupdater.ui.component
 
-import android.content.res.Configuration
+ import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -65,7 +66,6 @@ import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.clickableNoRipple
-import com.apkupdater.util.getAppIcon
 import org.koin.androidx.compose.get
 
 
@@ -132,11 +132,15 @@ fun ExcludeSystemIcon(excludeSystem: Boolean) = PlainTooltipBox(
 
 @Composable
 fun LoadingImage(
-	url: String,
+	uri: Uri,
 	height: Dp = 120.dp,
 	color: Color = Color.Transparent
 ) = AsyncImage(
-	model = ImageRequest.Builder(LocalContext.current).data(LocalContext.current.getAppIcon(url)).crossfade(true).build(),
+	model = ImageRequest
+		.Builder(LocalContext.current)
+		.data(uri)
+		.crossfade(true)
+		.build(),
 	contentDescription = stringResource(R.string.app_cd),
 	modifier = Modifier
 		.fillMaxSize()
@@ -197,7 +201,7 @@ fun InstalledGrid(content: LazyGridScope.() -> Unit) = LazyVerticalGrid(
 
 @Composable
 fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
-	LoadingImage(app.packageName)
+	LoadingImage(app.iconUri)
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	IgnoreIcon(
 		app.ignored,
@@ -210,7 +214,7 @@ fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 
 @Composable
 fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
-	LoadingImage(app.packageName)
+	LoadingImage(app.iconUri)
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	InstallIcon(
 		{  onInstall(app.link) },

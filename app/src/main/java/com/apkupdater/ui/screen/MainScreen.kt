@@ -74,7 +74,7 @@ fun NavHost(
 	modifier = Modifier.padding(padding)
 ) {
 	composable(Screen.Apps.route) { AppsScreen(viewModel) }
-	composable(Screen.Search.route) { SearchScreen() }
+	composable(Screen.Search.route) { SearchScreen(viewModel) }
 	composable(Screen.Updates.route) { UpdatesScreen(viewModel) }
 	composable(Screen.Settings.route) { SettingsScreen() }
 }

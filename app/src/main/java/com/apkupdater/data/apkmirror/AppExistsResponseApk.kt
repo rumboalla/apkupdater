@@ -1,5 +1,7 @@
 package com.apkupdater.data.apkmirror
 
+import com.apkupdater.data.ui.AppInstalled
+import com.apkupdater.data.ui.AppUpdate
 import com.google.gson.annotations.SerializedName
 
 data class AppExistsResponseApk(
@@ -15,4 +17,13 @@ data class AppExistsResponseApk(
 	val signaturesSha1: List<String> = emptyList(),
 	@SerializedName("signatures-sha256")
 	val signaturesSha256: List<String> = emptyList()
+)
+
+fun AppExistsResponseApk.toAppUpdate(app: AppInstalled) = AppUpdate(
+	app.name,
+	app.packageName,
+	"?",
+	versionCode,
+	app.iconUri,
+	"https://www.apkmirror.com/$link"
 )

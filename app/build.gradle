@@ -69,6 +69,7 @@ dependencies {
     implementation 'io.coil-kt:coil-compose:2.4.0'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs:0.4.3'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs-gson:0.4.3'
+    implementation 'org.jsoup:jsoup:1.16.1'
 
     testImplementation 'junit:junit:4.13.2'
 

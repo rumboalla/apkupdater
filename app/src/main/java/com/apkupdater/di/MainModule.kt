@@ -1,5 +1,6 @@
 package com.apkupdater.di
 
+import com.apkupdater.BuildConfig
 import com.google.gson.GsonBuilder
 import com.kryptoprefs.preferences.KryptoBuilder
 import com.apkupdater.R
@@ -9,6 +10,7 @@ import com.apkupdater.repository.AppsRepository
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.BottomBarViewModel
+import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import okhttp3.Cache
@@ -34,8 +36,17 @@ val mainModule = module {
 		}
 	}
 
-	single { OkHttpClient.Builder()
+	single { OkHttpClient
+		.Builder()
 		.cache(get())
+		.addNetworkInterceptor { chain ->
+			chain.proceed(
+				chain.request()
+					.newBuilder()
+					.header("User-Agent", "APKUpdater-v" + BuildConfig.VERSION_NAME)
+					.build()
+			)
+		}
 		//.addInterceptor(get<HttpLoggingInterceptor>())
 		.build()
 	}
@@ -65,5 +76,7 @@ val mainModule = module {
 	viewModel { UpdatesViewModel(get(), get(), get()) }
 
 	viewModel { SettingsViewModel(get()) }
+
+	viewModel { SearchViewModel(get(), get(), get()) }
 
 }
