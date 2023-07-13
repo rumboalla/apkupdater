@@ -1,72 +1,74 @@
 package com.apkupdater.ui.component
 
  import android.content.res.Configuration
-import android.net.Uri
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridScope
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Badge
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
-import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.apkupdater.R
-import com.apkupdater.data.ui.AppInstalled
-import com.apkupdater.data.ui.AppUpdate
-import com.apkupdater.prefs.Prefs
-import com.apkupdater.util.clickableNoRipple
-import org.koin.androidx.compose.get
+ import android.graphics.drawable.Drawable
+ import android.net.Uri
+ import androidx.compose.animation.core.AnimationSpec
+ import androidx.compose.animation.core.FastOutSlowInEasing
+ import androidx.compose.animation.core.RepeatMode
+ import androidx.compose.animation.core.infiniteRepeatable
+ import androidx.compose.animation.core.tween
+ import androidx.compose.foundation.ScrollState
+ import androidx.compose.foundation.background
+ import androidx.compose.foundation.horizontalScroll
+ import androidx.compose.foundation.layout.Arrangement
+ import androidx.compose.foundation.layout.Box
+ import androidx.compose.foundation.layout.Column
+ import androidx.compose.foundation.layout.PaddingValues
+ import androidx.compose.foundation.layout.Row
+ import androidx.compose.foundation.layout.RowScope
+ import androidx.compose.foundation.layout.fillMaxSize
+ import androidx.compose.foundation.layout.fillMaxWidth
+ import androidx.compose.foundation.layout.height
+ import androidx.compose.foundation.layout.padding
+ import androidx.compose.foundation.layout.width
+ import androidx.compose.foundation.lazy.grid.GridCells
+ import androidx.compose.foundation.lazy.grid.LazyGridScope
+ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+ import androidx.compose.foundation.rememberScrollState
+ import androidx.compose.foundation.shape.RoundedCornerShape
+ import androidx.compose.material3.Badge
+ import androidx.compose.material3.CircularProgressIndicator
+ import androidx.compose.material3.ExperimentalMaterial3Api
+ import androidx.compose.material3.Icon
+ import androidx.compose.material3.MaterialTheme
+ import androidx.compose.material3.PlainTooltipBox
+ import androidx.compose.material3.Slider
+ import androidx.compose.material3.Switch
+ import androidx.compose.material3.Text
+ import androidx.compose.runtime.Composable
+ import androidx.compose.runtime.LaunchedEffect
+ import androidx.compose.runtime.getValue
+ import androidx.compose.runtime.mutableStateOf
+ import androidx.compose.runtime.remember
+ import androidx.compose.runtime.setValue
+ import androidx.compose.ui.Alignment
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.draw.alpha
+ import androidx.compose.ui.draw.clip
+ import androidx.compose.ui.graphics.Color
+ import androidx.compose.ui.layout.ContentScale
+ import androidx.compose.ui.platform.LocalConfiguration
+ import androidx.compose.ui.platform.LocalContext
+ import androidx.compose.ui.res.painterResource
+ import androidx.compose.ui.res.stringResource
+ import androidx.compose.ui.text.TextStyle
+ import androidx.compose.ui.text.font.FontWeight
+ import androidx.compose.ui.text.style.TextAlign
+ import androidx.compose.ui.text.style.TextOverflow
+ import androidx.compose.ui.unit.Dp
+ import androidx.compose.ui.unit.TextUnit
+ import androidx.compose.ui.unit.TextUnitType
+ import androidx.compose.ui.unit.dp
+ import coil.compose.AsyncImage
+ import coil.request.ImageRequest
+ import com.apkupdater.R
+ import com.apkupdater.data.ui.AppInstalled
+ import com.apkupdater.data.ui.AppUpdate
+ import com.apkupdater.prefs.Prefs
+ import com.apkupdater.util.clickableNoRipple
+ import com.apkupdater.util.getAppIcon
+ import org.koin.androidx.compose.get
 
 
 @Composable
@@ -110,7 +112,9 @@ fun RefreshIcon(
 	Icon(
 		painter = painterResource(id = R.drawable.ic_refresh),
 		contentDescription = text,
-		modifier = Modifier.tooltipAnchor().then(modifier)
+		modifier = Modifier
+			.tooltipAnchor()
+			.then(modifier)
 	)
 }
 
@@ -148,7 +152,28 @@ fun LoadingImage(
 		.padding(10.dp)
 		.clip(RoundedCornerShape(8.dp))
 		.background(color),
-	contentScale = ContentScale.Fit,
+	contentScale = ContentScale.Fit
+)
+
+@Composable
+fun LoadingImageDrawable(
+	drawable: Drawable,
+	height: Dp = 120.dp,
+	color: Color = Color.Transparent
+) = AsyncImage(
+	model = ImageRequest
+		.Builder(LocalContext.current)
+		.data(drawable)
+		.crossfade(true)
+		.build(),
+	contentDescription = stringResource(R.string.app_cd),
+	modifier = Modifier
+		.fillMaxSize()
+		.height(height)
+		.padding(10.dp)
+		.clip(RoundedCornerShape(8.dp))
+		.background(color),
+	contentScale = ContentScale.Fit
 )
 
 @Composable
@@ -201,26 +226,32 @@ fun InstalledGrid(content: LazyGridScope.() -> Unit) = LazyVerticalGrid(
 
 @Composable
 fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
-	LoadingImage(app.iconUri)
+	LoadingImageDrawable(LocalContext.current.getAppIcon(app.packageName))
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	IgnoreIcon(
 		app.ignored,
 		{  onIgnore(app.packageName) },
-		Modifier
-			.align(Alignment.TopEnd)
-			.padding(4.dp)
+		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
 }
 
 @Composable
 fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
+	LoadingImageDrawable(LocalContext.current.getAppIcon(app.packageName))
+	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
+	InstallIcon(
+		{  onInstall(app.link) },
+		Modifier.align(Alignment.TopEnd).padding(4.dp)
+	)
+}
+
+@Composable
+fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 	LoadingImage(app.iconUri)
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	InstallIcon(
 		{  onInstall(app.link) },
-		Modifier
-			.align(Alignment.TopEnd)
-			.padding(4.dp)
+		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
 }
 
@@ -238,6 +269,15 @@ fun InstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Column(
 @Composable
 fun UpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
 	UpdateImage(app, onInstall)
+	Column(Modifier.padding(top = 4.dp)) {
+		ScrollableText { SmallText(app.packageName) }
+		TitleText(app.name)
+	}
+}
+
+@Composable
+fun SearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
+	SearchImage(app, onInstall)
 	Column(Modifier.padding(top = 4.dp)) {
 		ScrollableText { SmallText(app.packageName) }
 		TitleText(app.name)
@@ -334,4 +374,3 @@ fun SwitchSetting(
 		modifier = Modifier.align(Alignment.CenterEnd)
 	)
 }
-

@@ -2,13 +2,11 @@ package com.apkupdater.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +25,7 @@ import com.apkupdater.data.ui.SearchUiState
 import com.apkupdater.ui.component.DefaultErrorScreen
 import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
-import com.apkupdater.ui.component.UpdateItem
+import com.apkupdater.ui.component.SearchItem
 import com.apkupdater.viewmodel.BottomBarViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -57,7 +55,7 @@ fun SearchScreenSuccess(
 	val uriHandler = LocalUriHandler.current
 	InstalledGrid {
 		items(state.updates) { update ->
-			UpdateItem(update) {
+			SearchItem(update) {
 				uriHandler.openUri(update.link)
 			}
 		}
