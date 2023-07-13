@@ -61,9 +61,9 @@ class ApkMirrorRepository(
                 packageName = a[it].text() // Developer name in this case
             )
         }
-        emit(result)
+        emit(Result.success(result))
     }.catch {
-        emit(emptyList())
+        emit(Result.failure(it))
         Log.e("ApkMirrorRepository", "Error searching.", it)
     }
 

@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apkupdater.data.ui.SearchUiState
 import com.apkupdater.ui.component.DefaultErrorScreen
+import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.UpdateItem
 import com.apkupdater.viewmodel.BottomBarViewModel
@@ -36,36 +36,29 @@ import org.koin.androidx.compose.koinViewModel
 fun SearchScreen(
 	barViewModel: BottomBarViewModel,
 	viewModel: SearchViewModel = koinViewModel()
-) {
+) = Column {
+	SearchTopBar(viewModel)
 	viewModel.state().collectAsStateWithLifecycle().value.onError {
 		barViewModel.changeSearchBadge("!")
-		SearchScreenError()
+		DefaultErrorScreen()
 	}.onSuccess {
 		barViewModel.changeSearchBadge(it.updates.count().toString())
-		SearchScreenSuccess(viewModel, it)
+		SearchScreenSuccess(it)
+	}.onLoading {
+		barViewModel.changeSearchBadge("")
+		DefaultLoadingScreen()
 	}
 }
 
 @Composable
-fun SearchScreenError() = DefaultErrorScreen()
-
-@Composable
 fun SearchScreenSuccess(
-	viewModel: SearchViewModel,
 	state: SearchUiState.Success
 ) = Column {
 	val uriHandler = LocalUriHandler.current
-	SearchTopBar(viewModel)
-	if (state.loading) {
-		Box(Modifier.fillMaxSize()) {
-			CircularProgressIndicator(Modifier.align(Alignment.Center))
-		}
-	} else {
-		InstalledGrid {
-			items(state.updates) { update ->
-				UpdateItem(update) {
-					uriHandler.openUri(update.link)
-				}
+	InstalledGrid {
+		items(state.updates) { update ->
+			UpdateItem(update) {
+				uriHandler.openUri(update.link)
 			}
 		}
 	}

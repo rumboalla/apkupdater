@@ -17,14 +17,18 @@ class SearchViewModel(
 ) : ViewModel() {
 
     private val mutex = Mutex()
-    private val state = MutableStateFlow<SearchUiState>(SearchUiState.Success(false, emptyList()))
+    private val state = MutableStateFlow<SearchUiState>(SearchUiState.Success(emptyList()))
 
     fun state(): StateFlow<SearchUiState> = state
 
     fun search(text: String) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-        state.value = SearchUiState.Success(true, emptyList())
+        state.value = SearchUiState.Loading
         apkMirrorRepository.search(text).collect {
-            state.value = SearchUiState.Success(false, it)
+            it.onSuccess { apps ->
+                state.value = SearchUiState.Success(apps)
+            }.onFailure {
+                state.value = SearchUiState.Error
+            }
         }
     }
 
