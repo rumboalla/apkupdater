@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
 
 class AppsViewModel(
+	private val mainViewModel: MainViewModel,
 	private val repository: AppsRepository,
 	private val prefs: Prefs
 ) : ViewModel() {
@@ -20,17 +21,18 @@ class AppsViewModel(
 	private val mutex = Mutex()
 	private val state = MutableStateFlow<AppsUiState>(AppsUiState.Loading)
 
-	init { refresh() }
-
 	fun state(): StateFlow<AppsUiState> = state
 
 	fun refresh(load: Boolean = true) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
 		if (load) state.value = AppsUiState.Loading
+		mainViewModel.changeAppsBadge("")
 		repository.getApps().collect {
 			it.onSuccess { apps ->
 				state.value = AppsUiState.Success(apps, prefs.excludeSystem.get())
+				mainViewModel.changeAppsBadge(apps.size.toString())
 			}.onFailure { ex ->
 				state.value = AppsUiState.Error
+				mainViewModel.changeAppsBadge("!")
 				Log.e("InstalledViewModel", "Error getting apps.", ex)
 			}
 		}

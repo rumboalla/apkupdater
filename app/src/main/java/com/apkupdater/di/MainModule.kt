@@ -9,7 +9,7 @@ import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.viewmodel.AppsViewModel
-import com.apkupdater.viewmodel.BottomBarViewModel
+import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
@@ -69,14 +69,14 @@ val mainModule = module {
 
 	single { Prefs(get()) }
 
-	viewModel { AppsViewModel(get(), get()) }
+	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
 
-	viewModel { BottomBarViewModel() }
+	viewModel { MainViewModel() }
 
-	viewModel { UpdatesViewModel(get(), get(), get()) }
+	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get()) }
 
 	viewModel { SettingsViewModel(get()) }
 
-	viewModel { SearchViewModel(get(), get()) }
+	viewModel { parameters -> SearchViewModel(parameters.get(), get()) }
 
 }

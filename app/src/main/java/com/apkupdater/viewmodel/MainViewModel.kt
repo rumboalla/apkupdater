@@ -1,10 +1,12 @@
 package com.apkupdater.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.apkupdater.data.ui.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
-class BottomBarViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
 	val screens = listOf(Screen.Apps, Screen.Search, Screen.Updates, Screen.Settings)
 
@@ -14,6 +16,19 @@ class BottomBarViewModel : ViewModel() {
 		Screen.Updates.route to "",
 		Screen.Settings.route to ""
 	))
+
+	val isRefreshing = MutableStateFlow(false)
+
+	fun refresh(
+		appsViewModel: AppsViewModel,
+		updatesViewModel: UpdatesViewModel
+	) = viewModelScope.launch {
+		isRefreshing.value = true
+		appsViewModel.refresh(false)
+		updatesViewModel.refresh(false).invokeOnCompletion {
+			isRefreshing.value = false
+		}
+	}
 
 	fun changeSearchBadge(number: String) = changeBadge(Screen.Search.route, number)
 

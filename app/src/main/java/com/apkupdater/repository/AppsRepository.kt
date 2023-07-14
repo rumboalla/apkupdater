@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.transform.toAppInstalled
 import com.apkupdater.util.orFalse
@@ -30,6 +31,7 @@ class AppsRepository(
 			.toList()
 		emit(Result.success(apps))
 	}.catch {
+		Log.e("AppsRepository", "Error getting apps.", it)
 		emit(Result.failure(it))
 	}
 

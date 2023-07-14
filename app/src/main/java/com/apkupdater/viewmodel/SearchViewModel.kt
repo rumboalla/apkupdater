@@ -3,7 +3,6 @@ package com.apkupdater.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apkupdater.data.ui.SearchUiState
-import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.util.launchWithMutex
 import kotlinx.coroutines.Dispatchers
@@ -12,8 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
 
 class SearchViewModel(
-    private val apkMirrorRepository: ApkMirrorRepository,
-    private val prefs: Prefs
+    private val mainViewModel: MainViewModel,
+    private val apkMirrorRepository: ApkMirrorRepository
 ) : ViewModel() {
 
     private val mutex = Mutex()
@@ -23,10 +22,13 @@ class SearchViewModel(
 
     fun search(text: String) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
         state.value = SearchUiState.Loading
+        mainViewModel.changeSearchBadge("")
         apkMirrorRepository.search(text).collect {
             it.onSuccess { apps ->
                 state.value = SearchUiState.Success(apps)
+                mainViewModel.changeSearchBadge(apps.size.toString())
             }.onFailure {
+                mainViewModel.changeSearchBadge("!")
                 state.value = SearchUiState.Error
             }
         }

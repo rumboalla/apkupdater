@@ -26,24 +26,19 @@ import com.apkupdater.ui.component.DefaultErrorScreen
 import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.SearchItem
-import com.apkupdater.viewmodel.BottomBarViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SearchScreen(
-	barViewModel: BottomBarViewModel,
 	viewModel: SearchViewModel = koinViewModel()
 ) = Column {
 	SearchTopBar(viewModel)
 	viewModel.state().collectAsStateWithLifecycle().value.onError {
-		barViewModel.changeSearchBadge("!")
 		DefaultErrorScreen()
 	}.onSuccess {
-		barViewModel.changeSearchBadge(it.updates.count().toString())
 		SearchScreenSuccess(it)
 	}.onLoading {
-		barViewModel.changeSearchBadge("")
 		DefaultLoadingScreen()
 	}
 }

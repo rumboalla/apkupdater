@@ -229,7 +229,7 @@ fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	IgnoreIcon(
 		app.ignored,
-		{  onIgnore(app.packageName) },
+		{ onIgnore(app.packageName) },
 		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
 }
@@ -239,7 +239,7 @@ fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 	LoadingImageApp(app.packageName)
 	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
 	InstallIcon(
-		{  onInstall(app.link) },
+		{ onInstall(app.link) },
 		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
 }

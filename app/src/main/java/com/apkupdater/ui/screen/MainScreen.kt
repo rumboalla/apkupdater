@@ -1,5 +1,6 @@
 package com.apkupdater.ui.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -10,10 +11,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pullrefresh.PullRefreshIndicator
+import androidx.compose.material3.pullrefresh.pullRefresh
+import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -23,20 +30,44 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
-import com.apkupdater.viewmodel.BottomBarViewModel
+import com.apkupdater.viewmodel.AppsViewModel
+import com.apkupdater.viewmodel.MainViewModel
+import com.apkupdater.viewmodel.SearchViewModel
+import com.apkupdater.viewmodel.SettingsViewModel
+import com.apkupdater.viewmodel.UpdatesViewModel
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 
 @Composable
-fun MainScreen(viewModel: BottomBarViewModel = koinViewModel()) {
+fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
+	// ViewModels
+	val appsViewModel: AppsViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
+	val updatesViewModel: UpdatesViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
+	val searchViewModel: SearchViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
+
+	// Navigation
 	val navController = rememberNavController()
-	Scaffold(bottomBar = { BottomBar(navController, viewModel) }) { padding ->
-		NavHost(navController, padding, viewModel)
+
+	// Pull to refresh
+	val isRefreshing = mainViewModel.isRefreshing.collectAsStateWithLifecycle()
+	val pullToRefresh = rememberPullRefreshState(isRefreshing.value, {
+		mainViewModel.refresh(appsViewModel, updatesViewModel)
+	})
+	LaunchedEffect(pullToRefresh) {
+		mainViewModel.refresh(appsViewModel, updatesViewModel)
+	}
+
+	Scaffold(bottomBar = { BottomBar(navController, mainViewModel) }) { padding ->
+		Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
+			NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel)
+			PullRefreshIndicator(isRefreshing.value, pullToRefresh, Modifier.align(Alignment.TopCenter))
+		}
 	}
 }
 
 @Composable
-fun BottomBar(navController: NavController, viewModel: BottomBarViewModel) = BottomAppBar {
+fun BottomBar(navController: NavController, viewModel: MainViewModel) = BottomAppBar {
 	val badges = viewModel.badges.collectAsState().value
 	viewModel.screens.forEach { screen ->
 		val state = navController.currentBackStackEntryAsState().value
@@ -57,7 +88,7 @@ fun RowScope.BottomBarItem(
 		BadgedBox({ BadgeText(badge) }) {
 			Icon(if (selected) screen.iconSelected else screen.icon, contentDescription = null)
 		}
-   },
+   	},
 	label = { Text(stringResource(screen.resourceId)) },
 	selected = selected,
 	onClick = { navigateTo(navController, screen.route) }
@@ -67,16 +98,19 @@ fun RowScope.BottomBarItem(
 fun NavHost(
 	navController: NavHostController,
 	padding: PaddingValues,
-	viewModel: BottomBarViewModel
+	appsViewModel: AppsViewModel,
+	updatesViewModel: UpdatesViewModel,
+	searchViewModel: SearchViewModel,
+	settingsViewModel: SettingsViewModel = koinViewModel()
 ) = NavHost(
 	navController = navController,
 	startDestination = Screen.Apps.route,
 	modifier = Modifier.padding(padding)
 ) {
-	composable(Screen.Apps.route) { AppsScreen(viewModel) }
-	composable(Screen.Search.route) { SearchScreen(viewModel) }
-	composable(Screen.Updates.route) { UpdatesScreen(viewModel) }
-	composable(Screen.Settings.route) { SettingsScreen() }
+	composable(Screen.Apps.route) { AppsScreen(appsViewModel) }
+	composable(Screen.Search.route) { SearchScreen(searchViewModel) }
+	composable(Screen.Updates.route) { UpdatesScreen(updatesViewModel) }
+	composable(Screen.Settings.route) { SettingsScreen(settingsViewModel) }
 }
 
 fun navigateTo(navController: NavController, route: String) = navController.navigate(route) {

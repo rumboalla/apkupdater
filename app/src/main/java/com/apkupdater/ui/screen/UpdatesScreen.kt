@@ -17,24 +17,19 @@ import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.component.UpdateItem
-import com.apkupdater.viewmodel.BottomBarViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun UpdatesScreen(
-	barViewModel: BottomBarViewModel,
-	viewModel: UpdatesViewModel = koinViewModel()
+    viewModel: UpdatesViewModel = koinViewModel()
 ) {
 	viewModel.state().collectAsStateWithLifecycle().value.onLoading {
-		barViewModel.changeUpdatesBadge("")
 		UpdatesScreenLoading()
 	}.onError {
-		barViewModel.changeUpdatesBadge("!")
 		UpdatesScreenError()
 	}.onSuccess {
-		barViewModel.changeUpdatesBadge(it.updates.count().toString())
 		UpdatesScreenSuccess(viewModel, it.updates)
 	}
 }
