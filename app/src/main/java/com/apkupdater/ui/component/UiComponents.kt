@@ -75,7 +75,12 @@ fun TextBubble(text: String, modifier: Modifier = Modifier) = Text(
 	modifier = Modifier
 		.padding(4.dp)
 		.background(
-			color = Color(0, 0, 0, 180),
+			color = Color(
+				MaterialTheme.colorScheme.primaryContainer.red,
+				MaterialTheme.colorScheme.primaryContainer.green,
+				MaterialTheme.colorScheme.primaryContainer.blue,
+				0.7f
+			),
 			shape = RoundedCornerShape(16.dp)
 		)
 		.then(modifier),

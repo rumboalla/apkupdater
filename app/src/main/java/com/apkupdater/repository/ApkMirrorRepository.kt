@@ -27,10 +27,10 @@ class ApkMirrorRepository(
     private val prefs: Prefs
 ) {
     private val arch = when {
-        Build.SUPPORTED_ABIS.contains("armeabi-v7a") -> "arm"
-        Build.SUPPORTED_ABIS.contains("arm64-v8a") -> "arm"
         Build.SUPPORTED_ABIS.contains("x86") -> "x86"
         Build.SUPPORTED_ABIS.contains("x86_64") -> "x86"
+        Build.SUPPORTED_ABIS.contains("armeabi-v7a") -> "arm"
+        Build.SUPPORTED_ABIS.contains("arm64-v8a") -> "arm"
         else -> "arm"
     }
 
