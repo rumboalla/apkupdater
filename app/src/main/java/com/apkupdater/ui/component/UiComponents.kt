@@ -20,6 +20,7 @@ package com.apkupdater.ui.component
  import androidx.compose.foundation.layout.fillMaxWidth
  import androidx.compose.foundation.layout.height
  import androidx.compose.foundation.layout.padding
+ import androidx.compose.foundation.layout.size
  import androidx.compose.foundation.layout.width
  import androidx.compose.foundation.lazy.grid.GridCells
  import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -64,6 +65,7 @@ package com.apkupdater.ui.component
  import com.apkupdater.R
  import com.apkupdater.data.ui.AppInstalled
  import com.apkupdater.data.ui.AppUpdate
+ import com.apkupdater.data.ui.Source
  import com.apkupdater.prefs.Prefs
  import com.apkupdater.util.clickableNoRipple
  import com.apkupdater.util.getAppIcon
@@ -247,6 +249,12 @@ fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 		{ onInstall(app.link) },
 		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
+	SourceIcon(app.source, Modifier.align(Alignment.TopStart).padding(4.dp))
+}
+
+@Composable
+fun SourceIcon(source: Source, modifier: Modifier) {
+	Icon(painterResource(id = source.resourceId), source.name, Modifier.size(32.dp).then(modifier))
 }
 
 @Composable

@@ -7,6 +7,7 @@ data class AppUpdate(
 	val packageName: String,
 	val version: String,
 	val versionCode: Long,
+	val source: Source,
 	val iconUri: Uri = Uri.EMPTY,
-	val link: String = ""
+	val link: String = "",
 )

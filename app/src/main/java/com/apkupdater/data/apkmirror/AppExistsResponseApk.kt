@@ -1,5 +1,6 @@
 package com.apkupdater.data.apkmirror
 
+import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.google.gson.annotations.SerializedName
@@ -24,6 +25,7 @@ fun AppExistsResponseApk.toAppUpdate(app: AppInstalled) = AppUpdate(
 	app.packageName,
 	"?",
 	versionCode,
+	ApkMirrorSource,
 	app.iconUri,
 	"https://www.apkmirror.com/$link"
 )

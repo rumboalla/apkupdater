@@ -7,6 +7,7 @@ import com.apkupdater.data.apkmirror.AppExistsRequest
 import com.apkupdater.data.apkmirror.AppExistsResponseApk
 import com.apkupdater.data.apkmirror.AppExistsResponseData
 import com.apkupdater.data.apkmirror.toAppUpdate
+import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.getApp
@@ -34,7 +35,7 @@ class ApkMirrorRepository(
         else -> "arm"
     }
 
-    suspend fun getUpdates(apps: List<AppInstalled>) = flow {
+    suspend fun updates(apps: List<AppInstalled>) = flow {
         apps.chunked(100)
             .map { appExists(it.getPackageNames()) }
             .combine { all -> emit(parseUpdates(all.flatMap { it }, apps)) }
@@ -58,6 +59,7 @@ class ApkMirrorRepository(
                 iconUri = Uri.parse("$baseUrl${img[it].attr("src")}".replace("=32", "=128")),
                 version = "",
                 versionCode = 0L,
+                source = ApkMirrorSource,
                 packageName = a[it].text() // Developer name in this case
             )
         }

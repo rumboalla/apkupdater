@@ -7,7 +7,10 @@ import com.apkupdater.R
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.repository.AppsRepository
+import com.apkupdater.repository.GitHubRepository
+import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
+import com.apkupdater.service.GitHubService
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -59,11 +62,25 @@ val mainModule = module {
 			.build()
 	}
 
+	single(named("github")) {
+		Retrofit.Builder()
+			.client(get())
+			.baseUrl("https://api.github.com")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+	}
+
 	single { get<Retrofit>(named("apkmirror")).create(ApkMirrorService::class.java) }
+
+	single { get<Retrofit>(named("github")).create(GitHubService::class.java) }
 
 	single { ApkMirrorRepository(get(), get()) }
 
 	single { AppsRepository(get(), get()) }
+
+	single { GitHubRepository(get()) }
+
+	single { UpdatesRepository(get(), get(), get()) }
 
 	single { KryptoBuilder.hybrid(get(), androidContext().getString(R.string.app_name)) }
 
@@ -73,7 +90,7 @@ val mainModule = module {
 
 	viewModel { MainViewModel() }
 
-	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get()) }
+	viewModel { parameters -> UpdatesViewModel(parameters.get(), get()) }
 
 	viewModel { SettingsViewModel(get()) }
 
