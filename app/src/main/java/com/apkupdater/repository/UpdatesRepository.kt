@@ -16,9 +16,8 @@ class UpdatesRepository(
         appsRepository.getApps().collect { result ->
             result.onSuccess { apps ->
                 listOf(apkMirrorRepository.updates(apps), gitHubRepository.updates())
-                    .combine { updates ->
-                        emit(updates.flatMap { it })
-                    }.collect()
+                    .combine { updates -> emit(updates.flatMap { it }) }
+                    .collect()
             }.onFailure {
                 Log.e("UpdatesRepository", "Error getting apps", it)
             }

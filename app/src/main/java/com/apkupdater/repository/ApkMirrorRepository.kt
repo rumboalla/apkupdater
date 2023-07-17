@@ -27,6 +27,7 @@ class ApkMirrorRepository(
     private val service: ApkMirrorService,
     private val prefs: Prefs
 ) {
+
     private val arch = when {
         Build.SUPPORTED_ABIS.contains("x86") -> "x86"
         Build.SUPPORTED_ABIS.contains("x86_64") -> "x86"
@@ -34,6 +35,8 @@ class ApkMirrorRepository(
         Build.SUPPORTED_ABIS.contains("arm64-v8a") -> "arm"
         else -> "arm"
     }
+
+    private val api = Build.VERSION.SDK_INT
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
         apps.chunked(100)
@@ -81,9 +84,11 @@ class ApkMirrorRepository(
         .filter { it.exists == true }
         .mapNotNull { data ->
             data.apks
+                .asSequence()
                 .filter { filterSignature(it, apps.getSignature(data.pname))}
                 .mapNotNull { filterArch(it) }
                 .filter { it.versionCode > apps.getVersionCode(data.pname) }
+                .filter { filterMinApi(it) }
                 .maxByOrNull { it.versionCode }
                 ?.toAppUpdate(apps.getApp(data.pname)!!)
         }
@@ -100,6 +105,13 @@ class ApkMirrorRepository(
         app.arches.find { a -> a.contains(arch) } != null -> app
         else -> null
     }
+
+    private fun filterMinApi(apk: AppExistsResponseApk) = runCatching {
+        when {
+            apk.minapi.toInt() > api -> false
+            else -> true
+        }
+    }.getOrDefault(true)
 
     private fun buildIgnoreList() = mutableListOf<String>().apply {
         if (prefs.ignoreAlpha.get()) add("alpha")
