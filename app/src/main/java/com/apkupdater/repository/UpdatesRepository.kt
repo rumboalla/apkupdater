@@ -1,7 +1,10 @@
 package com.apkupdater.repository
 
 import android.util.Log
+import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.combine
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -9,13 +12,17 @@ import kotlinx.coroutines.flow.flow
 class UpdatesRepository(
     private val appsRepository: AppsRepository,
     private val apkMirrorRepository: ApkMirrorRepository,
-    private val gitHubRepository: GitHubRepository
+    private val gitHubRepository: GitHubRepository,
+    private val prefs: Prefs
 ) {
 
     fun updates() = flow {
         appsRepository.getApps().collect { result ->
             result.onSuccess { apps ->
-                listOf(apkMirrorRepository.updates(apps), gitHubRepository.updates())
+                val sources = mutableListOf<Flow<List<AppUpdate>>>()
+                if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.updates(apps))
+                if (prefs.useGitHub.get()) sources.add(gitHubRepository.updates())
+                sources
                     .combine { updates -> emit(updates.flatMap { it }) }
                     .collect()
             }.onFailure {

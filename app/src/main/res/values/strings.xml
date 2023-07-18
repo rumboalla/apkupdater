@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ApkUpdater</string>
+    <string name="app_name" translatable="false">ApkUpdater</string>
     <string name="tab_apps">Apps</string>
     <string name="tab_search">Search</string>
     <string name="tab_updates">Updates</string>
@@ -12,8 +12,12 @@
     <string name="include_system_apps">Include System Apps</string>
     <string name="install_cd">Install App</string>
     <string name="app_cd">App Icon</string>
-    <string name="setting_portrait_columns">Portrait columns</string>
-    <string name="setting_landscape_columns">Landscape columns</string>
+    <string name="settings_portrait_columns">Portrait columns</string>
+    <string name="settings_landscape_columns">Landscape columns</string>
+    <string name="settings_sources">Sources</string>
+    <string name="settings_ui">UI</string>
     <string name="ignore_alpha">Ignore Alpha</string>
     <string name="ignore_beta">Ignore Beta</string>
+    <string name="source_apkmirror">ApkMirror</string>
+    <string name="source_github">GitHub (Self-Update)</string>
 </resources>

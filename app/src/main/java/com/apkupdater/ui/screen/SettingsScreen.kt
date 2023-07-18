@@ -20,22 +20,36 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 	SettingsTopBar()
-	TitleText("UI", Modifier.padding(horizontal = 8.dp))
+
+	TitleText(stringResource(R.string.settings_ui), Modifier.padding(horizontal = 8.dp))
 	SliderSetting(
 		{ viewModel.getPortraitColumns().toFloat() },
 		{ viewModel.setPortraitColumns(it.toInt()) },
-		stringResource(R.string.setting_portrait_columns),
+		stringResource(R.string.settings_portrait_columns),
 		1f..4f,
 		2
 	)
 	SliderSetting(
 		{ viewModel.getLandscapeColumns().toFloat() },
 		{ viewModel.setLandscapeColumns(it.toInt()) },
-		stringResource(R.string.setting_landscape_columns),
+		stringResource(R.string.settings_landscape_columns),
 		1f..8f,
 		6
 	)
-	TitleText("ApkMirror", Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
+
+	TitleText(stringResource(R.string.settings_sources), Modifier.padding(horizontal = 8.dp))
+	SwitchSetting(
+		{ viewModel.getUseGitHub() },
+		{ viewModel.setUseGitHub(it) },
+		stringResource(R.string.source_github)
+	)
+	SwitchSetting(
+		{ viewModel.getUseApkMirror() },
+		{ viewModel.setUseApkMirror(it) },
+		stringResource(R.string.source_apkmirror)
+	)
+
+	TitleText(stringResource(R.string.source_apkmirror), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
 	SwitchSetting(
 		{ viewModel.getIgnoreAlpha() },
 		{ viewModel.setIgnoreAlpha(it) },

@@ -80,7 +80,7 @@ val mainModule = module {
 
 	single { GitHubRepository(get()) }
 
-	single { UpdatesRepository(get(), get(), get()) }
+	single { UpdatesRepository(get(), get(), get(), get()) }
 
 	single { KryptoBuilder.hybrid(get(), androidContext().getString(R.string.app_name)) }
 

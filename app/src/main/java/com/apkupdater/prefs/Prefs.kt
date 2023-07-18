@@ -14,4 +14,6 @@ class Prefs(prefs: KryptoPrefs): KryptoContext(prefs) {
 	val landscapeColumns  = int("landscapeColumns", 4, true)
 	val ignoreAlpha = boolean("ignoreAlpha", defValue = true, backed = true)
 	val ignoreBeta = boolean("ignoreBeta", defValue = true, backed = true)
+	val useApkMirror = boolean("useApkMirror", defValue = true, backed = true)
+	val useGitHub = boolean("useGitHub", defValue = true, backed = true)
 }
