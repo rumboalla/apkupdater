@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.security.MessageDigest
+import java.util.Calendar
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -62,3 +63,11 @@ fun PackageInfo.getSignatureHash(): String = runCatching {
 		signatures[0].toByteArray().toSha1()
 	}
 }.getOrDefault("")
+
+fun millisUntilHour(hour: Int): Long {
+	val calendar = Calendar.getInstance()
+	if (calendar.get(Calendar.HOUR_OF_DAY) >= hour) calendar.add(Calendar.HOUR, 24)
+	calendar.set(Calendar.HOUR_OF_DAY, hour)
+	calendar.set(Calendar.MINUTE, 0)
+	return calendar.timeInMillis - System.currentTimeMillis()
+}

@@ -2,11 +2,13 @@ package com.apkupdater.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apkupdater.R
@@ -14,6 +16,7 @@ import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.component.TitleText
 import com.apkupdater.viewmodel.SettingsViewModel
+import com.apkupdater.worker.UpdatesWorker
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -60,6 +63,13 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 		{ viewModel.setIgnoreBeta(it) },
 		stringResource(R.string.ignore_beta)
 	)
+
+	val context = LocalContext.current
+	Button({
+		UpdatesWorker.launch(context)
+	}) {
+
+	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
