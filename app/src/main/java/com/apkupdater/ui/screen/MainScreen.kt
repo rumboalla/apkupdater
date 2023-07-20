@@ -1,5 +1,9 @@
 package com.apkupdater.ui.screen
 
+import android.app.Activity
+import android.content.Intent
+import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -15,11 +19,14 @@ import androidx.compose.material3.pullrefresh.PullRefreshIndicator
 import androidx.compose.material3.pullrefresh.pullRefresh
 import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.util.Consumer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -28,6 +35,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apkupdater.R
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
 import com.apkupdater.viewmodel.AppsViewModel
@@ -58,12 +66,49 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 		mainViewModel.refresh(appsViewModel, updatesViewModel)
 	}
 
+	// Check intent when cold starting from notification
+	checkNotificationIntent(navController)
+
+	// Check notification intent when hot starting
+	intentListener(navController, updatesViewModel)
+
 	Scaffold(bottomBar = { BottomBar(navController, mainViewModel) }) { padding ->
 		Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
 			NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel)
 			PullRefreshIndicator(isRefreshing.value, pullToRefresh, Modifier.align(Alignment.TopCenter))
 		}
 	}
+}
+
+@Composable
+fun intentListener(
+	navController: NavController,
+	updatesViewModel: UpdatesViewModel
+) = runCatching {
+	val activity = LocalContext.current as ComponentActivity
+	val action = stringResource(R.string.notification_update_action)
+	DisposableEffect(Unit) {
+		val listener = Consumer<Intent> { intent ->
+			if (intent.action == action) {
+				navigateTo(navController, Screen.Updates.route)
+				updatesViewModel.refresh()
+			}
+		}
+		activity.addOnNewIntentListener(listener)
+		onDispose { activity.removeOnNewIntentListener(listener) }
+	}
+}.getOrElse {
+	Log.e("MainScreen", "Error listening to intent.", it)
+}
+
+@Composable
+fun checkNotificationIntent(navController: NavController) = runCatching {
+	val activity = LocalContext.current as Activity
+	if (activity.intent.action == stringResource(R.string.notification_update_action)) {
+		navigateTo(navController, Screen.Updates.route)
+	}
+}.getOrElse {
+	Log.e("MainScreen", "Error checking notification intent.", it)
 }
 
 @Composable

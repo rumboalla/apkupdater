@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name" translatable="false">ApkUpdater</string>
     <string name="tab_apps">Apps</string>
     <string name="tab_search">Search</string>
@@ -12,12 +13,29 @@
     <string name="include_system_apps">Include System Apps</string>
     <string name="install_cd">Install App</string>
     <string name="app_cd">App Icon</string>
+
+    // Settings
     <string name="settings_portrait_columns">Portrait columns</string>
     <string name="settings_landscape_columns">Landscape columns</string>
     <string name="settings_sources">Sources</string>
     <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarm</string>
+    <string name="settings_hour">Alarm Hour</string>
     <string name="ignore_alpha">Ignore Alpha</string>
     <string name="ignore_beta">Ignore Beta</string>
     <string name="source_apkmirror">ApkMirror</string>
     <string name="source_github">GitHub (Self-Update)</string>
+
+    // Notifications
+    <string name="notification_channel_name">Updates</string>
+    <string name="notification_channel_description">Channel for update notifications.</string>
+    <string translatable="false" name="notification_channel_id">updateChannel</string>
+    <string name="notification_update_title">Updates</string>
+    <string translatable="false" name="notification_update_action">updates</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">No updates found.</item>
+        <item quantity="one">Found %1$d update.</item>
+        <item quantity="other">Found %1$d updates.</item>
+    </plurals>
+
 </resources>

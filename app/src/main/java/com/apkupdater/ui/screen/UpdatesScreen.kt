@@ -18,13 +18,10 @@ import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.component.UpdateItem
 import com.apkupdater.viewmodel.UpdatesViewModel
-import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun UpdatesScreen(
-    viewModel: UpdatesViewModel = koinViewModel()
-) {
+fun UpdatesScreen(viewModel: UpdatesViewModel) {
 	viewModel.state().collectAsStateWithLifecycle().value.onLoading {
 		UpdatesScreenLoading()
 	}.onError {

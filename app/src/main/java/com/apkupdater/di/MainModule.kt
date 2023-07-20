@@ -1,5 +1,6 @@
 package com.apkupdater.di
 
+import androidx.work.WorkManager
 import com.apkupdater.BuildConfig
 import com.google.gson.GsonBuilder
 import com.kryptoprefs.preferences.KryptoBuilder
@@ -11,6 +12,7 @@ import com.apkupdater.repository.GitHubRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.service.GitHubService
+import com.apkupdater.util.NotificationUtil
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -86,13 +88,15 @@ val mainModule = module {
 
 	single { Prefs(get()) }
 
+	single { NotificationUtil(get()) }
+
 	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
 
 	viewModel { MainViewModel() }
 
 	viewModel { parameters -> UpdatesViewModel(parameters.get(), get()) }
 
-	viewModel { SettingsViewModel(get()) }
+	viewModel { SettingsViewModel(get(), get(), WorkManager.getInstance(get())) }
 
 	viewModel { parameters -> SearchViewModel(parameters.get(), get()) }
 

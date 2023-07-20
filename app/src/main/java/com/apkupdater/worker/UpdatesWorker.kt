@@ -1,13 +1,14 @@
 package com.apkupdater.worker
 
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.UpdatesRepository
+import com.apkupdater.util.NotificationUtil
 import com.apkupdater.util.millisUntilHour
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,29 +19,27 @@ class UpdatesWorker(
     workerParams: WorkerParameters
 ): CoroutineWorker(context, workerParams), KoinComponent {
 
-    companion object {
-
+    companion object: KoinComponent {
         private const val TAG = "UpdatesWorker"
+        private val prefs: Prefs by inject()
 
-        fun launch(context: Context) {
+        fun cancel(workManager: WorkManager) = workManager.cancelUniqueWork(TAG)
+
+        fun launch(workManager: WorkManager) {
             val request = PeriodicWorkRequestBuilder<UpdatesWorker>(1L, TimeUnit.DAYS)
-                .setInitialDelay(millisUntilHour(12), TimeUnit.MILLISECONDS)
+                .setInitialDelay(millisUntilHour(prefs.alarmHour.get()), TimeUnit.MILLISECONDS)
                 .build()
-            WorkManager.getInstance(context)
-                .enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.UPDATE, request)
+            workManager.enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.UPDATE, request)
         }
-
     }
 
     private val updatesRepository: UpdatesRepository by inject()
+    private val notification: NotificationUtil by inject()
 
     override suspend fun doWork(): Result {
-        Log.e("UpdatesWorker", "Start")
         updatesRepository.updates().collect {
-            // TODO: Send notification
-            Log.e("UpdatesWorker", "Got ${it.size} updates.")
+            notification.showUpdateNotification(it.size)
         }
-        Log.e("UpdatesWorker", "Stop")
         return Result.success()
     }
 
