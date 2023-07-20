@@ -11,8 +11,8 @@ android {
         applicationId "com.apkupdater3"
         minSdk 24
         targetSdk 34
-        versionCode 30000007
-        versionName "3.0.0-alpha-07"
+        versionCode 30000008
+        versionName "3.0.0-alpha-08"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
