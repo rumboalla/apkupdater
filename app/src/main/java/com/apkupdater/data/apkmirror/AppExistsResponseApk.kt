@@ -15,9 +15,9 @@ data class AppExistsResponseApk(
 	val description: String? = null,
 	val capabilities: List<String>? = null,
 	@SerializedName("signatures-sha1")
-	val signaturesSha1: List<String> = emptyList(),
+	val signaturesSha1: List<String>? = emptyList(),
 	@SerializedName("signatures-sha256")
-	val signaturesSha256: List<String> = emptyList()
+	val signaturesSha256: List<String>? = emptyList()
 )
 
 fun AppExistsResponseApk.toAppUpdate(app: AppInstalled) = AppUpdate(

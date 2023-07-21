@@ -1,5 +1,6 @@
 package com.apkupdater.repository
 
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -17,6 +18,7 @@ import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.util.combine
+import com.apkupdater.util.orFalse
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -25,7 +27,8 @@ import org.jsoup.Jsoup
 
 class ApkMirrorRepository(
     private val service: ApkMirrorService,
-    private val prefs: Prefs
+    private val prefs: Prefs,
+    packageManager: PackageManager
 ) {
 
     private val arch = when {
@@ -36,6 +39,7 @@ class ApkMirrorRepository(
         else -> "arm"
     }
 
+    private val isAndroidTV = packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
     private val api = Build.VERSION.SDK_INT
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
@@ -86,24 +90,44 @@ class ApkMirrorRepository(
             data.apks
                 .asSequence()
                 .filter { filterSignature(it, apps.getSignature(data.pname))}
-                .mapNotNull { filterArch(it) }
+                .filter { filterArch(it) }
                 .filter { it.versionCode > apps.getVersionCode(data.pname) }
                 .filter { filterMinApi(it) }
+                .filter { filterAndroidTv(it) }
+                .filter { filterWearOS(it) }
                 .maxByOrNull { it.versionCode }
                 ?.toAppUpdate(apps.getApp(data.pname)!!)
         }
 
     private fun filterSignature(apk: AppExistsResponseApk, signature: String?) = when {
-        apk.signaturesSha1 == null || apk.signaturesSha1.isEmpty() -> true
+        apk.signaturesSha1.isNullOrEmpty() -> true
         apk.signaturesSha1.contains(signature) -> true
         else -> false
     }
 
     private fun filterArch(app: AppExistsResponseApk) = when {
-        app.arches.isEmpty() -> app
-        app.arches.contains("universal") || app.arches.contains("noarch") -> app
-        app.arches.find { a -> a.contains(arch) } != null -> app
-        else -> null
+        app.arches.isEmpty() -> true
+        app.arches.contains("universal") || app.arches.contains("noarch") -> true
+        app.arches.find { a -> a.contains(arch) } != null -> true
+        else -> false
+    }
+
+    // Filter out standalone AndroidTV apps if we are not an AndroidTV device
+    private fun filterAndroidTv(apk: AppExistsResponseApk): Boolean {
+        if (!isAndroidTV) {
+            if(apk.capabilities?.contains("leanback_standalone").orFalse()) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun filterWearOS(apk: AppExistsResponseApk): Boolean {
+        // For the moment filter out all standalone Wear OS apps
+        if (apk.capabilities?.contains("wear_standalone").orFalse()) {
+            return false
+        }
+        return true
     }
 
     private fun filterMinApi(apk: AppExistsResponseApk) = runCatching {

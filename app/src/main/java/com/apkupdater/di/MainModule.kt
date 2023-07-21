@@ -1,5 +1,6 @@
 package com.apkupdater.di
 
+import android.content.Context
 import androidx.work.WorkManager
 import com.apkupdater.BuildConfig
 import com.google.gson.GsonBuilder
@@ -52,7 +53,7 @@ val mainModule = module {
 					.build()
 			)
 		}
-		//.addInterceptor(get<HttpLoggingInterceptor>())
+		.addInterceptor(get<HttpLoggingInterceptor>())
 		.build()
 	}
 
@@ -76,7 +77,7 @@ val mainModule = module {
 
 	single { get<Retrofit>(named("github")).create(GitHubService::class.java) }
 
-	single { ApkMirrorRepository(get(), get()) }
+	single { ApkMirrorRepository(get(), get(), get<Context>().packageManager) }
 
 	single { AppsRepository(get(), get()) }
 
