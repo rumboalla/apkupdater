@@ -13,6 +13,7 @@ class UpdatesRepository(
     private val appsRepository: AppsRepository,
     private val apkMirrorRepository: ApkMirrorRepository,
     private val gitHubRepository: GitHubRepository,
+    private val fdroidRepository: FdroidRepository,
     private val prefs: Prefs
 ) {
 
@@ -22,6 +23,7 @@ class UpdatesRepository(
                 val sources = mutableListOf<Flow<List<AppUpdate>>>()
                 if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.updates(apps))
                 if (prefs.useGitHub.get()) sources.add(gitHubRepository.updates())
+                if (prefs.useFdroid.get()) sources.add(fdroidRepository.updates(apps))
                 sources
                     .combine { updates -> emit(updates.flatMap { it }) }
                     .collect()

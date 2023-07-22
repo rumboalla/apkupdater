@@ -9,9 +9,11 @@ import com.apkupdater.R
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.repository.AppsRepository
+import com.apkupdater.repository.FdroidRepository
 import com.apkupdater.repository.GitHubRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
+import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
 import com.apkupdater.util.NotificationUtil
 import com.apkupdater.viewmodel.AppsViewModel
@@ -34,7 +36,7 @@ val mainModule = module {
 
 	single { GsonBuilder().create() }
 
-	single { Cache(androidContext().cacheDir, 5 * 1024 * 1024) }
+	single { Cache(androidContext().cacheDir, 20 * 1024 * 1024) }
 
 	single {
 		HttpLoggingInterceptor().apply {
@@ -73,9 +75,19 @@ val mainModule = module {
 			.build()
 	}
 
+	single(named("fdroid")) {
+		Retrofit.Builder()
+			.client(get())
+			.baseUrl("https://f-droid.org/repo/")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+	}
+
 	single { get<Retrofit>(named("apkmirror")).create(ApkMirrorService::class.java) }
 
 	single { get<Retrofit>(named("github")).create(GitHubService::class.java) }
+
+	single { get<Retrofit>(named("fdroid")).create(FdroidService::class.java) }
 
 	single { ApkMirrorRepository(get(), get(), get<Context>().packageManager) }
 
@@ -83,7 +95,9 @@ val mainModule = module {
 
 	single { GitHubRepository(get()) }
 
-	single { UpdatesRepository(get(), get(), get(), get()) }
+	single { FdroidRepository(get(), get()) }
+
+	single { UpdatesRepository(get(), get(), get(), get(), get()) }
 
 	single { KryptoBuilder.hybrid(get(), androidContext().getString(R.string.app_name)) }
 

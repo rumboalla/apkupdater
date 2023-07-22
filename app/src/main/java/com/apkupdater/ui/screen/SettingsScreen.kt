@@ -4,6 +4,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -25,61 +26,75 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 
 	SettingsTopBar()
 
-	TitleText(stringResource(R.string.settings_ui), Modifier.padding(horizontal = 8.dp))
-	SliderSetting(
-		{ viewModel.getPortraitColumns().toFloat() },
-		{ viewModel.setPortraitColumns(it.toInt()) },
-		stringResource(R.string.settings_portrait_columns),
-		1f..4f,
-		2
-	)
-	SliderSetting(
-		{ viewModel.getLandscapeColumns().toFloat() },
-		{ viewModel.setLandscapeColumns(it.toInt()) },
-		stringResource(R.string.settings_landscape_columns),
-		1f..8f,
-		6
-	)
+	LazyColumn {
+		item {
+			TitleText(stringResource(R.string.settings_ui), Modifier.padding(horizontal = 8.dp))
+			SliderSetting(
+				{ viewModel.getPortraitColumns().toFloat() },
+				{ viewModel.setPortraitColumns(it.toInt()) },
+				stringResource(R.string.settings_portrait_columns),
+				1f..4f,
+				2
+			)
+			SliderSetting(
+				{ viewModel.getLandscapeColumns().toFloat() },
+				{ viewModel.setLandscapeColumns(it.toInt()) },
+				stringResource(R.string.settings_landscape_columns),
+				1f..8f,
+				6
+			)
+		}
 
-	TitleText(stringResource(R.string.settings_sources), Modifier.padding(horizontal = 8.dp))
-	SwitchSetting(
-		{ viewModel.getUseGitHub() },
-		{ viewModel.setUseGitHub(it) },
-		stringResource(R.string.source_github)
-	)
-	SwitchSetting(
-		{ viewModel.getUseApkMirror() },
-		{ viewModel.setUseApkMirror(it) },
-		stringResource(R.string.source_apkmirror)
-	)
+		item {
+			TitleText(stringResource(R.string.settings_sources), Modifier.padding(horizontal = 8.dp))
+			SwitchSetting(
+				{ viewModel.getUseGitHub() },
+				{ viewModel.setUseGitHub(it) },
+				stringResource(R.string.source_github)
+			)
+			SwitchSetting(
+				{ viewModel.getUseApkMirror() },
+				{ viewModel.setUseApkMirror(it) },
+				stringResource(R.string.source_apkmirror)
+			)
+			SwitchSetting(
+				{ viewModel.getUseFdroid() },
+				{ viewModel.setUseFdroid(it) },
+				stringResource(R.string.source_fdroid)
+			)
+		}
 
-	TitleText(stringResource(R.string.source_apkmirror), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
-	SwitchSetting(
-		{ viewModel.getIgnoreAlpha() },
-		{ viewModel.setIgnoreAlpha(it) },
-		stringResource(R.string.ignore_alpha)
-	)
-	SwitchSetting(
-		{ viewModel.getIgnoreBeta() },
-		{ viewModel.setIgnoreBeta(it) },
-		stringResource(R.string.ignore_beta)
-	)
+		item {
+			TitleText(stringResource(R.string.settings_options), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
+			SwitchSetting(
+				{ viewModel.getIgnoreAlpha() },
+				{ viewModel.setIgnoreAlpha(it) },
+				stringResource(R.string.ignore_alpha)
+			)
+			SwitchSetting(
+				{ viewModel.getIgnoreBeta() },
+				{ viewModel.setIgnoreBeta(it) },
+				stringResource(R.string.ignore_beta)
+			)
+		}
 
-	TitleText(stringResource(R.string.settings_alarm), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
-	SwitchSetting(
-		getValue = { viewModel.getEnableAlarm() },
-		setValue = { viewModel.setEnableAlarm(it, launcher) },
-		text = stringResource(R.string.settings_alarm)
-	)
-	SliderSetting(
-		getValue = { viewModel.getAlarmHour().toFloat() },
-		setValue = { viewModel.setAlarmHour(it.toInt()) },
-		text = stringResource(R.string.settings_hour),
-		valueRange = 0f..23f,
-		steps = 23
-	)
-	Text("Alarm Frequency Daily", Modifier.padding(horizontal = 16.dp))
-
+		item {
+			TitleText(stringResource(R.string.settings_alarm), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
+			SwitchSetting(
+				getValue = { viewModel.getEnableAlarm() },
+				setValue = { viewModel.setEnableAlarm(it, launcher) },
+				text = stringResource(R.string.settings_alarm)
+			)
+			SliderSetting(
+				getValue = { viewModel.getAlarmHour().toFloat() },
+				setValue = { viewModel.setAlarmHour(it.toInt()) },
+				text = stringResource(R.string.settings_hour),
+				valueRange = 0f..23f,
+				steps = 23
+			)
+			Text("Alarm Frequency Daily", Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
+		}
+	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

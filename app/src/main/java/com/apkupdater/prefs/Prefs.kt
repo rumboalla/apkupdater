@@ -16,6 +16,7 @@ class Prefs(prefs: KryptoPrefs): KryptoContext(prefs) {
 	val ignoreBeta = boolean("ignoreBeta", defValue = true, backed = true)
 	val useApkMirror = boolean("useApkMirror", defValue = true, backed = true)
 	val useGitHub = boolean("useGitHub", defValue = true, backed = true)
+	val useFdroid = boolean("useFdroid", defValue = true, backed = true)
 	val enableAlarm = boolean("enableAlarm", defValue = false, backed = true)
 	val alarmHour = int("alarmHour", defValue = 12, backed = true)
 	val alarmFrequency = int("alarmFrequency", 0, backed = true)

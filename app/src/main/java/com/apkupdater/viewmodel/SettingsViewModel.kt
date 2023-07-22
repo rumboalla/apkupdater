@@ -23,6 +23,8 @@ class SettingsViewModel(
 	fun getIgnoreBeta() = prefs.ignoreBeta.get()
 	fun getUseApkMirror() = prefs.useApkMirror.get()
 	fun setUseApkMirror(b: Boolean) = prefs.useApkMirror.put(b)
+	fun getUseFdroid() = prefs.useFdroid.get()
+	fun setUseFdroid(b: Boolean) = prefs.useFdroid.put(b)
 	fun getUseGitHub() = prefs.useGitHub.get()
 	fun setUseGitHub(b: Boolean) = prefs.useGitHub.put(b)
 	fun getEnableAlarm() = prefs.enableAlarm.get()
