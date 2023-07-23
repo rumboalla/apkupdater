@@ -266,6 +266,7 @@ fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 		{ onInstall(app.link) },
 		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
+	SourceIcon(app.source, Modifier.align(Alignment.TopStart).padding(4.dp))
 }
 
 @Composable

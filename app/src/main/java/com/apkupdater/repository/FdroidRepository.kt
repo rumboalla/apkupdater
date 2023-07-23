@@ -41,7 +41,26 @@ class FdroidRepository(
         emit(updates)
     }.catch {
         emit(emptyList())
-        Log.e("FdroidRepository", "Error", it)
+        Log.e("FdroidRepository", "Error looking for updates.", it)
+    }
+
+    suspend fun search(text: String) = flow {
+        val response = service.getJar()
+        val data = jarToJson(response.byteStream())
+        val updates = data.apps
+            .asSequence()
+            .filter { it.name.contains(text) }
+            .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
+            .filter { it.apk.minSdkVersion <= api }
+            .filter { filterArch(it) }
+            .filter { filterAlpha(it) }
+            .filter { filterBeta(it) }
+            .map { it.toAppUpdate() }
+            .toList()
+        emit(Result.success(updates))
+    }.catch {
+        emit(Result.failure(it))
+        Log.e("FdroidRepository", "Error searching.", it)
     }
 
     private fun filterAlpha(update: FdroidUpdate) = when {

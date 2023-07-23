@@ -3,8 +3,6 @@ package com.apkupdater.di
 import android.content.Context
 import androidx.work.WorkManager
 import com.apkupdater.BuildConfig
-import com.google.gson.GsonBuilder
-import com.kryptoprefs.preferences.KryptoBuilder
 import com.apkupdater.R
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
@@ -21,6 +19,8 @@ import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
+import com.google.gson.GsonBuilder
+import com.kryptoprefs.preferences.KryptoBuilder
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -113,6 +113,6 @@ val mainModule = module {
 
 	viewModel { SettingsViewModel(get(), get(), WorkManager.getInstance(get())) }
 
-	viewModel { parameters -> SearchViewModel(parameters.get(), get()) }
+	viewModel { parameters -> SearchViewModel(parameters.get(), get(), get()) }
 
 }

@@ -15,6 +15,9 @@ fun FdroidUpdate.toAppUpdate() = AppUpdate(
     apk.versionName,
     apk.versionCode,
     FdroidSource,
-    app.icon.toUri(),
+    if(app.icon.isEmpty())
+        "https://f-droid.org/assets/ic_repo_app_default.png".toUri()
+    else
+        "https://f-droid.org/repo/icons-640/${app.icon}".toUri(),
     "https://f-droid.org/repo/${apk.apkName}"
 )
