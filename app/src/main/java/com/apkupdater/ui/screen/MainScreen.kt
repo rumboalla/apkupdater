@@ -12,6 +12,7 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -75,7 +76,12 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	Scaffold(bottomBar = { BottomBar(navController, mainViewModel) }) { padding ->
 		Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
 			NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel)
-			PullRefreshIndicator(isRefreshing.value, pullToRefresh, Modifier.align(Alignment.TopCenter))
+			PullRefreshIndicator(
+				refreshing = isRefreshing.value,
+				state = pullToRefresh,
+				modifier = Modifier.align(Alignment.TopCenter),
+				contentColor = MaterialTheme.colorScheme.primary
+			)
 		}
 	}
 }

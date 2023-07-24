@@ -31,13 +31,7 @@ class FdroidRepository(
             .filter { appNames.contains(it.packageName) }
             .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
             .filter { it.apk.versionCode > apps.getVersionCode(it.app.packageName) }
-            .filter { it.apk.minSdkVersion <= api }
-            .filter { filterArch(it) }
-            .filter { filterAlpha(it) }
-            .filter { filterBeta(it) }
-            .map { it.toAppUpdate() }
-            .toList()
-        // TODO: Filter by signature if possible
+            .parseUpdates()
         emit(updates)
     }.catch {
         emit(emptyList())
@@ -51,17 +45,20 @@ class FdroidRepository(
             .asSequence()
             .filter { it.name.contains(text) }
             .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
-            .filter { it.apk.minSdkVersion <= api }
-            .filter { filterArch(it) }
-            .filter { filterAlpha(it) }
-            .filter { filterBeta(it) }
-            .map { it.toAppUpdate() }
-            .toList()
+            .parseUpdates()
         emit(Result.success(updates))
     }.catch {
         emit(Result.failure(it))
         Log.e("FdroidRepository", "Error searching.", it)
     }
+
+    private fun Sequence<FdroidUpdate>.parseUpdates() = this
+        .filter { it.apk.minSdkVersion <= api }
+        .filter { filterArch(it) }
+        .filter { filterAlpha(it) }
+        .filter { filterBeta(it) }
+        .map { it.toAppUpdate() }
+        .toList()
 
     private fun filterAlpha(update: FdroidUpdate) = when {
         prefs.ignoreAlpha.get() && update.apk.versionName.contains("alpha") -> false

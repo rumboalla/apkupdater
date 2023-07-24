@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,6 +18,7 @@ import com.apkupdater.R
 import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.component.TitleText
+import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -100,5 +103,6 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsTopBar() = TopAppBar(
-	title = { Text(stringResource(R.string.tab_settings)) }
+	title = { Text(stringResource(R.string.tab_settings)) },
+	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 )

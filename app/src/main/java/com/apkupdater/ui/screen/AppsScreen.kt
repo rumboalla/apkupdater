@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -18,6 +19,7 @@ import com.apkupdater.ui.component.ExcludeSystemIcon
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.InstalledItem
 import com.apkupdater.ui.component.RefreshIcon
+import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.AppsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -49,7 +51,7 @@ fun AppsScreenSuccess(viewModel: AppsViewModel, state: AppsUiState.Success) = Co
 @Composable
 fun AppsTopBar(viewModel: AppsViewModel, state: AppsUiState.Success) = TopAppBar(
 	title = { Text(stringResource(R.string.tab_apps)) },
-	colors = TopAppBarDefaults.topAppBarColors(),
+	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
 		IconButton(onClick = { viewModel.refresh() }) {
 			RefreshIcon(stringResource(R.string.refresh_apps))
