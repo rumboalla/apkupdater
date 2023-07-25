@@ -27,7 +27,7 @@ If you want to help with translations, use [![Translate](https://poeditor.com/pu
 ![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
 
 # Other Projects
-* [CoolRs](https://github.com/rumboalla/coolrs): A collection of Android RenderScript effecs. 
+* [CoolRs](https://github.com/rumboalla/coolrs): A collection of Android RenderScript effects. 
 * [KryptoPrefs](https://github.com/rumboalla/KryptoPrefs): Kotlin library for handling encrypted SharedPreferences.
 
 # License
