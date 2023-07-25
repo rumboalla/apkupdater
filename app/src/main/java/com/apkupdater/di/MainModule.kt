@@ -9,6 +9,7 @@ import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.repository.FdroidRepository
 import com.apkupdater.repository.GitHubRepository
+import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.service.FdroidService
@@ -99,7 +100,9 @@ val mainModule = module {
 
 	single { UpdatesRepository(get(), get(), get(), get(), get()) }
 
-	single { KryptoBuilder.hybrid(get(), androidContext().getString(R.string.app_name)) }
+	single { SearchRepository(get(), get(), get()) }
+
+	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
 
 	single { Prefs(get()) }
 
