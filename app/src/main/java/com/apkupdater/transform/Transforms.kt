@@ -21,4 +21,3 @@ fun PackageInfo.toAppInstalled(context: Context, ignored: List<String>) = AppIns
 )
 
 fun iconUri(packageName: String, id: Int): Uri = Uri.parse("android.resource://$packageName/$id")
-

@@ -10,6 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,7 @@ import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.SearchItem
 import com.apkupdater.viewmodel.SearchViewModel
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -64,13 +66,16 @@ fun SearchTopBar(viewModel: SearchViewModel) = Box {
 	var value by remember { mutableStateOf("") }
 	OutlinedTextField(
 		value = value,
-		onValueChange = {
-			value = it
-			if (it.length >= 3) viewModel.search(it)
-		},
+		onValueChange = { value = it },
 		modifier = Modifier.fillMaxWidth().padding(8.dp),
 		label = { Text("Search") },
 		keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
 		keyboardActions = KeyboardActions(onSearch = { keyboardController?.hide() })
 	)
+	LaunchedEffect(value) {
+		if (value.length >= 3) {
+			delay(1000)
+			viewModel.search(value)
+		}
+	}
 }

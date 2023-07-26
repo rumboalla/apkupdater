@@ -4,7 +4,12 @@ package com.apkupdater.data.ui
 sealed class AppsUiState {
 	object Loading: AppsUiState()
 	object Error : AppsUiState()
-	class Success(val apps: List<AppInstalled>, val excludeSystem: Boolean): AppsUiState()
+	class Success(
+		val apps: List<AppInstalled>,
+		val excludeSystem: Boolean,
+		val excludeAppStore: Boolean,
+		val excludeDisabled: Boolean
+	): AppsUiState()
 
 	inline fun onLoading(block: (Loading) -> Unit): AppsUiState {
 		if (this is Loading) block(this)

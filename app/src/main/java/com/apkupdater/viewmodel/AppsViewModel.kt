@@ -28,7 +28,11 @@ class AppsViewModel(
 		mainViewModel.changeAppsBadge("")
 		repository.getApps().collect {
 			it.onSuccess { apps ->
-				state.value = AppsUiState.Success(apps, prefs.excludeSystem.get())
+				state.value = AppsUiState.Success(
+					apps, prefs.excludeSystem.get(),
+					prefs.excludeStore.get(),
+					prefs.excludeDisabled.get()
+				)
 				mainViewModel.changeAppsBadge(apps.size.toString())
 			}.onFailure { ex ->
 				state.value = AppsUiState.Error
@@ -40,6 +44,16 @@ class AppsViewModel(
 
 	fun onSystemClick() = viewModelScope.launchWithMutex(mutex, Dispatchers.Default) {
 		prefs.excludeSystem.put(!prefs.excludeSystem.get())
+		refresh(false)
+	}
+
+	fun onAppStoreClick() = viewModelScope.launchWithMutex(mutex, Dispatchers.Default) {
+		prefs.excludeStore.put(!prefs.excludeStore.get())
+		refresh(false)
+	}
+
+	fun onDisabledClick() = viewModelScope.launchWithMutex(mutex, Dispatchers.Default) {
+		prefs.excludeDisabled.put(!prefs.excludeDisabled.get())
 		refresh(false)
 	}
 

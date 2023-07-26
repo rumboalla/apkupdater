@@ -15,10 +15,11 @@ import com.apkupdater.R
 import com.apkupdater.data.ui.AppsUiState
 import com.apkupdater.ui.component.DefaultErrorScreen
 import com.apkupdater.ui.component.DefaultLoadingScreen
+import com.apkupdater.ui.component.ExcludeAppStoreIcon
+import com.apkupdater.ui.component.ExcludeDisabledIcon
 import com.apkupdater.ui.component.ExcludeSystemIcon
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.InstalledItem
-import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.AppsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -53,11 +54,14 @@ fun AppsTopBar(viewModel: AppsViewModel, state: AppsUiState.Success) = TopAppBar
 	title = { Text(stringResource(R.string.tab_apps)) },
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
-		IconButton(onClick = { viewModel.refresh() }) {
-			RefreshIcon(stringResource(R.string.refresh_apps))
-		}
 		IconButton(onClick = { viewModel.onSystemClick() }) {
 			ExcludeSystemIcon(state.excludeSystem)
+		}
+		IconButton(onClick = { viewModel.onAppStoreClick() }) {
+			ExcludeAppStoreIcon(state.excludeAppStore)
+		}
+		IconButton(onClick = { viewModel.onDisabledClick() }) {
+			ExcludeDisabledIcon(state.excludeDisabled)
 		}
 	}
 )

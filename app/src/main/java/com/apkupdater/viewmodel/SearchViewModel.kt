@@ -6,6 +6,7 @@ import com.apkupdater.data.ui.SearchUiState
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.util.launchWithMutex
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
@@ -17,10 +18,16 @@ class SearchViewModel(
 
     private val mutex = Mutex()
     private val state = MutableStateFlow<SearchUiState>(SearchUiState.Success(emptyList()))
+    private var job: Job? = null
 
     fun state(): StateFlow<SearchUiState> = state
 
-    fun search(text: String) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+    fun search(text: String) {
+        job?.cancel()
+        job = searchJob(text)
+    }
+
+    private fun searchJob(text: String) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
         state.value = SearchUiState.Loading
         mainViewModel.changeSearchBadge("")
         searchRepository.search(text).collect {

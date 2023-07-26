@@ -11,6 +11,10 @@
     <string name="refresh_updates">Look for Updates</string>
     <string name="exclude_system_apps">Exclude System Apps</string>
     <string name="include_system_apps">Include System Apps</string>
+    <string name="exclude_app_store">Exclude App Store</string>
+    <string name="include_app_store">Include App Store</string>
+    <string name="exclude_disabled_apps">Exclude Disabled Apps</string>
+    <string name="include_disabled_apps">Include Disabled Apps</string>
     <string name="install_cd">Install App</string>
     <string name="app_cd">App Icon</string>
 
