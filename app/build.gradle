@@ -13,11 +13,8 @@ android {
         targetSdk 34
         versionCode 30000010
         versionName "3.0.0-alpha-10"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        vectorDrawables { useSupportLibrary true }
     }
 
     buildTypes {
@@ -32,17 +29,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.4.7'
-    }
+    kotlinOptions { jvmTarget = '1.8' }
+    buildFeatures { compose true }
+    composeOptions { kotlinCompilerExtensionVersion '1.4.7' }
 
     packagingOptions {
         resources {
@@ -76,7 +65,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.4.3'
 
     debugImplementation 'androidx.compose.ui:ui-tooling:1.4.3'
     debugImplementation 'androidx.compose.ui:ui-test-manifest:1.4.3'

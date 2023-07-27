@@ -14,7 +14,9 @@ import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
-import com.apkupdater.util.NotificationUtil
+import com.apkupdater.util.Downloader
+import com.apkupdater.util.SessionInstaller
+import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -37,7 +39,7 @@ val mainModule = module {
 
 	single { GsonBuilder().create() }
 
-	single { Cache(androidContext().cacheDir, 20 * 1024 * 1024) }
+	single { Cache(androidContext().cacheDir, 100 * 1024 * 1024) }
 
 	single {
 		HttpLoggingInterceptor().apply {
@@ -56,7 +58,7 @@ val mainModule = module {
 					.build()
 			)
 		}
-		.addInterceptor(get<HttpLoggingInterceptor>())
+		//.addInterceptor(get<HttpLoggingInterceptor>())
 		.build()
 	}
 
@@ -106,13 +108,17 @@ val mainModule = module {
 
 	single { Prefs(get()) }
 
-	single { NotificationUtil(get()) }
+	single { UpdatesNotification(get()) }
+
+	single { Downloader(get()) }
+
+	single { SessionInstaller(get()) }
 
 	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
 
 	viewModel { MainViewModel() }
 
-	viewModel { parameters -> UpdatesViewModel(parameters.get(), get()) }
+	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get(), get()) }
 
 	viewModel { SettingsViewModel(get(), get(), WorkManager.getInstance(get())) }
 

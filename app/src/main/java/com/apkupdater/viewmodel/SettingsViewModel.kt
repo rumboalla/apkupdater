@@ -4,13 +4,13 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.lifecycle.ViewModel
 import androidx.work.WorkManager
 import com.apkupdater.prefs.Prefs
-import com.apkupdater.util.NotificationUtil
+import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
 
 class SettingsViewModel(
-	private val prefs: Prefs,
-	private val notification: NotificationUtil,
-	private val workManager: WorkManager
+    private val prefs: Prefs,
+    private val notification: UpdatesNotification,
+    private val workManager: WorkManager
 ) : ViewModel() {
 
 	fun setPortraitColumns(n: Int) = prefs.portraitColumns.put(n)

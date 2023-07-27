@@ -8,7 +8,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.UpdatesRepository
-import com.apkupdater.util.NotificationUtil
+import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.util.millisUntilHour
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -34,7 +34,7 @@ class UpdatesWorker(
     }
 
     private val updatesRepository: UpdatesRepository by inject()
-    private val notification: NotificationUtil by inject()
+    private val notification: UpdatesNotification by inject()
 
     override suspend fun doWork(): Result {
         updatesRepository.updates().collect {

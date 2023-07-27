@@ -1,6 +1,5 @@
 package com.apkupdater.ui.screen
 
-import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -30,13 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.util.Consumer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apkupdater.R
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
 import com.apkupdater.viewmodel.AppsViewModel
@@ -68,12 +65,12 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	}
 
 	// Check intent when cold starting from notification
-	checkNotificationIntent(navController)
+	checkNotificationIntent(mainViewModel, updatesViewModel, navController)
 
 	// Check notification intent when hot starting
-	intentListener(navController, updatesViewModel)
+	intentListener(mainViewModel, updatesViewModel, navController)
 
-	Scaffold(bottomBar = { BottomBar(navController, mainViewModel) }) { padding ->
+	Scaffold(bottomBar = { BottomBar(mainViewModel, navController) }) { padding ->
 		Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
 			NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel)
 			PullRefreshIndicator(
@@ -88,17 +85,14 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 
 @Composable
 fun intentListener(
-	navController: NavController,
-	updatesViewModel: UpdatesViewModel
+	mainViewModel: MainViewModel,
+	updatesViewModel: UpdatesViewModel,
+	navController: NavController
 ) = runCatching {
 	val activity = LocalContext.current as ComponentActivity
-	val action = stringResource(R.string.notification_update_action)
 	DisposableEffect(Unit) {
-		val listener = Consumer<Intent> { intent ->
-			if (intent.action == action) {
-				navigateTo(navController, Screen.Updates.route)
-				updatesViewModel.refresh()
-			}
+		val listener = Consumer<Intent> {
+			mainViewModel.processIntent(it, activity, updatesViewModel, navController)
 		}
 		activity.addOnNewIntentListener(listener)
 		onDispose { activity.removeOnNewIntentListener(listener) }
@@ -108,28 +102,31 @@ fun intentListener(
 }
 
 @Composable
-fun checkNotificationIntent(navController: NavController) = runCatching {
-	val activity = LocalContext.current as Activity
-	if (activity.intent.action == stringResource(R.string.notification_update_action)) {
-		navigateTo(navController, Screen.Updates.route)
-	}
+fun checkNotificationIntent(
+	mainViewModel: MainViewModel,
+	updatesViewModel: UpdatesViewModel,
+	navController: NavController
+) = runCatching {
+	val activity = LocalContext.current as ComponentActivity
+	mainViewModel.processIntent(activity.intent, activity, updatesViewModel, navController)
 }.getOrElse {
 	Log.e("MainScreen", "Error checking notification intent.", it)
 }
 
 @Composable
-fun BottomBar(navController: NavController, viewModel: MainViewModel) = BottomAppBar {
-	val badges = viewModel.badges.collectAsState().value
-	viewModel.screens.forEach { screen ->
+fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = BottomAppBar {
+	val badges = mainViewModel.badges.collectAsState().value
+	mainViewModel.screens.forEach { screen ->
 		val state = navController.currentBackStackEntryAsState().value
 		val selected = state?.destination?.route  == screen.route
-		BottomBarItem(navController, screen, selected, badges[screen.route].orEmpty())
+		BottomBarItem(mainViewModel, navController, screen, selected, badges[screen.route].orEmpty())
 	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RowScope.BottomBarItem(
+	mainViewModel: MainViewModel,
     navController: NavController,
     screen: Screen,
     selected: Boolean,
@@ -142,7 +139,7 @@ fun RowScope.BottomBarItem(
    	},
 	label = { Text(stringResource(screen.resourceId)) },
 	selected = selected,
-	onClick = { navigateTo(navController, screen.route) }
+	onClick = { mainViewModel.navigateTo(navController, screen.route) }
 )
 
 @Composable
@@ -162,10 +159,4 @@ fun NavHost(
 	composable(Screen.Search.route) { SearchScreen(searchViewModel) }
 	composable(Screen.Updates.route) { UpdatesScreen(updatesViewModel) }
 	composable(Screen.Settings.route) { SettingsScreen(settingsViewModel) }
-}
-
-fun navigateTo(navController: NavController, route: String) = navController.navigate(route) {
-	popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-	launchSingleTop = true
-	restoreState = true
 }

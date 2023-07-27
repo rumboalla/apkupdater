@@ -14,13 +14,16 @@ import androidx.core.app.NotificationManagerCompat
 import com.apkupdater.R
 import com.apkupdater.ui.activity.MainActivity
 
-class NotificationUtil(private val context: Context) {
+class UpdatesNotification(private val context: Context) {
+
+    companion object {
+        const val UpdateAction = "updateAction"
+    }
 
     private val notificationManager get() = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val channelId = context.getString(R.string.notification_channel_id)
     private val channelName = context.getString(R.string.notification_channel_name)
     private val updateTitle = context.getString(R.string.notification_update_title)
-    private val updateAction = context.getString(R.string.notification_update_action)
     private val updateId = 42
 
     @SuppressLint("MissingPermission")
@@ -28,7 +31,7 @@ class NotificationUtil(private val context: Context) {
         // Intent for the notification click
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-            action = updateAction
+            action = UpdateAction
         }
 
         val builder = NotificationCompat.Builder(context, channelId)

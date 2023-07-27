@@ -47,6 +47,8 @@ fun PackageInfo.name(context: Context) = applicationInfo.loadLabel(context.packa
 
 fun Context.getAppIcon(packageName: String) = packageManager.getApplicationIcon(packageName)
 
+fun Context.getAppName(packageName: String): String = packageManager.getPackageInfo(packageName, 0).name(this)
+
 inline fun <reified T> List<Flow<T>>.combine(crossinline block: suspend (Array<T>) -> Unit) =
 	combine(this) { block(it) }
 

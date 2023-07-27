@@ -37,7 +37,6 @@
     <string name="notification_channel_description">Channel for update notifications.</string>
     <string translatable="false" name="notification_channel_id">updateChannel</string>
     <string name="notification_update_title">Updates</string>
-    <string translatable="false" name="notification_update_action">updates</string>
     <plurals name="notification_update_description">
         <item quantity="zero">No updates found.</item>
         <item quantity="one">Found %1$d update.</item>

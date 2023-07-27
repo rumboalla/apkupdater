@@ -65,7 +65,7 @@ fun UpdatesScreenSuccess(
 	InstalledGrid {
 		items(updates) { update ->
 			UpdateItem(update) {
-				uriHandler.openUri(update.link)
+				viewModel.install(update, uriHandler)
 			}
 		}
 	}

@@ -16,12 +16,14 @@ package com.apkupdater.ui.component
  import androidx.compose.ui.Modifier
  import androidx.compose.ui.draw.alpha
  import androidx.compose.ui.platform.LocalConfiguration
+ import androidx.compose.ui.platform.LocalContext
  import androidx.compose.ui.res.stringResource
  import androidx.compose.ui.unit.dp
  import com.apkupdater.R
  import com.apkupdater.data.ui.AppInstalled
  import com.apkupdater.data.ui.AppUpdate
  import com.apkupdater.prefs.Prefs
+ import com.apkupdater.util.getAppName
  import org.koin.androidx.compose.get
 
 
@@ -96,7 +98,7 @@ fun UpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
 	UpdateImage(app, onInstall)
 	Column(Modifier.padding(top = 4.dp)) {
 		ScrollableText { SmallText(app.packageName) }
-		TitleText(app.name)
+		TitleText(app.name.ifEmpty { LocalContext.current.getAppName(app.packageName) })
 	}
 }
 
