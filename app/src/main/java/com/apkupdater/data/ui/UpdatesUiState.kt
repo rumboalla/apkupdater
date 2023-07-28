@@ -20,4 +20,12 @@ sealed class UpdatesUiState {
 		if (this is Success) block(this)
 		return this
 	}
+
+	fun mutableUpdates(): MutableList<AppUpdate> {
+		if (this is Success) {
+			return updates.toMutableList()
+		}
+		return mutableListOf()
+	}
+
 }

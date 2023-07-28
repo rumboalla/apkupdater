@@ -3,6 +3,10 @@ package com.apkupdater.ui.screen
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -64,11 +68,16 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 		mainViewModel.refresh(appsViewModel, updatesViewModel)
 	}
 
+	// Used to launch the install intent and get dismissal result
+	val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+		mainViewModel.cancelCurrentInstall()
+	}
+
 	// Check intent when cold starting from notification
-	checkNotificationIntent(mainViewModel, updatesViewModel, navController)
+	checkNotificationIntent(mainViewModel, updatesViewModel, navController, launcher)
 
 	// Check notification intent when hot starting
-	intentListener(mainViewModel, updatesViewModel, navController)
+	intentListener(mainViewModel, updatesViewModel, navController, launcher)
 
 	Scaffold(bottomBar = { BottomBar(mainViewModel, navController) }) { padding ->
 		Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
@@ -87,12 +96,13 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 fun intentListener(
 	mainViewModel: MainViewModel,
 	updatesViewModel: UpdatesViewModel,
-	navController: NavController
+	navController: NavController,
+	launcher: ManagedActivityResultLauncher<Intent, ActivityResult>
 ) = runCatching {
 	val activity = LocalContext.current as ComponentActivity
 	DisposableEffect(Unit) {
 		val listener = Consumer<Intent> {
-			mainViewModel.processIntent(it, activity, updatesViewModel, navController)
+			mainViewModel.processIntent(it, launcher, updatesViewModel, navController)
 		}
 		activity.addOnNewIntentListener(listener)
 		onDispose { activity.removeOnNewIntentListener(listener) }
@@ -105,10 +115,11 @@ fun intentListener(
 fun checkNotificationIntent(
 	mainViewModel: MainViewModel,
 	updatesViewModel: UpdatesViewModel,
-	navController: NavController
+	navController: NavController,
+	launcher: ManagedActivityResultLauncher<Intent, ActivityResult>
 ) = runCatching {
 	val activity = LocalContext.current as ComponentActivity
-	mainViewModel.processIntent(activity.intent, activity, updatesViewModel, navController)
+	mainViewModel.processIntent(activity.intent, launcher, updatesViewModel, navController)
 }.getOrElse {
 	Log.e("MainScreen", "Error checking notification intent.", it)
 }

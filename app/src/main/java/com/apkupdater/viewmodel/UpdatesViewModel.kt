@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
+import com.apkupdater.data.ui.indexOf
 
 
 class UpdatesViewModel(
@@ -26,6 +27,8 @@ class UpdatesViewModel(
 
 	private val mutex = Mutex()
 	private val state = MutableStateFlow<UpdatesUiState>(UpdatesUiState.Loading)
+
+	init { subscribeToInstallLog() }
 
 	fun state(): StateFlow<UpdatesUiState> = state
 
@@ -45,9 +48,43 @@ class UpdatesViewModel(
 		}
 	}
 
+	private fun cancelInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+		state.value = UpdatesUiState.Success(setIsInstalling(id, false))
+		installer.finish()
+	}
+
+	private fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+		val updates = state.value.mutableUpdates()
+		val index = updates.indexOf(id)
+		if (index != -1) updates.removeAt(index)
+		state.value = UpdatesUiState.Success(updates)
+		installer.finish()
+	}
+
+	private fun subscribeToInstallLog() = viewModelScope.launch(Dispatchers.IO) {
+		mainViewModel.appInstallLog.collect {
+			if (it.success) {
+				finishInstall(it.id)
+			} else {
+				cancelInstall(it.id)
+			}
+		}
+	}
+
 	private fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
-		val apk = downloader.download(update.link)
-		installer.install(update.packageName, apk)
+		if(installer.checkPermission()) {
+			state.value = UpdatesUiState.Success(setIsInstalling(update.id, true))
+			installer.install(update, downloader.download(update.link))
+		}
+	}
+
+	private fun setIsInstalling(id: Int, b: Boolean): List<AppUpdate> {
+		val updates = state.value.mutableUpdates()
+		val index = updates.indexOf(id)
+		if (index != -1) {
+			updates[index] = updates[index].copy(isInstalling = b)
+		}
+		return updates
 	}
 
 }

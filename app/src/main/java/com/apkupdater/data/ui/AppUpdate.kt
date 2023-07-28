@@ -10,4 +10,8 @@ data class AppUpdate(
 	val source: Source,
 	val iconUri: Uri = Uri.EMPTY,
 	val link: String = "",
+	val isInstalling: Boolean = false,
+	val id: Int = "${source.name}.$packageName.$versionCode".hashCode()
 )
+
+fun List<AppUpdate>.indexOf(id: Int) = indexOfFirst { it.id == id }

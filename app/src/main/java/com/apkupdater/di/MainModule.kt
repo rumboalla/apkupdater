@@ -122,6 +122,6 @@ val mainModule = module {
 
 	viewModel { SettingsViewModel(get(), get(), WorkManager.getInstance(get())) }
 
-	viewModel { parameters -> SearchViewModel(parameters.get(), get()) }
+	viewModel { parameters -> SearchViewModel(parameters.get(), get(), get(), get()) }
 
 }

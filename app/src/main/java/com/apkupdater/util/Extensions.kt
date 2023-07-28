@@ -1,6 +1,7 @@
 package com.apkupdater.util
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.os.Build
 import androidx.compose.foundation.clickable
@@ -12,8 +13,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.yield
 import java.security.MessageDigest
 import java.util.Calendar
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -30,15 +33,6 @@ fun CoroutineScope.launchWithMutex(
 	mutex.withLock {
 		block()
 	}
-}
-
-fun <T> MutableList<T>.update(newItems: List<T>) {
-	clear()
-	addAll(newItems)
-}
-
-inline fun <T> List<T>.ifNotEmpty(block: (List<T>) -> Unit) {
-	if (isNotEmpty()) block(this)
 }
 
 fun Boolean?.orFalse() = this ?: false
@@ -73,3 +67,19 @@ fun millisUntilHour(hour: Int): Long {
 	calendar.set(Calendar.MINUTE, 0)
 	return calendar.timeInMillis - System.currentTimeMillis()
 }
+
+suspend fun AtomicBoolean.lock() {
+	while (get()) yield()
+	set(true)
+}
+
+fun AtomicBoolean.unlock() = set(false)
+
+fun Intent.getIntentExtra(): Intent? = when {
+	Build.VERSION.SDK_INT > 33 -> getParcelableExtra(Intent.EXTRA_INTENT, Intent::class.java)
+	else -> @Suppress("DEPRECATION") getParcelableExtra(Intent.EXTRA_INTENT)
+}
+
+fun Intent.getAppId() = runCatching {
+	action?.split(".")?.get(1)?.toInt()
+}.getOrNull()

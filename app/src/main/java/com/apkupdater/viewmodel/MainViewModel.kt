@@ -1,19 +1,26 @@
 package com.apkupdater.viewmodel
 
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.util.Log
-import androidx.core.content.ContextCompat
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.util.SessionInstaller
 import com.apkupdater.util.UpdatesNotification
+import com.apkupdater.util.getAppId
+import com.apkupdater.util.getIntentExtra
+import com.apkupdater.util.orFalse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+
 
 class MainViewModel : ViewModel() {
 
@@ -27,6 +34,8 @@ class MainViewModel : ViewModel() {
 	))
 
 	val isRefreshing = MutableStateFlow(false)
+	val appInstallLog = MutableSharedFlow<AppInstallStatus>()
+	private var currentInstallId = 0
 
 	fun refresh(
 		appsViewModel: AppsViewModel,
@@ -45,16 +54,20 @@ class MainViewModel : ViewModel() {
 
 	fun changeUpdatesBadge(number: String) = changeBadge(Screen.Updates.route, number)
 
+	fun cancelCurrentInstall() = viewModelScope.launch(Dispatchers.IO) {
+		appInstallLog.emit(AppInstallStatus(false, currentInstallId))
+	}
+
 	fun processIntent(
 		intent: Intent,
-		activity: Activity,
+		launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
 		updatesViewModel: UpdatesViewModel,
 		navController: NavController
 	) {
-		when (intent.action) {
-			UpdatesNotification.UpdateAction -> processUpdateIntent(navController, updatesViewModel)
-			SessionInstaller.InstallAction -> processInstallIntent(intent, activity)
-			else -> Log.e("processIntent", intent.toString())
+		when {
+			intent.action == UpdatesNotification.UpdateAction -> processUpdateIntent(navController, updatesViewModel)
+			intent.action?.contains(SessionInstaller.InstallAction).orFalse() -> processInstallIntent(intent, launcher)
+			else -> {}
 		}
 	}
 
@@ -64,19 +77,30 @@ class MainViewModel : ViewModel() {
 		restoreState = true
 	}
 
-	private fun processInstallIntent(intent: Intent, activity: Activity) {
-		val status = intent.extras?.getInt(PackageInstaller.EXTRA_STATUS)
-		when (status) {
+	private fun processInstallIntent(
+		intent: Intent,
+		launcher: ManagedActivityResultLauncher<Intent, ActivityResult>
+	) = viewModelScope.launch(Dispatchers.IO) {
+		when (intent.extras?.getInt(PackageInstaller.EXTRA_STATUS)) {
 			PackageInstaller.STATUS_PENDING_USER_ACTION -> {
-				@Suppress("DEPRECATION") val confirmIntent = intent.extras?.get(Intent.EXTRA_INTENT) as Intent
-				confirmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-				ContextCompat.startActivity(activity, confirmIntent, null)
+				currentInstallId = intent.getAppId() ?: 0
+				// Launch intent to confirm install
+				intent.getIntentExtra()?.let {
+					it.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+					launcher.launch(it)
+				}
 			}
 			PackageInstaller.STATUS_SUCCESS -> {
-				// TODO: Success
+				intent.getAppId()?.let {
+					appInstallLog.emit(AppInstallStatus(true, it))
+				}
 			}
 			else -> {
-				// TODO: Consider error
+				// We assume error and cancel the install
+				intent.getAppId()?.let {
+					appInstallLog.emit(AppInstallStatus(false, it))
+				}
+				Log.e("MainViewModel", "processInstallIntent: ${intent.toString()}")
 			}
 		}
 	}

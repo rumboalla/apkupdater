@@ -39,7 +39,7 @@ fun SearchScreen(
 	viewModel.state().collectAsStateWithLifecycle().value.onError {
 		DefaultErrorScreen()
 	}.onSuccess {
-		SearchScreenSuccess(it)
+		SearchScreenSuccess(it, viewModel)
 	}.onLoading {
 		DefaultLoadingScreen()
 	}
@@ -47,13 +47,14 @@ fun SearchScreen(
 
 @Composable
 fun SearchScreenSuccess(
-	state: SearchUiState.Success
+	state: SearchUiState.Success,
+	viewModel: SearchViewModel
 ) = Column {
 	val uriHandler = LocalUriHandler.current
 	InstalledGrid {
 		items(state.updates) { update ->
 			SearchItem(update) {
-				uriHandler.openUri(update.link)
+				viewModel.install(update, uriHandler)
 			}
 		}
 	}
