@@ -26,10 +26,17 @@ class UpdatesWorker(
         fun cancel(workManager: WorkManager) = workManager.cancelUniqueWork(TAG)
 
         fun launch(workManager: WorkManager) {
-            val request = PeriodicWorkRequestBuilder<UpdatesWorker>(1L, TimeUnit.DAYS)
+            val request = PeriodicWorkRequestBuilder<UpdatesWorker>(getDays(), TimeUnit.DAYS)
                 .setInitialDelay(millisUntilHour(prefs.alarmHour.get()), TimeUnit.MILLISECONDS)
                 .build()
             workManager.enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.UPDATE, request)
+        }
+
+        private fun getDays() = when(prefs.alarmFrequency.get()) {
+            0 -> 1L
+            1 -> 3L
+            2 -> 7L
+            else -> 1L
         }
     }
 

@@ -76,7 +76,7 @@ fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modif
     painter = painterResource(
         id = if(ignored) R.drawable.ic_visible_off else R.drawable.ic_visible
     ),
-    contentDescription = stringResource(R.string.ignored_cd),
+    contentDescription = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
     modifier = Modifier.clickableNoRipple(onClick).then(modifier)
 )
 

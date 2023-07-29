@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apkupdater.R
+import com.apkupdater.ui.component.DropDownSetting
 import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.component.TitleText
@@ -95,7 +96,16 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 				valueRange = 0f..23f,
 				steps = 23
 			)
-			Text("Alarm Frequency Daily", Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
+			DropDownSetting(
+				"Frequency",
+				listOf(
+					stringResource(R.string.settings_alarm_daily),
+					stringResource(R.string.settings_alarm_3day),
+					stringResource(R.string.settings_alarm_weekly)
+				),
+				{ viewModel.getAlarmFrequency() },
+				{ viewModel.setAlarmFrequency(it) }
+			)
 		}
 	}
 }

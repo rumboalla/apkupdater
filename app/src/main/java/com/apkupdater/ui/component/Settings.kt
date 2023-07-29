@@ -6,6 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -62,4 +67,46 @@ fun SwitchSetting(
         },
         modifier = Modifier.align(Alignment.CenterEnd)
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropDownSetting(
+    text: String,
+    options: List<String>,
+    getValue: () -> Int,
+    setValue: (Int) -> Unit
+) = Box(Modifier.padding(16.dp).fillMaxWidth()) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOptionText by remember { mutableStateOf(options[getValue()]) }
+
+    Text(text, modifier = Modifier.align(Alignment.CenterStart))
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier.align(Alignment.CenterEnd).width(150.dp)
+    ) {
+        OutlinedTextField(
+            readOnly = true,
+            value = selectedOptionText,
+            onValueChange = { setValue(options.indexOf(it)) },
+            modifier = Modifier.menuAnchor(),
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(text = option) },
+                    onClick = {
+                        selectedOptionText = option
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
 }

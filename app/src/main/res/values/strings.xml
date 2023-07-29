@@ -6,7 +6,8 @@
     <string name="tab_updates">Updates</string>
     <string name="tab_settings">Settings</string>
     <string name="something_went_wrong">"Something went wrong\n\uD83E\uDD26"</string>
-    <string name="ignored_cd">Ignore App</string>
+    <string name="ignore_cd">Ignore App</string>
+    <string name="unignore_cd">Unignore App</string>
     <string name="refresh_apps">Refresh App List</string>
     <string name="refresh_updates">Look for Updates</string>
     <string name="exclude_system_apps">Exclude System Apps</string>
@@ -26,6 +27,9 @@
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Options</string>
     <string name="settings_hour">Alarm Hour</string>
+    <string name="settings_alarm_daily">Daily</string>
+    <string name="settings_alarm_3day">3-Day</string>
+    <string name="settings_alarm_weekly">Weekly</string>
     <string name="ignore_alpha">Ignore Alpha</string>
     <string name="ignore_beta">Ignore Beta</string>
     <string name="source_apkmirror">ApkMirror</string>
