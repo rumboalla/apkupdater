@@ -12,15 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.tv.foundation.lazy.grid.items
 import com.apkupdater.R
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.component.DefaultErrorScreen
 import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.RefreshIcon
+import com.apkupdater.ui.component.TvInstalledGrid
+import com.apkupdater.ui.component.TvUpdateItem
 import com.apkupdater.ui.component.UpdateItem
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.UpdatesViewModel
+import org.koin.androidx.compose.get
 
 
 @Composable
@@ -60,12 +65,24 @@ fun UpdatesScreenSuccess(
 	updates: List<AppUpdate>
 ) = Column {
 	val uriHandler = LocalUriHandler.current
+	val prefs: Prefs = get()
 
 	UpdatesTopBar(viewModel)
-	InstalledGrid {
-		items(updates) { update ->
-			UpdateItem(update) {
-				viewModel.install(update, uriHandler)
+
+	if (prefs.androidTvUi.get()) {
+		TvInstalledGrid {
+			items(updates) { update ->
+				TvUpdateItem(update) {
+					viewModel.install(update, uriHandler)
+				}
+			}
+		}
+	} else {
+		InstalledGrid {
+			items(updates) { update ->
+				UpdateItem(update) {
+					viewModel.install(update, uriHandler)
+				}
 			}
 		}
 	}

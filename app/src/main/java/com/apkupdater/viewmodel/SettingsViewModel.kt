@@ -27,6 +27,8 @@ class SettingsViewModel(
 	fun setUseFdroid(b: Boolean) = prefs.useFdroid.put(b)
 	fun getUseGitHub() = prefs.useGitHub.get()
 	fun setUseGitHub(b: Boolean) = prefs.useGitHub.put(b)
+	fun getAndroidTvUi() = prefs.androidTvUi.get()
+	fun setAndroidTvUi(b: Boolean) = prefs.androidTvUi.put(b)
 	fun getEnableAlarm() = prefs.enableAlarm.get()
 	fun getAlarmHour() = prefs.alarmHour.get()
 	fun getAlarmFrequency() = prefs.alarmFrequency.get()

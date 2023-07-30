@@ -3,6 +3,7 @@ package com.apkupdater.util
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -83,3 +84,7 @@ fun Intent.getIntentExtra(): Intent? = when {
 fun Intent.getAppId() = runCatching {
 	action?.split(".")?.get(1)?.toInt()
 }.getOrNull()
+
+fun PackageManager.isAndroidTv() = hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+
+fun Context.isAndroidTv() = packageManager.isAndroidTv()

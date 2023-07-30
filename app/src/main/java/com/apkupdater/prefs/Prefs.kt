@@ -5,7 +5,10 @@ import com.kryptoprefs.gson.json
 import com.kryptoprefs.preferences.KryptoPrefs
 
 
-class Prefs(prefs: KryptoPrefs): KryptoContext(prefs) {
+class Prefs(
+	prefs: KryptoPrefs,
+	isAndroidTv: Boolean
+): KryptoContext(prefs) {
 	val ignoredApps = json("ignoredApps", emptyList<String>(), true)
 	val excludeSystem = boolean("excludeSystem", defValue = true, backed = true)
 	val excludeDisabled = boolean("excludeDisabled", defValue = true, backed = true)
@@ -20,4 +23,5 @@ class Prefs(prefs: KryptoPrefs): KryptoContext(prefs) {
 	val enableAlarm = boolean("enableAlarm", defValue = false, backed = true)
 	val alarmHour = int("alarmHour", defValue = 12, backed = true)
 	val alarmFrequency = int("alarmFrequency", 0, backed = true)
+	val androidTvUi = boolean("androidTvUi", defValue = isAndroidTv, backed = true)
 }

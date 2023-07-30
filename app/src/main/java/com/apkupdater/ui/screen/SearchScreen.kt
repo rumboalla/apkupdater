@@ -15,21 +15,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.tv.foundation.lazy.grid.items
 import com.apkupdater.data.ui.SearchUiState
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.component.DefaultErrorScreen
 import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.SearchItem
+import com.apkupdater.ui.component.TvInstalledGrid
+import com.apkupdater.ui.component.TvSearchItem
 import com.apkupdater.viewmodel.SearchViewModel
 import kotlinx.coroutines.delay
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
 fun SearchScreen(
@@ -51,16 +56,27 @@ fun SearchScreenSuccess(
 	viewModel: SearchViewModel
 ) = Column {
 	val uriHandler = LocalUriHandler.current
-	InstalledGrid {
-		items(state.updates) { update ->
-			SearchItem(update) {
-				viewModel.install(update, uriHandler)
+	val prefs: Prefs = get()
+
+	if (prefs.androidTvUi.get()) {
+		TvInstalledGrid {
+			items(state.updates) { update ->
+				TvSearchItem(update) {
+					viewModel.install(update, uriHandler)
+				}
+			}
+		}
+	} else {
+		InstalledGrid {
+			items(state.updates) { update ->
+				SearchItem(update) {
+					viewModel.install(update, uriHandler)
+				}
 			}
 		}
 	}
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTopBar(viewModel: SearchViewModel) = Box {
 	val keyboardController = LocalSoftwareKeyboardController.current

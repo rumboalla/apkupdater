@@ -18,7 +18,7 @@ import com.apkupdater.R
 import com.apkupdater.ui.component.DropDownSetting
 import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SwitchSetting
-import com.apkupdater.ui.component.TitleText
+import com.apkupdater.ui.component.MediumTitle
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -32,7 +32,12 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 
 	LazyColumn {
 		item {
-			TitleText(stringResource(R.string.settings_ui), Modifier.padding(horizontal = 8.dp))
+			MediumTitle(stringResource(R.string.settings_ui), Modifier.padding(horizontal = 8.dp))
+			SwitchSetting(
+				getValue = { viewModel.getAndroidTvUi() },
+				setValue = { viewModel.setAndroidTvUi(it) },
+				text = stringResource(R.string.settings_android_tv_ui)
+			)
 			SliderSetting(
 				{ viewModel.getPortraitColumns().toFloat() },
 				{ viewModel.setPortraitColumns(it.toInt()) },
@@ -50,7 +55,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 		}
 
 		item {
-			TitleText(stringResource(R.string.settings_sources), Modifier.padding(horizontal = 8.dp))
+			MediumTitle(stringResource(R.string.settings_sources), Modifier.padding(horizontal = 8.dp))
 			SwitchSetting(
 				{ viewModel.getUseGitHub() },
 				{ viewModel.setUseGitHub(it) },
@@ -69,7 +74,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 		}
 
 		item {
-			TitleText(stringResource(R.string.settings_options), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
+			MediumTitle(stringResource(R.string.settings_options), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
 			SwitchSetting(
 				{ viewModel.getIgnoreAlpha() },
 				{ viewModel.setIgnoreAlpha(it) },
@@ -83,7 +88,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 		}
 
 		item {
-			TitleText(stringResource(R.string.settings_alarm), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
+			MediumTitle(stringResource(R.string.settings_alarm), Modifier.padding(horizontal = 8.dp, vertical = 8.dp))
 			SwitchSetting(
 				getValue = { viewModel.getEnableAlarm() },
 				setValue = { viewModel.setEnableAlarm(it, launcher) },

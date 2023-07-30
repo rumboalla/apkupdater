@@ -18,6 +18,7 @@ import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.util.combine
+import com.apkupdater.util.isAndroidTv
 import com.apkupdater.util.orFalse
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -39,7 +40,7 @@ class ApkMirrorRepository(
         else -> "arm"
     }
 
-    private val isAndroidTV = packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+    private val isAndroidTV = packageManager.isAndroidTv()
     private val api = Build.VERSION.SDK_INT
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
@@ -64,7 +65,7 @@ class ApkMirrorRepository(
                 name = h5[it].attr("title"),
                 link = "$baseUrl${h5[it].selectFirst("a")?.attr("href")}",
                 iconUri = Uri.parse("$baseUrl${img[it].attr("src")}".replace("=32", "=128")),
-                version = "",
+                version = "?",
                 versionCode = 0L,
                 source = ApkMirrorSource,
                 packageName = a[it].text() // Developer name in this case

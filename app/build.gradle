@@ -47,7 +47,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
     implementation 'androidx.compose.ui:ui:1.4.3'
-    implementation 'androidx.compose.ui:ui-tooling-preview:1.4.3'
+    implementation "androidx.tv:tv-foundation:1.0.0-alpha08"
+//    implementation "androidx.tv:tv-material:1.0.0-alpha08"
     implementation 'androidx.compose.material3:material3:1.1.1'
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
     implementation 'io.insert-koin:koin-android:3.4.2'

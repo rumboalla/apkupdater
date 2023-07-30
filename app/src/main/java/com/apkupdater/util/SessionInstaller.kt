@@ -12,7 +12,8 @@ import androidx.core.content.ContextCompat.startActivity
 import com.apkupdater.BuildConfig
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.ui.activity.MainActivity
-import java.io.File
+import java.io.InputStream
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -24,7 +25,7 @@ class SessionInstaller(private val context: Context) {
 
     private val installMutex = AtomicBoolean(false)
 
-    suspend fun install(app: AppUpdate, file: File) {
+    suspend fun install(app: AppUpdate, stream: InputStream) {
         val packageInstaller: PackageInstaller = context.packageManager.packageInstaller
         val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
         params.setAppPackageName(app.packageName)
@@ -41,10 +42,10 @@ class SessionInstaller(private val context: Context) {
         val sessionId = packageInstaller.createSession(params)
         val session = packageInstaller.openSession(sessionId)
 
-        session.openWrite(file.name, 0, file.length()).use { output ->
-            file.inputStream().copyTo(output)
+        session.openWrite(UUID.randomUUID().toString(), 0, -1).use { output ->
+            stream.copyTo(output)
+            stream.close()
             session.fsync(output)
-            file.delete()
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {

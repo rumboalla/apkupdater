@@ -17,6 +17,7 @@ import com.apkupdater.service.GitHubService
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
 import com.apkupdater.util.UpdatesNotification
+import com.apkupdater.util.isAndroidTv
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -106,7 +107,7 @@ val mainModule = module {
 
 	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
 
-	single { Prefs(get()) }
+	single { Prefs(get(), androidContext().isAndroidTv()) }
 
 	single { UpdatesNotification(get()) }
 

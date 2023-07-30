@@ -23,14 +23,12 @@ import com.apkupdater.util.getAppIcon
 @Composable
 private fun BaseLoadingImage(
     request: ImageRequest,
-    height: Dp = 120.dp,
+    modifier: Modifier,
     color: Color = Color.Transparent
 ) = AsyncImage(
     model = request,
     contentDescription = stringResource(R.string.app_cd),
-    modifier = Modifier
-        .fillMaxSize()
-        .height(height)
+    modifier = modifier
         .padding(10.dp)
         .clip(RoundedCornerShape(8.dp))
         .background(color),
@@ -40,23 +38,23 @@ private fun BaseLoadingImage(
 @Composable
 fun LoadingImage(
     uri: Uri,
-    height: Dp = 120.dp,
+    modifier: Modifier = Modifier.height(120.dp).fillMaxSize(),
     crossfade: Boolean = true,
     color: Color = Color.Transparent
 ) = BaseLoadingImage(
     ImageRequest.Builder(LocalContext.current).data(uri).crossfade(crossfade).build(),
-    height,
+    modifier,
     color
 )
 
 @Composable
 fun LoadingImageApp(
     packageName: String,
-    height: Dp = 120.dp,
+    modifier: Modifier = Modifier.height(120.dp).fillMaxSize(),
     crossfade: Boolean = true,
     color: Color = Color.Transparent
 ) = BaseLoadingImage(
     ImageRequest.Builder(LocalContext.current).data(LocalContext.current.getAppIcon(packageName)).crossfade(crossfade).build(),
-    height,
+    modifier,
     color
 )

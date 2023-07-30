@@ -30,6 +30,7 @@
     <string name="settings_alarm_daily">Daily</string>
     <string name="settings_alarm_3day">3-Day</string>
     <string name="settings_alarm_weekly">Weekly</string>
+    <string name="settings_android_tv_ui">Android TV UI</string>
     <string name="ignore_alpha">Ignore Alpha</string>
     <string name="ignore_beta">Ignore Beta</string>
     <string name="source_apkmirror">ApkMirror</string>

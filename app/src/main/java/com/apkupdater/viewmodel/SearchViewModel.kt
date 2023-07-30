@@ -85,7 +85,12 @@ class SearchViewModel(
     private fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
         if(installer.checkPermission()) {
             state.value = SearchUiState.Success(setIsInstalling(update.id, true))
-            installer.install(update, downloader.download(update.link))
+            val stream = downloader.downloadStream(update.link)
+            if (stream != null) {
+                installer.install(update, stream)
+            } else {
+                cancelInstall(update.id)
+            }
         }
     }
 
