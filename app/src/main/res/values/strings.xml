@@ -35,6 +35,7 @@
     <string name="ignore_beta">Ignore Beta</string>
     <string name="source_apkmirror">ApkMirror</string>
     <string name="source_fdroid">F-Droid</string>
+    <string name="source_aptoide">Aptoide</string>
     <string name="source_github">GitHub (Self-Update)</string>
 
     // Notifications

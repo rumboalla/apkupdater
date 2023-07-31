@@ -71,6 +71,11 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 				{ viewModel.setUseFdroid(it) },
 				stringResource(R.string.source_fdroid)
 			)
+			SwitchSetting(
+				{ viewModel.getUseAptoide() },
+				{ viewModel.setUseAptoide(it) },
+				stringResource(R.string.source_aptoide)
+			)
 		}
 
 		item {

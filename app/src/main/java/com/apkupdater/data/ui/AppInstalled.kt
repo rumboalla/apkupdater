@@ -1,6 +1,8 @@
 package com.apkupdater.data.ui
 
 import android.net.Uri
+import com.apkupdater.data.aptoide.ApksData
+import com.apkupdater.util.toSha1Aptoide
 
 data class AppInstalled(
 	val name: String,
@@ -23,3 +25,10 @@ fun List<AppInstalled>.getSignature(packageName: String) = getApp(packageName)
 	.orEmpty()
 
 fun List<AppInstalled>.getPackageNames() = filter { !it.ignored }.map { it.packageName }
+
+fun AppInstalled.toApksData() = ApksData(
+	packageName = packageName,
+	vercode = versionCode.toString(),
+	signature = signature.toSha1Aptoide(),
+	isEnabled = true
+)

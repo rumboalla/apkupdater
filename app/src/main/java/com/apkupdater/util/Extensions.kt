@@ -52,11 +52,13 @@ fun ByteArray.toSha1(): String = MessageDigest
 	.digest(this)
 	.joinToString(separator = "", transform = { "%02x".format(it) })
 
-@Suppress("DEPRECATION")
+fun String.toSha1Aptoide(): String = chunked(2).joinToString(separator = ":") { it.uppercase() }
+
 fun PackageInfo.getSignatureHash(): String = runCatching {
 	if (Build.VERSION.SDK_INT >= 28) {
 		signingInfo.apkContentsSigners[0].toByteArray().toSha1()
 	} else {
+		@Suppress("DEPRECATION")
 		signatures[0].toByteArray().toSha1()
 	}
 }.getOrDefault("")

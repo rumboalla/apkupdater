@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flow
 class SearchRepository(
     private val apkMirrorRepository: ApkMirrorRepository,
     private val fdroidRepository: FdroidRepository,
+    private val aptoideRepository: AptoideRepository,
     private val prefs: Prefs
 ) {
 
@@ -19,6 +20,7 @@ class SearchRepository(
         val sources = mutableListOf<Flow<Result<List<AppUpdate>>>>()
         if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.search(text))
         if (prefs.useFdroid.get()) sources.add(fdroidRepository.search(text))
+        if (prefs.useAptoide.get()) sources.add(aptoideRepository.search(text))
         sources.combine { updates ->
             val result = updates.filter { it.isSuccess }.mapNotNull { it.getOrNull() }
             emit(Result.success(result.flatten().sortedBy { it.name }))

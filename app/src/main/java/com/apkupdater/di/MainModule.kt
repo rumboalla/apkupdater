@@ -7,11 +7,13 @@ import com.apkupdater.R
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.repository.AppsRepository
+import com.apkupdater.repository.AptoideRepository
 import com.apkupdater.repository.FdroidRepository
 import com.apkupdater.repository.GitHubRepository
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
+import com.apkupdater.service.AptoideService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
 import com.apkupdater.util.Downloader
@@ -87,23 +89,35 @@ val mainModule = module {
 			.build()
 	}
 
+	single(named("aptoide")) {
+		Retrofit.Builder()
+			.client(get())
+			.baseUrl("https://ws75.aptoide.com/api/7/")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+	}
+
 	single { get<Retrofit>(named("apkmirror")).create(ApkMirrorService::class.java) }
 
 	single { get<Retrofit>(named("github")).create(GitHubService::class.java) }
 
 	single { get<Retrofit>(named("fdroid")).create(FdroidService::class.java) }
 
+	single { get<Retrofit>(named("aptoide")).create(AptoideService::class.java) }
+
 	single { ApkMirrorRepository(get(), get(), get<Context>().packageManager) }
 
 	single { AppsRepository(get(), get()) }
 
-	single { GitHubRepository(get()) }
+	single { GitHubRepository(get(), get()) }
 
 	single { FdroidRepository(get(), get()) }
 
-	single { UpdatesRepository(get(), get(), get(), get(), get()) }
+	single { AptoideRepository(get(), get()) }
 
-	single { SearchRepository(get(), get(), get()) }
+	single { UpdatesRepository(get(), get(), get(), get(), get(), get()) }
+
+	single { SearchRepository(get(), get(), get(), get()) }
 
 	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
 

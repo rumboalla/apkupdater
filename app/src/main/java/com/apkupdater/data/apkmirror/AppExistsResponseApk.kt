@@ -27,5 +27,5 @@ fun AppExistsResponseApk.toAppUpdate(app: AppInstalled) = AppUpdate(
 	versionCode,
 	ApkMirrorSource,
 	app.iconUri,
-	"https://www.apkmirror.com/$link"
+	"https://www.apkmirror.com$link"
 )
