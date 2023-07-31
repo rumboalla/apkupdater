@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name" translatable="false">ApkUpdater</string>
+    <string name="app_name" translatable="false">APKUpdater</string>
     <string name="tab_apps">Apps</string>
     <string name="tab_search">Search</string>
     <string name="tab_updates">Updates</string>
@@ -33,15 +33,15 @@
     <string name="settings_android_tv_ui">Android TV UI</string>
     <string name="ignore_alpha">Ignore Alpha</string>
     <string name="ignore_beta">Ignore Beta</string>
-    <string name="source_apkmirror">ApkMirror</string>
-    <string name="source_fdroid">F-Droid</string>
-    <string name="source_aptoide">Aptoide</string>
-    <string name="source_github">GitHub (Self-Update)</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub (Self-Update)</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
     <string name="notification_channel_description">Channel for update notifications.</string>
-    <string translatable="false" name="notification_channel_id">updateChannel</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Updates</string>
     <plurals name="notification_update_description">
         <item quantity="zero">No updates found.</item>
