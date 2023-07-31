@@ -23,8 +23,11 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 If you want to help with translations, open a [Pull Request](https://github.com/rumboalla/apkupdater/pulls) or an [Issue](https://github.com/rumboalla/apkupdater/issues) with the translated strings.xml
 
 # Screenshots
-![1](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0001.png) ![2](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0002.png)
-![3](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0003.png) ![4](https://github.com/rumboalla/apkupdater/raw/2.x/screenshots/screenshot_0004.png)
+![1](https://github.com/rumboalla/apkupdater/assets/21153554/d881f850-797b-4acb-bfbf-6c9371841400) | ![2](https://github.com/rumboalla/apkupdater/assets/21153554/ff44772f-2114-4722-821c-e1f552e282a4) | ![3](https://github.com/rumboalla/apkupdater/assets/21153554/09dd649d-3488-4c26-aac1-e1d736a0be88) | ![4](https://github.com/rumboalla/apkupdater/assets/21153554/bd33bfee-a2ae-472a-80d8-7258fd913057)
+------------ | ------------- | ------------- | -------------
+
+![5](https://github.com/rumboalla/apkupdater/assets/21153554/b6ef8b65-6483-482c-a363-220d70dd1f13) | ![6](https://github.com/rumboalla/apkupdater/assets/21153554/e02fb243-12db-47df-8927-fca6e247eca0)
+------------ | -------------
 
 # Other Projects
 * [CoolRs](https://github.com/rumboalla/coolrs): A collection of Android RenderScript effects. 
