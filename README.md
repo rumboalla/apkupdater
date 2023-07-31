@@ -5,8 +5,8 @@ It provides similar functionality to an app store, but instead of depending on a
 The 3.x branch is a full rewrite using modern technologies like **Jetpack Compose**, **Flow** and **WorkManager**.
 
 # Features
-* **Update Sources**: Find updates from **APKMirror**, **Aptoide**, **F-Droid**, **GitHub**.
-* **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**, **F-Droid**, **Google Play**.
+* **Update Sources**: Find updates from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
+* **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
 * Schedule **background update checks** and receive a **notification** when updates are found.
 * Supports **Android 7.0** (**24**) to **Android 14** (**34**).
 * Supports **Android TV**.
