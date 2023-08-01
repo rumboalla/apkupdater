@@ -17,9 +17,32 @@ android {
         vectorDrawables { useSupportLibrary true }
     }
 
+    signingConfigs {
+        release {
+            try {
+                Properties props = new Properties()
+                props.load(new FileInputStream(file("../local.properties")))
+                storeFile file(props['keystore.file'])
+                storePassword props['keystore.password']
+                keyAlias props['keystore.keyalias']
+                keyPassword props['keystore.keypassword']
+            } catch (ignored) {
+                storeFile signingConfigs.debug.storeFile
+                storePassword signingConfigs.debug.storePassword
+                keyAlias signingConfigs.debug.keyAlias
+                keyPassword signingConfigs.debug.keyPassword
+                println "Signing config not found. Using debug settings."
+            }
+            v1SigningEnabled true
+            v2SigningEnabled true
+            enableV3Signing true
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,7 +71,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
     implementation 'androidx.compose.ui:ui:1.4.3'
     implementation "androidx.tv:tv-foundation:1.0.0-alpha08"
-//    implementation "androidx.tv:tv-material:1.0.0-alpha08"
     implementation 'androidx.compose.material3:material3:1.1.1'
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
     implementation 'io.insert-koin:koin-android:3.4.2'
@@ -56,7 +78,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'io.coil-kt:coil-compose:2.4.0'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs:0.4.3'
     implementation 'com.github.rumboalla.KryptoPrefs:kryptoprefs-gson:0.4.3'
