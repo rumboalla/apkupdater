@@ -13,7 +13,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Material Design 3** with **Dark**, **Light** and **Dynamic** theme support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates. TODO
-* **Languages**: English, Spanish, Dutch.
+* **Languages**: English, Spanish, Dutch, German.
 
 # Download
 * [Alpha Preview release (3.0.0-alpha-13)](https://github.com/rumboalla/apkupdater/releases/download/3.0.0-alpha-13/app-debug.apk)
