@@ -100,7 +100,8 @@ class MainViewModel : ViewModel() {
 				intent.getAppId()?.let {
 					appInstallLog.emit(AppInstallStatus(false, it))
 				}
-				Log.e("MainViewModel", "processInstallIntent: ${intent.toString()}")
+				val message = intent.extras?.getString(PackageInstaller.EXTRA_STATUS_MESSAGE)
+				Log.e("MainViewModel", "Failed to install app: $message $intent")
 			}
 		}
 	}

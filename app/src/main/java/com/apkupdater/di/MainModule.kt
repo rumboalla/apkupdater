@@ -118,7 +118,7 @@ val mainModule = module {
 
 	single { FdroidRepository(get(), get()) }
 
-	single { AptoideRepository(get(), get()) }
+	single { AptoideRepository(get(), get(), get()) }
 
 	single { UpdatesRepository(get(), get(), get(), get(), get(), get()) }
 
