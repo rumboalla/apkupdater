@@ -31,4 +31,9 @@
     <string name="notification_channel_name">Actualizaciones</string>
     <string name="notification_channel_description">Canal para las notificaciones de las actualizaciones</string>
     <string name="notification_update_title">Actualizaciones</string>
+    <plurals name="notification_update_description">
+        <item quantity="one">Se encontró %1$d actualización.</item>
+        <item quantity="other">Se encontraron %1$d actualizaciones.</item>
+        <item quantity="many">Se encontraron %1$d actualizaciones.</item>
+    </plurals>
 </resources>
