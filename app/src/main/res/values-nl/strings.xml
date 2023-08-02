@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_apps">Applicaties</string>
+    <string name="tab_search">Zoeken</string>
+    <string name="tab_updates">Updates</string>
+    <string name="tab_settings">Instellingen</string>
+    <string name="something_went_wrong">Er is iets misgegaan\\n\\uD83E\\uDD26</string>
+    <string name="ignore_cd">App Negeren</string>
+    <string name="unignore_cd">App niet Negeren</string>
+    <string name="refresh_updates">Zoeken naar Updates</string>
+    <string name="exclude_system_apps">Systeemapps Uitsluiten</string>
+    <string name="include_system_apps">Systeemapps Toestaan</string>
+    <string name="exclude_app_store">App Store Uitsluiten</string>
+    <string name="include_app_store">App Store Toestaan</string>
+    <string name="exclude_disabled_apps">Uitgeschakelde Apps Uitsluiten</string>
+    <string name="include_disabled_apps">Uitgeschakelde Apps Toestaan</string>
+    <string name="install_cd">App Installeren</string>
+    <string name="app_cd">App Icoon</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Staande Kolommen</string>
+    <string name="settings_landscape_columns">Liggende Kolommen</string>
+    <string name="settings_sources">Bronnen</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarm</string>
+    <string name="settings_options">Opties</string>
+    <string name="settings_hour">Alarm Uur</string>
+    <string name="settings_alarm_daily">Dagelijks</string>
+    <string name="settings_alarm_3day">3-Daags</string>
+    <string name="settings_alarm_weekly">Wekelijks</string>
+    <string name="ignore_alpha">Alpha Negeren</string>
+    <string name="ignore_beta">Bèta Negeren</string>
+
+    // Notifications
+    <string name="notification_channel_name">Updates</string>
+    <string name="notification_channel_description">Kanaal voor update notificaties</string>
+    <string name="notification_update_title">Updates</string>
+    <plurals name="notification_update_description">
+        <item quantity="one">%1$d Update gevonden.</item>
+        <item quantity="other">%1$d Updates gevonden.</item>
+        <item quantity="many">%1$d Updates gevonden.</item>
+    </plurals>
+</resources>
