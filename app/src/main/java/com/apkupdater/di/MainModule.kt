@@ -50,11 +50,12 @@ val mainModule = module {
 		}
 	}
 
-	single { OkHttpClient
-		.Builder()
-		.cache(get())
-		.addNetworkInterceptor { chain ->
-			chain.proceed(
+	single {
+		OkHttpClient
+			.Builder()
+			.cache(get())
+			.addNetworkInterceptor { chain ->
+				chain.proceed(
 				chain.request()
 					.newBuilder()
 					.header("User-Agent", "APKUpdater-v" + BuildConfig.VERSION_NAME)
@@ -90,8 +91,12 @@ val mainModule = module {
 	}
 
 	single(named("aptoide")) {
+		val client = OkHttpClient.Builder().cache(get()).addNetworkInterceptor {
+			it.proceed(it.request().newBuilder().header("User-Agent", AptoideRepository.UserAgent).build())
+		}.build()
+
 		Retrofit.Builder()
-			.client(get())
+			.client(client)
 			.baseUrl("https://ws75.aptoide.com/api/7/")
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()

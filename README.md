@@ -13,7 +13,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Material Design 3** with **Dark**, **Light** and **Dynamic** theme support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates. TODO
-* **Languages**: English. TODO
+* **Languages**: English, Spanish.
 
 # Download
 * [Alpha Preview release (3.0.0-alpha-12)](https://github.com/rumboalla/apkupdater/releases/download/3.0.0-alpha-12/app-debug.apk)
@@ -28,7 +28,6 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 
 | ![5](https://github.com/rumboalla/apkupdater/assets/21153554/b6ef8b65-6483-482c-a363-220d70dd1f13) | ![6](https://github.com/rumboalla/apkupdater/assets/21153554/e02fb243-12db-47df-8927-fca6e247eca0) |
 |----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-
 
 # Other Projects
 * [CoolRs](https://github.com/rumboalla/coolrs): A collection of Android RenderScript effects. 

@@ -18,10 +18,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.foundation.lazy.grid.items
+import com.apkupdater.R
 import com.apkupdater.data.ui.SearchUiState
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.component.DefaultErrorScreen
@@ -84,8 +86,10 @@ fun SearchTopBar(viewModel: SearchViewModel) = Box {
 	OutlinedTextField(
 		value = value,
 		onValueChange = { value = it },
-		modifier = Modifier.fillMaxWidth().padding(8.dp),
-		label = { Text("Search") },
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(8.dp),
+		label = { Text(stringResource(R.string.tab_search)) },
 		keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
 		keyboardActions = KeyboardActions(onSearch = { keyboardController?.hide() })
 	)

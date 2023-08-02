@@ -16,7 +16,7 @@ class Downloader(context: Context) {
 
     @Suppress("unused")
     fun download(url: String): File {
-        val file = File(dir, UUID.randomUUID().toString())
+        val file = File(dir, randomUUID())
         client.newCall(downloadRequest(url)).execute().use {
             if (it.isSuccessful) {
                 it.body?.byteStream()?.copyTo(file.outputStream())

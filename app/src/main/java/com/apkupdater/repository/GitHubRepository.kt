@@ -39,9 +39,9 @@ class GitHubRepository(
         val releases = service.getReleases()
         val versions = getVersions(releases[0].name)
 
-        if (versions.second > BuildConfig.VERSION_CODE) {
+        if (versions.second != BuildConfig.VERSION_CODE.toLong()) {
             emit(listOf(AppUpdate(
-                name = "ApkUpdater",
+                name = "APKUpdater",
                 packageName = BuildConfig.APPLICATION_ID,
                 version = versions.first,
                 versionCode = versions.second,

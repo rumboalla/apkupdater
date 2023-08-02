@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -51,7 +50,7 @@ fun LoadingImage(
 fun LoadingImageApp(
     packageName: String,
     modifier: Modifier = Modifier.height(120.dp).fillMaxSize(),
-    crossfade: Boolean = true,
+    crossfade: Boolean = false,
     color: Color = Color.Transparent
 ) = BaseLoadingImage(
     ImageRequest.Builder(LocalContext.current).data(LocalContext.current.getAppIcon(packageName)).crossfade(crossfade).build(),

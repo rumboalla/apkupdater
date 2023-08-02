@@ -19,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apkupdater.R
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.util.getAppName
 
 @Composable
 fun TvCommonItem(
@@ -53,7 +55,7 @@ fun TvCommonItem(
             .align(Alignment.CenterVertically)
             .padding(horizontal = 8.dp)
     ) {
-        LargeTitle(name)
+        LargeTitle(name.ifEmpty { LocalContext.current.getAppName(packageName) })
         MediumText(version)
         MediumText(versionCode.toString())
     }

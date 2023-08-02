@@ -42,7 +42,7 @@ class SessionInstaller(private val context: Context) {
         val sessionId = packageInstaller.createSession(params)
         val session = packageInstaller.openSession(sessionId)
 
-        session.openWrite(UUID.randomUUID().toString(), 0, -1).use { output ->
+        session.openWrite(randomUUID(), 0, -1).use { output ->
             stream.copyTo(output)
             stream.close()
             session.fsync(output)

@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.util.Consumer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -148,7 +149,13 @@ fun RowScope.BottomBarItem(
 			Icon(if (selected) screen.iconSelected else screen.icon, contentDescription = null)
 		}
    	},
-	label = { Text(stringResource(screen.resourceId)) },
+	label = {
+		Text(
+			stringResource(screen.resourceId),
+			maxLines = 1,
+			overflow = TextOverflow.Ellipsis
+		)
+	},
 	selected = selected,
 	onClick = { mainViewModel.navigateTo(navController, screen.route) }
 )

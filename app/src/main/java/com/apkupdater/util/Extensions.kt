@@ -17,6 +17,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.yield
 import java.security.MessageDigest
 import java.util.Calendar
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
@@ -90,3 +91,5 @@ fun Intent.getAppId() = runCatching {
 fun PackageManager.isAndroidTv() = hasSystemFeature(PackageManager.FEATURE_LEANBACK)
 
 fun Context.isAndroidTv() = packageManager.isAndroidTv()
+
+fun randomUUID() = UUID.randomUUID().toString()

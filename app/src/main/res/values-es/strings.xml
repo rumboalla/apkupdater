@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_apps">Aplicaciones</string>
+    <string name="tab_search">Búsqueda</string>
+    <string name="tab_updates">Actualizaciones</string>
+    <string name="tab_settings">Configuración</string>
+    <string name="something_went_wrong">Algo ha fallado\\n\\uD83E\\uDD26</string>
+    <string name="ignore_cd">Ignorar Apliación</string>
+    <string name="unignore_cd">No Ignorar Aplicación</string>
+    <string name="refresh_updates">Buscar Actualizaciones</string>
+    <string name="exclude_system_apps">Excluir aplicaciones del sistema</string>
+    <string name="include_system_apps">Incluir aplicaciones del sistema</string>
+    <string name="exclude_app_store">Excluir aplicaciones de App Stores</string>
+    <string name="include_app_store">Incluir aplicaciones de App Stores</string>
+    <string name="exclude_disabled_apps">Excluir aplicaciones deshabilitadas</string>
+    <string name="include_disabled_apps">Incluir aplicaciones deshabilitadas</string>
+    <string name="install_cd">Instalar Aplicación</string>
+    <string name="app_cd">Icono de la Applicación</string>
+    <string name="settings_portrait_columns">Columnas en modo Retrato</string>
+    <string name="settings_landscape_columns">Columnas en modo Apaisado</string>
+    <string name="settings_sources">Fuentes</string>
+    <string name="settings_ui">Interfaz de Usuario</string>
+    <string name="settings_alarm">Alarma</string>
+    <string name="settings_options">Opciones</string>
+    <string name="settings_hour">Hora de Alarma</string>
+    <string name="settings_alarm_daily">Diaria</string>
+    <string name="settings_alarm_3day">3 Días</string>
+    <string name="settings_alarm_weekly">Semanal</string>
+    <string name="ignore_alpha">Ignorar Alpha</string>
+    <string name="ignore_beta">Ignorar Beta</string>
+    <string name="notification_channel_name">Actualizaciones</string>
+    <string name="notification_channel_description">Canal para las notificaciones de las actualizaciones</string>
+    <string name="notification_update_title">Actualizaciones</string>
+</resources>

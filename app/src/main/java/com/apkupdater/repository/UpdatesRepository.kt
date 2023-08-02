@@ -22,11 +22,12 @@ class UpdatesRepository(
     fun updates() = flow {
         appsRepository.getApps().collect { result ->
             result.onSuccess { apps ->
+                val filtered = apps.filter { !it.ignored }
                 val sources = mutableListOf<Flow<List<AppUpdate>>>()
-                if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.updates(apps))
-                if (prefs.useGitHub.get()) sources.add(gitHubRepository.updates(apps))
-                if (prefs.useFdroid.get()) sources.add(fdroidRepository.updates(apps))
-                if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(apps))
+                if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.updates(filtered))
+                if (prefs.useGitHub.get()) sources.add(gitHubRepository.updates(filtered))
+                if (prefs.useFdroid.get()) sources.add(fdroidRepository.updates(filtered))
+                if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(filtered))
                 sources
                     .combine { updates -> emit(updates.flatMap { it }) }
                     .collect()

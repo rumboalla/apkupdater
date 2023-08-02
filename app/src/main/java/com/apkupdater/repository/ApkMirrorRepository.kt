@@ -113,12 +113,16 @@ class ApkMirrorRepository(
         else -> false
     }
 
-    // Filter out standalone AndroidTV apps if we are not an AndroidTV device
     private fun filterAndroidTv(apk: AppExistsResponseApk): Boolean {
         if (!isAndroidTV) {
+            // Filter out standalone AndroidTV apps if we are not an AndroidTV device
             if(apk.capabilities?.contains("leanback_standalone").orFalse()) {
                 return false
             }
+        } else {
+            // Filter out apps that don't have leanback if we are an AndroidTV device
+            return (apk.capabilities?.contains("leanback_standalone").orFalse()
+                    || apk.capabilities?.contains("leanback").orFalse())
         }
         return true
     }

@@ -1,5 +1,6 @@
 package com.apkupdater.repository
 
+import android.os.Build
 import android.util.Log
 import com.apkupdater.data.aptoide.App
 import com.apkupdater.data.aptoide.ListAppsUpdatesRequest
@@ -9,6 +10,7 @@ import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.toApksData
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.AptoideService
+import com.apkupdater.util.randomUUID
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
@@ -17,6 +19,14 @@ class AptoideRepository(
     private val service: AptoideService,
     private val prefs: Prefs
 ) {
+    companion object {
+        val UserAgent = "aptoide-9.20.6.1;" + getTerminal() + ";0x0;id:" + randomUUID() + ";;"
+        private fun getTerminal() = "${getModel()}(${getProduct()});v${getRelease()};${getArch()}"
+        private fun getProduct() = Build.PRODUCT.replace(";", " ")
+        private fun getModel() = Build.MODEL.replace(";", " ")
+        private fun getRelease() = Build.VERSION.RELEASE.replace(";", " ")
+        private fun getArch() = System.getProperty("os.arch")
+    }
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val data = apps.map(AppInstalled::toApksData)
