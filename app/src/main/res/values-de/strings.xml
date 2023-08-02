@@ -1,0 +1,51 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Apps</string>
+    <string name="tab_search">Suche</string>
+    <string name="tab_updates">Updates</string>
+    <string name="tab_settings">Setup</string>
+    <string name="something_went_wrong">"Etwas ist schiefgelaufen\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">App Ignorieren</string>
+    <string name="unignore_cd">App Überprüfen</string>
+    <string name="refresh_updates">Suche nach Updates</string>
+    <string name="exclude_system_apps">System-Apps Ignorieren</string>
+    <string name="include_system_apps">System-Apps Überprüfen</string>
+    <string name="exclude_app_store">App-Store Ignorieren</string>
+    <string name="include_app_store">App-Store Überprüfen</string>
+    <string name="exclude_disabled_apps">Deaktivierte Apps Ignorieren</string>
+    <string name="include_disabled_apps">Deaktivierte Apps Überprüfen</string>
+    <string name="install_cd">App Installieren</string>
+    <string name="app_cd">App-Icon</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Anzahl der Spalten</string>
+    <string name="settings_landscape_columns">Anzahl der Zeilen</string>
+    <string name="settings_sources">Quellen</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarm</string>
+    <string name="settings_options">Optionen</string>
+    <string name="settings_hour">Alarmzeit</string>
+    <string name="settings_alarm_daily">Täglich</string>
+    <string name="settings_alarm_3day">3-Tägig</string>
+    <string name="settings_alarm_weekly">Wöchentlich</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">Alphas Ignorieren</string>
+    <string name="ignore_beta">Betas Ignorieren</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+
+    // Notifications
+    <string name="notification_channel_name">Updates</string>
+    <string name="notification_channel_description">Kanal für Update-Benachrichtigungen.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Updates</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Keine Updates gefunden.</item>
+        <item quantity="one">%1$d Update gefunden.</item>
+        <item quantity="other">%1$d Updates gefunden.</item>
+    </plurals>
+
+</resources>
