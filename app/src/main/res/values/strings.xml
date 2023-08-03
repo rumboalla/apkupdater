@@ -32,6 +32,7 @@
     <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
     <string name="ignore_alpha">Ignore Alpha</string>
     <string name="ignore_beta">Ignore Beta</string>
+    <string name="root_install">Root Install</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
     <string name="source_fdroid" translatable="false">F-Droid</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>

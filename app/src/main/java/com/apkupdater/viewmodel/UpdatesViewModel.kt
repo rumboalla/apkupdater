@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.UpdatesUiState
+import com.apkupdater.data.ui.indexOf
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
@@ -15,14 +17,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
-import com.apkupdater.data.ui.indexOf
 
 
 class UpdatesViewModel(
 	private val mainViewModel: MainViewModel,
 	private val updatesRepository: UpdatesRepository,
 	private val downloader: Downloader,
-	private val installer: SessionInstaller
+	private val installer: SessionInstaller,
+	private val prefs: Prefs
 ) : ViewModel() {
 
 	private val mutex = Mutex()
@@ -44,7 +46,13 @@ class UpdatesViewModel(
 	fun install(update: AppUpdate, uriHandler: UriHandler) {
 		when (update.source) {
 			ApkMirrorSource -> uriHandler.openUri(update.link)
-			else -> downloadAndInstall(update)
+			else -> {
+				if (prefs.rootInstall.get()) {
+					downloadAndRootInstall(update)
+				} else {
+					downloadAndInstall(update)
+				}
+			}
 		}
 	}
 
@@ -68,6 +76,17 @@ class UpdatesViewModel(
 			} else {
 				cancelInstall(it.id)
 			}
+		}
+	}
+
+	private fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+		state.value = UpdatesUiState.Success(setIsInstalling(update.id, true))
+		val file = downloader.download(update.link)
+		val res = installer.rootInstall(file)
+		if (res) {
+			finishInstall(update.id)
+		} else {
+			cancelInstall(update.id)
 		}
 	}
 

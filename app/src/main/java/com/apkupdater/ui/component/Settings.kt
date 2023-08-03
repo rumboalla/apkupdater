@@ -104,8 +104,8 @@ fun SwitchSetting(
     Switch(
         checked = value,
         onCheckedChange = {
-            value = it
             setValue(it)
+            value = getValue()
         },
         modifier = Modifier.align(CenterEnd)
     )

@@ -6,6 +6,8 @@ import androidx.work.WorkManager
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
+import eu.chainfire.libsuperuser.Shell
+
 
 class SettingsViewModel(
     private val prefs: Prefs,
@@ -32,8 +34,17 @@ class SettingsViewModel(
 	fun getAndroidTvUi() = prefs.androidTvUi.get()
 	fun setAndroidTvUi(b: Boolean) = prefs.androidTvUi.put(b)
 	fun getEnableAlarm() = prefs.enableAlarm.get()
+	fun getRootInstall() = prefs.rootInstall.get()
 	fun getAlarmHour() = prefs.alarmHour.get()
 	fun getAlarmFrequency() = prefs.alarmFrequency.get()
+
+	fun setRootInstall(b: Boolean) {
+		if (b && Shell.SU.available()) {
+			prefs.rootInstall.put(true)
+		} else {
+			prefs.rootInstall.put(false)
+		}
+	}
 
 	fun setAlarmFrequency(frequency: Int) {
 		prefs.alarmFrequency.put(frequency)
@@ -44,7 +55,6 @@ class SettingsViewModel(
 		prefs.enableAlarm.put(b)
 		if (b) {
 			notification.checkNotificationPermission(launcher)
-			notification.showUpdateNotification(11)
 			UpdatesWorker.launch(workManager)
 		} else {
 			UpdatesWorker.cancel(workManager)

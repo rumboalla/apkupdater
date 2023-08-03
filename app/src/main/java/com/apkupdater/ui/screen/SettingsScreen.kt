@@ -88,6 +88,12 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 		item {
 			LargeTitle(stringResource(R.string.settings_options), Modifier.padding(start = 16.dp, top = 16.dp))
 			SwitchSetting(
+				{ viewModel.getRootInstall() },
+				{ viewModel.setRootInstall(it) },
+				stringResource(R.string.root_install),
+				R.drawable.ic_beta
+			)
+			SwitchSetting(
 				{ viewModel.getIgnoreAlpha() },
 				{ viewModel.setIgnoreAlpha(it) },
 				stringResource(R.string.ignore_alpha),

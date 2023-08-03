@@ -7,6 +7,7 @@ import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.SearchUiState
 import com.apkupdater.data.ui.indexOf
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
@@ -22,7 +23,8 @@ class SearchViewModel(
     private val mainViewModel: MainViewModel,
     private val searchRepository: SearchRepository,
     private val downloader: Downloader,
-    private val installer: SessionInstaller
+    private val installer: SessionInstaller,
+    private val prefs: Prefs
 ) : ViewModel() {
 
     private val mutex = Mutex()
@@ -55,7 +57,13 @@ class SearchViewModel(
     fun install(update: AppUpdate, uriHandler: UriHandler) {
         when (update.source) {
             ApkMirrorSource -> uriHandler.openUri(update.link)
-            else -> downloadAndInstall(update)
+            else -> {
+                if (prefs.rootInstall.get()) {
+                    downloadAndRootInstall(update)
+                } else {
+                    downloadAndInstall(update)
+                }
+            }
         }
     }
 
@@ -79,6 +87,17 @@ class SearchViewModel(
             } else {
                 cancelInstall(it.id)
             }
+        }
+    }
+
+    private fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+        state.value = SearchUiState.Success(setIsInstalling(update.id, true))
+        val file = downloader.download(update.link)
+        val res = installer.rootInstall(file)
+        if (res) {
+            finishInstall(update.id)
+        } else {
+            cancelInstall(update.id)
         }
     }
 
