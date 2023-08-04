@@ -37,6 +37,7 @@
     <string name="source_fdroid" translatable="false">F-Droid</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
+    <string name="about">About</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>

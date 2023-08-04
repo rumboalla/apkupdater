@@ -3,10 +3,12 @@ package com.apkupdater.viewmodel
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.lifecycle.ViewModel
 import androidx.work.WorkManager
+import com.apkupdater.data.ui.SettingsUiState
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
 import eu.chainfire.libsuperuser.Shell
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class SettingsViewModel(
@@ -14,6 +16,8 @@ class SettingsViewModel(
     private val notification: UpdatesNotification,
     private val workManager: WorkManager
 ) : ViewModel() {
+
+	val state = MutableStateFlow<SettingsUiState>(SettingsUiState.Settings)
 
 	fun setPortraitColumns(n: Int) = prefs.portraitColumns.put(n)
 	fun getPortraitColumns() = prefs.portraitColumns.get()
@@ -64,6 +68,14 @@ class SettingsViewModel(
 	fun setAlarmHour(hour: Int) {
 		prefs.alarmHour.put(hour)
 		if (getEnableAlarm()) UpdatesWorker.launch(workManager) else UpdatesWorker.cancel(workManager)
+	}
+
+	fun setAbout() {
+		state.value = SettingsUiState.About
+	}
+
+	fun setSettings() {
+		state.value = SettingsUiState.Settings
 	}
 
 }
