@@ -2,8 +2,12 @@ package com.apkupdater.ui.screen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -15,16 +19,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apkupdater.BuildConfig
 import com.apkupdater.R
+import com.apkupdater.data.ui.GitHubSource
 import com.apkupdater.data.ui.SettingsUiState
 import com.apkupdater.ui.component.DropDownSetting
 import com.apkupdater.ui.component.LargeTitle
+import com.apkupdater.ui.component.LoadingImageApp
+import com.apkupdater.ui.component.MediumText
 import com.apkupdater.ui.component.SliderSetting
+import com.apkupdater.ui.component.SourceIcon
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.SettingsViewModel
@@ -43,8 +55,24 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 }
 
 @Composable
-fun About() {
-	Text("TODO")
+fun About() = Box(Modifier.fillMaxSize()) {
+	val launcher = LocalUriHandler.current
+	Column(Modifier.align(Alignment.Center)) {
+		LoadingImageApp(BuildConfig.APPLICATION_ID)
+		LargeTitle(stringResource(R.string.app_name), Modifier.align(CenterHorizontally))
+		MediumText("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})", Modifier.align(CenterHorizontally))
+		MediumText("Copyright © 2016-2023 rumboalla", Modifier.align(CenterHorizontally))
+		SourceIcon(
+			GitHubSource,
+			Modifier
+				.size(32.dp)
+				.align(CenterHorizontally)
+				.padding(top = 8.dp)
+				.clickable {
+					launcher.openUri("https://github.com/rumboalla/apkupdater")
+				}
+		)
+	}
 }
 
 @Composable
