@@ -1,0 +1,53 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">應用程式</string>
+    <string name="tab_search">搜尋</string>
+    <string name="tab_updates">更新</string>
+    <string name="tab_settings">設定</string>
+    <string name="something_went_wrong">"發生錯誤\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">忽略應用程式</string>
+    <string name="unignore_cd">取消忽略應用程式</string>
+    <string name="refresh_updates">尋找更新</string>
+    <string name="exclude_system_apps">排除系統應用程式</string>
+    <string name="include_system_apps">包含系統應用程式</string>
+    <string name="exclude_app_store">排除應用程式商店</string>
+    <string name="include_app_store">包含應用程式商店</string>
+    <string name="exclude_disabled_apps">排除已停用應用程式</string>
+    <string name="include_disabled_apps">包含已停用應用程式</string>
+    <string name="install_cd">安裝應用程式</string>
+    <string name="app_cd">應用程式圖示</string>
+
+    // Settings
+    <string name="settings_portrait_columns">直向欄數</string>
+    <string name="settings_landscape_columns">橫向欄數</string>
+    <string name="settings_sources">來源</string>
+    <string name="settings_ui">使用者介面</string>
+    <string name="settings_alarm">鬧鐘</string>
+    <string name="settings_options">選項</string>
+    <string name="settings_hour">鬧鐘小時</string>
+    <string name="settings_alarm_daily">每日</string>
+    <string name="settings_alarm_3day">3 天</string>
+    <string name="settings_alarm_weekly">每週</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV 介面</string>
+    <string name="ignore_alpha">忽略 Alpha 版本</string>
+    <string name="ignore_beta">忽略 Beta 版本</string>
+    <string name="root_install">Root 安裝</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="about">關於</string>
+
+    // Notifications
+    <string name="notification_channel_name">更新</string>
+    <string name="notification_channel_description">用於接收更新通知的頻道。</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">更新</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">沒有找到更新。</item>
+        <item quantity="one">找到 %1$d 個更新。</item>
+        <item quantity="other">找到 %1$d 個更新。</item>
+    </plurals>
+
+</resources>
