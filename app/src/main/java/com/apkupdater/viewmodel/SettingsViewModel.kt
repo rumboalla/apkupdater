@@ -3,15 +3,21 @@ package com.apkupdater.viewmodel
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.lifecycle.ViewModel
 import androidx.work.WorkManager
+import com.apkupdater.data.ui.SettingsUiState
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
+import eu.chainfire.libsuperuser.Shell
+import kotlinx.coroutines.flow.MutableStateFlow
+
 
 class SettingsViewModel(
     private val prefs: Prefs,
     private val notification: UpdatesNotification,
     private val workManager: WorkManager
 ) : ViewModel() {
+
+	val state = MutableStateFlow<SettingsUiState>(SettingsUiState.Settings)
 
 	fun setPortraitColumns(n: Int) = prefs.portraitColumns.put(n)
 	fun getPortraitColumns() = prefs.portraitColumns.get()
@@ -32,8 +38,17 @@ class SettingsViewModel(
 	fun getAndroidTvUi() = prefs.androidTvUi.get()
 	fun setAndroidTvUi(b: Boolean) = prefs.androidTvUi.put(b)
 	fun getEnableAlarm() = prefs.enableAlarm.get()
+	fun getRootInstall() = prefs.rootInstall.get()
 	fun getAlarmHour() = prefs.alarmHour.get()
 	fun getAlarmFrequency() = prefs.alarmFrequency.get()
+
+	fun setRootInstall(b: Boolean) {
+		if (b && Shell.SU.available()) {
+			prefs.rootInstall.put(true)
+		} else {
+			prefs.rootInstall.put(false)
+		}
+	}
 
 	fun setAlarmFrequency(frequency: Int) {
 		prefs.alarmFrequency.put(frequency)
@@ -44,7 +59,6 @@ class SettingsViewModel(
 		prefs.enableAlarm.put(b)
 		if (b) {
 			notification.checkNotificationPermission(launcher)
-			notification.showUpdateNotification(11)
 			UpdatesWorker.launch(workManager)
 		} else {
 			UpdatesWorker.cancel(workManager)
@@ -54,6 +68,14 @@ class SettingsViewModel(
 	fun setAlarmHour(hour: Int) {
 		prefs.alarmHour.put(hour)
 		if (getEnableAlarm()) UpdatesWorker.launch(workManager) else UpdatesWorker.cancel(workManager)
+	}
+
+	fun setAbout() {
+		state.value = SettingsUiState.About
+	}
+
+	fun setSettings() {
+		state.value = SettingsUiState.Settings
 	}
 
 }

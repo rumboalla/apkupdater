@@ -25,4 +25,5 @@ class Prefs(
 	val alarmHour = int("alarmHour", defValue = 12, backed = true)
 	val alarmFrequency = int("alarmFrequency", 0, backed = true)
 	val androidTvUi = boolean("androidTvUi", defValue = isAndroidTv, backed = true)
+	val rootInstall = boolean("rootInstall", defValue = false, backed = true)
 }

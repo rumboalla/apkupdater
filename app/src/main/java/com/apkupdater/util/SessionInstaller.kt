@@ -12,8 +12,9 @@ import androidx.core.content.ContextCompat.startActivity
 import com.apkupdater.BuildConfig
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.ui.activity.MainActivity
+import eu.chainfire.libsuperuser.Shell
+import java.io.File
 import java.io.InputStream
-import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -56,6 +57,12 @@ class SessionInstaller(private val context: Context) {
         val pending = PendingIntent.getActivity(context, 0, intent, FLAG_MUTABLE)
         session.commit(pending.intentSender)
         session.close()
+    }
+
+    fun rootInstall(file: File): Boolean {
+        val res = Shell.Pool.SU.run("pm install -r ${file.absolutePath}") == 0
+        file.delete()
+        return res
     }
 
     fun finish() = installMutex.unlock()

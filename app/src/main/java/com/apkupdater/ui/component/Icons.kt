@@ -65,7 +65,7 @@ fun ExcludeDisabledIcon(exclude: Boolean) = ExcludeIcon(
 )
 
 @Composable
-fun SourceIcon(source: Source, modifier: Modifier) = Icon(
+fun SourceIcon(source: Source, modifier: Modifier = Modifier) = Icon(
     painterResource(id = source.resourceId),
     source.name,
     modifier
