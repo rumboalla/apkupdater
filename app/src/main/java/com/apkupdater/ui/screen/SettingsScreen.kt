@@ -171,7 +171,7 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_hour
 		)
 		DropDownSetting(
-			"Frequency",
+			stringResource(R.string.frequency),
 			listOf(
 				stringResource(R.string.settings_alarm_daily),
 				stringResource(R.string.settings_alarm_3day),
