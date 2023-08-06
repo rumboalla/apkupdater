@@ -24,6 +24,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 
 * Dutch by [AnonymousWP](https://github.com/AnonymousWP)
 * German by [peat80](https://github.com/peat80)
+* Traditional Chinese by [abc0922001](https://github.com/abc0922001)
 
 # Screenshots
 | ![1](https://github.com/rumboalla/apkupdater/assets/21153554/d881f850-797b-4acb-bfbf-6c9371841400) | ![2](https://github.com/rumboalla/apkupdater/assets/21153554/ff44772f-2114-4722-821c-e1f552e282a4) | ![3](https://github.com/rumboalla/apkupdater/assets/21153554/09dd649d-3488-4c26-aac1-e1d736a0be88) | ![4](https://github.com/rumboalla/apkupdater/assets/21153554/c1bf5cc2-0ddf-4739-972d-49eeaaeba120) |
