@@ -30,6 +30,9 @@
     <string name="settings_alarm_weekly">Wekelijks</string>
     <string name="ignore_alpha">Alpha Negeren</string>
     <string name="ignore_beta">Bèta Negeren</string>
+    <string name="root_install">Root Installatie</string>
+    <string name="about">Over</string>
+    <string name="frequency">Frequentie</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
