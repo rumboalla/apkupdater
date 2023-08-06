@@ -27,17 +27,20 @@
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Optionen</string>
     <string name="settings_hour">Alarmzeit</string>
+    <string name="frequency">Häufigkeit</string>
     <string name="settings_alarm_daily">Täglich</string>
     <string name="settings_alarm_3day">3-Tägig</string>
     <string name="settings_alarm_weekly">Wöchentlich</string>
     <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
     <string name="ignore_alpha">Alphas Ignorieren</string>
     <string name="ignore_beta">Betas Ignorieren</string>
+    <string name="root_install">Root-Installation</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
     <string name="source_fdroid" translatable="false">F-Droid</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
-
+    <string name="about">Über</string>
+    
     // Notifications
     <string name="notification_channel_name">Updates</string>
     <string name="notification_channel_description">Kanal für Update-Benachrichtigungen.</string>
