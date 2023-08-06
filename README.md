@@ -13,7 +13,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Material Design 3** with **Dark**, **Light** and **Dynamic** theme support.
 * **Direct install** of updates for sources that support it.
 * **Root install** of updates.
-* **Languages**: English, Spanish, Dutch, German.
+* **Languages**: English, Spanish, Dutch, German, Traditional Chinese.
 
 # Download
 * [Beta Release (3.0.0-beta-01)](https://github.com/rumboalla/apkupdater/releases/download/3.0.0-beta-01/app-release.apk)
