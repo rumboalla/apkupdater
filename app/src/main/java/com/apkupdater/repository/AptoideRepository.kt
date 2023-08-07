@@ -41,7 +41,7 @@ class AptoideRepository(
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val data = apps.map(AppInstalled::toApksData)
-        val r = service.findUpdates(ListAppsUpdatesRequest(data, buildFilterList(), query))
+        val r = service.findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList()))
         emit(r.list.map(App::toAppUpdate))
     }.catch {
         emit(emptyList())
@@ -49,7 +49,7 @@ class AptoideRepository(
     }
 
     suspend fun search(text: String) = flow {
-        val request = ListSearchAppsRequest(text, "10", buildFilterList(), query)
+        val request = ListSearchAppsRequest(text, "10", query, buildFilterList())
         val response = service.searchApps(request)
         val updates = response.datalist.list.map(App::toAppUpdate)
         emit(Result.success(updates))

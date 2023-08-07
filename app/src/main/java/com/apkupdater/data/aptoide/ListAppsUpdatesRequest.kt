@@ -1,11 +1,9 @@
 package com.apkupdater.data.aptoide
 
-import java.util.Collections.emptyList
-
 
 data class ListAppsUpdatesRequest(
-    val apks_data: List<ApksData> = emptyList(),
-    val notApkTags: String = "alpha,beta",
-    val q: String
-    //val storeIds: List<Long>? = listOf(15L, 1966380L),
+    val apks_data: List<ApksData>,
+    val q: String,
+    val not_apk_tags: String = "alpha,beta",
+    val store_ids: List<Long>? = listOf(15L, 711454L)
 )

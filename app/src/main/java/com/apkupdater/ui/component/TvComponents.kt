@@ -98,7 +98,7 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
                 modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp),
                 onClick = { onIgnore(app.packageName) }
             ) {
-                Text(stringResource(R.string.ignore_cd))
+                Text(stringResource(if (app.ignored) R.string.unignore_cd else R.string.ignore_cd))
             }
         }
     }
