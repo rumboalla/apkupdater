@@ -16,7 +16,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Languages**: English, Spanish, Dutch, German, Traditional Chinese.
 
 # Download
-* [Beta Release (3.0.0-beta-01)](https://github.com/rumboalla/apkupdater/releases/download/3.0.0-beta-01/app-release.apk)
+* [Beta Release (3.0.0-beta-02)](https://github.com/rumboalla/apkupdater/releases/download/3.0.0-beta-02/app-release.apk)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Translations
