@@ -46,6 +46,7 @@
     <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Actualizări</string>
     <plurals name="notification_update_description">
+        <item quantity="few">TODO</item>
         <item quantity="zero">Nicio actualizare găsită.</item>
         <item quantity="one">A fost găsită %1$d actualizare.</item>
         <item quantity="other">Au fost găsite %1$d actualizări.</item>
