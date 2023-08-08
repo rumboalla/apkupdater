@@ -1,0 +1,54 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Aplicații</string>
+    <string name="tab_search">Caută</string>
+    <string name="tab_updates">Actualizări</string>
+    <string name="tab_settings">Setări</string>
+    <string name="something_went_wrong">"Ceva nu a mers bine\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">Ignoră Aplicația</string>
+    <string name="unignore_cd">Nu mai ignora Aplicația</string>
+    <string name="refresh_updates">Caută actualizări</string>
+    <string name="exclude_system_apps">Exclude Aplicațiile de Sistem</string>
+    <string name="include_system_apps">Include Aplicațiile de Sistem</string>
+    <string name="exclude_app_store">Exclude Magazinul de Aplicații</string>
+    <string name="include_app_store">Include Magazinul de Aplicații</string>
+    <string name="exclude_disabled_apps">Exclude Aplicațiile Dezactivate</string>
+    <string name="include_disabled_apps">Include Aplicațiile Dezactivate</string>
+    <string name="install_cd">Instalează Aplicația</string>
+    <string name="app_cd">Iconița Aplicației</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Coloane Portret</string>
+    <string name="settings_landscape_columns">Coloane Peisaj</string>
+    <string name="settings_sources">Surse</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarmă</string>
+    <string name="settings_options">Opțiuni</string>
+    <string name="settings_hour">Ora Alarmei</string>
+    <string name="settings_alarm_daily">Zilnic</string>
+    <string name="settings_alarm_3day">În fiecare 3 zile</string>
+    <string name="settings_alarm_weekly">Săptămânal</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">Ignoră Aplicațiile Alpha</string>
+    <string name="ignore_beta">Ignoră Aplicațiile Beta</string>
+    <string name="root_install">Instalează Automat Folosind ROOT</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="about">Despre</string>
+    <string name="frequency">Frecvență</string>
+
+    // Notifications
+    <string name="notification_channel_name">Actualizări</string>
+    <string name="notification_channel_description">Canalul pentru notificări despre actualizări.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Actualizări</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Nicio actualizare găsită.</item>
+        <item quantity="one">A fost găsită %1$d actualizare.</item>
+        <item quantity="other">Au fost găsite %1$d actualizări.</item>
+    </plurals>
+
+</resources>
