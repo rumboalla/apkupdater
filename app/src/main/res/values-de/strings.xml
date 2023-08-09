@@ -27,7 +27,6 @@
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Optionen</string>
     <string name="settings_hour">Alarmzeit</string>
-    <string name="frequency">Häufigkeit</string>
     <string name="settings_alarm_daily">Täglich</string>
     <string name="settings_alarm_3day">3-Tägig</string>
     <string name="settings_alarm_weekly">Wöchentlich</string>
@@ -40,6 +39,11 @@
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
     <string name="about">Über</string>
+    <string name="frequency">Häufigkeit</string>
+    <string name="theme">Thema</string>
+    <string name="theme_system">System</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_light">Hell</string>
     
     // Notifications
     <string name="notification_channel_name">Updates</string>
