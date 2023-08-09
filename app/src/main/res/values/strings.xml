@@ -39,6 +39,10 @@
     <string name="source_github" translatable="false">GitHub</string>
     <string name="about">About</string>
     <string name="frequency">Frequency</string>
+    <string name="theme">Theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>

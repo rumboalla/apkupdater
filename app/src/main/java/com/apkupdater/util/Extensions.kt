@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -93,3 +95,5 @@ fun PackageManager.isAndroidTv() = hasSystemFeature(PackageManager.FEATURE_LEANB
 fun Context.isAndroidTv() = packageManager.isAndroidTv()
 
 fun randomUUID() = UUID.randomUUID().toString()
+
+fun isDark() = Resources.getSystem().configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES

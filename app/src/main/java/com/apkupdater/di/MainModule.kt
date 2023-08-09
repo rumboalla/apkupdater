@@ -136,11 +136,11 @@ val mainModule = module {
 
 	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
 
-	viewModel { MainViewModel() }
+	viewModel { MainViewModel(get()) }
 
 	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get(), get(), get()) }
 
-	viewModel { SettingsViewModel(get(), get(), WorkManager.getInstance(get())) }
+	viewModel { parameters -> SettingsViewModel(parameters.get(), get(), get(), WorkManager.getInstance(get())) }
 
 	viewModel { parameters -> SearchViewModel(parameters.get(), get(), get(), get(), get()) }
 

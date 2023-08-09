@@ -101,6 +101,17 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			6,
 			R.drawable.ic_landscape
 		)
+		DropDownSetting(
+			stringResource(R.string.theme),
+			listOf(
+				stringResource(R.string.theme_system),
+				stringResource(R.string.theme_dark),
+				stringResource(R.string.theme_light)
+			),
+			{ viewModel.getTheme() },
+			{ viewModel.setTheme(it) },
+			R.drawable.ic_theme
+		)
 	}
 
 	item {

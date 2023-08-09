@@ -2,7 +2,6 @@ package com.apkupdater.ui.theme
 
 import android.app.Activity
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -17,10 +16,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import com.apkupdater.util.isDark
+
 
 @Composable
 fun AppTheme(
-	darkTheme: Boolean = isSystemInDarkTheme(),
+	darkTheme: Boolean,
 	dynamicColor: Boolean = true,
 	content: @Composable () -> Unit
 ) {
@@ -60,3 +61,9 @@ fun AppTheme(
 }
 
 fun ColorScheme.statusBarColor() = surfaceColorAtElevation(3.dp)
+
+fun isDarkTheme(theme: Int): Boolean {
+	if (theme == 1) return true
+	if (theme == 2) return false
+	return isDark()
+}

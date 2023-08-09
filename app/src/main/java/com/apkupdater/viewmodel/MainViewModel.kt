@@ -11,6 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.Screen
+import com.apkupdater.prefs.Prefs
+import com.apkupdater.ui.theme.isDarkTheme
 import com.apkupdater.util.SessionInstaller
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.util.getAppId
@@ -22,9 +24,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 
-class MainViewModel : ViewModel() {
+class MainViewModel(prefs: Prefs) : ViewModel() {
 
 	val screens = listOf(Screen.Apps, Screen.Search, Screen.Updates, Screen.Settings)
+
+	val theme = MutableStateFlow(isDarkTheme(prefs.theme.get()))
 
 	val badges = MutableStateFlow(mapOf(
 		Screen.Apps.route to "",
@@ -47,6 +51,8 @@ class MainViewModel : ViewModel() {
 			isRefreshing.value = false
 		}
 	}
+
+	fun setTheme(theme: Boolean) = this.theme.apply { value = theme }
 
 	fun changeSearchBadge(number: String) = changeBadge(Screen.Search.route, number)
 

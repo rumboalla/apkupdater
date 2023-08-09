@@ -121,8 +121,9 @@ fun DropDownSetting(
     @DrawableRes icon: Int
 ) = Box(
     Modifier
-        .padding(16.dp)
-        .fillMaxWidth()) {
+        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp)
+        .fillMaxWidth()
+) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[getValue()]) }
 
@@ -155,12 +156,13 @@ fun DropDownSetting(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            options.forEach { option ->
+            options.forEachIndexed { i, option ->
                 DropdownMenuItem(
                     text = { Text(text = option) },
                     onClick = {
                         selectedOptionText = option
                         expanded = false
+                        setValue(i)
                     }
                 )
             }

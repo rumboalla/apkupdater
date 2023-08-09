@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.work.WorkManager
 import com.apkupdater.data.ui.SettingsUiState
 import com.apkupdater.prefs.Prefs
+import com.apkupdater.ui.theme.isDarkTheme
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
 import eu.chainfire.libsuperuser.Shell
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class SettingsViewModel(
+	private val mainViewModel: MainViewModel,
     private val prefs: Prefs,
     private val notification: UpdatesNotification,
     private val workManager: WorkManager
@@ -41,6 +43,12 @@ class SettingsViewModel(
 	fun getRootInstall() = prefs.rootInstall.get()
 	fun getAlarmHour() = prefs.alarmHour.get()
 	fun getAlarmFrequency() = prefs.alarmFrequency.get()
+	fun getTheme() = prefs.theme.get()
+
+	fun setTheme(theme: Int) {
+		prefs.theme.put(theme)
+		mainViewModel.setTheme(isDarkTheme(theme))
+	}
 
 	fun setRootInstall(b: Boolean) {
 		if (b && Shell.SU.available()) {

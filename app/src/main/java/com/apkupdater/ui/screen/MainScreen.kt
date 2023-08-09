@@ -41,6 +41,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
+import com.apkupdater.ui.theme.AppTheme
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -56,6 +57,7 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	val appsViewModel: AppsViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
 	val updatesViewModel: UpdatesViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
 	val searchViewModel: SearchViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
+	val settingsViewModel: SettingsViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
 
 	// Navigation
 	val navController = rememberNavController()
@@ -80,15 +82,20 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	// Check notification intent when hot starting
 	intentListener(mainViewModel, updatesViewModel, navController, launcher)
 
-	Scaffold(bottomBar = { BottomBar(mainViewModel, navController) }) { padding ->
-		Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
-			NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel)
-			PullRefreshIndicator(
-				refreshing = isRefreshing.value,
-				state = pullToRefresh,
-				modifier = Modifier.align(Alignment.TopCenter),
-				contentColor = MaterialTheme.colorScheme.primary
-			)
+	// Theme
+	val theme = mainViewModel.theme.collectAsStateWithLifecycle().value
+
+	AppTheme(theme) {
+		Scaffold(bottomBar = { BottomBar(mainViewModel, navController) }) { padding ->
+			Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
+				NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
+				PullRefreshIndicator(
+					refreshing = isRefreshing.value,
+					state = pullToRefresh,
+					modifier = Modifier.align(Alignment.TopCenter),
+					contentColor = MaterialTheme.colorScheme.primary
+				)
+			}
 		}
 	}
 }
@@ -167,7 +174,7 @@ fun NavHost(
 	appsViewModel: AppsViewModel,
 	updatesViewModel: UpdatesViewModel,
 	searchViewModel: SearchViewModel,
-	settingsViewModel: SettingsViewModel = koinViewModel()
+	settingsViewModel: SettingsViewModel
 ) = NavHost(
 	navController = navController,
 	startDestination = Screen.Apps.route,
