@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 
-class MainViewModel(prefs: Prefs) : ViewModel() {
+class MainViewModel(private val prefs: Prefs) : ViewModel() {
 
 	val screens = listOf(Screen.Apps, Screen.Search, Screen.Updates, Screen.Settings)
 
@@ -81,7 +81,10 @@ class MainViewModel(prefs: Prefs) : ViewModel() {
 		popUpTo(navController.graph.findStartDestination().id) { saveState = true }
 		launchSingleTop = true
 		restoreState = true
+		prefs.lastTab.put(route)
 	}
+
+	fun getLastRoute() = prefs.lastTab.get()
 
 	private fun processInstallIntent(
 		intent: Intent,

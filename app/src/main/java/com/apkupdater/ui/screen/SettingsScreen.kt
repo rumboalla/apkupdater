@@ -148,7 +148,7 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			{ viewModel.getRootInstall() },
 			{ viewModel.setRootInstall(it) },
 			stringResource(R.string.root_install),
-			R.drawable.ic_beta
+			R.drawable.ic_root
 		)
 		SwitchSetting(
 			{ viewModel.getIgnoreAlpha() },

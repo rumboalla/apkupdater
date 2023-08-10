@@ -88,7 +88,7 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	AppTheme(theme) {
 		Scaffold(bottomBar = { BottomBar(mainViewModel, navController) }) { padding ->
 			Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
-				NavHost(navController, padding, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
+				NavHost(navController, padding, mainViewModel, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
 				PullRefreshIndicator(
 					refreshing = isRefreshing.value,
 					state = pullToRefresh,
@@ -171,13 +171,14 @@ fun RowScope.BottomBarItem(
 fun NavHost(
 	navController: NavHostController,
 	padding: PaddingValues,
+	mainViewModel: MainViewModel,
 	appsViewModel: AppsViewModel,
 	updatesViewModel: UpdatesViewModel,
 	searchViewModel: SearchViewModel,
 	settingsViewModel: SettingsViewModel
 ) = NavHost(
 	navController = navController,
-	startDestination = Screen.Apps.route,
+	startDestination = mainViewModel.getLastRoute(),
 	modifier = Modifier.padding(padding)
 ) {
 	composable(Screen.Apps.route) { AppsScreen(appsViewModel) }
