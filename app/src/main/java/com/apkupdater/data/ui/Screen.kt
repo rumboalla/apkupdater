@@ -19,8 +19,8 @@ sealed class Screen(
 	val icon: ImageVector,
 	val iconSelected: ImageVector
 ) {
-	object Apps : Screen("apps", R.string.tab_apps, Icons.Outlined.Home, Icons.Filled.Home)
-	object Search : Screen("search", R.string.tab_search, Icons.Outlined.Search, Icons.Filled.Search)
-	object Updates : Screen("updates", R.string.tab_updates, Icons.Outlined.ThumbUp, Icons.Filled.ThumbUp)
-	object Settings : Screen("settings", R.string.tab_settings, Icons.Outlined.Settings, Icons.Filled.Settings)
+	data object Apps : Screen("apps", R.string.tab_apps, Icons.Outlined.Home, Icons.Filled.Home)
+	data object Search : Screen("search", R.string.tab_search, Icons.Outlined.Search, Icons.Filled.Search)
+	data object Updates : Screen("updates", R.string.tab_updates, Icons.Outlined.ThumbUp, Icons.Filled.ThumbUp)
+	data object Settings : Screen("settings", R.string.tab_settings, Icons.Outlined.Settings, Icons.Filled.Settings)
 }

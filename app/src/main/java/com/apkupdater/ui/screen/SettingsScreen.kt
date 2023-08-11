@@ -31,17 +31,16 @@ import com.apkupdater.BuildConfig
 import com.apkupdater.R
 import com.apkupdater.data.ui.GitHubSource
 import com.apkupdater.data.ui.SettingsUiState
-import com.apkupdater.ui.component.DropDownSetting
 import com.apkupdater.ui.component.LargeTitle
 import com.apkupdater.ui.component.LoadingImageApp
 import com.apkupdater.ui.component.MediumText
+import com.apkupdater.ui.component.SegmentedButtonSetting
 import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SourceIcon
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
@@ -101,7 +100,7 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			6,
 			R.drawable.ic_landscape
 		)
-		DropDownSetting(
+		SegmentedButtonSetting(
 			stringResource(R.string.theme),
 			listOf(
 				stringResource(R.string.theme_system),
@@ -181,7 +180,7 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			steps = 23,
 			R.drawable.ic_hour
 		)
-		DropDownSetting(
+		SegmentedButtonSetting(
 			stringResource(R.string.frequency),
 			listOf(
 				stringResource(R.string.settings_alarm_daily),

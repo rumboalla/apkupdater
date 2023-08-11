@@ -15,6 +15,9 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -22,12 +25,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.res.painterResource
@@ -47,23 +52,14 @@ fun SliderSetting(
     Modifier
         .fillMaxWidth()
         .height(70.dp)
-        .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
+        .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
 ) {
     var position by remember { mutableFloatStateOf(getValue()) }
     Icon(painterResource(id = icon), text, Modifier.align(CenterVertically))
-    Column(
-        Modifier
-            .padding(start = 16.dp)
-            .fillMaxWidth()) {
+    Column(Modifier.padding(start = 8.dp).fillMaxWidth()) {
         Box(Modifier.fillMaxWidth()) {
-            Text(text,
-                Modifier
-                    .align(CenterStart)
-                    .padding(start = 8.dp))
-            Text("${getValue().toInt()}",
-                Modifier
-                    .align(CenterEnd)
-                    .padding(end = 8.dp))
+            Text(text, Modifier.align(CenterStart).padding(start = 8.dp))
+            Text("${getValue().toInt()}", Modifier.align(CenterEnd).padding(end = 8.dp))
         }
         Slider(
             value = position,
@@ -73,10 +69,38 @@ fun SliderSetting(
                 position = it
                 setValue(it)
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SegmentedButtonSetting(
+    text: String,
+    options: List<String>,
+    getValue: () -> Int,
+    setValue: (Int) -> Unit,
+    @DrawableRes icon: Int = R.drawable.ic_system
+) = Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)) {
+    var position by remember { mutableIntStateOf(getValue()) }
+    Icon(painterResource(id = icon), text, Modifier.align(CenterVertically))
+    Column(Modifier.padding(start = 8.dp).fillMaxWidth()) {
+        Text(text, Modifier.align(Start).padding(start = 8.dp))
+        SingleChoiceSegmentedButtonRow(Modifier.padding(8.dp).fillMaxWidth()) {
+            options.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.shape(position = index, count = options.size),
+                    onClick = {
+                        position = index
+                        setValue(position)
+                    },
+                    selected = index == position
+                ) {
+                    Text(label)
+                }
+            }
+        }
     }
 }
 
@@ -86,12 +110,7 @@ fun SwitchSetting(
     setValue: (Boolean) -> Unit,
     text: String,
     @DrawableRes icon: Int = R.drawable.ic_system
-) = Box (
-    Modifier
-        .fillMaxWidth()
-        .height(60.dp)
-        .padding(horizontal = 16.dp)
-) {
+) = Box (Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 16.dp)) {
     var value by remember { mutableStateOf(getValue()) }
     Row(Modifier.align(CenterStart)) {
         Icon(
@@ -99,7 +118,7 @@ fun SwitchSetting(
             text,
             Modifier.align(CenterVertically).padding(end = 16.dp).size(24.dp)
         )
-        Text(text,  Modifier.align(CenterVertically))
+        Text(text, Modifier.align(CenterVertically))
     }
     Switch(
         checked = value,
@@ -111,6 +130,7 @@ fun SwitchSetting(
     )
 }
 
+@Suppress("unused")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropDownSetting(
@@ -119,11 +139,7 @@ fun DropDownSetting(
     getValue: () -> Int,
     setValue: (Int) -> Unit,
     @DrawableRes icon: Int
-) = Box(
-    Modifier
-        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp)
-        .fillMaxWidth()
-) {
+) = Box(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp).fillMaxWidth()) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[getValue()]) }
 

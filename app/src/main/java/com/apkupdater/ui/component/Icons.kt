@@ -34,7 +34,7 @@ fun ExcludeIcon(
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
 ) = PlainTooltipBox(tooltip = { Text(stringResource(string)) }) {
-    Icon(painterResource(icon), stringResource(contentDescription), Modifier.tooltipAnchor())
+    Icon(painterResource(icon), stringResource(contentDescription), Modifier.tooltipTrigger())
 }
 
 @Composable
@@ -115,6 +115,6 @@ fun RefreshIcon(
     Icon(
         painter = painterResource(id = R.drawable.ic_refresh),
         contentDescription = text,
-        modifier = Modifier.tooltipAnchor().then(modifier)
+        modifier = Modifier.tooltipTrigger().then(modifier)
     )
 }
