@@ -2,11 +2,14 @@ package com.apkupdater.ui.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.tv.foundation.lazy.grid.TvGridCells
@@ -16,21 +19,47 @@ import com.apkupdater.prefs.Prefs
 import org.koin.androidx.compose.get
 
 @Composable
-fun InstalledGrid(content: LazyGridScope.() -> Unit) = LazyVerticalGrid(
+fun LoadingGrid() {
+    if (get<Prefs>().androidTvUi.get()) {
+        TvShimmeringGrid()
+    } else {
+        ShimmeringGrid()
+    }
+}
+
+@Composable
+fun ShimmeringGrid() = InstalledGrid(false) {
+    items(16) {
+        Box(Modifier.height(170.dp).shimmering(true))
+    }
+}
+
+@Composable
+fun TvShimmeringGrid() = TvInstalledGrid(false) {
+    items(16) {
+        Box(Modifier.height(144.dp).shimmering(true))
+    }
+}
+
+
+@Composable
+fun InstalledGrid(scroll: Boolean = true, content: LazyGridScope.() -> Unit) = LazyVerticalGrid(
     columns =  GridCells.Fixed(getNumColumns(LocalConfiguration.current.orientation)),
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
     verticalArrangement = Arrangement.spacedBy(8.dp),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
-    content = content
+    content = content,
+    userScrollEnabled = scroll
 )
 
 @Composable
-fun TvInstalledGrid(content: TvLazyGridScope.() -> Unit) = TvLazyVerticalGrid(
+fun TvInstalledGrid(scroll: Boolean = true, content: TvLazyGridScope.() -> Unit) = TvLazyVerticalGrid(
     columns = TvGridCells.Fixed(getTvNumColumns()),
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
     verticalArrangement = Arrangement.spacedBy(8.dp),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
-    content = content
+    content = content,
+    userScrollEnabled = scroll
 )
 
 @Composable

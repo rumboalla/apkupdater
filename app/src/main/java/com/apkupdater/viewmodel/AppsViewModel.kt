@@ -19,17 +19,18 @@ class AppsViewModel(
 ) : ViewModel() {
 
 	private val mutex = Mutex()
-	private val state = MutableStateFlow<AppsUiState>(AppsUiState.Loading)
+	private val state = MutableStateFlow<AppsUiState>(buildLoadingState())
 
 	fun state(): StateFlow<AppsUiState> = state
 
 	fun refresh(load: Boolean = true) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-		if (load) state.value = AppsUiState.Loading
+		if (load) state.value = buildLoadingState()
 		mainViewModel.changeAppsBadge("")
 		repository.getApps().collect {
 			it.onSuccess { apps ->
 				state.value = AppsUiState.Success(
-					apps, prefs.excludeSystem.get(),
+					apps,
+					prefs.excludeSystem.get(),
 					prefs.excludeStore.get(),
 					prefs.excludeDisabled.get()
 				)
@@ -67,5 +68,11 @@ class AppsViewModel(
 		prefs.ignoredApps.put(ignored)
 		refresh(false)
 	}
+
+	private fun buildLoadingState() = AppsUiState.Loading(
+		prefs.excludeSystem.get(),
+		prefs.excludeStore.get(),
+		prefs.excludeDisabled.get()
+	)
 
 }

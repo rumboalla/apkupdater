@@ -2,7 +2,10 @@ package com.apkupdater.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,8 +20,8 @@ import com.apkupdater.R
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.component.DefaultErrorScreen
-import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.InstalledGrid
+import com.apkupdater.ui.component.LoadingGrid
 import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.component.TvInstalledGrid
 import com.apkupdater.ui.component.TvUpdateItem
@@ -31,7 +34,7 @@ import org.koin.androidx.compose.get
 @Composable
 fun UpdatesScreen(viewModel: UpdatesViewModel) {
 	viewModel.state().collectAsStateWithLifecycle().value.onLoading {
-		UpdatesScreenLoading()
+		UpdatesScreenLoading(viewModel)
 	}.onError {
 		UpdatesScreenError()
 	}.onSuccess {
@@ -50,11 +53,19 @@ fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
 		IconButton(onClick = { viewModel.refresh() }) {
 			RefreshIcon(stringResource(R.string.refresh_updates))
 		}
+	},
+	navigationIcon = {
+		IconButton(onClick = {}) {
+			Icon(Icons.Filled.ThumbUp, "Tab Icon")
+		}
 	}
 )
 
 @Composable
-fun UpdatesScreenLoading() = DefaultLoadingScreen()
+fun UpdatesScreenLoading(viewModel: UpdatesViewModel) = Column {
+	UpdatesTopBar(viewModel)
+	LoadingGrid()
+}
 
 @Composable
 fun UpdatesScreenError() = DefaultErrorScreen()

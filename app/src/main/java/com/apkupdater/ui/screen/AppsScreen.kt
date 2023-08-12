@@ -2,8 +2,10 @@ package com.apkupdater.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.grid.items
-import androidx.tv.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -12,18 +14,19 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.tv.foundation.lazy.grid.items
 import com.apkupdater.R
 import com.apkupdater.data.ui.AppsUiState
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.component.DefaultErrorScreen
-import com.apkupdater.ui.component.DefaultLoadingScreen
 import com.apkupdater.ui.component.ExcludeAppStoreIcon
 import com.apkupdater.ui.component.ExcludeDisabledIcon
 import com.apkupdater.ui.component.ExcludeSystemIcon
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.InstalledItem
-import com.apkupdater.ui.component.TvInstalledItem
+import com.apkupdater.ui.component.LoadingGrid
 import com.apkupdater.ui.component.TvInstalledGrid
+import com.apkupdater.ui.component.TvInstalledItem
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.AppsViewModel
 import org.koin.androidx.compose.get
@@ -35,7 +38,7 @@ fun AppsScreen(
 	viewModel: AppsViewModel = koinViewModel()
 ) {
 	viewModel.state().collectAsStateWithLifecycle().value.onLoading {
-		AppsScreenLoading()
+		AppsScreenLoading(viewModel, it)
 	}.onError {
 		AppsScreenError()
 	}.onSuccess {
@@ -45,9 +48,8 @@ fun AppsScreen(
 
 @Composable
 fun AppsScreenSuccess(viewModel: AppsViewModel, state: AppsUiState.Success) = Column {
-	AppsTopBar(viewModel, state)
-	val prefs: Prefs = get()
-	if (prefs.androidTvUi.get()) {
+	AppsTopBar(viewModel, state.excludeSystem, state.excludeAppStore, state.excludeDisabled)
+	if (get<Prefs>().androidTvUi.get()) {
 		TvInstalledGrid {
 			items(state.apps) {
 				TvInstalledItem(it) { app -> viewModel.ignore(app) }
@@ -62,26 +64,39 @@ fun AppsScreenSuccess(viewModel: AppsViewModel, state: AppsUiState.Success) = Co
 	}
 }
 
+@Composable
+fun AppsScreenLoading(viewModel: AppsViewModel, state: AppsUiState.Loading) = Column {
+	AppsTopBar(viewModel, state.excludeSystem, state.excludeAppStore, state.excludeDisabled)
+	LoadingGrid()
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppsTopBar(viewModel: AppsViewModel, state: AppsUiState.Success) = TopAppBar(
+fun AppsTopBar(
+	viewModel: AppsViewModel,
+	excludeSystem: Boolean,
+	excludeAppStore: Boolean,
+	excludeDisabled: Boolean
+) = TopAppBar(
 	title = { Text(stringResource(R.string.tab_apps)) },
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
 		IconButton(onClick = { viewModel.onSystemClick() }) {
-			ExcludeSystemIcon(state.excludeSystem)
+			ExcludeSystemIcon(excludeSystem)
 		}
 		IconButton(onClick = { viewModel.onAppStoreClick() }) {
-			ExcludeAppStoreIcon(state.excludeAppStore)
+			ExcludeAppStoreIcon(excludeAppStore)
 		}
 		IconButton(onClick = { viewModel.onDisabledClick() }) {
-			ExcludeDisabledIcon(state.excludeDisabled)
+			ExcludeDisabledIcon(excludeDisabled)
+		}
+	},
+	navigationIcon = {
+		IconButton(onClick = {}) {
+			Icon(Icons.Filled.Home, "Tab Icon")
 		}
 	}
 )
-
-@Composable
-fun AppsScreenLoading() = DefaultLoadingScreen()
 
 @Composable
 fun AppsScreenError() = DefaultErrorScreen()

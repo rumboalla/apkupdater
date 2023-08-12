@@ -2,9 +2,16 @@ package com.apkupdater.data.ui
 
 
 sealed class AppsUiState {
-	object Loading: AppsUiState()
-	object Error : AppsUiState()
-	class Success(
+
+	data class Loading(
+		val excludeSystem: Boolean,
+		val excludeAppStore: Boolean,
+		val excludeDisabled: Boolean
+	): AppsUiState()
+
+	data object Error : AppsUiState()
+
+	data class Success(
 		val apps: List<AppInstalled>,
 		val excludeSystem: Boolean,
 		val excludeAppStore: Boolean,

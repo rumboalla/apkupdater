@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -204,6 +205,11 @@ fun SettingsTopBar(viewModel: SettingsViewModel) = TopAppBar(
 		IconButton(onClick = { viewModel.setAbout() }) {
 			Icon(painterResource(R.drawable.ic_info), stringResource(R.string.about))
 		}
+	},
+	navigationIcon = {
+		IconButton(onClick = {}) {
+			Icon(Icons.Filled.Settings, "Tab Icon")
+		}
 	}
 )
 
@@ -215,6 +221,11 @@ fun AboutTopBar(viewModel: SettingsViewModel) = TopAppBar(
 	actions = {
 		IconButton(onClick = { viewModel.setSettings() }) {
 			Icon(Icons.Default.Settings, stringResource(R.string.tab_settings))
+		}
+	},
+	navigationIcon = {
+		IconButton(onClick = {}) {
+			Icon(Icons.Filled.Info, "Tab Icon")
 		}
 	}
 )

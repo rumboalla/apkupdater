@@ -2,9 +2,9 @@ package com.apkupdater.data.ui
 
 
 sealed class UpdatesUiState {
-	object Loading: UpdatesUiState()
-	object Error : UpdatesUiState()
-	class Success(val updates: List<AppUpdate>): UpdatesUiState()
+	data object Loading: UpdatesUiState()
+	data object Error : UpdatesUiState()
+	data class Success(val updates: List<AppUpdate>): UpdatesUiState()
 
 	inline fun onLoading(block: (Loading) -> Unit): UpdatesUiState {
 		if (this is Loading) block(this)
