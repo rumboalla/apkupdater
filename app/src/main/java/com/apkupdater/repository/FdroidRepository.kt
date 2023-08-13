@@ -6,6 +6,7 @@ import com.apkupdater.data.fdroid.FdroidData
 import com.apkupdater.data.fdroid.FdroidUpdate
 import com.apkupdater.data.fdroid.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
+import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.FdroidService
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import java.io.InputStream
 import java.util.jar.JarInputStream
+
 
 class FdroidRepository(
     private val service: FdroidService,
@@ -31,7 +33,7 @@ class FdroidRepository(
             .filter { appNames.contains(it.packageName) }
             .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
             .filter { it.apk.versionCode > apps.getVersionCode(it.app.packageName) }
-            .parseUpdates()
+            .parseUpdates(apps)
         emit(updates)
     }.catch {
         emit(emptyList())
@@ -45,19 +47,19 @@ class FdroidRepository(
             .asSequence()
             .filter { it.name.contains(text) }
             .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
-            .parseUpdates()
+            .parseUpdates(null)
         emit(Result.success(updates))
     }.catch {
         emit(Result.failure(it))
         Log.e("FdroidRepository", "Error searching.", it)
     }
 
-    private fun Sequence<FdroidUpdate>.parseUpdates() = this
+    private fun Sequence<FdroidUpdate>.parseUpdates(apps: List<AppInstalled>?) = this
         .filter { it.apk.minSdkVersion <= api }
         .filter { filterArch(it) }
         .filter { filterAlpha(it) }
         .filter { filterBeta(it) }
-        .map { it.toAppUpdate() }
+        .map { it.toAppUpdate(apps?.getApp(it.app.packageName)) }
         .toList()
 
     private fun filterAlpha(update: FdroidUpdate) = when {

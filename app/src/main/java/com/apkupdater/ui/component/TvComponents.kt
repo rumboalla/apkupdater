@@ -27,37 +27,38 @@ import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.util.getAppName
 
+
 @Composable
 fun TvCommonItem(
     packageName: String,
     name: String,
     version: String,
+    oldVersion: String?,
     versionCode: Long,
-    uri: Uri? = null
+    oldVersionCode: Long?,
+    uri: Uri? = null,
+    single: Boolean = false
 ) = Row {
     if (uri == null) {
-        LoadingImageApp(
-            packageName,
-            Modifier
-                .height(90.dp)
-                .align(Alignment.CenterVertically)
-        )
+        LoadingImageApp(packageName, Modifier.height(90.dp).align(Alignment.CenterVertically))
     } else {
-        LoadingImage(
-            uri,
-            Modifier
-                .height(90.dp)
-                .align(Alignment.CenterVertically)
-        )
+        LoadingImage(uri, Modifier.height(90.dp).align(Alignment.CenterVertically))
     }
-    Column(
-        Modifier
-            .align(Alignment.CenterVertically)
-            .padding(horizontal = 8.dp)
-    ) {
+    Column(Modifier.align(Alignment.CenterVertically).padding(horizontal = 8.dp)) {
         LargeTitle(name.ifEmpty { LocalContext.current.getAppName(packageName) })
-        MediumText(version)
-        MediumText(versionCode.toString())
+        if (oldVersion != null && !single) {
+            ScrollableText {
+                MediumText("$oldVersion -> $version")
+            }
+        } else {
+            MediumText(version)
+        }
+        val code = if (versionCode == 0L) "?" else versionCode.toString()
+        if (oldVersionCode != null && !single) {
+            MediumText("$oldVersionCode -> $code")
+        } else {
+            MediumText(code)
+        }
     }
 }
 
@@ -92,7 +93,7 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
     modifier = Modifier.alpha(if (app.ignored) 0.5f else 1f)
 ) {
     Column {
-        TvCommonItem(app.packageName, app.name, app.version, app.versionCode)
+        TvCommonItem(app.packageName, app.name, app.version, null, app.versionCode, null)
         Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
             ElevatedButton(
                 modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp),
@@ -107,7 +108,7 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
 @Composable
 fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
-        TvCommonItem(app.packageName, app.name, app.version, app.versionCode)
+        TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
@@ -120,7 +121,7 @@ fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
 @Composable
 fun TvSearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
-        TvCommonItem(app.packageName, app.name, app.version, app.versionCode, app.iconUri)
+        TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode, app.iconUri, true)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {

@@ -2,9 +2,11 @@ package com.apkupdater.repository
 
 import android.util.Log
 import com.apkupdater.BuildConfig
+import com.apkupdater.data.github.GitHubApps
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.GitHubSource
+import com.apkupdater.data.ui.getApp
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.GitHubService
 import com.apkupdater.util.combine
@@ -22,9 +24,10 @@ class GitHubRepository(
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val checks = mutableListOf(selfCheck())
 
-        // Look for NewPipe if installed
-        apps.find { it.packageName == "org.schabi.newpipe" }?.let {
-            checks.add(checkApp("TeamNewPipe", "NewPipe", "org.schabi.newpipe", it.version))
+        GitHubApps.forEach { app ->
+            apps.find { it.packageName == app.packageName }?.let {
+                checks.add(checkApp(apps, app.user, app.repo, app.packageName, it.version))
+            }
         }
 
         checks.combine { all ->
@@ -44,7 +47,9 @@ class GitHubRepository(
                 name = "APKUpdater",
                 packageName = BuildConfig.APPLICATION_ID,
                 version = versions.first,
+                oldVersion = BuildConfig.VERSION_NAME,
                 versionCode = versions.second,
+                oldVersionCode = BuildConfig.VERSION_CODE.toLong(),
                 source = GitHubSource,
                 link = releases[0].assets[0].browser_download_url
             )))
@@ -58,6 +63,7 @@ class GitHubRepository(
     }
 
     private fun checkApp(
+        apps: List<AppInstalled>,
         user: String,
         repo: String,
         packageName: String,
@@ -65,11 +71,14 @@ class GitHubRepository(
     ) = flow {
         val release = service.getReleases(user, repo)[0]
         if (!release.tag_name.contains(currentVersion)) {
+            val app = apps.getApp(packageName)
             emit(listOf(AppUpdate(
                 name = repo,
                 packageName = packageName,
                 version = release.tag_name,
+                oldVersion = app?.version ?: "?",
                 versionCode = 0L,
+                oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
                 link = release.assets[0].browser_download_url
             )))

@@ -7,11 +7,11 @@ import android.content.res.Resources
 import android.os.Build
 import android.util.Base64
 import android.util.Log
-import com.apkupdater.data.aptoide.App
 import com.apkupdater.data.aptoide.ListAppsUpdatesRequest
 import com.apkupdater.data.aptoide.ListSearchAppsRequest
 import com.apkupdater.data.aptoide.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
+import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.toApksData
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.AptoideService
@@ -42,7 +42,7 @@ class AptoideRepository(
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val data = apps.map(AppInstalled::toApksData)
         val r = service.findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList()))
-        emit(r.list.map(App::toAppUpdate))
+        emit(r.list.map { it.toAppUpdate(apps.getApp(it.packageName)) })
     }.catch {
         emit(emptyList())
         Log.e("AptoideRepository", "Error looking for updates.", it)
@@ -51,7 +51,7 @@ class AptoideRepository(
     suspend fun search(text: String) = flow {
         val request = ListSearchAppsRequest(text, "10", query, buildFilterList())
         val response = service.searchApps(request)
-        val updates = response.datalist.list.map(App::toAppUpdate)
+        val updates = response.datalist.list.map{ it.toAppUpdate(null) }
         emit(Result.success(updates))
     }.catch {
         emit(Result.failure(it))

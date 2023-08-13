@@ -66,7 +66,9 @@ class ApkMirrorRepository(
                 link = "$baseUrl${h5[it].selectFirst("a")?.attr("href")}",
                 iconUri = Uri.parse("$baseUrl${img[it].attr("src")}".replace("=32", "=128")),
                 version = "?",
+                oldVersion = "?",
                 versionCode = 0L,
+                oldVersionCode = 0L,
                 source = ApkMirrorSource,
                 packageName = a[it].text() // Developer name in this case
             )
@@ -97,7 +99,7 @@ class ApkMirrorRepository(
                 .filter { filterAndroidTv(it) }
                 .filter { filterWearOS(it) }
                 .maxByOrNull { it.versionCode }
-                ?.toAppUpdate(apps.getApp(data.pname)!!)
+                ?.toAppUpdate(apps.getApp(data.pname)!!, data.release.version)
         }
 
     private fun filterSignature(apk: AppExistsResponseApk, signature: String?) = when {

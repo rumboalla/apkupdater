@@ -1,7 +1,6 @@
 package com.apkupdater.ui.component
 
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
@@ -20,15 +19,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 
+
+@Composable
+fun TextBubble(code: Long, modifier: Modifier = Modifier) = TextBubble(
+    if (code == 0L) "?" else code.toString(),
+    modifier
+)
 
 @Composable
 fun TextBubble(text: String, modifier: Modifier = Modifier) = Text(
@@ -51,7 +60,10 @@ fun SmallText(text: String, modifier: Modifier = Modifier) = Text(
 )
 
 @Composable
-fun MediumText(text: String, modifier: Modifier = Modifier) = Text(
+fun MediumText(
+    text: String,
+    modifier: Modifier = Modifier
+) = Text(
     text = text,
     style = MaterialTheme.typography.bodyMedium,
     maxLines = 1,
@@ -93,22 +105,36 @@ fun HugeText(text: String, modifier: Modifier = Modifier, maxLines: Int = 1) = T
 @Composable
 fun ScrollableText(
     modifier: Modifier = Modifier,
-    spec: AnimationSpec<Float> = infiniteRepeatable(
-        animation = tween(durationMillis = 2000, easing = FastOutSlowInEasing),
-        repeatMode = RepeatMode.Reverse
-    ),
-    effect: suspend (ScrollState) -> Unit = {
-        it.scrollTo(0)
-        it.animateScrollTo(it.maxValue, spec)
-    },
     content: @Composable RowScope.() -> Unit
 ) {
     val state = rememberScrollState()
-    LaunchedEffect(Unit) { effect(state) }
-    Row(
-        modifier = Modifier.fillMaxWidth().horizontalScroll(state).then(modifier),
-        content = content
-    )
+    val inner = remember { mutableStateOf(IntSize.Zero) }
+    val outer = remember { mutableStateOf(IntSize.Zero) }
+
+    val effect: suspend (ScrollState) -> Unit = {
+        it.scrollTo(0)
+        val scroll = (inner.value.width - outer.value.width)
+        if (scroll > 0) {
+            it.animateScrollTo(
+                scroll,
+                infiniteRepeatable(
+                    animation = tween(durationMillis = scroll * 10, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse
+                )
+            )
+        }
+    }
+    LaunchedEffect(outer.value) { effect(state) }
+    Row(Modifier.onSizeChanged { outer.value = it }) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(state)
+                .onSizeChanged { inner.value = it }
+                .then(modifier),
+            content = content
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

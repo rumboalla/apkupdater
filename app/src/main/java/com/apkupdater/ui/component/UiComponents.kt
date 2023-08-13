@@ -5,7 +5,6 @@ package com.apkupdater.ui.component
  import androidx.compose.foundation.layout.fillMaxSize
  import androidx.compose.foundation.layout.padding
  import androidx.compose.foundation.layout.size
- import androidx.compose.material3.CircularProgressIndicator
  import androidx.compose.runtime.Composable
  import androidx.compose.ui.Alignment
  import androidx.compose.ui.Modifier
@@ -22,7 +21,7 @@ package com.apkupdater.ui.component
 @Composable
 fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 	LoadingImageApp(app.packageName)
-	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
+	TextBubble(app.versionCode, Modifier.align(Alignment.BottomStart))
 	IgnoreIcon(
 		app.ignored,
 		{ onIgnore(app.packageName) },
@@ -35,7 +34,7 @@ fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 @Composable
 fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 	LoadingImageApp(app.packageName)
-	TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
+	TextBubble(app.versionCode, Modifier.align(Alignment.BottomStart))
 	InstallProgressIcon(app.isInstalling) { onInstall(app.link) }
 	SourceIcon(
 		app.source,
@@ -50,8 +49,7 @@ fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 @Composable
 fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 	LoadingImage(app.iconUri)
-	if (app.versionCode != 0L)
-		TextBubble(app.versionCode.toString(), Modifier.align(Alignment.BottomStart))
+	TextBubble(app.versionCode, Modifier.align(Alignment.BottomStart))
 	InstallProgressIcon(app.isInstalling) { onInstall(app.link) }
 	SourceIcon(
 		app.source,
@@ -98,9 +96,4 @@ fun DefaultErrorScreen() = Box(Modifier.fillMaxSize()) {
 		Modifier.align(Alignment.Center),
 		2
 	)
-}
-
-@Composable
-fun DefaultLoadingScreen() = Box(Modifier.fillMaxSize()) {
-	CircularProgressIndicator(Modifier.align(Alignment.Center))
 }
