@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.work.WorkManager
 import com.apkupdater.BuildConfig
 import com.apkupdater.R
+import com.apkupdater.data.ui.FdroidSource
+import com.apkupdater.data.ui.IzzySource
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
 import com.apkupdater.repository.AppsRepository
@@ -116,13 +118,15 @@ val mainModule = module {
 
 	single { GitHubRepository(get(), get()) }
 
-	single { FdroidRepository(get(), get()) }
+	single(named("main")) { FdroidRepository(get(), "https://f-droid.org/repo/index-v1.jar", FdroidSource, get()) }
+
+	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/index-v1.jar", IzzySource, get()) }
 
 	single { AptoideRepository(get(), get(), get()) }
 
-	single { UpdatesRepository(get(), get(), get(), get(), get(), get()) }
+	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get()) }
 
-	single { SearchRepository(get(), get(), get(), get()) }
+	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get()) }
 
 	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
 
@@ -134,9 +138,9 @@ val mainModule = module {
 
 	single { SessionInstaller(get()) }
 
-	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
-
 	viewModel { MainViewModel(get()) }
+
+	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
 
 	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get(), get(), get()) }
 

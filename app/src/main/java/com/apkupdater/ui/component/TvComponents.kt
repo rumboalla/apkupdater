@@ -40,12 +40,13 @@ fun TvCommonItem(
     single: Boolean = false
 ) = Row {
     if (uri == null) {
-        LoadingImageApp(packageName, Modifier.height(90.dp).align(Alignment.CenterVertically))
+        LoadingImageApp(packageName, Modifier.height(100.dp).align(Alignment.CenterVertically).padding(top = 8.dp))
     } else {
-        LoadingImage(uri, Modifier.height(90.dp).align(Alignment.CenterVertically))
+        LoadingImage(uri, Modifier.height(100.dp).align(Alignment.CenterVertically).padding(top = 8.dp))
     }
-    Column(Modifier.align(Alignment.CenterVertically).padding(horizontal = 8.dp)) {
+    Column(Modifier.align(Alignment.CenterVertically).padding(start = 8.dp, end = 8.dp, top = 8.dp)) {
         LargeTitle(name.ifEmpty { LocalContext.current.getAppName(packageName) })
+        MediumText(packageName)
         if (oldVersion != null && !single) {
             ScrollableText {
                 MediumText("$oldVersion -> $version")

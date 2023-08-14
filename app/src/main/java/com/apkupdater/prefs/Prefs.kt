@@ -21,6 +21,7 @@ class Prefs(
 	val useApkMirror = boolean("useApkMirror", defValue = true, backed = true)
 	val useGitHub = boolean("useGitHub", defValue = true, backed = true)
 	val useFdroid = boolean("useFdroid", defValue = true, backed = true)
+	val useIzzy = boolean("useIzzy", defValue = true, backed = true)
 	val useAptoide = boolean("useAptoide", defValue = true, backed = true)
 	val enableAlarm = boolean("enableAlarm", defValue = false, backed = true)
 	val alarmHour = int("alarmHour", defValue = 12, backed = true)

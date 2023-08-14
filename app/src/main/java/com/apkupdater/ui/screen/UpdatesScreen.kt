@@ -13,6 +13,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.foundation.lazy.grid.items
@@ -20,6 +21,7 @@ import com.apkupdater.R
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.component.DefaultErrorScreen
+import com.apkupdater.ui.component.EmptyGrid
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.LoadingGrid
 import com.apkupdater.ui.component.RefreshIcon
@@ -75,26 +77,40 @@ fun UpdatesScreenSuccess(
 	viewModel: UpdatesViewModel,
 	updates: List<AppUpdate>
 ) = Column {
-	val uriHandler = LocalUriHandler.current
-	val prefs: Prefs = get()
+	val handler = LocalUriHandler.current
+	val tv = get<Prefs>().androidTvUi.get()
 
 	UpdatesTopBar(viewModel)
 
-	if (prefs.androidTvUi.get()) {
-		TvInstalledGrid {
-			items(updates) { update ->
-				TvUpdateItem(update) {
-					viewModel.install(update, uriHandler)
-				}
-			}
+	when {
+		updates.isEmpty() -> EmptyGrid()
+		tv -> TvGrid(viewModel, updates, handler)
+		!tv -> Grid(viewModel, updates, handler)
+	}
+}
+
+@Composable
+fun TvGrid(
+	viewModel: UpdatesViewModel,
+	updates: List<AppUpdate>,
+	handler: UriHandler
+) = TvInstalledGrid {
+	items(updates) { update ->
+		TvUpdateItem(update) {
+			viewModel.install(update, handler)
 		}
-	} else {
-		InstalledGrid {
-			items(updates) { update ->
-				UpdateItem(update) {
-					viewModel.install(update, uriHandler)
-				}
-			}
+	}
+}
+
+@Composable
+fun Grid(
+	viewModel: UpdatesViewModel,
+	updates: List<AppUpdate>,
+	handler: UriHandler
+) = InstalledGrid {
+	items(updates) { update ->
+		UpdateItem(update) {
+			viewModel.install(update, handler)
 		}
 	}
 }

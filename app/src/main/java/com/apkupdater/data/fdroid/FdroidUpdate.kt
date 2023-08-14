@@ -3,21 +3,21 @@ package com.apkupdater.data.fdroid
 import androidx.core.net.toUri
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
-import com.apkupdater.data.ui.FdroidSource
+import com.apkupdater.data.ui.Source
 
 data class FdroidUpdate(
     val apk: FdroidPackage,
     val app: FdroidApp
 )
 
-fun FdroidUpdate.toAppUpdate(current: AppInstalled?) = AppUpdate(
+fun FdroidUpdate.toAppUpdate(current: AppInstalled?, source: Source) = AppUpdate(
     app.name,
     app.packageName,
     apk.versionName,
     current?.version ?: "?",
     apk.versionCode,
     current?.versionCode ?: 0L,
-    FdroidSource,
+    source,
     if(app.icon.isEmpty())
         "https://f-droid.org/assets/ic_repo_app_default.png".toUri()
     else

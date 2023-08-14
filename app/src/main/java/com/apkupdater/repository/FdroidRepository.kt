@@ -6,6 +6,7 @@ import com.apkupdater.data.fdroid.FdroidData
 import com.apkupdater.data.fdroid.FdroidUpdate
 import com.apkupdater.data.fdroid.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
+import com.apkupdater.data.ui.Source
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
@@ -19,13 +20,15 @@ import java.util.jar.JarInputStream
 
 class FdroidRepository(
     private val service: FdroidService,
+    private val url: String,
+    private val source: Source,
     private val prefs: Prefs
 ) {
     private val arch = Build.SUPPORTED_ABIS.toSet()
     private val api = Build.VERSION.SDK_INT
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
-        val response = service.getJar()
+        val response = service.getJar(url)
         val data = jarToJson(response.byteStream())
         val appNames = apps.map { it.packageName }
         val updates = data.apps
@@ -41,7 +44,7 @@ class FdroidRepository(
     }
 
     suspend fun search(text: String) = flow {
-        val response = service.getJar()
+        val response = service.getJar(url)
         val data = jarToJson(response.byteStream())
         val updates = data.apps
             .asSequence()
@@ -59,7 +62,7 @@ class FdroidRepository(
         .filter { filterArch(it) }
         .filter { filterAlpha(it) }
         .filter { filterBeta(it) }
-        .map { it.toAppUpdate(apps?.getApp(it.app.packageName)) }
+        .map { it.toAppUpdate(apps?.getApp(it.app.packageName), source) }
         .toList()
 
     private fun filterAlpha(update: FdroidUpdate) = when {

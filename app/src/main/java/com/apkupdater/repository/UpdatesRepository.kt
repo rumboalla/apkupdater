@@ -15,11 +15,12 @@ class UpdatesRepository(
     private val apkMirrorRepository: ApkMirrorRepository,
     private val gitHubRepository: GitHubRepository,
     private val fdroidRepository: FdroidRepository,
+    private val izzyRepository: FdroidRepository,
     private val aptoideRepository: AptoideRepository,
     private val prefs: Prefs
 ) {
 
-    fun updates() = flow {
+    fun updates() = flow<List<AppUpdate>> {
         appsRepository.getApps().collect { result ->
             result.onSuccess { apps ->
                 val filtered = apps.filter { !it.ignored }
@@ -27,10 +28,15 @@ class UpdatesRepository(
                 if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.updates(filtered))
                 if (prefs.useGitHub.get()) sources.add(gitHubRepository.updates(filtered))
                 if (prefs.useFdroid.get()) sources.add(fdroidRepository.updates(filtered))
+                if (prefs.useIzzy.get()) sources.add(izzyRepository.updates(filtered))
                 if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(filtered))
-                sources
-                    .combine { updates -> emit(updates.flatMap { it }) }
-                    .collect()
+                if (sources.isNotEmpty()) {
+                    sources
+                        .combine { updates -> emit(updates.flatMap { it }) }
+                        .collect()
+                } else {
+                    emit(emptyList())
+                }
             }.onFailure {
                 Log.e("UpdatesRepository", "Error getting apps", it)
             }

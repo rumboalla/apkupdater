@@ -135,6 +135,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_fdroid
 		)
 		SwitchSetting(
+			{ viewModel.getUseIzzy() },
+			{ viewModel.setUseIzzy(it) },
+			stringResource(R.string.source_izzy),
+			R.drawable.ic_izzy
+		)
+		SwitchSetting(
 			{ viewModel.getUseAptoide() },
 			{ viewModel.setUseAptoide(it) },
 			stringResource(R.string.source_aptoide),
