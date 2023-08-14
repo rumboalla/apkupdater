@@ -1,0 +1,1 @@
+APKUpdater is an open source tool that simplifies the process of finding updates for your installed apps. It provides similar functionality to an app store, but instead of depending on a single source, it aggregates the results from APKMirror, Aptoide, F-Droid and GitHub.
