@@ -41,7 +41,7 @@ fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 		Modifier
 			.align(Alignment.TopStart)
 			.padding(4.dp)
-			.size(32.dp)
+			.size(28.dp)
 	)
 }
 
@@ -56,7 +56,7 @@ fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
 		Modifier
 			.align(Alignment.TopStart)
 			.padding(4.dp)
-			.size(32.dp)
+			.size(28.dp)
 	)
 }
 

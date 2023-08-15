@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -213,7 +214,7 @@ fun SettingsTopBar(viewModel: SettingsViewModel) = TopAppBar(
 		}
 	},
 	navigationIcon = {
-		IconButton(onClick = {}) {
+		Box(Modifier.minimumInteractiveComponentSize().size(40.dp), Alignment.Center) {
 			Icon(Icons.Filled.Settings, "Tab Icon")
 		}
 	}
@@ -230,7 +231,7 @@ fun AboutTopBar(viewModel: SettingsViewModel) = TopAppBar(
 		}
 	},
 	navigationIcon = {
-		IconButton(onClick = {}) {
+		Box(Modifier.minimumInteractiveComponentSize().size(40.dp), Alignment.Center) {
 			Icon(Icons.Filled.Info, "Tab Icon")
 		}
 	}

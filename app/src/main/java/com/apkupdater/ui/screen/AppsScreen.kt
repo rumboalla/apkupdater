@@ -1,6 +1,8 @@
 package com.apkupdater.ui.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -11,8 +13,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.foundation.lazy.grid.items
 import com.apkupdater.R
@@ -92,7 +98,7 @@ fun AppsTopBar(
 		}
 	},
 	navigationIcon = {
-		IconButton(onClick = {}) {
+		Box(Modifier.minimumInteractiveComponentSize().size(40.dp), Alignment.Center) {
 			Icon(Icons.Filled.Home, "Tab Icon")
 		}
 	}

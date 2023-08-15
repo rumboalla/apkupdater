@@ -99,7 +99,7 @@ class ApkMirrorRepository(
                 .filter { filterAndroidTv(it) }
                 .filter { filterWearOS(it) }
                 .maxByOrNull { it.versionCode }
-                ?.toAppUpdate(apps.getApp(data.pname)!!, data.release.version)
+                ?.toAppUpdate(apps.getApp(data.pname)!!, data.release)
         }
 
     private fun filterSignature(apk: AppExistsResponseApk, signature: String?) = when {

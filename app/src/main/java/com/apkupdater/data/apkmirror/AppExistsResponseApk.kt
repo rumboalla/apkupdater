@@ -20,14 +20,15 @@ data class AppExistsResponseApk(
 	val signaturesSha256: List<String>? = emptyList()
 )
 
-fun AppExistsResponseApk.toAppUpdate(app: AppInstalled, version: String) = AppUpdate(
+fun AppExistsResponseApk.toAppUpdate(app: AppInstalled, release: AppExistsResponseRelease) = AppUpdate(
 	app.name,
 	app.packageName,
-	version,
+	release.version,
 	app.version,
 	versionCode,
 	app.versionCode,
 	ApkMirrorSource,
 	app.iconUri,
-	"https://www.apkmirror.com$link"
+	"https://www.apkmirror.com$link",
+	release.whatsNew.orEmpty()
 )

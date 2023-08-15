@@ -5,6 +5,7 @@ data class GitHubRelease(
     val name: String,
     val prerelease: Boolean,
     val assets: List<GitHubReleaseAsset>,
-    val tag_name: String
+    val tag_name: String,
+    val body: String = ""
 )
 

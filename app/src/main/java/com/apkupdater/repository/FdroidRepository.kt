@@ -2,6 +2,7 @@ package com.apkupdater.repository
 
 import android.os.Build
 import android.util.Log
+import com.apkupdater.data.fdroid.FdroidApp
 import com.apkupdater.data.fdroid.FdroidData
 import com.apkupdater.data.fdroid.FdroidUpdate
 import com.apkupdater.data.fdroid.toAppUpdate
@@ -34,6 +35,7 @@ class FdroidRepository(
         val updates = data.apps
             .asSequence()
             .filter { appNames.contains(it.packageName) }
+            .filter { filterSignature(apps.getApp(it.packageName)!!, it) }
             .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
             .filter { it.apk.versionCode > apps.getVersionCode(it.app.packageName) }
             .parseUpdates(apps)
@@ -64,6 +66,12 @@ class FdroidRepository(
         .filter { filterBeta(it) }
         .map { it.toAppUpdate(apps?.getApp(it.app.packageName), source) }
         .toList()
+
+    private fun filterSignature(installed: AppInstalled, update: FdroidApp) = when {
+        update.allowedAPKSigningKeys.isEmpty() -> true
+        update.allowedAPKSigningKeys.contains(installed.signature) -> true
+        else -> false
+    }
 
     private fun filterAlpha(update: FdroidUpdate) = when {
         prefs.ignoreAlpha.get() && update.apk.versionName.contains("alpha") -> false

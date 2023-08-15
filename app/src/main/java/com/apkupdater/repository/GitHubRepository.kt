@@ -51,7 +51,8 @@ class GitHubRepository(
                 versionCode = versions.second,
                 oldVersionCode = BuildConfig.VERSION_CODE.toLong(),
                 source = GitHubSource,
-                link = releases[0].assets[0].browser_download_url
+                link = releases[0].assets[0].browser_download_url,
+                whatsNew = releases[0].body
             )))
         } else {
             // We need to emit empty so it can be combined later
@@ -80,7 +81,8 @@ class GitHubRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
-                link = release.assets[0].browser_download_url
+                link = release.assets[0].browser_download_url,
+                whatsNew = release.body
             )))
         } else {
             emit(emptyList())

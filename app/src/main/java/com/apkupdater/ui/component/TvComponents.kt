@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,10 +23,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.text.HtmlCompat
 import com.apkupdater.R
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.util.getAppName
+import com.apkupdater.util.toAnnotatedString
 
 
 @Composable
@@ -110,6 +113,7 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
 fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode)
+        WhatsNew(app.whatsNew)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
@@ -123,11 +127,23 @@ fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
 fun TvSearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode, app.iconUri, true)
+        WhatsNew(app.whatsNew)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
                 TvInstallButton(app, onInstall)
             }
         }
+    }
+}
+
+@Composable
+fun WhatsNew(whatsNew: String) {
+    if (whatsNew.isNotEmpty()) {
+        val spanned = HtmlCompat.fromHtml(whatsNew.trim(), HtmlCompat.FROM_HTML_MODE_COMPACT)
+        ExpandingAnnotatedText(
+            spanned.toAnnotatedString(),
+            Modifier.padding(8.dp).fillMaxWidth()
+        )
     }
 }
