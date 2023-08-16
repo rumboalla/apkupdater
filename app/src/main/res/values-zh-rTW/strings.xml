@@ -34,10 +34,15 @@
     <string name="ignore_beta">忽略 Beta 版本</string>
     <string name="root_install">Root 安裝</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
-    <string name="source_fdroid" translatable="false">F-Droid</string>
+    <string name="source_fdroid" translatable="false">F-Droid (Main)</string>
+    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
     <string name="about">關於</string>
+    <string name="theme">Theme</string>
+    <string name="theme_system">系統預設</string>
+    <string name="theme_dark">暗色主題</string>
+    <string name="theme_light">亮色主題</string>
 
     // Notifications
     <string name="notification_channel_name">更新</string>
