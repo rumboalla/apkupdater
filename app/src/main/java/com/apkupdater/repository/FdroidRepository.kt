@@ -29,7 +29,7 @@ class FdroidRepository(
     private val api = Build.VERSION.SDK_INT
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
-        val response = service.getJar(url)
+        val response = service.getJar("${url}index-v1.jar")
         val data = jarToJson(response.byteStream())
         val appNames = apps.map { it.packageName }
         val updates = data.apps
@@ -50,8 +50,8 @@ class FdroidRepository(
         val data = jarToJson(response.byteStream())
         val updates = data.apps
             .asSequence()
-            .filter { it.name.contains(text) }
             .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
+            .filter { it.app.name.contains(text, true) || it.app.packageName.contains(text, true) || it.apk.apkName.contains(text, true) }
             .parseUpdates(null)
         emit(Result.success(updates))
     }.catch {
@@ -64,12 +64,12 @@ class FdroidRepository(
         .filter { filterArch(it) }
         .filter { filterAlpha(it) }
         .filter { filterBeta(it) }
-        .map { it.toAppUpdate(apps?.getApp(it.app.packageName), source) }
+        .map { it.toAppUpdate(apps?.getApp(it.app.packageName), source, url) }
         .toList()
 
     private fun filterSignature(installed: AppInstalled, update: FdroidApp) = when {
         update.allowedAPKSigningKeys.isEmpty() -> true
-        update.allowedAPKSigningKeys.contains(installed.signature) -> true
+        update.allowedAPKSigningKeys.contains(installed.signatureSha256) -> true
         else -> false
     }
 

@@ -10,7 +10,6 @@ import android.os.Build
 import android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES
 import androidx.core.content.ContextCompat.startActivity
 import com.apkupdater.BuildConfig
-import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.ui.activity.MainActivity
 import eu.chainfire.libsuperuser.Shell
 import java.io.File
@@ -26,10 +25,10 @@ class SessionInstaller(private val context: Context) {
 
     private val installMutex = AtomicBoolean(false)
 
-    suspend fun install(app: AppUpdate, stream: InputStream) {
+    suspend fun install(id: Int, packageName: String, stream: InputStream) {
         val packageInstaller: PackageInstaller = context.packageManager.packageInstaller
         val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
-        params.setAppPackageName(app.packageName)
+        params.setAppPackageName(packageName)
         params.setOriginatingUid(android.os.Process.myUid())
 
         if (Build.VERSION.SDK_INT >= 31) {
@@ -50,7 +49,7 @@ class SessionInstaller(private val context: Context) {
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {
-            action = InstallAction + "." + app.id
+            action = "$InstallAction.$id"
         }
 
         installMutex.lock()

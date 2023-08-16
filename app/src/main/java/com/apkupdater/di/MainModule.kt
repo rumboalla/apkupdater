@@ -118,15 +118,15 @@ val mainModule = module {
 
 	single { GitHubRepository(get(), get()) }
 
-	single(named("main")) { FdroidRepository(get(), "https://f-droid.org/repo/index-v1.jar", FdroidSource, get()) }
+	single(named("main")) { FdroidRepository(get(), "https://f-droid.org/repo/", FdroidSource, get()) }
 
-	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/index-v1.jar", IzzySource, get()) }
+	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get()) }
 
 	single { AptoideRepository(get(), get(), get()) }
 
 	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get()) }
 
-	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get()) }
+	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get(), get()) }
 
 	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
 

@@ -1,5 +1,7 @@
 package com.apkupdater.ui.screen
 
+import android.app.Activity.RESULT_CANCELED
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,6 +20,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.pullrefresh.PullRefreshIndicator
 import androidx.compose.material3.pullrefresh.pullRefresh
@@ -26,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +45,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.apkupdater.R
+import com.apkupdater.data.snack.ISnack
+import com.apkupdater.data.snack.InstallSnack
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
 import com.apkupdater.ui.theme.AppTheme
@@ -47,8 +56,14 @@ import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 
 @Composable
@@ -73,7 +88,9 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 
 	// Used to launch the install intent and get dismissal result
 	val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-		mainViewModel.cancelCurrentInstall()
+		if (it.resultCode == RESULT_CANCELED) {
+			mainViewModel.cancelCurrentInstall()
+		}
 	}
 
 	// Check intent when cold starting from notification
@@ -85,8 +102,18 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	// Theme
 	val theme = mainViewModel.theme.collectAsStateWithLifecycle().value
 
+	// SnackBar
+	val context = LocalContext.current
+	val snackBarHostState = remember { SnackbarHostState() }
+	mainViewModel.snackBar.CollectAsEffect {
+		handleSnack(context, snackBarHostState, it)
+	}
+
 	AppTheme(theme) {
-		Scaffold(bottomBar = { BottomBar(mainViewModel, navController) }) { padding ->
+		Scaffold(
+			snackbarHost = { SnackbarHost(snackBarHostState) },
+			bottomBar = { BottomBar(mainViewModel, navController) }
+		) { padding ->
 			Box(modifier = Modifier.pullRefresh(pullToRefresh)) {
 				NavHost(navController, padding, mainViewModel, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
 				PullRefreshIndicator(
@@ -97,6 +124,35 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 				)
 			}
 		}
+	}
+}
+
+suspend fun handleSnack(
+	context: Context,
+	snackbarHostState: SnackbarHostState,
+	snack: ISnack
+) {
+	when (snack) {
+		is InstallSnack -> {
+			val message = if (snack.success) R.string.install_success else R.string.install_failure
+			snackbarHostState.showSnackbar(
+				context.getString(message, snack.name),
+				null,
+				true,
+				SnackbarDuration.Short
+			)
+		}
+		else -> Log.e("MainScreen", "Invalid snack type.")
+	}
+}
+
+@Composable
+fun <T> Flow<T>.CollectAsEffect(
+	context: CoroutineContext = EmptyCoroutineContext,
+	block: suspend (T) -> Unit
+) {
+	LaunchedEffect(Unit) {
+		onEach(block).flowOn(context).launchIn(this)
 	}
 }
 

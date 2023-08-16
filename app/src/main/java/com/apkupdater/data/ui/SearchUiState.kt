@@ -28,4 +28,10 @@ sealed class SearchUiState {
         return mutableListOf()
     }
 
+    fun updates(): List<AppUpdate> {
+        if (this is Success) {
+            return updates
+        }
+        return emptyList()
+    }
 }

@@ -1,12 +1,10 @@
 package com.apkupdater.viewmodel
 
-import androidx.compose.ui.platform.UriHandler
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.SearchUiState
-import com.apkupdater.data.ui.indexOf
+import com.apkupdater.data.ui.removeId
+import com.apkupdater.data.ui.setIsInstalling
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.util.Downloader
@@ -19,19 +17,24 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 
+
 class SearchViewModel(
     private val mainViewModel: MainViewModel,
     private val searchRepository: SearchRepository,
-    private val downloader: Downloader,
     private val installer: SessionInstaller,
-    private val prefs: Prefs
-) : ViewModel() {
+    downloader: Downloader,
+    prefs: Prefs
+) : InstallViewModel(mainViewModel, downloader, installer, prefs) {
 
     private val mutex = Mutex()
     private val state = MutableStateFlow<SearchUiState>(SearchUiState.Success(emptyList()))
     private var job: Job? = null
 
-    init { subscribeToInstallLog() }
+    init {
+        subscribeToInstallLog { success, id ->
+            sendInstallSnack(state.value.updates(), success, id)
+        }
+    }
 
     fun state(): StateFlow<SearchUiState> = state
 
@@ -54,72 +57,26 @@ class SearchViewModel(
         }
     }
 
-    fun install(update: AppUpdate, uriHandler: UriHandler) {
-        when (update.source) {
-            ApkMirrorSource -> uriHandler.openUri(update.link)
-            else -> {
-                if (prefs.rootInstall.get()) {
-                    downloadAndRootInstall(update)
-                } else {
-                    downloadAndInstall(update)
-                }
-            }
-        }
-    }
-
-    private fun cancelInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-        state.value = SearchUiState.Success(setIsInstalling(id, false))
+    override fun cancelInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+        state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(id, false))
         installer.finish()
     }
 
-    private fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-        val updates = state.value.mutableUpdates()
-        val index = updates.indexOf(id)
-        if (index != -1) updates.removeAt(index)
-        state.value = SearchUiState.Success(updates)
+    override fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+        state.value = SearchUiState.Success(state.value.mutableUpdates().removeId(id))
         installer.finish()
     }
 
-    private fun subscribeToInstallLog() = viewModelScope.launch(Dispatchers.IO) {
-        mainViewModel.appInstallLog.collect {
-            if (it.success) {
-                finishInstall(it.id)
-            } else {
-                cancelInstall(it.id)
-            }
-        }
+    override fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+        state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+        downloadAndRootInstall(update.id, update.link)
     }
 
-    private fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
-        state.value = SearchUiState.Success(setIsInstalling(update.id, true))
-        val file = downloader.download(update.link)
-        val res = installer.rootInstall(file)
-        if (res) {
-            finishInstall(update.id)
-        } else {
-            cancelInstall(update.id)
-        }
-    }
-
-    private fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+    override fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
         if(installer.checkPermission()) {
-            state.value = SearchUiState.Success(setIsInstalling(update.id, true))
-            val stream = downloader.downloadStream(update.link)
-            if (stream != null) {
-                installer.install(update, stream)
-            } else {
-                cancelInstall(update.id)
-            }
+            state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+            downloadAndInstall(update.id, update.packageName, update.link)
         }
-    }
-
-    private fun setIsInstalling(id: Int, b: Boolean): List<AppUpdate> {
-        val updates = state.value.mutableUpdates()
-        val index = updates.indexOf(id)
-        if (index != -1) {
-            updates[index] = updates[index].copy(isInstalling = b)
-        }
-        return updates
     }
 
 }

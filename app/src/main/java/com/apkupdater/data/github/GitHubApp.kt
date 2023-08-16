@@ -7,6 +7,7 @@ data class GitHubApp(
 )
 
 val GitHubApps = listOf(
+    GitHubApp("com.apkupdater", "rumboalla", "apkupdater"),
     GitHubApp("org.schabi.newpipe", "TeamNewPipe", "NewPipe"),
     GitHubApp("eu.faircode.netguard", "M66B", "NetGuard")
 )

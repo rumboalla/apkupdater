@@ -10,8 +10,8 @@ data class FdroidUpdate(
     val app: FdroidApp
 )
 
-fun FdroidUpdate.toAppUpdate(current: AppInstalled?, source: Source) = AppUpdate(
-    app.name,
+fun FdroidUpdate.toAppUpdate(current: AppInstalled?, source: Source, url: String) = AppUpdate(
+    app.localized["en-US"]?.name ?: app.name,
     app.packageName,
     apk.versionName,
     current?.version ?: "?",
@@ -21,7 +21,7 @@ fun FdroidUpdate.toAppUpdate(current: AppInstalled?, source: Source) = AppUpdate
     if(app.icon.isEmpty())
         "https://f-droid.org/assets/ic_repo_app_default.png".toUri()
     else
-        "https://f-droid.org/repo/icons-640/${app.icon}".toUri(),
-    "https://f-droid.org/repo/${apk.apkName}",
+        "${url}icons-640/${app.icon}".toUri(),
+    "$url${apk.apkName}",
     if (current != null) app.localized["en-US"]?.whatsNew.orEmpty() else app.localized["en-US"]?.summary.orEmpty()
 )

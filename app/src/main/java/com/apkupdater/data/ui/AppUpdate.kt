@@ -18,3 +18,17 @@ data class AppUpdate(
 )
 
 fun List<AppUpdate>.indexOf(id: Int) = indexOfFirst { it.id == id }
+
+fun MutableList<AppUpdate>.setIsInstalling(id: Int, b: Boolean): List<AppUpdate> {
+	val index = this.indexOf(id)
+	if (index != -1) {
+		this[index] = this[index].copy(isInstalling = b)
+	}
+	return this
+}
+
+fun MutableList<AppUpdate>.removeId(id: Int): List<AppUpdate> {
+	val index = this.indexOf(id)
+	if (index != -1) this.removeAt(index)
+	return this
+}

@@ -69,14 +69,23 @@ fun ByteArray.toSha1(): String = MessageDigest
 
 fun String.toSha1Aptoide(): String = chunked(2).joinToString(separator = ":") { it.uppercase() }
 
-fun PackageInfo.getSignatureHash(): String = runCatching {
+fun ByteArray.toSha256(): String = MessageDigest
+	.getInstance("SHA-256")
+	.digest(this)
+	.joinToString(separator = "", transform = { "%02x".format(it) })
+
+fun PackageInfo.getSignature(): ByteArray = runCatching {
 	if (Build.VERSION.SDK_INT >= 28) {
-		signingInfo.apkContentsSigners[0].toByteArray().toSha1()
+		signingInfo.apkContentsSigners[0].toByteArray()
 	} else {
 		@Suppress("DEPRECATION")
-		signatures[0].toByteArray().toSha1()
+		signatures[0].toByteArray()
 	}
-}.getOrDefault("")
+}.getOrDefault(ByteArray(0))
+
+fun PackageInfo.getSignatureSha1(): String = getSignature().toSha1()
+
+fun PackageInfo.getSignatureSha256(): String = getSignature().toSha256()
 
 fun millisUntilHour(hour: Int): Long {
 	val calendar = Calendar.getInstance()

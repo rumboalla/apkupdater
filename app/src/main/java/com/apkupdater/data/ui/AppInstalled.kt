@@ -11,7 +11,8 @@ data class AppInstalled(
 	val versionCode: Long,
 	val iconUri: Uri = Uri.EMPTY,
 	val ignored: Boolean = false,
-	val signature: String = ""
+	val signature: String = "",
+	val signatureSha256: String = ""
 )
 
 fun List<AppInstalled>.getApp(packageName: String) = find { packageName == it.packageName }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.apkupdater.data.snack.ISnack
 import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.prefs.Prefs
@@ -37,6 +38,8 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 		Screen.Settings.route to ""
 	))
 
+	val snackBar = MutableSharedFlow<ISnack>()
+
 	val isRefreshing = MutableStateFlow(false)
 	val appInstallLog = MutableSharedFlow<AppInstallStatus>()
 	private var currentInstallId = 0
@@ -51,6 +54,8 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 			isRefreshing.value = false
 		}
 	}
+
+	fun sendSnack(snack: ISnack) = viewModelScope.launch { snackBar.emit(snack) }
 
 	fun setTheme(theme: Boolean) = this.theme.apply { value = theme }
 
