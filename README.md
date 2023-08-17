@@ -14,7 +14,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Direct install** of updates for sources that support it.
 * Supports **installs without user interaction** on Android 12+.
 * **Root install** of updates.
-* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Romanian.
+* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Romanian, Simplified Chinese.
 
 # Download
 * [Beta Release (3.0.0-beta-03)](https://github.com/rumboalla/apkupdater/releases/download/3.0.0-beta-03/app-release.apk)
@@ -27,6 +27,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 * German by [peat80](https://github.com/peat80)
 * Traditional Chinese by [abc0922001](https://github.com/abc0922001)
 * Romanian by [StormProductionsMusic](https://github.com/StormProductionsMusic)
+* Simplified Chinese by [Nriver](https://github.com/Nriver)
 
 # Feedback
 - To give feedback and request new features go to [Discussions](https://github.com/rumboalla/apkupdater/discussions).
