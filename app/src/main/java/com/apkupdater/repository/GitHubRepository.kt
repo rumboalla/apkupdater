@@ -4,6 +4,8 @@ import android.net.Uri
 import android.util.Log
 import com.apkupdater.BuildConfig
 import com.apkupdater.data.github.GitHubApps
+import com.apkupdater.data.github.GitHubRelease
+import com.apkupdater.data.github.GitHubReleaseAsset
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.GitHubSource
@@ -11,6 +13,7 @@ import com.apkupdater.data.ui.getApp
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.GitHubService
 import com.apkupdater.util.combine
+import io.github.g00fy2.versioncompare.Version
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -65,7 +68,7 @@ class GitHubRepository(
     }
 
     private fun selfCheck() = flow {
-        val releases = service.getReleases()
+        val releases = service.getReleases().filter { filterPreRelease(it) }
         val versions = getVersions(releases[0].name)
 
         if (versions.second != BuildConfig.VERSION_CODE.toLong()) {
@@ -96,27 +99,27 @@ class GitHubRepository(
         packageName: String,
         currentVersion: String
     ) = flow {
-        val release = service.getReleases(user, repo)[0]
-        if (!release.tag_name.contains(currentVersion)) {
+        val releases = service.getReleases(user, repo).filter { filterPreRelease(it) }
+        if (releases.isNotEmpty() && Version(releases[0].tag_name.trimStart('v')) > Version(currentVersion)) {
             val app = apps?.getApp(packageName)
             emit(listOf(AppUpdate(
                 name = repo,
                 packageName = packageName,
-                version = release.tag_name,
+                version = releases[0].tag_name,
                 oldVersion = app?.version ?: "?",
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
-                link = release.assets[0].browser_download_url,
-                whatsNew = release.body,
-                iconUri = if (apps == null) Uri.parse(release.author.avatar_url) else Uri.EMPTY
+                link = findApkAsset(releases[0].assets),
+                whatsNew = releases[0].body,
+                iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))
         } else {
             emit(emptyList())
         }
     }.catch {
         emit(emptyList())
-        Log.e("GitHubRepository", "Error fetching releases.", it)
+        Log.e("GitHubRepository", "Error fetching releases for $packageName.", it)
     }
 
     private fun getVersions(name: String) = runCatching {
@@ -125,5 +128,16 @@ class GitHubRepository(
         val versionCode = scanner.next().trim('(', ')').toLong()
         Pair(version, versionCode)
     }.getOrDefault(Pair(name, 0L))
+
+    private fun filterPreRelease(release: GitHubRelease) = when {
+        prefs.ignorePreRelease.get() && release.prerelease -> false
+        else -> true
+    }
+
+    private fun findApkAsset(assets: List<GitHubReleaseAsset>) = assets
+        .filter { it.browser_download_url.endsWith(".apk", true) }
+        .maxByOrNull { it.size }
+        ?.browser_download_url
+        .orEmpty()
 
 }

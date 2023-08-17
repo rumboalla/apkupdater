@@ -169,6 +169,18 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			stringResource(R.string.ignore_beta),
 			R.drawable.ic_beta
 		)
+		SwitchSetting(
+			{ viewModel.getIgnorePreRelease() },
+			{ viewModel.setIgnorePreRelease(it) },
+			stringResource(R.string.ignore_preRelease),
+			R.drawable.ic_pre_release
+		)
+		SwitchSetting(
+			{ viewModel.getUseSafeStores() },
+			{ viewModel.setUseSafeStores(it) },
+			stringResource(R.string.use_safe_stores),
+			R.drawable.ic_safe
+		)
 	}
 
 	item {

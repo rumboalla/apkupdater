@@ -18,6 +18,8 @@ class Prefs(
 	val landscapeColumns  = int("landscapeColumns", 6, true)
 	val ignoreAlpha = boolean("ignoreAlpha", defValue = true, backed = true)
 	val ignoreBeta = boolean("ignoreBeta", defValue = true, backed = true)
+	val ignorePreRelease = boolean("ignorePreRelease", defValue = true, backed = true)
+	val useSafeStores = boolean("useSafeStores", defValue = true, backed = true)
 	val useApkMirror = boolean("useApkMirror", defValue = true, backed = true)
 	val useGitHub = boolean("useGitHub", defValue = true, backed = true)
 	val useFdroid = boolean("useFdroid", defValue = true, backed = true)

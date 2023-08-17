@@ -63,7 +63,9 @@ class SearchViewModel(
     }
 
     override fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-        state.value = SearchUiState.Success(state.value.mutableUpdates().removeId(id))
+        val updates = state.value.mutableUpdates().removeId(id)
+        state.value = SearchUiState.Success(updates)
+        mainViewModel.changeSearchBadge(updates.size.toString())
         installer.finish()
     }
 

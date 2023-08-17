@@ -22,11 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import com.apkupdater.R
+import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.data.ui.Source
 import com.apkupdater.util.getAppName
 import com.apkupdater.util.toAnnotatedString
 
@@ -113,7 +116,7 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
 fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode)
-        WhatsNew(app.whatsNew)
+        WhatsNew(app.whatsNew, app.source)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
@@ -127,7 +130,7 @@ fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
 fun TvSearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode, app.iconUri, true)
-        WhatsNew(app.whatsNew)
+        WhatsNew(app.whatsNew, app.source)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
@@ -138,12 +141,13 @@ fun TvSearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
 }
 
 @Composable
-fun WhatsNew(whatsNew: String) {
+fun WhatsNew(whatsNew: String, source: Source) {
     if (whatsNew.isNotEmpty()) {
-        val spanned = HtmlCompat.fromHtml(whatsNew.trim(), HtmlCompat.FROM_HTML_MODE_COMPACT)
-        ExpandingAnnotatedText(
-            spanned.toAnnotatedString(),
-            Modifier.padding(8.dp).fillMaxWidth()
-        )
+        val text = if (source == ApkMirrorSource) {
+            HtmlCompat.fromHtml(whatsNew.trim(), HtmlCompat.FROM_HTML_MODE_COMPACT).toAnnotatedString()
+        } else {
+            AnnotatedString(whatsNew)
+        }
+        ExpandingAnnotatedText(text, Modifier.padding(8.dp).fillMaxWidth())
     }
 }

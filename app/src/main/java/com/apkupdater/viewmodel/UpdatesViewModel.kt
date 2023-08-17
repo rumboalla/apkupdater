@@ -51,7 +51,9 @@ class UpdatesViewModel(
 	}
 
 	override fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-		state.value = UpdatesUiState.Success(state.value.mutableUpdates().removeId(id))
+		val updates = state.value.mutableUpdates().removeId(id)
+		state.value = UpdatesUiState.Success(updates)
+		mainViewModel.changeUpdatesBadge(updates.size.toString())
 		installer.finish()
 	}
 

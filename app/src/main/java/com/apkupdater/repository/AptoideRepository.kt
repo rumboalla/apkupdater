@@ -41,7 +41,7 @@ class AptoideRepository(
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val data = apps.map(AppInstalled::toApksData)
-        val r = service.findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList()))
+        val r = service.findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList(), buildStoreList()))
         emit(r.list.map { it.toAppUpdate(apps.getApp(it.packageName)) })
     }.catch {
         emit(emptyList())
@@ -49,7 +49,7 @@ class AptoideRepository(
     }
 
     suspend fun search(text: String) = flow {
-        val request = ListSearchAppsRequest(text, "10", query, buildFilterList())
+        val request = ListSearchAppsRequest(text, "10", query, buildFilterList(), buildStoreList())
         val response = service.searchApps(request)
         val updates = response.datalist.list.map{ it.toAppUpdate(null) }
         emit(Result.success(updates))
@@ -57,6 +57,8 @@ class AptoideRepository(
         emit(Result.failure(it))
         Log.e("AptoideRepository", "Error searching.", it)
     }
+
+    private fun buildStoreList() = if (prefs.useSafeStores.get()) listOf(15L, 711454L) else emptyList()
 
     private fun buildFilterList(): String {
         val list = mutableListOf<String>()

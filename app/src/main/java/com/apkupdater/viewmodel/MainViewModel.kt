@@ -129,9 +129,9 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 	}
 
 	private fun changeBadge(route: String, number: String) {
-		if (number.toIntOrNull() == 0) return
+		val finalNumber = if (number.toIntOrNull() == 0) "" else number
 		val newBadges = badges.value.toMutableMap()
-		newBadges[route] = number
+		newBadges[route] = finalNumber
 		badges.value = newBadges
 	}
 
