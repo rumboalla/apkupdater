@@ -1,0 +1,53 @@
+<resources>
+    <string name="tab_apps">应用</string>
+    <string name="tab_search">搜索</string>
+    <string name="tab_updates">更新</string>
+    <string name="tab_settings">设置</string>
+    <string name="something_went_wrong">"出了点问题\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">忽略应用</string>
+    <string name="unignore_cd">取消忽略应用</string>
+    <string name="refresh_updates">查找更新</string>
+    <string name="exclude_system_apps">排除系统应用</string>
+    <string name="include_system_apps">包括系统应用</string>
+    <string name="exclude_app_store">排除应用商店</string>
+    <string name="include_app_store">包括应用商店</string>
+    <string name="exclude_disabled_apps">排除已禁用应用</string>
+    <string name="include_disabled_apps">包括已禁用应用</string>
+    <string name="install_cd">安装应用</string>
+    <string name="app_cd">应用图标</string>
+    <string name="install_success">%1$s 已安装</string>
+    <string name="install_failure">%1$s 安装失败</string>
+
+    <!-- 设置 -->
+    <string name="settings_portrait_columns">竖屏列数</string>
+    <string name="settings_landscape_columns">横屏列数</string>
+    <string name="settings_sources">来源</string>
+    <string name="settings_ui">用户界面</string>
+    <string name="settings_alarm">提醒</string>
+    <string name="settings_options">选项</string>
+    <string name="settings_hour">提醒小时</string>
+    <string name="settings_alarm_daily">每日</string>
+    <string name="settings_alarm_3day">3天</string>
+    <string name="settings_alarm_weekly">每周</string>
+    <string name="settings_android_tv_ui">Android TV 界面</string>
+    <string name="ignore_alpha">忽略Alpha版本</string>
+    <string name="ignore_beta">忽略Beta版本</string>
+    <string name="root_install">Root安装</string>
+    <string name="about">关于</string>
+    <string name="frequency">频率</string>
+    <string name="theme">主题</string>
+    <string name="theme_system">系统</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_light">浅色</string>
+
+    <!-- 通知 -->
+    <string name="notification_channel_name">更新</string>
+    <string name="notification_channel_description">用于更新通知的通道。</string>
+    <string name="notification_update_title">更新</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">没有发现更新。</item>
+        <item quantity="one">发现 %1$d 个更新。</item>
+        <item quantity="other">发现 %1$d 个更新。</item>
+    </plurals>
+
+</resources>
