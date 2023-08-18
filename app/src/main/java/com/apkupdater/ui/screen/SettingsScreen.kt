@@ -5,7 +5,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +19,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -23,12 +27,15 @@ import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.apkupdater.BuildConfig
 import com.apkupdater.R
 import com.apkupdater.data.ui.GitHubSource
@@ -36,6 +43,7 @@ import com.apkupdater.data.ui.SettingsUiState
 import com.apkupdater.ui.component.LargeTitle
 import com.apkupdater.ui.component.LoadingImageApp
 import com.apkupdater.ui.component.MediumText
+import com.apkupdater.ui.component.MediumTitle
 import com.apkupdater.ui.component.SegmentedButtonSetting
 import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SourceIcon
@@ -43,6 +51,7 @@ import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
@@ -56,23 +65,78 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
 }
 
 @Composable
-fun About() = Box(Modifier.fillMaxSize()) {
-	val launcher = LocalUriHandler.current
-	Column(Modifier.align(Alignment.Center)) {
-		LoadingImageApp(BuildConfig.APPLICATION_ID)
-		LargeTitle(stringResource(R.string.app_name), Modifier.align(CenterHorizontally))
-		MediumText("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})", Modifier.align(CenterHorizontally))
-		MediumText("Copyright © 2016-2023 rumboalla", Modifier.align(CenterHorizontally))
-		SourceIcon(
-			GitHubSource,
-			Modifier
-				.size(32.dp)
-				.align(CenterHorizontally)
-				.padding(top = 8.dp)
-				.clickable {
-					launcher.openUri("https://github.com/rumboalla/apkupdater")
-				}
+fun About() = LazyColumn(
+	Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+	item {
+		Column(Modifier.padding(vertical = 16.dp)) {
+			LoadingImageApp(BuildConfig.APPLICATION_ID)
+			LargeTitle(stringResource(R.string.app_name), Modifier.align(CenterHorizontally))
+			MediumText("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})", Modifier.align(CenterHorizontally))
+			MediumText("Copyright © 2016-2023 rumboalla", Modifier.align(CenterHorizontally))
+		}
+	}
+	item {
+		AboutItem(
+			"GitHub - APKUpdater",
+			stringResource(R.string.about_github),
+			"https://github.com/rumboalla/apkupdater",
+			{ SourceIcon(GitHubSource, Modifier.size(64.dp).align(CenterVertically)) }
 		)
+		AboutItem(
+			"Donate - Malaria Consortium",
+			stringResource(R.string.about_donate),
+			"https://www.malariaconsortium.org/support-us/donate.htm",
+			{
+				AsyncImage(
+					"https://www.malariaconsortium.org/website-2017/_images/logo-mc.png",
+					"Malaria Consortium",
+					Modifier.size(64.dp).align(CenterVertically)
+				)
+			}
+		)
+		AboutItem(
+			"Donate - New Incentives",
+			stringResource(R.string.about_donate),
+			"https://www.newincentives.org/donate",
+			{
+				AsyncImage(
+					"https://i.vimeocdn.com/portrait/81193504_60x60",
+					"New Incentives",
+					Modifier.size(64.dp).align(CenterVertically)
+				)
+			}
+		)
+		AboutItem(
+			"Donate - Sightsavers",
+			stringResource(R.string.about_donate),
+			"https://donate.sightsavers.org/smxpatron/global/donate.html",
+			{
+				AsyncImage(
+					"https://www.sightsavers.org/wp-content/uploads/2017/10/Sightsavers-Author-Placeholder.png",
+					"Sightsavers",
+					Modifier.size(64.dp).align(CenterVertically)
+				)
+			}
+		)
+	}
+}
+
+
+@Composable
+fun AboutItem(
+	title: String,
+	body: String,
+	link: String,
+	icon: @Composable RowScope.() -> Unit,
+	handler: UriHandler = LocalUriHandler.current
+) = OutlinedCard(
+	Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable { handler.openUri(link) }) {
+	Row(Modifier.padding(8.dp)) {
+		icon()
+		Column(Modifier.padding(start = 16.dp)) {
+			MediumTitle(title)
+			MediumText(body, maxLines = 2)
+		}
 	}
 }
 

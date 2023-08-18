@@ -68,11 +68,12 @@ fun SmallText(text: String, modifier: Modifier = Modifier) = Text(
 @Composable
 fun MediumText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    maxLines: Int = 1
 ) = Text(
     text = text,
     style = MaterialTheme.typography.bodyMedium,
-    maxLines = 1,
+    maxLines = maxLines,
     modifier = modifier,
     overflow = TextOverflow.Ellipsis
 )

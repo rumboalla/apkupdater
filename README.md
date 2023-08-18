@@ -14,6 +14,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Direct install** of updates for sources that support it.
 * Supports **installs without user interaction** on Android 12+.
 * **Root install** of updates.
+* No ads. No tracking.
 * **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Simplified Chinese, Romanian, Italian.
 
 # Download

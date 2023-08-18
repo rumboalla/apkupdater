@@ -12,11 +12,13 @@ import com.apkupdater.data.aptoide.ListSearchAppsRequest
 import com.apkupdater.data.aptoide.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.getApp
+import com.apkupdater.data.ui.getVersion
 import com.apkupdater.data.ui.toApksData
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.AptoideService
 import com.apkupdater.util.isAndroidTv
 import com.apkupdater.util.randomUUID
+import io.github.g00fy2.versioncompare.Version
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
@@ -41,8 +43,11 @@ class AptoideRepository(
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val data = apps.map(AppInstalled::toApksData)
-        val r = service.findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList(), buildStoreList()))
-        emit(r.list.map { it.toAppUpdate(apps.getApp(it.packageName)) })
+        val r = service
+            .findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList(), buildStoreList()))
+            .list
+            .filter { Version(it.file.vername) > Version(apps.getVersion(it.packageName)) }
+        emit(r.map { it.toAppUpdate(apps.getApp(it.packageName)) })
     }.catch {
         emit(emptyList())
         Log.e("AptoideRepository", "Error looking for updates.", it)

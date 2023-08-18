@@ -48,6 +48,8 @@
     <string name="theme_system">System</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
+    <string name="about_github">Get the source code, report bugs, request new features and add translations.</string>
+    <string name="about_donate">If you like the app, consider donating to a worthy cause.</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
