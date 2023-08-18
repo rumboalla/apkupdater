@@ -18,6 +18,8 @@
     <string name="app_cd">Icona app</string>
     <string name="install_success">%1$s installate.</string>
     <string name="install_failure">%1$s installazione fallita.</string>
+
+    // Settings
     <string name="settings_portrait_columns">Colonne verticali</string>
     <string name="settings_landscape_columns">Colonne orizzontali</string>
     <string name="settings_sources">Sorgenti</string>
@@ -39,7 +41,15 @@
     <string name="theme_system">Sistema</string>
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
+
+    // Notifications
     <string name="notification_channel_name">Aggiornamenti</string>
     <string name="notification_channel_description">Canale di notifica per gli aggiornamenti</string>
     <string name="notification_update_title">Aggiornamenti</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Nessun aggiornamento trovato.</item>
+        <item quantity="one">%1$d aggiornamento trovato.</item>
+        <item quantity="other">%1$d aggiornamenti trovati.</item>
+    </plurals>
+
 </resources>
