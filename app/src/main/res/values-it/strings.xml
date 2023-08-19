@@ -41,6 +41,8 @@
     <string name="theme_system">Sistema</string>
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
+    <string name="about_github">Ottieni il codice sorgente, segnala bug, richiedi nuove funzionalità e aggiungi traduzioni.</string>
+    <string name="about_donate">Se ti piace l\'applicazione, prendi in considerazione l\'idea di fare una donazione per una causa meritevole.</string>
 
     // Notifications
     <string name="notification_channel_name">Aggiornamenti</string>
