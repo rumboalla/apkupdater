@@ -7,23 +7,24 @@
     <string name="tab_updates">Updates</string>
     <string name="tab_settings">Setup</string>
     <string name="something_went_wrong">"Etwas ist schiefgelaufen\n\uD83E\uDD26"</string>
-    <string name="ignore_cd">App Ignorieren</string>
-    <string name="unignore_cd">App Überprüfen</string>
+    <string name="ignore_cd">App ignorieren</string>
+    <string name="unignore_cd">App überprüfen</string>
     <string name="refresh_updates">Suche nach Updates</string>
-    <string name="exclude_system_apps">System-Apps Ignorieren</string>
-    <string name="include_system_apps">System-Apps Überprüfen</string>
-    <string name="exclude_app_store">App-Store Ignorieren</string>
-    <string name="include_app_store">App-Store Überprüfen</string>
-    <string name="exclude_disabled_apps">Deaktivierte Apps Ignorieren</string>
-    <string name="include_disabled_apps">Deaktivierte Apps Überprüfen</string>
-    <string name="install_cd">App Installieren</string>
+    <string name="exclude_system_apps">System-Apps ignorieren</string>
+    <string name="include_system_apps">System-Apps überprüfen</string>
+    <string name="exclude_app_store">App-Store ignorieren</string>
+    <string name="include_app_store">App-Store überprüfen</string>
+    <string name="exclude_disabled_apps">Deaktivierte Apps ignorieren</string>
+    <string name="include_disabled_apps">Deaktivierte Apps überprüfen</string>
+    <string name="install_cd">App installieren</string>
     <string name="app_cd">App-Icon</string>
-
+	<string name="install_success">%1$s installiert.</string>
+	<string name="install_failure">%1$s wurde nicht installiert.</string>															   
     // Settings
     <string name="settings_portrait_columns">Anzahl der Spalten</string>
     <string name="settings_landscape_columns">Anzahl der Zeilen</string>
     <string name="settings_sources">Quellen</string>
-    <string name="settings_ui">UI</string>
+    <string name="settings_ui">Benutzeroberfläche</string>
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Optionen</string>
     <string name="settings_hour">Alarmzeit</string>
@@ -31,11 +32,14 @@
     <string name="settings_alarm_3day">3-Tägig</string>
     <string name="settings_alarm_weekly">Wöchentlich</string>
     <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
-    <string name="ignore_alpha">Alphas Ignorieren</string>
-    <string name="ignore_beta">Betas Ignorieren</string>
+    <string name="ignore_alpha">Alphas ignorieren</string>
+    <string name="ignore_beta">Betas ignorieren</string>
+    <string name="ignore_preRelease">Pre-Releases ignorieren</string>
+    <string name="use_safe_stores">Nutze sichere Stores (Aptoide)</string>
     <string name="root_install">Root-Installation</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
-    <string name="source_fdroid" translatable="false">F-Droid</string>
+	<string name="source_fdroid" translatable="false">F-Droid (Main)</string>
+	<string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
     <string name="about">Über</string>
@@ -44,6 +48,8 @@
     <string name="theme_system">System</string>
     <string name="theme_dark">Dunkel</string>
     <string name="theme_light">Hell</string>
+	<string name="about_github">Quellcode holen, Fehler melden, Funktionen anfragen, Übersetzungen einreichen.</string>
+	<string name="about_donate">Wenn dir die App gefällt solltest du eine Spende in Betracht ziehen.</string>
     
     // Notifications
     <string name="notification_channel_name">Updates</string>
