@@ -49,7 +49,7 @@ android {
 
     applicationVariants.configureEach {
         outputs.configureEach {
-            outputFileName = defaultConfig.applicationId + "." + buildType.name + "." + defaultConfig.versionCode + ".apk"
+            outputFileName = defaultConfig.applicationId + "-" + buildType.name + ".apk"
         }
     }
 

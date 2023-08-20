@@ -31,8 +31,8 @@ class SearchViewModel(
     private var job: Job? = null
 
     init {
-        subscribeToInstallLog { success, id ->
-            sendInstallSnack(state.value.updates(), success, id)
+        subscribeToInstallLog { log ->
+            sendInstallSnack(state.value.updates(), log)
         }
     }
 

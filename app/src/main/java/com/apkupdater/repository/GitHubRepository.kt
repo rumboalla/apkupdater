@@ -1,6 +1,7 @@
 package com.apkupdater.repository
 
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import com.apkupdater.BuildConfig
 import com.apkupdater.data.github.GitHubApps
@@ -99,8 +100,11 @@ class GitHubRepository(
         packageName: String,
         currentVersion: String
     ) = flow {
-        val releases = service.getReleases(user, repo).filter { filterPreRelease(it) }
-        if (releases.isNotEmpty() && Version(releases[0].tag_name.trimStart('v')) > Version(currentVersion)) {
+        val releases = service.getReleases(user, repo)
+            .filter { filterPreRelease(it) }
+            .filter { findApkAsset(it.assets).isNotEmpty() }
+
+        if (releases.isNotEmpty() && Version(filterVersion(releases[0].tag_name)) > Version(currentVersion)) {
             val app = apps?.getApp(packageName)
             emit(listOf(AppUpdate(
                 name = repo,
@@ -110,7 +114,7 @@ class GitHubRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
-                link = findApkAsset(releases[0].assets),
+                link = findApkAssetArch(releases[0].assets),
                 whatsNew = releases[0].body,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))
@@ -134,10 +138,51 @@ class GitHubRepository(
         else -> true
     }
 
+    private fun filterVersion(version: String) = version
+        .replace(Regex("^\\D*"), "")
+        //.replace(Regex("\\D+\$"), "") // In case we want to remove non-numeric at end too
+
     private fun findApkAsset(assets: List<GitHubReleaseAsset>) = assets
         .filter { it.browser_download_url.endsWith(".apk", true) }
         .maxByOrNull { it.size }
         ?.browser_download_url
         .orEmpty()
+
+    private fun findApkAssetArch(assets: List<GitHubReleaseAsset>): String {
+        val apks = assets.filter { it.browser_download_url.endsWith(".apk", true) }
+        when {
+            apks.isEmpty() -> return ""
+            apks.size == 1 -> return apks.first().browser_download_url
+            else -> {
+                // Try to match exact arch
+                Build.SUPPORTED_ABIS.forEach { arch ->
+                    apks.forEach { apk ->
+                        if (apk.browser_download_url.contains(arch, true)) {
+                            return apk.browser_download_url
+                        }
+                    }
+                }
+                // Try to match arm64
+                if (Build.SUPPORTED_ABIS.contains("arm64-v8a")) {
+                    apks.forEach { apk ->
+                        if (apk.browser_download_url.contains("arm64", true)) {
+                            return apk.browser_download_url
+                        }
+                    }
+                }
+                // Try to match arm
+                if (Build.SUPPORTED_ABIS.contains("armeabi-v7a")) {
+                    apks.forEach { apk ->
+                        if (apk.browser_download_url.contains("arm", true)) {
+                            return apk.browser_download_url
+                        }
+                    }
+                }
+                // If no match, return biggest apk in the hope it's universal
+                return apks.maxByOrNull { it.size }?.browser_download_url.orEmpty()
+            }
+        }
+
+    }
 
 }

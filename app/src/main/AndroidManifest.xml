@@ -21,7 +21,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
-        android:banner="@mipmap/ic_launcher"
+        android:banner="@drawable/banner"
         tools:targetApi="34"
     >
         <activity

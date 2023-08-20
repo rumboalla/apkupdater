@@ -1,0 +1,65 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKAtualizador</string>
+    <string name="tab_apps">"Apps"</string>
+    <string name="tab_search">"Procurar"</string>
+    <string name="tab_updates">"Atualizações"</string>
+    <string name="tab_settings">"Configurações"</string>
+    <string name="something_went_wrong">"Aconteceu algo de errado\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">"Ignorar app"</string>
+    <string name="unignore_cd">"Não ignorar app"</string>
+    <string name="refresh_updates">"Procurar atualizações"</string>
+    <string name="exclude_system_apps">"Excluir apps do sistema"</string>
+    <string name="include_system_apps">"Incluir apps do sistema"</string>
+    <string name="exclude_app_store">"Excluir App Store"</string>
+    <string name="include_app_store">"Incluir App Store"</string>
+    <string name="exclude_disabled_apps">"Excluir apps desativadas"</string>
+    <string name="include_disabled_apps">"Incluir apps desativadas"</string>
+    <string name="install_cd">"Instalar app"</string>
+    <string name="app_cd">"App ícone"</string>
+    <string name="install_success">"%1$s instalada."</string>
+    <string name="install_failure">"%1$s falhou a instalação."</string>
+
+        // Settings
+    <string name="settings_portrait_columns">"Colunas em modo retrato"</string>
+    <string name="settings_landscape_columns">"Colunas em modo paisagem"</string>
+    <string name="settings_sources">"Código fonte"</string>
+    <string name="settings_ui">"UI"</string>
+    <string name="settings_alarm">"Alarme"</string>
+    <string name="settings_options">"Opções"</string>
+    <string name="settings_hour">"Hora do alarme"</string>
+    <string name="settings_alarm_daily">"Diário"</string>
+    <string name="settings_alarm_3day">"3-Dias"</string>
+    <string name="settings_alarm_weekly">"Semanalmente"</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">"Ignorar alpha"</string>
+    <string name="ignore_beta">"Ignorar beta"</string>
+    <string name="ignore_preRelease">"Ignorar pré-lançamento"</string>
+    <string name="use_safe_stores">"Utilizar lojas seguras (Aptoide)"</string>
+    <string name="root_install">"Instalação root"</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid (Principal)</string>
+    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="about">"Sobre"</string>
+    <string name="frequency">"Frequência"</string>
+    <string name="theme">"Tema"</string>
+    <string name="theme_system">"Sistema"</string>
+    <string name="theme_dark">"Escuro"</string>
+    <string name="theme_light">"Claro"</string>
+    <string name="about_github">"Obter código fonte, reportar bugs, requisitar novas funcionalidades e traduções."</string>
+    <string name="about_donate">"Se gostas da app, considera fazer um donativo para uma causa justa."</string>
+
+        // Notifications
+    <string name="notification_channel_name">Atualizações</string>
+    <string name="notification_channel_description">Canal para notificações de atualizações.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Atualizações</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Nenhuma atualização encontrada.</item>
+        <item quantity="one">Encontrada %1$d atualização.</item>
+        <item quantity="other">Encontradas %1$d atualizações.</item>
+    </plurals>
+
+</resources>

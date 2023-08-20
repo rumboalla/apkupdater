@@ -46,7 +46,9 @@ class UpdatesWorker(
 
     override suspend fun doWork(): Result {
         updatesRepository.updates().collect {
-            notification.showUpdateNotification(it.size)
+            if (it.isNotEmpty()) {
+                notification.showUpdateNotification(it.size)
+            }
         }
         return Result.success()
     }

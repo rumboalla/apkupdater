@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apkupdater.data.snack.InstallSnack
 import com.apkupdater.data.ui.ApkMirrorSource
+import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.Downloader
@@ -35,10 +36,10 @@ abstract class InstallViewModel(
     }
 
     protected fun subscribeToInstallLog(
-        block: (Boolean, Int) -> Unit
+        block: (AppInstallStatus) -> Unit
     ) = viewModelScope.launch(Dispatchers.IO) {
         mainViewModel.appInstallLog.collect {
-            block(it.success, it.id)
+            block(it)
             if (it.success) {
                 finishInstall(it.id).join()
             } else {
@@ -66,9 +67,11 @@ abstract class InstallViewModel(
         }
     }
 
-    protected fun sendInstallSnack(updates: List<AppUpdate>, success: Boolean, id: Int) {
-        updates.find { id == it.id && it.isInstalling }?.let { app ->
-            mainViewModel.sendSnack(InstallSnack(success, app.name))
+    protected fun sendInstallSnack(updates: List<AppUpdate>, log: AppInstallStatus) {
+        if (log.snack) {
+            updates.find { log.id == it.id }?.let { app ->
+                mainViewModel.sendSnack(InstallSnack(log.success, app.name))
+            }
         }
     }
 

@@ -66,7 +66,7 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 	fun changeUpdatesBadge(number: String) = changeBadge(Screen.Updates.route, number)
 
 	fun cancelCurrentInstall() = viewModelScope.launch(Dispatchers.IO) {
-		appInstallLog.emit(AppInstallStatus(false, currentInstallId))
+		appInstallLog.emit(AppInstallStatus(false, currentInstallId, false))
 	}
 
 	fun processIntent(

@@ -29,8 +29,8 @@ class UpdatesViewModel(
 	private val state = MutableStateFlow<UpdatesUiState>(UpdatesUiState.Loading)
 
 	init {
-		subscribeToInstallLog { success, id ->
-			sendInstallSnack(state.value.updates(), success, id)
+		subscribeToInstallLog { log ->
+			sendInstallSnack(state.value.updates(), log)
 		}
 	}
 
