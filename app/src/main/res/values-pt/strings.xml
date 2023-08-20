@@ -20,18 +20,18 @@
     <string name="install_success">"%1$s instalada."</string>
     <string name="install_failure">"%1$s falhou a instalação."</string>
 
-        // Settings
+    // Settings
     <string name="settings_portrait_columns">"Colunas em modo retrato"</string>
     <string name="settings_landscape_columns">"Colunas em modo paisagem"</string>
-    <string name="settings_sources">"Código fonte"</string>
-    <string name="settings_ui">"UI"</string>
+    <string name="settings_sources">"Fontes"</string>
+    <string name="settings_ui">"Interface"</string>
     <string name="settings_alarm">"Alarme"</string>
     <string name="settings_options">"Opções"</string>
-    <string name="settings_hour">"Hora do alarme"</string>
+    <string name="settings_hour">"Intervalo de horas"</string>
     <string name="settings_alarm_daily">"Diário"</string>
-    <string name="settings_alarm_3day">"3-Dias"</string>
+    <string name="settings_alarm_3day">"Cada 3 dias"</string>
     <string name="settings_alarm_weekly">"Semanalmente"</string>
-    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV</string>
     <string name="ignore_alpha">"Ignorar alpha"</string>
     <string name="ignore_beta">"Ignorar beta"</string>
     <string name="ignore_preRelease">"Ignorar pré-lançamento"</string>
@@ -51,7 +51,7 @@
     <string name="about_github">"Obter código fonte, reportar bugs, requisitar novas funcionalidades e traduções."</string>
     <string name="about_donate">"Se gostas da app, considera fazer um donativo para uma causa justa."</string>
 
-        // Notifications
+    // Notifications
     <string name="notification_channel_name">Atualizações</string>
     <string name="notification_channel_description">Canal para notificações de atualizações.</string>
     <string name="notification_channel_id" translatable="false">updateChannel</string>
