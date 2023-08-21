@@ -16,7 +16,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * Supports **installs without user interaction** on Android 12+.
 * **Root install** of updates.
 * No ads. No tracking.
-* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Simplified Chinese, Romanian, Italian, Portuguese.
+* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Simplified Chinese, Romanian, Italian, Portuguese, Russian.
 
 # Download
 * [Beta Release (3.0.0-beta-05)](https://github.com/rumboalla/apkupdater/releases/latest/download/com.apkupdater-release.apk)
@@ -32,6 +32,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 * Romanian by [StormProductionsMusic](https://github.com/StormProductionsMusic)
 * Italian by [NicKoehler](https://github.com/NicKoehler)
 * Portuguese by [zekabra](https://github.com/zekabra)
+* Russian by [Xenorant](https://github.com/Xenorant)
 
 # Feedback
 - To give feedback and request new features go to [Discussions](https://github.com/rumboalla/apkupdater/discussions).
