@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
@@ -40,6 +41,7 @@ import com.apkupdater.BuildConfig
 import com.apkupdater.R
 import com.apkupdater.data.ui.GitHubSource
 import com.apkupdater.data.ui.SettingsUiState
+import com.apkupdater.ui.component.DropDownSetting
 import com.apkupdater.ui.component.LargeTitle
 import com.apkupdater.ui.component.LoadingImageApp
 import com.apkupdater.ui.component.MediumText
@@ -49,6 +51,7 @@ import com.apkupdater.ui.component.SliderSetting
 import com.apkupdater.ui.component.SourceIcon
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.theme.statusBarColor
+import com.apkupdater.util.isAndroidTv
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -256,14 +259,24 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			text = stringResource(R.string.settings_alarm),
 			icon = R.drawable.ic_alarm
 		)
-		SliderSetting(
-			getValue = { viewModel.getAlarmHour().toFloat() },
-			setValue = { viewModel.setAlarmHour(it.toInt()) },
-			text = stringResource(R.string.settings_hour),
-			valueRange = 0f..23f,
-			steps = 23,
-			R.drawable.ic_hour
-		)
+		if (LocalContext.current.isAndroidTv()) {
+			DropDownSetting(
+				text = stringResource(R.string.settings_hour),
+				options = (0..23).map { it.toString() },
+				getValue = { viewModel.getAlarmHour() },
+				setValue = { viewModel.setAlarmHour(it) },
+				icon = R.drawable.ic_hour
+			)
+		} else {
+			SliderSetting(
+				getValue = { viewModel.getAlarmHour().toFloat() },
+				setValue = { viewModel.setAlarmHour(it.toInt()) },
+				text = stringResource(R.string.settings_hour),
+				valueRange = 0f..23f,
+				steps = 23,
+				R.drawable.ic_hour
+			)
+		}
 		SegmentedButtonSetting(
 			stringResource(R.string.frequency),
 			listOf(
