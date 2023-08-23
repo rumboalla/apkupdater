@@ -18,6 +18,7 @@ import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.service.AptoideService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
+import com.apkupdater.util.Clipboard
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
 import com.apkupdater.util.UpdatesNotification
@@ -136,6 +137,8 @@ val mainModule = module {
 
 	single { Downloader(get()) }
 
+	single { Clipboard(androidContext()) }
+
 	single { SessionInstaller(get()) }
 
 	viewModel { MainViewModel(get()) }
@@ -144,7 +147,7 @@ val mainModule = module {
 
 	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get(), get(), get()) }
 
-	viewModel { parameters -> SettingsViewModel(parameters.get(), get(), get(), WorkManager.getInstance(get())) }
+	viewModel { parameters -> SettingsViewModel(parameters.get(), get(), get(), WorkManager.getInstance(get()), get(), get()) }
 
 	viewModel { parameters -> SearchViewModel(parameters.get(), get(), get(), get(), get()) }
 

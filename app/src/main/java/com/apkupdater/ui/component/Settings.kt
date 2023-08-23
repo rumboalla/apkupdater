@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
@@ -40,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -237,5 +240,24 @@ fun TextFieldSetting(
         },
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
     )
+}
 
+@Composable
+fun ButtonSetting(
+    text: String,
+    onClick: () -> Unit,
+    @DrawableRes icon: Int,
+    @DrawableRes iconButton: Int
+) = Row(
+    Modifier
+        .fillMaxWidth()
+        .height(70.dp)
+        .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
+) {
+    Icon(painterResource(id = icon), text, Modifier.align(CenterVertically))
+    Text(text, Modifier.align(CenterVertically).padding(start = 16.dp))
+    Spacer(Modifier.weight(1f))
+    IconButton(onClick = onClick) {
+        Icon(painterResource(iconButton), stringResource(R.string.copy_to_clipboard))
+    }
 }

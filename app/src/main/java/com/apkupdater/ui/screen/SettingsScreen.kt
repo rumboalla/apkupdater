@@ -41,6 +41,7 @@ import com.apkupdater.BuildConfig
 import com.apkupdater.R
 import com.apkupdater.data.ui.GitHubSource
 import com.apkupdater.data.ui.SettingsUiState
+import com.apkupdater.ui.component.ButtonSetting
 import com.apkupdater.ui.component.DropDownSetting
 import com.apkupdater.ui.component.LargeTitle
 import com.apkupdater.ui.component.LoadingImageApp
@@ -289,8 +290,16 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_frequency
 		)
 	}
+	item {
+		LargeTitle(stringResource(R.string.settings_utils), Modifier.padding(start = 16.dp, top = 16.dp))
+		ButtonSetting(
+			stringResource(R.string.copy_app_list),
+			{ viewModel.copyAppList() },
+			R.drawable.ic_root,
+			R.drawable.ic_copy
+		)
+	}
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

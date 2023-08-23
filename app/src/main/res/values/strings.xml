@@ -27,6 +27,7 @@
     <string name="settings_ui">UI</string>
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Options</string>
+    <string name="settings_utils">Utils</string>
     <string name="settings_hour">Alarm Hour</string>
     <string name="settings_alarm_daily">Daily</string>
     <string name="settings_alarm_3day">3-Day</string>
@@ -50,6 +51,8 @@
     <string name="theme_light">Light</string>
     <string name="about_github">Get the source code, report bugs, request new features and add translations.</string>
     <string name="about_donate">If you like the app, consider donating to a worthy cause.</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="copy_app_list">Copy App List</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
