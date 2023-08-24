@@ -2,8 +2,6 @@ package com.apkupdater.ui.component
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -119,16 +117,20 @@ fun ScrollableText(
     val outer = remember { mutableStateOf(IntSize.Zero) }
 
     val effect: suspend (ScrollState) -> Unit = {
-        it.scrollTo(0)
+        state.scrollTo(0)
         val scroll = (inner.value.width - outer.value.width)
         if (scroll > 0) {
-            it.animateScrollTo(
-                scroll,
-                infiniteRepeatable(
-                    animation = tween(durationMillis = scroll * 10, easing = LinearEasing),
-                    repeatMode = RepeatMode.Reverse
+            while(true) {
+                state.animateScrollTo(
+                    scroll,
+                    tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
                 )
-            )
+                state.animateScrollTo(
+                    0,
+                    tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
+                )
+            }
+
         }
     }
     LaunchedEffect(outer.value) { effect(state) }

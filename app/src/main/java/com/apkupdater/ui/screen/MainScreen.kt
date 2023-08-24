@@ -56,6 +56,7 @@ import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -63,7 +64,6 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 
 @Composable
@@ -148,7 +148,7 @@ suspend fun handleSnack(
 
 @Composable
 fun <T> Flow<T>.CollectAsEffect(
-	context: CoroutineContext = EmptyCoroutineContext,
+	context: CoroutineContext = Dispatchers.IO,
 	block: suspend (T) -> Unit
 ) {
 	LaunchedEffect(Unit) {

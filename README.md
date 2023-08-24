@@ -8,7 +8,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * **Update Sources**: Find updates from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
 * **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
 * Schedule **background update checks** and receive a **notification** when updates are found.
-* Supports **Android 7.0** (**24**) to **Android 14** (**34**).
+* Supports **Android 5** (**21**) to **Android 14** (**34**).
 * Supports **Android TV**.
 * **Material Design 3** with **Dark**, **Light** and **System** theme support.
 * Supports **Material You** on Android 12+.

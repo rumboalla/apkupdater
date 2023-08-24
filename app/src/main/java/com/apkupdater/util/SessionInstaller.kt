@@ -29,7 +29,10 @@ class SessionInstaller(private val context: Context) {
         val packageInstaller: PackageInstaller = context.packageManager.packageInstaller
         val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
         params.setAppPackageName(packageName)
-        params.setOriginatingUid(android.os.Process.myUid())
+
+        if (Build.VERSION.SDK_INT > 24) {
+            params.setOriginatingUid(android.os.Process.myUid())
+        }
 
         if (Build.VERSION.SDK_INT >= 31) {
             params.setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED)

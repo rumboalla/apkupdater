@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.apkupdater"
-        minSdk 24
+        minSdk 21
         targetSdk 34
         versionCode 48
         versionName "3.0.0-beta-05"

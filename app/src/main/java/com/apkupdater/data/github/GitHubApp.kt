@@ -20,5 +20,11 @@ val GitHubApps = listOf(
     GitHubApp("com.fsck.k9", "thundernest", "k-9"),
     GitHubApp("de.tutao.tutanota", "tutao", "tutanota"),
     GitHubApp("com.shabinder.spotiflyer", "Shabinder", "SpotiFlyer"),
-    GitHubApp("org.koreader.launcher", "koreader", "koreader")
+    GitHubApp("org.koreader.launcher", "koreader", "koreader"),
+    GitHubApp("org.koreader.launcher", "koreader", "koreader"),
+    GitHubApp("com.amaze.filemanager", "TeamAmaze", "AmazeFileManager"),
+    GitHubApp("me.zhanghai.android.files", "zhanghai", "MaterialFiles"),
+    GitHubApp("dev.ukanth.ufirewall", "ukanth", "afwall"),
+    GitHubApp("com.ichi2.anki", "ankidroid", "Anki-Android"),
+    GitHubApp("com.simplemobiletools.flashlight", "SimpleMobileTools", "Simple-Flashlight")
 )
