@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Uygulamalar</string>
+    <string name="tab_search">Ara</string>
+    <string name="tab_updates">Güncellemeler</string>
+    <string name="tab_settings">Ayarlar</string>
+    <string name="something_went_wrong">"Bir şeyler yanlış gitti\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">Uygulamayı Yoksay</string>
+    <string name="unignore_cd">Uygulamayı Yoksayılanlardan Çıkar</string>
+    <string name="refresh_updates">Güncellemeleri Denetle</string>
+    <string name="exclude_system_apps">Sistem Uygulamalarını Hariç Tut</string>
+    <string name="include_system_apps">Sistem Uygulamalarını Dahil Et</string>
+    <string name="exclude_app_store">Play Store\'dan Yüklenmiş Uygulamaları Hariç Tut</string>
+    <string name="include_app_store">Play Store\'dan Yüklenmiş Uygulamaları Dahil Et</string>
+    <string name="exclude_disabled_apps">Devre Dışı Bırakılan Uygulamaları Hariç Tut</string>
+    <string name="include_disabled_apps">Devre Dışı Bırakılan Uygulamaları Dahil Et</string>
+    <string name="install_cd">Uygulamayı Yükle</string>
+    <string name="app_cd">Uygulama İkonu</string>
+    <string name="install_success">%1$s uygulamaaı başarıyla yüklendi.</string>
+    <string name="install_failure">%1$s uygulaması yüklenemedi.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Dikey Sütun Sayısı</string>
+    <string name="settings_landscape_columns">Yatay Sütun Sayısı</string>
+    <string name="settings_sources">Kaynaklar</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarm</string>
+    <string name="settings_options">Seçenekler</string>
+    <string name="settings_utils">Araçlar</string>
+    <string name="settings_hour">Alarm Saati</string>
+    <string name="settings_alarm_daily">Günlük</string>
+    <string name="settings_alarm_3day">3-Gün</string>
+    <string name="settings_alarm_weekly">Haftalık</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">Alpha sürümleri görmezden gel</string>
+    <string name="ignore_beta">Beta sürümleri görmezden gel</string>
+    <string name="ignore_preRelease">Ön sürümleri görmezden gel</string>
+    <string name="use_safe_stores">Güvenli mağazaları kullan (Aptoide)</string>
+    <string name="root_install">Root ile yükleme</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid (Ana)</string>
+    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="about">Hakkında</string>
+    <string name="frequency">Sıklık</string>
+    <string name="theme">Tema</string>
+    <string name="theme_system">Sistem</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="theme_light">Açık</string>
+    <string name="about_github">Kaynak kodlarına göz atın, hata bildirin, yeni özellikler isteyin ve çeviri ekleyin.</string>
+    <string name="about_donate">Uygulamayı seviyorsanız, bağış yapmayı düşünebilirsiniz.</string>
+    <string name="copy_to_clipboard">Panoya kopyala</string>
+    <string name="copy_app_list">Uygulama Listesini Kopyala</string>
+
+    // Notifications
+    <string name="notification_channel_name">Güncellemeler</string>
+    <string name="notification_channel_description">Güncelleme bildirimleri için kanal</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Güncellemeler</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Hiçbir güncelleme bulunamadı.</item>
+        <item quantity="one">%1$d güncelleme bulundu.</item>
+        <item quantity="other">%1$d güncelleme bulundu.</item>
+    </plurals>
+
+</resources>
