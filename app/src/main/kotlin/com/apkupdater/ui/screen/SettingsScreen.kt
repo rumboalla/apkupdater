@@ -25,6 +25,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -148,28 +150,34 @@ fun AboutItem(
 fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 	item {
 		LargeTitle(stringResource(R.string.settings_ui), Modifier.padding(start = 16.dp, top = 16.dp))
+		val tvUi = remember { mutableStateOf(viewModel.getAndroidTvUi()) }
 		SwitchSetting(
 			getValue = { viewModel.getAndroidTvUi() },
-			setValue = { viewModel.setAndroidTvUi(it) },
+			setValue = {
+				viewModel.setAndroidTvUi(it)
+				tvUi.value = it
+		   	},
 			text = stringResource(R.string.settings_android_tv_ui),
 			icon = R.drawable.ic_androidtv
 		)
-		SliderSetting(
-			{ viewModel.getPortraitColumns().toFloat() },
-			{ viewModel.setPortraitColumns(it.toInt()) },
-			stringResource(R.string.settings_portrait_columns),
-			1f..4f,
-			2,
-			R.drawable.ic_portrait
-		)
-		SliderSetting(
-			{ viewModel.getLandscapeColumns().toFloat() },
-			{ viewModel.setLandscapeColumns(it.toInt()) },
-			stringResource(R.string.settings_landscape_columns),
-			1f..8f,
-			6,
-			R.drawable.ic_landscape
-		)
+		if (!tvUi.value) {
+			SliderSetting(
+				{ viewModel.getPortraitColumns().toFloat() },
+				{ viewModel.setPortraitColumns(it.toInt()) },
+				stringResource(R.string.settings_portrait_columns),
+				1f..4f,
+				2,
+				R.drawable.ic_portrait
+			)
+			SliderSetting(
+				{ viewModel.getLandscapeColumns().toFloat() },
+				{ viewModel.setLandscapeColumns(it.toInt()) },
+				stringResource(R.string.settings_landscape_columns),
+				1f..8f,
+				6,
+				R.drawable.ic_landscape
+			)
+		}
 		SegmentedButtonSetting(
 			stringResource(R.string.theme),
 			listOf(
