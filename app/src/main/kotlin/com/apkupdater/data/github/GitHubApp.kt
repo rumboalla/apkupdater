@@ -28,5 +28,7 @@ val GitHubApps = listOf(
     GitHubApp("com.simplemobiletools.flashlight", "SimpleMobileTools", "Simple-Flashlight"),
     GitHubApp("ru.tech.imageresizershrinker", "T8RIN", "ImageToolbox"),
     GitHubApp("com.zhenxiang.superimage", "Lucchetto", "SuperImage"),
-    GitHubApp("me.rosuh.easywatermark", "rosuH", "EasyWatermark")
+    GitHubApp("me.rosuh.easywatermark", "rosuH", "EasyWatermark"),
+    GitHubApp("deckers.thibault.aves", "deckerst", "aves"),
+    GitHubApp("com.simplemobiletools.gallery.pro", "SimpleMobileTools", "Simple-Gallery")
 )
