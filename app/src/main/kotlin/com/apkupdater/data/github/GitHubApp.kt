@@ -30,5 +30,6 @@ val GitHubApps = listOf(
     GitHubApp("com.zhenxiang.superimage", "Lucchetto", "SuperImage"),
     GitHubApp("me.rosuh.easywatermark", "rosuH", "EasyWatermark"),
     GitHubApp("deckers.thibault.aves", "deckerst", "aves"),
-    GitHubApp("com.simplemobiletools.gallery.pro", "SimpleMobileTools", "Simple-Gallery")
+    GitHubApp("com.simplemobiletools.gallery.pro", "SimpleMobileTools", "Simple-Gallery"),
+    GitHubApp("org.cromite.cromite", "uazo", "cromite")
 )
