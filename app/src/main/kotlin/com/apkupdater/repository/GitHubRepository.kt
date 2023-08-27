@@ -170,6 +170,14 @@ class GitHubRepository(
                         }
                     }
                 }
+                // Try to match x64
+                if (Build.SUPPORTED_ABIS.contains("x86_64")) {
+                    apks.forEach { apk ->
+                        if (apk.browser_download_url.contains("x64", true)) {
+                            return apk.browser_download_url
+                        }
+                    }
+                }
                 // Try to match arm
                 if (Build.SUPPORTED_ABIS.contains("armeabi-v7a")) {
                     apks.forEach { apk ->

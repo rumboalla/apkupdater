@@ -31,5 +31,8 @@ val GitHubApps = listOf(
     GitHubApp("me.rosuh.easywatermark", "rosuH", "EasyWatermark"),
     GitHubApp("deckers.thibault.aves", "deckerst", "aves"),
     GitHubApp("com.simplemobiletools.gallery.pro", "SimpleMobileTools", "Simple-Gallery"),
-    GitHubApp("org.cromite.cromite", "uazo", "cromite")
+    GitHubApp("org.cromite.cromite", "uazo", "cromite"),
+    GitHubApp("de.grobox.liberario", "grote", "Transportr"),
+    GitHubApp("app.organicmaps", "organicmaps", "organicmaps"),
+    GitHubApp("com.kylecorry.trail_sense", "kylecorry31", "Trail-Sense")
 )
