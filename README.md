@@ -44,7 +44,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 | ![1](https://github.com/rumboalla/apkupdater/assets/21153554/b5b4943b-e12a-43e2-a056-26d6f06f9bc4) | ![2](https://github.com/rumboalla/apkupdater/assets/21153554/c4679c1b-09d4-429d-9160-77d4d33b0a0f) | ![3](https://github.com/rumboalla/apkupdater/assets/21153554/7b89c5a6-672c-44e4-836e-e01f51f33591) | ![4](https://github.com/rumboalla/apkupdater/assets/21153554/7ec15783-e719-4feb-9e07-a14c0f1defcc) |
 |----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 
-| ![5](https://github.com/rumboalla/apkupdater/assets/21153554/bbf1132a-b0b6-4890-aed7-8fe95c0da11b) | ![6](https://github.com/rumboalla/apkupdater/assets/21153554/32236bfb-b53e-4999-8363-e957fa8f77a9) |
+| ![5](https://github.com/rumboalla/apkupdater/assets/21153554/32236bfb-b53e-4999-8363-e957fa8f77a9) | ![6](https://github.com/rumboalla/apkupdater/assets/21153554/bbf1132a-b0b6-4890-aed7-8fe95c0da11b) |
 |----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 
 # Other Projects
