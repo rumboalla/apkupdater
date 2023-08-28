@@ -40,10 +40,11 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 - To report bugs, crashes, typos and translations go to [Issues](https://github.com/rumboalla/apkupdater/issues).
 
 # Screenshots
-| ![1](https://github.com/rumboalla/apkupdater/assets/21153554/d881f850-797b-4acb-bfbf-6c9371841400) | ![2](https://github.com/rumboalla/apkupdater/assets/21153554/ff44772f-2114-4722-821c-e1f552e282a4) | ![3](https://github.com/rumboalla/apkupdater/assets/21153554/09dd649d-3488-4c26-aac1-e1d736a0be88) | ![4](https://github.com/rumboalla/apkupdater/assets/21153554/c1bf5cc2-0ddf-4739-972d-49eeaaeba120) |
+
+| ![1](https://github.com/rumboalla/apkupdater/assets/21153554/b6d7b7ca-fec3-476e-aedd-2dae3a973b47) | ![2](https://github.com/rumboalla/apkupdater/assets/21153554/c4679c1b-09d4-429d-9160-77d4d33b0a0f) | ![3](https://github.com/rumboalla/apkupdater/assets/21153554/7b89c5a6-672c-44e4-836e-e01f51f33591) | ![4](https://github.com/rumboalla/apkupdater/assets/21153554/7ec15783-e719-4feb-9e07-a14c0f1defcc) |
 |----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 
-| ![5](https://github.com/rumboalla/apkupdater/assets/21153554/b6ef8b65-6483-482c-a363-220d70dd1f13) | ![6](https://github.com/rumboalla/apkupdater/assets/21153554/e02fb243-12db-47df-8927-fca6e247eca0) |
+| ![5](https://github.com/rumboalla/apkupdater/assets/21153554/bbf1132a-b0b6-4890-aed7-8fe95c0da11b) | ![6](https://github.com/rumboalla/apkupdater/assets/21153554/32236bfb-b53e-4999-8363-e957fa8f77a9) |
 |----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 
 # Other Projects
