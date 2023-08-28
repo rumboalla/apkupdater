@@ -15,8 +15,8 @@ android {
         applicationId = "com.apkupdater"
         minSdk = 21
         targetSdk = 34
-        versionCode = 48
-        versionName = "3.0.0-beta-05"
+        versionCode = 49
+        versionName = "3.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -85,7 +85,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation("androidx.compose.ui:ui:1.5.0")
     implementation("androidx.tv:tv-foundation:1.0.0-alpha08")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha06")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha05")
     implementation("androidx.work:work-runtime-ktx:2.8.1")
     implementation("io.insert-koin:koin-android:3.4.2")
     implementation("io.insert-koin:koin-androidx-compose:3.4.2")

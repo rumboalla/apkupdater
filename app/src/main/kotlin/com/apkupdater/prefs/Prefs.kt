@@ -20,7 +20,7 @@ class Prefs(
 	val ignoreBeta = boolean("ignoreBeta", defValue = true, backed = true)
 	val ignorePreRelease = boolean("ignorePreRelease", defValue = true, backed = true)
 	val useSafeStores = boolean("useSafeStores", defValue = true, backed = true)
-	val useApkMirror = boolean("useApkMirror", defValue = true, backed = true)
+	val useApkMirror = boolean("useApkMirror", defValue = !isAndroidTv, backed = true)
 	val useGitHub = boolean("useGitHub", defValue = true, backed = true)
 	val useFdroid = boolean("useFdroid", defValue = true, backed = true)
 	val useIzzy = boolean("useIzzy", defValue = true, backed = true)

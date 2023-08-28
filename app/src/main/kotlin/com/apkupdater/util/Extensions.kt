@@ -12,6 +12,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.ui.Modifier
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.core.content.ContextCompat
+import com.apkupdater.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -55,7 +58,12 @@ fun Boolean?.orFalse() = this ?: false
 
 fun PackageInfo.name(context: Context) = applicationInfo.loadLabel(context.packageManager).toString()
 
-fun Context.getAppIcon(packageName: String) = packageManager.getApplicationIcon(packageName)
+fun Context.getAppIcon(packageName: String) = runCatching {
+	packageManager.getApplicationIcon(packageName)
+}.getOrElse {
+	Log.e("getAppIcon", "App not found. Uninstalled most likely.")
+	ContextCompat.getDrawable(this, R.drawable.ic_root)
+}
 
 fun Context.getAppName(packageName: String): String = packageManager.getPackageInfo(packageName, 0).name(this)
 
