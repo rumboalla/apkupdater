@@ -34,5 +34,9 @@ val GitHubApps = listOf(
     GitHubApp("org.cromite.cromite", "uazo", "cromite"),
     GitHubApp("de.grobox.liberario", "grote", "Transportr"),
     GitHubApp("app.organicmaps", "organicmaps", "organicmaps"),
-    GitHubApp("com.kylecorry.trail_sense", "kylecorry31", "Trail-Sense")
+    GitHubApp("com.kylecorry.trail_sense", "kylecorry31", "Trail-Sense"),
+    GitHubApp("com.arjanvlek.oxygenupdater", "oxygen-updater", "oxygen-updater"),
+    GitHubApp("com.beemdevelopment.aegis", "beemdevelopment", "Aegis"),
+    GitHubApp("code.name.monkey.retromusic", "RetroMusicPlayer", "RetroMusicPlayer"),
+    GitHubApp("org.blokada.origin.alarm", "blokadaorg", "blokada")
 )
