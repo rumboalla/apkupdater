@@ -43,6 +43,8 @@
     <string name="theme_light">Licht</string>
     <string name="about_github">Verkrijg de broncode, rapporteer bugs, vraag nieuwe functies aan en voeg vertalingen toe.</string>
     <string name="about_donate">Als je de app leuk vindt, overweeg dan om te doneren aan een goed doel.</string>
+    <string name="copy_to_clipboard">Kopieer naar klembord</string>
+    <string name="copy_app_list">Kopieer applicatielijst</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
