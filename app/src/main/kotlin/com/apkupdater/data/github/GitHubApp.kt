@@ -58,7 +58,7 @@ val GitHubApps = listOf(
     GitHubApp("com.xBrowserSync.android", "xbrowsersync", "app"),
     GitHubApp("de.moekadu.metronome", "thetwom", "toc2"),
     GitHubApp("de.moekadu.tuner", "thetwom", "Tuner"),
-    GithubApp("com.github.libretube", "libre-tube", "LibreTube")
+    GithubApp("com.github.libretube", "libre-tube", "LibreTube"),
+    GithubApp("jp.panta.misskeyandroidclient", "pantasystem", "Milktea")
 
-)
 )
