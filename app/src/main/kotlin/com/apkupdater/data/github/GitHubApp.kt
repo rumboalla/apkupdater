@@ -68,6 +68,7 @@ val GitHubApps = listOf(
     GithubApp("eu.kanade.tachiyomi.sy", "jobobby04", "TachiyomiSY"),
     GithubApp("xyz.jmir.tachiyomi.mi", "aniyomiorg", "aniyomi"),
     GithubApp("xyz.jmir.tachiyomi.mi.debug", "aniyomiorg", "aniyomi-preview"),
-    GithubApp("org.localsend.localsend_app", "localsend", "localsend")
+    GithubApp("org.localsend.localsend_app", "localsend", "localsend"),
+    GithubApp("com.utopia.pxviewr", "alphasp", "pxview")
 
 )
