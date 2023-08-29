@@ -62,6 +62,7 @@ val GitHubApps = listOf(
     GithubApp("jp.panta.misskeyandroidclient", "pantasystem", "Milktea"),
     GithubApp("info.shiosyakeyakini.miria", "shiosyakeyakini-info", "miria"),
     GithubApp("eu.kanade.tachiyomi", "tachiyomiorg", "tachiyomi"),
-    GithubApp("tachiyomi.mangadex", "CarlosEsco", "Neko")
+    GithubApp("tachiyomi.mangadex", "CarlosEsco", "Neko"),
+    GithubApp("eu.kanade.tachiyomi.j2k", "Jays2Kings", "tachiyomiJ2K")
 
 )
