@@ -18,9 +18,9 @@
     <string name="include_disabled_apps">Deaktivierte Apps überprüfen</string>
     <string name="install_cd">Installieren</string>
     <string name="app_cd">App-Icon</string>
-	<string name="install_success">%1$s installiert.</string>
-	<string name="install_failure">%1$s wurde nicht installiert.</string>
-	
+    <string name="install_success">%1$s installiert.</string>
+    <string name="install_failure">%1$s wurde nicht installiert.</string>
+
     // Settings
     <string name="settings_portrait_columns">Anzahl der Spalten</string>
     <string name="settings_landscape_columns">Anzahl der Zeilen</string>
@@ -28,6 +28,7 @@
     <string name="settings_ui">Benutzeroberfläche</string>
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Optionen</string>
+    <string name="settings_utils">Hilfsmittel</string>
     <string name="settings_hour">Alarmzeit</string>
     <string name="settings_alarm_daily">Täglich</string>
     <string name="settings_alarm_3day">3-Tägig</string>
@@ -39,8 +40,8 @@
     <string name="use_safe_stores">Sichere Stores nutzen (Aptoide)</string>
     <string name="root_install">Root-Installation</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
-	<string name="source_fdroid" translatable="false">F-Droid (Main)</string>
-	<string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
+    <string name="source_fdroid" translatable="false">F-Droid (Main)</string>
+    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
     <string name="about">Über</string>
@@ -49,11 +50,11 @@
     <string name="theme_system">System</string>
     <string name="theme_dark">Dunkel</string>
     <string name="theme_light">Hell</string>
-	<string name="about_github">Hol dir den Quellcode, melde Fehler und schlage Funktionen / Übersetzungen vor.</string>
-	<string name="about_donate">Wenn dir die App gefällt solltest du eine Spende in Betracht ziehen.</string>
+    <string name="about_github">Hol dir den Quellcode, melde Fehler und schlage Funktionen / Übersetzungen vor.</string>
+    <string name="about_donate">Wenn dir die App gefällt solltest du eine Spende in Betracht ziehen.</string>
     <string name="copy_to_clipboard">Kopiere in Zwischenablage</string>
     <string name="copy_app_list">App-Liste kopieren</string>
-	
+
     // Notifications
     <string name="notification_channel_name">Updates</string>
     <string name="notification_channel_description">Kanal für Update-Benachrichtigungen.</string>
