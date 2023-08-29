@@ -4,28 +4,29 @@
     <string name="tab_search">Cerca</string>
     <string name="tab_updates">Aggiornamenti</string>
     <string name="tab_settings">Impostazioni</string>
-    <string name="something_went_wrong">Qualcosa è andato storto</string>
+    <string name="something_went_wrong">Qualcosa è andato storto\n\uD83E\uDD26</string>
     <string name="ignore_cd">Ignora app</string>
-    <string name="unignore_cd">Considera app</string>
+    <string name="unignore_cd">Includi app</string>
     <string name="refresh_updates">Cerca aggiornamenti</string>
-    <string name="exclude_system_apps">Escludi app di sitema</string>
+    <string name="exclude_system_apps">Escludi app di sistema</string>
     <string name="include_system_apps">Includi app di sistema</string>
     <string name="exclude_app_store">Escludi app store</string>
     <string name="include_app_store">Includi app store</string>
-    <string name="exclude_disabled_apps">Escludi app disabilitate</string>
-    <string name="include_disabled_apps">Includi app disabilitate</string>
+    <string name="exclude_disabled_apps">Escludi app disattivate</string>
+    <string name="include_disabled_apps">Includi app disattivate</string>
     <string name="install_cd">Installa app</string>
     <string name="app_cd">Icona app</string>
     <string name="install_success">%1$s installate.</string>
-    <string name="install_failure">%1$s installazione fallita.</string>
+    <string name="install_failure">%1$s installazioni fallite.</string>
 
     // Settings
     <string name="settings_portrait_columns">Colonne verticali</string>
     <string name="settings_landscape_columns">Colonne orizzontali</string>
-    <string name="settings_sources">Sorgenti</string>
+    <string name="settings_sources">Fonti</string>
     <string name="settings_ui">Interfaccia grafica</string>
     <string name="settings_alarm">Notifiche</string>
     <string name="settings_options">Opzioni</string>
+    <string name="settings_utils">Utilità</string>
     <string name="settings_hour">Orario di notifica</string>
     <string name="settings_alarm_daily">Giornaliera</string>
     <string name="settings_alarm_3day">Ogni 3 giorni</string>
@@ -33,7 +34,7 @@
     <string name="ignore_alpha">Ignora Alpha</string>
     <string name="ignore_beta">Ignora Beta</string>
     <string name="ignore_preRelease">Ignora Pre-release</string>
-    <string name="use_safe_stores">Utilizza store sicuri (Aptoide)</string>
+    <string name="use_safe_stores">Usa store sicuri (Aptoide)</string>
     <string name="root_install">Installa con root</string>
     <string name="about">Informazioni</string>
     <string name="frequency">Frequenza</string>
@@ -42,11 +43,13 @@
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
     <string name="about_github">Ottieni il codice sorgente, segnala bug, richiedi nuove funzionalità e aggiungi traduzioni.</string>
-    <string name="about_donate">Se ti piace l\'applicazione, prendi in considerazione l\'idea di fare una donazione per una causa meritevole.</string>
+    <string name="about_donate">Se ti piace l\'applicazione, considera l\'idea di fare una donazione per una buona causa.</string>
+    <string name="copy_to_clipboard">Copia negli appunti</string>
+    <string name="copy_app_list">Copia lista app</string>
 
     // Notifications
     <string name="notification_channel_name">Aggiornamenti</string>
-    <string name="notification_channel_description">Canale di notifica per gli aggiornamenti</string>
+    <string name="notification_channel_description">Canale per notifiche di aggiornamento.</string>
     <string name="notification_update_title">Aggiornamenti</string>
     <plurals name="notification_update_description">
         <item quantity="zero">Nessun aggiornamento trovato.</item>
