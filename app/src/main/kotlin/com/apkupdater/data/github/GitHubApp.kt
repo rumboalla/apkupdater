@@ -68,5 +68,7 @@ val GitHubApps = listOf(
     GitHubApp("xyz.jmir.tachiyomi.mi", "aniyomiorg", "aniyomi"),
     GitHubApp("xyz.jmir.tachiyomi.mi.debug", "aniyomiorg", "aniyomi-preview"),
     GitHubApp("org.localsend.localsend_app", "localsend", "localsend"),
-    GitHubApp("com.utopia.pxviewr", "alphasp", "pxview")
+    GitHubApp("com.utopia.pxviewr", "alphasp", "pxview"),
+    GitHubApp("app.revanced.manager.flutter", "revanced", "revanced-manager"),
+    GitHubApp("com.mattermost.rn", "mattermost", "mattermost-mobile")
 )
