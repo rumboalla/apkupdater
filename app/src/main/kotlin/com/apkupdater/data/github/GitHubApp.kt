@@ -57,5 +57,16 @@ val GitHubApps = listOf(
     GitHubApp("com.simplemobiletools.voicerecorder", "SimpleMobileTools", "Simple-Voice-Recorder"),
     GitHubApp("com.xBrowserSync.android", "xbrowsersync", "app"),
     GitHubApp("de.moekadu.metronome", "thetwom", "toc2"),
-    GitHubApp("de.moekadu.tuner", "thetwom", "Tuner")
+    GitHubApp("de.moekadu.tuner", "thetwom", "Tuner"),
+    GithubApp("jp.panta.misskeyandroidclient", "pantasystem", "Milktea"),
+    GithubApp("info.shiosyakeyakini.miria", "shiosyakeyakini-info", "miria"),
+    GithubApp("eu.kanade.tachiyomi", "tachiyomiorg", "tachiyomi"),
+    GithubApp("tachiyomi.mangadex", "CarlosEsco", "Neko"),
+    GithubApp("eu.kanade.tachiyomi.j2k", "Jays2Kings", "tachiyomiJ2K"),
+    GithubApp("eu.kanade.tachiyomi.az", "az4521", "TachiyomiAZ"),
+    GithubApp("eu.kanade.tachiyomi.sy", "jobobby04", "TachiyomiSY"),
+    GithubApp("xyz.jmir.tachiyomi.mi", "aniyomiorg", "aniyomi"),
+    GithubApp("xyz.jmir.tachiyomi.mi.debug", "aniyomiorg", "aniyomi-preview"),
+    GithubApp("org.localsend.localsend_app", "localsend", "localsend"),
+    GithubApp("com.utopia.pxviewr", "alphasp", "pxview")
 )
