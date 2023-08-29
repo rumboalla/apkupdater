@@ -57,5 +57,8 @@ val GitHubApps = listOf(
     GitHubApp("com.simplemobiletools.voicerecorder", "SimpleMobileTools", "Simple-Voice-Recorder"),
     GitHubApp("com.xBrowserSync.android", "xbrowsersync", "app"),
     GitHubApp("de.moekadu.metronome", "thetwom", "toc2"),
-    GitHubApp("de.moekadu.tuner", "thetwom", "Tuner")
+    GitHubApp("de.moekadu.tuner", "thetwom", "Tuner"),
+    GithubApp("com.github.libretube", "libre-tube", "LibreTube")
+
+)
 )
