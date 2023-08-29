@@ -60,6 +60,7 @@ val GitHubApps = listOf(
     GitHubApp("de.moekadu.tuner", "thetwom", "Tuner"),
     GithubApp("com.github.libretube", "libre-tube", "LibreTube"),
     GithubApp("jp.panta.misskeyandroidclient", "pantasystem", "Milktea"),
-    GithubApp("info.shiosyakeyakini.miria", "shiosyakeyakini-info", "miria")
+    GithubApp("info.shiosyakeyakini.miria", "shiosyakeyakini-info", "miria"),
+    GithubApp("eu.kanade.tachiyomi", "tachiyomiorg", "tachiyomi")
 
 )
