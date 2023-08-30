@@ -23,7 +23,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Translations
-If you want to help with translations, open a [Pull Request](https://github.com/rumboalla/apkupdater/pulls) or an [Issue](https://github.com/rumboalla/apkupdater/issues) with the translated strings.xml
+If you want to help with translations, open a [Pull Request](https://github.com/rumboalla/apkupdater/pulls) or an [Issue](https://github.com/rumboalla/apkupdater/issues) with the translated [strings.xml](https://github.com/rumboalla/apkupdater/blob/3.x/app/src/main/res/values/strings.xml).
 
 * Dutch by [AnonymousWP](https://github.com/AnonymousWP)
 * German by [peat80](https://github.com/peat80)
