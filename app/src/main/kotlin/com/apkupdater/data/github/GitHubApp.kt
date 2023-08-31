@@ -70,5 +70,7 @@ val GitHubApps = listOf(
     GitHubApp("org.localsend.localsend_app", "localsend", "localsend"),
     GitHubApp("com.utopia.pxviewr", "alphasp", "pxview"),
     GitHubApp("app.revanced.manager.flutter", "revanced", "revanced-manager"),
-    GitHubApp("com.mattermost.rn", "mattermost", "mattermost-mobile")
+    GitHubApp("com.mattermost.rn", "mattermost", "mattermost-mobile"),
+    GitHubApp("com.looker.droidify", "Droid-ify", "client"),
+    GitHubApp("com.darkempire78.opencalculator", "Darkempire78", "OpenCalc")
 )
