@@ -1,12 +1,12 @@
 # APKUpdater [![](https://github.com/rumboalla/apkupdater/workflows/Android%20Build/badge.svg)](https://github.com/rumboalla/apkupdater/actions?query=workflow%3A%22Android+Build%22)
 **APKUpdater** is an open source tool that simplifies the process of **finding updates** for your installed apps.  
-It provides similar functionality to an app store, but instead of depending on a single source, it aggregates the results from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
+It provides similar functionality to an app store, but instead of depending on a single source, it aggregates the results from **APKMirror**, **Aptoide**, **F-Droid**, **IzzyOnDroid**, **APKPure** and **GitHub**.
 
 The 3.x branch is a full rewrite using modern technologies like **Jetpack Compose**, **Flow** and **WorkManager**.
 
 # Features
-* **Update Sources**: Find updates from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
-* **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**, **F-Droid** and **GitHub**.
+* **Update Sources**: Find updates from **APKMirror**, **Aptoide**, **F-Droid**, **IzzyOnDroid**, **APKPure** and **GitHub**.
+* **Search Sources**: Find new apps to install from **APKMirror**, **Aptoide**, **F-Droid**, **IzzyOnDroid**, **APKPure** and **GitHub**.
 * Schedule **background update checks** and receive a **notification** when updates are found.
 * Supports **Android 5** (**21**) to **Android 14** (**34**).
 * Supports **Android TV**.
@@ -16,7 +16,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * Supports **installs without user interaction** on Android 12+.
 * **Root install** of updates.
 * No ads. No tracking.
-* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Simplified Chinese, Romanian, Italian, Portuguese, Russian, Turkish.
+* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Simplified Chinese, Romanian, Italian, Portuguese, Russian, Turkish, Indonesian.
 
 # Download
 * [Stable Release (3.0.0)](https://github.com/rumboalla/apkupdater/releases/latest/download/com.apkupdater-release.apk)
@@ -34,6 +34,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 * Portuguese by [zekabra](https://github.com/zekabra)
 * Russian by [Xenorant](https://github.com/Xenorant)
 * Turkish by [kyoyacchi](https://github.com/kyoyacchi)
+* Indonesian by [HazakuraID](https://github.com/HazakuraID)
 
 # Feedback
 - To give feedback and request new features go to [Discussions](https://github.com/rumboalla/apkupdater/discussions).

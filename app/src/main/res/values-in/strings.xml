@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Aplikasi</string>
+    <string name="tab_search">Mencari</string>
+    <string name="tab_updates">Pembaruan</string>
+    <string name="tab_settings">Pengaturan</string>
+    <string name="something_went_wrong">"Ada yang salah\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">Abaikan Aplikasi</string>
+    <string name="unignore_cd">Batal Abaikan Aplikasi</string>
+    <string name="refresh_updates">Cari Pembaruan</string>
+    <string name="exclude_system_apps">Kecualikan Aplikasi Sistem</string>
+    <string name="include_system_apps">Sertakan Aplikasi Sistem</string>
+    <string name="exclude_app_store">Kecualikan App Store</string>
+    <string name="include_app_store">Sertakan App Store</string>
+    <string name="exclude_disabled_apps">Kecualikan Aplikasi Dinonaktifkan</string>
+    <string name="include_disabled_apps">Sertakan Aplikasi Dinonaktifkan</string>
+    <string name="install_cd">Install App</string>
+    <string name="app_cd">Ikon Aplikasi</string>
+    <string name="install_success">%1$s dipasang.</string>
+    <string name="install_failure">%1$s gagal memasang.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Kolom Potret</string>
+    <string name="settings_landscape_columns">Kolom Landscape</string>
+    <string name="settings_sources">Sumber</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarm</string>
+    <string name="settings_options">Pilihan</string>
+    <string name="settings_utils">kegunaan</string>
+    <string name="settings_hour">Alarm Jam</string>
+    <string name="settings_alarm_daily">Daily</string>
+    <string name="settings_alarm_3day">3-Hari</string>
+    <string name="settings_alarm_weekly">Mingguan</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">Abaikan Alpha</string>
+    <string name="ignore_beta">Abaikan Beta</string>
+    <string name="ignore_preRelease">Abaikan Pre-release</string>
+    <string name="use_safe_stores">Menggunakan Safe Stores (Aptoide)</string>
+    <string name="root_install">Instal Root</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid (Main)</string>
+    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="about">Tentang</string>
+    <string name="frequency">Frequency</string>
+    <string name="theme">Tema</string>
+    <string name="theme_system">Sistem</string>
+    <string name="theme_dark">Gelap</string>
+    <string name="theme_light">Light</string>
+    <string name="about_github">Dapatkan kode sumber, laporkan bug, minta fitur baru, dan tambahkan terjemahan.</string>
+    <string name="about_donate">Jika anda menyukai aplikasi ini, pertimbangkan untuk berdonasi untuk tujuan yang bermanfaat.</string>
+    <string name="copy_to_clipboard">Salin ke clipboard</string>
+    <string name="copy_app_list">Salin Daftar Aplikasi</string>
+
+    // Notifications
+    <string name="notification_channel_name">Pembaruan</string>
+    <string name="notification_channel_description">Saluran untuk pemberitahuan pembaruan.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Pembaruan</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Tidak ada pembaruan ditemukan.</item>
+        <item quantity="one">Ditemukan %1$d update.</item>
+        <item quantity="other">Ditemukan %1$d updates.</item>
+    </plurals>
+
+</resources>
