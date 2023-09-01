@@ -54,6 +54,8 @@ class SettingsViewModel(
 	fun setUseGitHub(b: Boolean) = prefs.useGitHub.put(b)
 	fun getUseAptoide() = prefs.useAptoide.get()
 	fun setUseAptoide(b: Boolean) = prefs.useAptoide.put(b)
+	fun getUseApkPure() = prefs.useApkPure.get()
+	fun setUseApkPure(b: Boolean) = prefs.useApkPure.put(b)
 	fun getAndroidTvUi() = prefs.androidTvUi.get()
 	fun setAndroidTvUi(b: Boolean) = prefs.androidTvUi.put(b)
 	fun getEnableAlarm() = prefs.enableAlarm.get()

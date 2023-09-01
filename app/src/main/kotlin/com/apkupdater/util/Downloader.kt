@@ -6,12 +6,14 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
 import java.io.InputStream
-import java.util.UUID
 
 
 class Downloader(context: Context) {
 
     private val client = OkHttpClient.Builder().followRedirects(true).build()
+    private val apkPureClient = OkHttpClient.Builder().followRedirects(true).addNetworkInterceptor {
+        it.proceed(it.request().newBuilder().header("user-agent", "APKPure/3.19.39 (Aegon)").build())
+    }.build()
     private val dir =  File(context.cacheDir, "downloads").apply { mkdirs() }
 
     @Suppress("unused")
@@ -26,11 +28,18 @@ class Downloader(context: Context) {
     }
 
     fun downloadStream(url: String): InputStream? = runCatching {
-        val response = client.newCall(downloadRequest(url)).execute()
+        val c = when {
+            url.contains("apkpure") -> apkPureClient
+            else -> client
+        }
+        val response = c.newCall(downloadRequest(url)).execute()
         if (response.isSuccessful) {
             response.body?.let {
                 return it.byteStream()
             }
+        } else {
+            response.close()
+            Log.e("Downloader", "Download failed with error code: ${response.code}")
         }
         return null
     }.getOrElse {

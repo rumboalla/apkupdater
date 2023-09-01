@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import com.apkupdater.R
 import com.apkupdater.data.ui.ApkMirrorSource
+import com.apkupdater.data.ui.ApkPureSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Source
@@ -143,7 +144,7 @@ fun TvSearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
 @Composable
 fun WhatsNew(whatsNew: String, source: Source) {
     if (whatsNew.isNotEmpty()) {
-        val text = if (source == ApkMirrorSource) {
+        val text = if (source == ApkMirrorSource || source == ApkPureSource) {
             HtmlCompat.fromHtml(whatsNew.trim(), HtmlCompat.FROM_HTML_MODE_COMPACT).toAnnotatedString()
         } else {
             AnnotatedString(whatsNew)

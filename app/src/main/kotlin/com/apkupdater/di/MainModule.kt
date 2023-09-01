@@ -8,6 +8,7 @@ import com.apkupdater.data.ui.FdroidSource
 import com.apkupdater.data.ui.IzzySource
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.ApkMirrorRepository
+import com.apkupdater.repository.ApkPureRepository
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.repository.AptoideRepository
 import com.apkupdater.repository.FdroidRepository
@@ -123,11 +124,13 @@ val mainModule = module {
 
 	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get()) }
 
+	single { ApkPureRepository() }
+
 	single { AptoideRepository(get(), get(), get()) }
 
-	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get()) }
+	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get(), get()) }
 
-	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get(), get()) }
+	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get(), get(), get()) }
 
 	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
 

@@ -223,6 +223,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			stringResource(R.string.source_aptoide),
 			R.drawable.ic_aptoide
 		)
+		SwitchSetting(
+			{ viewModel.getUseApkPure() },
+			{ viewModel.setUseApkPure(it) },
+			stringResource(R.string.source_apkpure),
+			R.drawable.ic_apkpure
+		)
 	}
 
 	item {

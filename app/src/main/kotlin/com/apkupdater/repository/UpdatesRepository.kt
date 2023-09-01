@@ -17,6 +17,7 @@ class UpdatesRepository(
     private val fdroidRepository: FdroidRepository,
     private val izzyRepository: FdroidRepository,
     private val aptoideRepository: AptoideRepository,
+    private val apkPureRepository: ApkPureRepository,
     private val prefs: Prefs
 ) {
 
@@ -30,6 +31,8 @@ class UpdatesRepository(
                 if (prefs.useFdroid.get()) sources.add(fdroidRepository.updates(filtered))
                 if (prefs.useIzzy.get()) sources.add(izzyRepository.updates(filtered))
                 if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(filtered))
+                if (prefs.useApkPure.get()) sources.add(apkPureRepository.updates(filtered))
+
                 if (sources.isNotEmpty()) {
                     sources
                         .combine { updates -> emit(updates.flatMap { it }) }
