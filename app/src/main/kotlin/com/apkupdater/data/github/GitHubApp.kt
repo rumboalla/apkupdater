@@ -72,5 +72,6 @@ val GitHubApps = listOf(
     GitHubApp("app.revanced.manager.flutter", "revanced", "revanced-manager"),
     GitHubApp("com.mattermost.rn", "mattermost", "mattermost-mobile"),
     GitHubApp("com.looker.droidify", "Droid-ify", "client"),
-    GitHubApp("com.darkempire78.opencalculator", "Darkempire78", "OpenCalc")
+    GitHubApp("com.darkempire78.opencalculator", "Darkempire78", "OpenCalc"),
+    GitHubApp("com.github.lamarios.clipious", "lamarios", "clipious")
 )
