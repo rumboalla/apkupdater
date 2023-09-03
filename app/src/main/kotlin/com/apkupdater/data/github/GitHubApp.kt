@@ -74,8 +74,8 @@ val GitHubApps = listOf(
     GitHubApp("com.looker.droidify", "Droid-ify", "client"),
     GitHubApp("com.darkempire78.opencalculator", "Darkempire78", "OpenCalc"),
     GitHubApp("com.github.lamarios.clipious", "lamarios", "clipious"),
-    GithubApp("hr.dtakac.prognoza", "davidtakac", "prognoza"),
-    GithubApp("com.yoshi.rain", "DarkMooNight", "Rain"),
-    GithubApp("com.perol.play.pixez", "Notsfsssf", "pixez-flutter"),
-    GithubApp("sh.ppy.osulazer", "ppy", "osu")
+    GitHubApp("hr.dtakac.prognoza", "davidtakac", "prognoza"),
+    GitHubApp("com.yoshi.rain", "DarkMooNight", "Rain"),
+    GitHubApp("com.perol.play.pixez", "Notsfsssf", "pixez-flutter"),
+    GitHubApp("sh.ppy.osulazer", "ppy", "osu")
 )
