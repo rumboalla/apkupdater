@@ -73,5 +73,8 @@ val GitHubApps = listOf(
     GitHubApp("com.mattermost.rn", "mattermost", "mattermost-mobile"),
     GitHubApp("com.looker.droidify", "Droid-ify", "client"),
     GitHubApp("com.darkempire78.opencalculator", "Darkempire78", "OpenCalc"),
-    GitHubApp("com.github.lamarios.clipious", "lamarios", "clipious")
+    GitHubApp("com.github.lamarios.clipious", "lamarios", "clipious"),
+    GithubApp("hr.dtakac.prognoza", "davidtakac", "prognoza"),
+    GithubApp("com.yoshi.rain", "DarkMooNight", "Rain"),
+    GithubApp("com.perol.play.pixez", "Notsfsssf", "pixez-flutter")
 )
