@@ -111,6 +111,7 @@ class ApkMirrorRepository(
     private fun filterArch(app: AppExistsResponseApk) = when {
         app.arches.isEmpty() -> true
         app.arches.contains("universal") || app.arches.contains("noarch") -> true
+        app.arches.find { a -> Build.SUPPORTED_ABIS.contains(a) } != null -> true
         app.arches.find { a -> a.contains(arch) } != null -> true
         else -> false
     }
