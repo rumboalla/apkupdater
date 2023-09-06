@@ -78,5 +78,8 @@ val GitHubApps = listOf(
     GitHubApp("com.yoshi.rain", "DarkMooNight", "Rain"),
     GitHubApp("com.perol.play.pixez", "Notsfsssf", "pixez-flutter"),
     GitHubApp("sh.ppy.osulazer", "ppy", "osu"),
-    GitHubApp("com.yubico.yubioath", "Yubico", "yubioath-flutter")
+    GitHubApp("com.yubico.yubioath", "Yubico", "yubioath-flutter"),
+    GitHubApp("org.oxycblt.auxio", "OxygenCobalt", "Auxio"),
+    GitHubApp("com.shadow.blackhole", "Sangwan5688", "BlackHole"),
+    GitHubApp("com.zionhuang.music", "z-huang", "InnerTune")
 )
