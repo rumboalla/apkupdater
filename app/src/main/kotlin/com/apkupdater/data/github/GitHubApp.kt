@@ -82,5 +82,5 @@ val GitHubApps = listOf(
     GitHubApp("org.oxycblt.auxio", "OxygenCobalt", "Auxio"),
     GitHubApp("com.shadow.blackhole", "Sangwan5688", "BlackHole"),
     GitHubApp("com.nextcloud.client", "nextcloud", "android"),
-    GitHubApp("at.bitfire.davdroid", "bitfireAT", "davx5-ose"
+    GitHubApp("at.bitfire.davdroid", "bitfireAT", "davx5-ose")
 )
