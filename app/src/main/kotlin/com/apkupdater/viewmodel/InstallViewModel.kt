@@ -61,7 +61,11 @@ abstract class InstallViewModel(
     protected suspend fun downloadAndInstall(id: Int, packageName: String, link: String) {
         val stream = downloader.downloadStream(link)
         if (stream != null) {
-            installer.install(id, packageName, stream)
+            if (link.contains("/XAPK")) {
+                installer.installXapk(id, packageName, stream)
+            } else {
+                installer.install(id, packageName, stream)
+            }
         } else {
             cancelInstall(id)
         }

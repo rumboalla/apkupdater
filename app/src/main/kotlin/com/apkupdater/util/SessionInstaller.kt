@@ -15,6 +15,7 @@ import eu.chainfire.libsuperuser.Shell
 import java.io.File
 import java.io.InputStream
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.zip.ZipFile
 
 
 class SessionInstaller(private val context: Context) {
@@ -25,7 +26,10 @@ class SessionInstaller(private val context: Context) {
 
     private val installMutex = AtomicBoolean(false)
 
-    suspend fun install(id: Int, packageName: String, stream: InputStream) {
+    suspend fun install(id: Int, packageName: String, stream: InputStream) =
+        install(id, packageName, listOf(stream))
+
+    private suspend fun install(id: Int, packageName: String, streams: List<InputStream>) {
         val packageInstaller: PackageInstaller = context.packageManager.packageInstaller
         val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL)
         params.setAppPackageName(packageName)
@@ -45,10 +49,12 @@ class SessionInstaller(private val context: Context) {
         val sessionId = packageInstaller.createSession(params)
         val session = packageInstaller.openSession(sessionId)
 
-        session.openWrite(randomUUID(), 0, -1).use { output ->
-            stream.copyTo(output)
-            stream.close()
-            session.fsync(output)
+        streams.forEach {
+            session.openWrite("$packageName.${randomUUID()}", 0, -1).use { output ->
+                it.copyTo(output)
+                it.close()
+                session.fsync(output)
+            }
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {
@@ -80,6 +86,28 @@ class SessionInstaller(private val context: Context) {
             }
         }
         return true
+    }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    suspend fun installXapk(id: Int, packageName: String, stream: InputStream) {
+        // Copy file to disk.
+        // TODO: Find a way to do this without saving file
+        val file = File(context.cacheDir, randomUUID())
+        stream.copyTo(file.outputStream())
+
+        // Get entries
+        val zip = ZipFile(file)
+        val entries = zip.entries().toList()
+
+        // Install all the apks
+        // TODO: Try to install only needed apks
+        // TODO: Add root install support
+        val apks = entries.filter { it.name.contains(".apk") }.map { zip.getInputStream(it) }
+        install(id, packageName, apks)
+
+        // Cleanup
+        zip.close()
+        file.delete()
     }
 
 }

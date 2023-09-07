@@ -23,6 +23,7 @@ import com.apkupdater.util.Clipboard
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
 import com.apkupdater.util.UpdatesNotification
+import com.apkupdater.util.addUserAgentInterceptor
 import com.apkupdater.util.isAndroidTv
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
@@ -46,7 +47,7 @@ val mainModule = module {
 
 	single { GsonBuilder().create() }
 
-	single { Cache(androidContext().cacheDir, 100 * 1024 * 1024) }
+	single { Cache(androidContext().cacheDir, 1024 * 1024 * 1024) }
 
 	single {
 		HttpLoggingInterceptor().apply {
@@ -55,19 +56,11 @@ val mainModule = module {
 	}
 
 	single {
-		OkHttpClient
-			.Builder()
+		OkHttpClient.Builder()
 			.cache(get())
-			.addNetworkInterceptor { chain ->
-				chain.proceed(
-				chain.request()
-					.newBuilder()
-					.header("User-Agent", "APKUpdater-v" + BuildConfig.VERSION_NAME)
-					.build()
-			)
-		}
-		//.addInterceptor(get<HttpLoggingInterceptor>())
-		.build()
+			.addUserAgentInterceptor("APKUpdater-v" + BuildConfig.VERSION_NAME)
+			//.addInterceptor(get<HttpLoggingInterceptor>())
+			.build()
 	}
 
 	single(named("apkmirror")) {
@@ -95,9 +88,10 @@ val mainModule = module {
 	}
 
 	single(named("aptoide")) {
-		val client = OkHttpClient.Builder().cache(get()).addNetworkInterceptor {
-			it.proceed(it.request().newBuilder().header("User-Agent", AptoideRepository.UserAgent).build())
-		}.build()
+		val client = OkHttpClient.Builder()
+			.cache(get())
+			.addUserAgentInterceptor(AptoideRepository.UserAgent)
+			.build()
 
 		Retrofit.Builder()
 			.client(client)
@@ -124,7 +118,7 @@ val mainModule = module {
 
 	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get()) }
 
-	single { ApkPureRepository() }
+	single { ApkPureRepository(get(), get()) }
 
 	single { AptoideRepository(get(), get(), get()) }
 
@@ -138,7 +132,7 @@ val mainModule = module {
 
 	single { UpdatesNotification(get()) }
 
-	single { Downloader(get()) }
+	single { Downloader(get(), get()) }
 
 	single { Clipboard(androidContext()) }
 

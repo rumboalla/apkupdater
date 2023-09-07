@@ -12,23 +12,23 @@ import com.apkupdater.service.ApkPureService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class ApkPureRepository {
+class ApkPureRepository(
+    gson: Gson,
+    cache: Cache
+) {
 
-    private val gson = Gson()
-
-    private val client = OkHttpClient.Builder()
-        //.addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-        .build()
+    private val client = OkHttpClient.Builder().cache(cache).build()
 
     private val service: ApkPureService = Retrofit.Builder()
         .client(client)
         .baseUrl("https://tapi.pureapk.com/")
-        .addConverterFactory(GsonConverterFactory.create(Gson()))
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
         .create(ApkPureService::class.java)
 
@@ -39,7 +39,6 @@ class ApkPureRepository {
         val r = service.getAppUpdate(header, GetAppUpdate(info))
         val updates = r.app_update_response
             .filter { filterSignature(it.sign, apps.getSignature(it.package_name)) }
-            .filter { !it.asset.url.contains("/XAPK") }
             .map { it.toAppUpdate(apps.getApp(it.package_name)) }
         emit(updates)
     }.catch {
@@ -56,7 +55,6 @@ class ApkPureRepository {
         }
         val r = service.getAppUpdate(header, GetAppUpdate(info))
         val updates = r.app_update_response
-            .filter { !it.asset.url.contains("/XAPK") }
             .map { it.toAppUpdate(null) }
         emit(Result.success(updates))
     }.catch {

@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.yield
+import okhttp3.OkHttpClient
 import java.security.MessageDigest
 import java.util.Calendar
 import java.util.UUID
@@ -143,4 +144,8 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 			is ForegroundColorSpan -> addStyle(SpanStyle(color = Color(span.foregroundColor)), start, end)
 		}
 	}
+}
+
+fun OkHttpClient.Builder.addUserAgentInterceptor(agent: String) = addNetworkInterceptor {
+	it.proceed(it.request().newBuilder().header("User-Agent", agent).build())
 }
