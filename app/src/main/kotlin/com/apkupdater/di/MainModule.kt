@@ -1,6 +1,5 @@
 package com.apkupdater.di
 
-import android.content.Context
 import androidx.work.WorkManager
 import com.apkupdater.BuildConfig
 import com.apkupdater.R
@@ -16,6 +15,7 @@ import com.apkupdater.repository.GitHubRepository
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
+import com.apkupdater.service.ApkPureService
 import com.apkupdater.service.AptoideService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
@@ -41,6 +41,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 
 
 val mainModule = module {
@@ -63,31 +64,34 @@ val mainModule = module {
 			.build()
 	}
 
-	single(named("apkmirror")) {
+	single {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://www.apkmirror.com")
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()
+			.create(ApkMirrorService::class.java)
 	}
 
-	single(named("github")) {
+	single {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://api.github.com")
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()
+			.create(GitHubService::class.java)
 	}
 
-	single(named("fdroid")) {
+	single {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://f-droid.org/repo/")
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()
+			.create(FdroidService::class.java)
 	}
 
-	single(named("aptoide")) {
+	single {
 		val client = OkHttpClient.Builder()
 			.cache(get())
 			.addUserAgentInterceptor(AptoideRepository.UserAgent)
@@ -98,29 +102,38 @@ val mainModule = module {
 			.baseUrl("https://ws75.aptoide.com/api/7/")
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()
+			.create(AptoideService::class.java)
 	}
 
-	single { get<Retrofit>(named("apkmirror")).create(ApkMirrorService::class.java) }
+	single {
+		Retrofit.Builder()
+			.client(get())
+			.baseUrl("https://tapi.pureapk.com/")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+			.create(ApkPureService::class.java)
+	}
 
-	single { get<Retrofit>(named("github")).create(GitHubService::class.java) }
+	single {
+		val client = OkHttpClient.Builder().followRedirects(true).cache(get()).build()
+		val apkPureClient = OkHttpClient.Builder().followRedirects(true).cache(get()).addUserAgentInterceptor("APKPure/3.19.39 (Aegon)").build()
+		val dir = File(androidContext().cacheDir, "downloads").apply { mkdirs() }
+		Downloader(client, apkPureClient, dir)
+	}
 
-	single { get<Retrofit>(named("fdroid")).create(FdroidService::class.java) }
-
-	single { get<Retrofit>(named("aptoide")).create(AptoideService::class.java) }
-
-	single { ApkMirrorRepository(get(), get(), get<Context>().packageManager) }
+	single { ApkMirrorRepository(get(), get(), androidContext().packageManager) }
 
 	single { AppsRepository(get(), get()) }
 
 	single { GitHubRepository(get(), get()) }
 
+	single { ApkPureRepository(get(), get(), get()) }
+
+	single { AptoideRepository(get(), get(), get()) }
+
 	single(named("main")) { FdroidRepository(get(), "https://f-droid.org/repo/", FdroidSource, get()) }
 
 	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get()) }
-
-	single { ApkPureRepository(get(), get()) }
-
-	single { AptoideRepository(get(), get(), get()) }
 
 	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get(), get()) }
 
@@ -131,8 +144,6 @@ val mainModule = module {
 	single { Prefs(get(), androidContext().isAndroidTv()) }
 
 	single { UpdatesNotification(get()) }
-
-	single { Downloader(get(), get()) }
 
 	single { Clipboard(androidContext()) }
 

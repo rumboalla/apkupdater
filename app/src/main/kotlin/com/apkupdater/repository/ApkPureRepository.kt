@@ -2,35 +2,25 @@ package com.apkupdater.repository
 
 import android.util.Log
 import com.apkupdater.data.apkpure.AppInfoForUpdate
+import com.apkupdater.data.apkpure.AppUpdateResponse
 import com.apkupdater.data.apkpure.DeviceHeader
 import com.apkupdater.data.apkpure.GetAppUpdate
 import com.apkupdater.data.apkpure.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.getSignature
+import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.ApkPureService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class ApkPureRepository(
     gson: Gson,
-    cache: Cache
+    private val service: ApkPureService,
+    private val prefs: Prefs
 ) {
-
-    private val client = OkHttpClient.Builder().cache(cache).build()
-
-    private val service: ApkPureService = Retrofit.Builder()
-        .client(client)
-        .baseUrl("https://tapi.pureapk.com/")
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .build()
-        .create(ApkPureService::class.java)
 
     private val header = gson.toJson(DeviceHeader())
 
@@ -39,6 +29,8 @@ class ApkPureRepository(
         val r = service.getAppUpdate(header, GetAppUpdate(info))
         val updates = r.app_update_response
             .filter { filterSignature(it.sign, apps.getSignature(it.package_name)) }
+            .filter { filterAlpha(it) }
+            .filter { filterBeta(it) }
             .map { it.toAppUpdate(apps.getApp(it.package_name)) }
         emit(updates)
     }.catch {
@@ -55,11 +47,23 @@ class ApkPureRepository(
         }
         val r = service.getAppUpdate(header, GetAppUpdate(info))
         val updates = r.app_update_response
+            .filter { filterAlpha(it) }
+            .filter { filterBeta(it) }
             .map { it.toAppUpdate(null) }
         emit(Result.success(updates))
     }.catch {
         Log.e("ApkPureRepository", it.message, it)
         emit(Result.failure(it))
+    }
+
+    private fun filterAlpha(update: AppUpdateResponse) = when {
+        prefs.ignoreAlpha.get() && update.version_name.contains("alpha", true) -> false
+        else -> true
+    }
+
+    private fun filterBeta(update: AppUpdateResponse) = when {
+        prefs.ignoreBeta.get() && update.version_name.contains("beta", true) -> false
+        else -> true
     }
 
     private fun filterSignature(signatures: List<String>, signature: String) = when {
