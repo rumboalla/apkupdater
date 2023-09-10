@@ -43,7 +43,7 @@
     <string name="source_izzy" translatable="false">F-Droid Izzy</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
-    <string name="source_apkpure" translatable="false">APKPure (Alpha)</string>
+    <string name="source_apkpure" translatable="false">APKPure (Beta)</string>
     <string name="about">About</string>
     <string name="frequency">Frequency</string>
     <string name="theme">Theme</string>

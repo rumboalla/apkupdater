@@ -1,6 +1,5 @@
 package com.apkupdater.util
 
-import android.content.Context
 import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -8,15 +7,12 @@ import java.io.File
 import java.io.InputStream
 
 
-class Downloader(context: Context) {
+class Downloader(
+    private val client: OkHttpClient,
+    private val apkPureClient: OkHttpClient,
+    private val dir: File
+) {
 
-    private val client = OkHttpClient.Builder().followRedirects(true).build()
-    private val apkPureClient = OkHttpClient.Builder().followRedirects(true).addNetworkInterceptor {
-        it.proceed(it.request().newBuilder().header("user-agent", "APKPure/3.19.39 (Aegon)").build())
-    }.build()
-    private val dir =  File(context.cacheDir, "downloads").apply { mkdirs() }
-
-    @Suppress("unused")
     fun download(url: String): File {
         val file = File(dir, randomUUID())
         client.newCall(downloadRequest(url)).execute().use {

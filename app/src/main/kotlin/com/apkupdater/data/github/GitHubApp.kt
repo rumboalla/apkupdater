@@ -79,5 +79,10 @@ val GitHubApps = listOf(
     GitHubApp("com.perol.play.pixez", "Notsfsssf", "pixez-flutter"),
     GitHubApp("sh.ppy.osulazer", "ppy", "osu"),
     GitHubApp("com.yubico.yubioath", "Yubico", "yubioath-flutter"),
+    GitHubApp("org.oxycblt.auxio", "OxygenCobalt", "Auxio"),
+    GitHubApp("com.shadow.blackhole", "Sangwan5688", "BlackHole"),
+    GitHubApp("com.zionhuang.music", "z-huang", "InnerTune"),
+    GitHubApp("com.nextcloud.client", "nextcloud", "android"),
+    GitHubApp("at.bitfire.davdroid", "bitfireAT", "davx5-ose"),
     GitHubApp("keepass2android.keepass2android","PhilippC","keepass2android")
 )
