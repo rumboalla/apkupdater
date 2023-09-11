@@ -3,7 +3,8 @@ package com.apkupdater.data.github
 data class GitHubApp(
     val packageName: String,
     val user: String,
-    val repo: String
+    val repo: String,
+    val extra: Regex? = null
 )
 
 val GitHubApps = listOf(
@@ -86,5 +87,11 @@ val GitHubApps = listOf(
     GitHubApp("at.bitfire.davdroid", "bitfireAT", "davx5-ose"),
     GitHubApp("com.iakmds.librecamera", "iakmds", "librecamera"),
     GitHubApp("com.bnyro.translate", "you-apps", "TranslateYou"),
-    GitHubApp("com.bnyro.recorder", "you-apps", "RecordYou")
+    GitHubApp("com.bnyro.recorder", "you-apps", "RecordYou"),
+    GitHubApp("keepass2android.keepass2android_nonet", "PhilippC", "keepass2android", contains("nonet")),
+    GitHubApp("keepass2android.keepass2android", "PhilippC", "keepass2android", notContains("nonet"))
 )
+
+fun contains(text: String) = Regex("^.*$text.*\$")
+
+fun notContains(text: String) = Regex("^((?!$text).)*\$")

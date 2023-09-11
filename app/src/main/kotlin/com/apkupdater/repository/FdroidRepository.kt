@@ -46,7 +46,7 @@ class FdroidRepository(
     }
 
     suspend fun search(text: String) = flow {
-        val response = service.getJar(url)
+        val response = service.getJar("${url}index-v1.jar")
         val data = jarToJson(response.byteStream())
         val updates = data.apps
             .asSequence()

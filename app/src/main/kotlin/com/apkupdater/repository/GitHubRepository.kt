@@ -33,7 +33,7 @@ class GitHubRepository(
         GitHubApps.forEachIndexed { i, app ->
             if (i != 0) {
                 apps.find { it.packageName == app.packageName }?.let {
-                    checks.add(checkApp(apps, app.user, app.repo, app.packageName, it.version))
+                    checks.add(checkApp(apps, app.user, app.repo, app.packageName, it.version, app.extra))
                 }
             }
         }
@@ -51,7 +51,7 @@ class GitHubRepository(
 
         GitHubApps.forEach { app ->
             if (app.repo.contains(text, true) || app.user.contains(text, true) || app.packageName.contains(text, true)) {
-                checks.add(checkApp(null, app.user, app.repo, app.packageName, "?"))
+                checks.add(checkApp(null, app.user, app.repo, app.packageName, "?", null))
             }
         }
 
@@ -98,7 +98,8 @@ class GitHubRepository(
         user: String,
         repo: String,
         packageName: String,
-        currentVersion: String
+        currentVersion: String,
+        extra: Regex?
     ) = flow {
         val releases = service.getReleases(user, repo)
             .filter { filterPreRelease(it) }
@@ -114,7 +115,7 @@ class GitHubRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
-                link = findApkAssetArch(releases[0].assets),
+                link = findApkAssetArch(releases[0].assets, extra),
                 whatsNew = releases[0].body,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))
@@ -148,8 +149,14 @@ class GitHubRepository(
         ?.browser_download_url
         .orEmpty()
 
-    private fun findApkAssetArch(assets: List<GitHubReleaseAsset>): String {
-        val apks = assets.filter { it.browser_download_url.endsWith(".apk", true) }
+    private fun findApkAssetArch(
+        assets: List<GitHubReleaseAsset>,
+        extra: Regex?
+    ): String {
+        val apks = assets
+            .filter { it.browser_download_url.endsWith(".apk", true) }
+            .filter { filterExtra(it, extra) }
+
         when {
             apks.isEmpty() -> return ""
             apks.size == 1 -> return apks.first().browser_download_url
@@ -190,7 +197,11 @@ class GitHubRepository(
                 return apks.maxByOrNull { it.size }?.browser_download_url.orEmpty()
             }
         }
+    }
 
+    private fun filterExtra(asset: GitHubReleaseAsset, extra: Regex?) = when(extra) {
+        null -> true
+        else -> asset.browser_download_url.matches(extra)
     }
 
 }
