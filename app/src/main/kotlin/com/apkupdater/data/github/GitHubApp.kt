@@ -84,5 +84,7 @@ val GitHubApps = listOf(
     GitHubApp("com.zionhuang.music", "z-huang", "InnerTune"),
     GitHubApp("com.nextcloud.client", "nextcloud", "android"),
     GitHubApp("at.bitfire.davdroid", "bitfireAT", "davx5-ose"),
-    GitHubApp("com.iakmds.librecamera", "iakmds", "librecamera")
+    GitHubApp("com.iakmds.librecamera", "iakmds", "librecamera"),
+    GitHubApp("com.bnyro.translate", "you-apps", "TranslateYou"),
+    GitHubApp("com.bnyro.recorder", "you-apps", "RecordYou")
 )
