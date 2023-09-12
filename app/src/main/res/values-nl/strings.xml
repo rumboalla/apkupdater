@@ -26,6 +26,7 @@
     <string name="settings_ui">UI</string>
     <string name="settings_alarm">Alarm</string>
     <string name="settings_options">Opties</string>
+    <string name="settings_utils">Hulpmiddelen</string>
     <string name="settings_hour">Alarm In Uren</string>
     <string name="settings_alarm_daily">Dagelijks</string>
     <string name="settings_alarm_3day">3-Daags</string>
