@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Appများ</string>
+    <string name="tab_search">ရှာဖွေရန်</string>
+    <string name="tab_updates">ဗားရှင်းအသစ်များ</string>
+    <string name="tab_settings">ဆက်တင်များ</string>
+    <string name="something_went_wrong">"တစ်ခုခုမှားယွင်းနေပါသည်\n\uD83E\uDD26"</string>
+    <string name="ignore_cd">ငြင်းပယ်ထားသောAppများ</string>
+    <string name="unignore_cd">မငြင်းပယ်ထားသောAppများ</string>
+    <string name="refresh_updates">ဗားရှင်းအသစ်များရှာဖွေခြင်း</string>
+    <string name="exclude_system_apps">System Appsများမပါဝင်</string>
+    <string name="include_system_apps">System Appsများပါအပါဝင်</string>
+    <string name="exclude_app_store">App Storeမပါဝင်</string>
+    <string name="include_app_store">App Storeအပါအဝင်</string>
+    <string name="exclude_disabled_apps">အသုံးပြုမရသော Apps များမပါဝင်</string>
+    <string name="include_disabled_apps">အသုံးပြုမရသော Apps များပါအပါအဝင်</string>
+    <string name="install_cd">ထည့်သွင်းထားသောအပ်ပလီကေးရှင်း</string>
+    <string name="app_cd">အပ်ပလီကေးရှင်းရုပ်ပုံ</string>
+    <string name="install_success">%1$s ထည့်သွင်းပြီး။</string>
+    <string name="install_failure">%1$s ထည့်သွင်းမှုမအောင်မြင်ပါ။</string>
+
+    // Settings
+    <string name="settings_portrait_columns">အလျားလိုက်အကန့်</string>
+    <string name="settings_landscape_columns">ဒေါင်လိုက်အကန့်</string>
+    <string name="settings_sources">အရင်းမြစ်များ</string>
+    <string name="settings_ui">ပြသပုံ</string>
+    <string name="settings_alarm">နှိုးစက်အသိပေးချက်</string>
+    <string name="settings_options">ရွေးချယ်စရာများ</string>
+    <string name="settings_utils">အခြားလုပ်ဆောင်ချက်များ</string>
+    <string name="settings_hour">သတိပေးချိန် နာရီ</string>
+    <string name="settings_alarm_daily">နေ့စဥ်</string>
+    <string name="settings_alarm_3day">သုံးရက်တိုင်း</string>
+    <string name="settings_alarm_weekly">အပတ်စဥ်</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">အယ်ဖာ(အစမ်း)များမပါဝင်</string>
+    <string name="ignore_beta">ဘယ်တာ(အကြို)များမပါဝင်</string>
+    <string name="ignore_preRelease">ကြိုတင်စမ်းသပ်Appများမပါဝင်</string>
+    <string name="use_safe_stores">လုံခြုံမှု(Aptoide)စတိုးအသုံးပြုရန်</string>
+    <string name="root_install">Rootချပြီးထည့်သွင်းမှု</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_apkpure" translatable="false">APKPure (Beta)</string>
+    <string name="about">ကျွန်ုပ်တို့အကြောင်း</string>
+    <string name="frequency">ကြိမ်ရေ</string>
+    <string name="theme">တင်ပြပုံ</string>
+    <string name="theme_system">စက်အတိုင်း</string>
+    <string name="theme_dark">အမှောင်</string>
+    <string name="theme_light">အလင်း</string>
+    <string name="about_github">ပင်ရင်းကုဒ်တွင် ဘာသာစကားများ၊ လိုအပ်ချက်များ၊ ပါဝင်မှုအသစ်များ ထည့်သွင်းရန်။</string>
+    <string name="about_donate">ယခုအပ်ပလီကေးရှင်းကိုနှစ်သက်ပါက ကူညီလှူတန်းရန်။</string>
+    <string name="copy_to_clipboard">ကော်ပီကူးယူသည်</string>
+    <string name="copy_app_list">Appလိပ်စာကိုကူးယူသည်</string>
+
+    // Notifications
+    <string name="notification_channel_name">ဗားရှင်းအသစ်များ</string>
+    <string name="notification_channel_description">ဗားရှင်းအသစ်များအတွက်အသိပေးချက်ရယူရန်။</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">ဗားရှင်းအသစ်များ</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">ဗားရှင်းအသစ် မတွေ့ပါ။</item>
+        <item quantity="one">ဗားရှင်းအသစ် %1$d ခု။</item>
+        <item quantity="other">ဗားရှင်းအသစ် %1$d ခု။</item>
+    </plurals>
+
+</resources>
