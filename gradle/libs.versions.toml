@@ -1,0 +1,87 @@
+[versions]
+kotlin = "1.9.0"
+agp = "8.1.1"
+# compose
+compose-compiler = "1.5.1"
+compose-bom = "2023.09.00"
+# di
+koin = "3.4.2"
+# retrofit
+retrofit = "2.9.0"
+
+[libraries]
+# androidx
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.10.1" }
+androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.6.1" }
+androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version = "2.6.1" }
+androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version = "2.8.1" }
+androidx-tv = { group = "androidx.tv", name = "tv-foundation", version = "1.0.0-alpha08" }
+# compose
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version = "1.7.2" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.0-alpha05" }
+compose-coil = { group = "io.coil-kt", name = "coil-compose", version = "2.4.0" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+# di
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+# network
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+gson = { group = "com.google.code.gson", name = "gson", version = "2.10.1" }
+gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version = "4.11.0" }
+
+jsoup = { group = "org.jsoup", name = "jsoup", version = "1.16.1" }
+kryptoprefs = { group = "com.github.rumboalla.KryptoPrefs", name = "kryptoprefs", version = "0.4.3" }
+kryptoprefs-gson = { group = "com.github.rumboalla.KryptoPrefs", name = "kryptoprefs-gson", version = "0.4.3" }
+libsuperuser = { group = "eu.chainfire", name = "libsuperuser", version = "1.1.1" }
+versioncompare = { group = "io.github.g00fy2", name = "versioncompare", version = "1.5.0" }
+# unit test
+junit = { group = "junit", name = "junit", version = "4.13.2" }
+# android test
+junit-ext = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
+espresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
+
+[bundles]
+androidx-core = [
+    "androidx-core",
+    "androidx-lifecycle",
+    "androidx-lifecycle-compose",
+    "androidx-work",
+    "androidx-tv"
+]
+network = [
+    "retrofit",
+    "gson",
+    "gson-converter",
+    "logging-interceptor"
+]
+di = [
+    "koin-android",
+    "koin-compose"
+]
+compose = [
+    "compose-activity",
+    "compose-ui",
+    "compose-ui-graphics",
+    "compose-ui-preview",
+    "compose-material3",
+    "compose-coil"
+]
+compose-debug = [
+    "compose-ui-tooling",
+    "compose-ui-manifest"
+]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+
+
+
