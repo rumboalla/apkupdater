@@ -1,5 +1,6 @@
 package com.apkupdater.viewmodel
 
+import android.util.Log
 import androidx.compose.ui.platform.UriHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -48,7 +49,7 @@ abstract class InstallViewModel(
         }
     }
 
-    protected fun downloadAndRootInstall(id: Int, link: String) {
+    protected fun downloadAndRootInstall(id: Int, link: String) = runCatching {
         val file = downloader.download(link)
         val res = installer.rootInstall(file)
         if (res) {
@@ -56,9 +57,12 @@ abstract class InstallViewModel(
         } else {
             cancelInstall(id)
         }
+    }.getOrElse {
+        Log.e("InstallViewModel", "Error in downloadAndRootInstall.", it)
+        cancelInstall(id)
     }
 
-    protected suspend fun downloadAndInstall(id: Int, packageName: String, link: String) {
+    protected suspend fun downloadAndInstall(id: Int, packageName: String, link: String) = runCatching {
         val stream = downloader.downloadStream(link)
         if (stream != null) {
             if (link.contains("/XAPK")) {
@@ -69,7 +73,11 @@ abstract class InstallViewModel(
         } else {
             cancelInstall(id)
         }
+    }.getOrElse {
+        Log.e("InstallViewModel", "Error in downloadAndInstall.", it)
+        cancelInstall(id)
     }
+
 
     protected fun sendInstallSnack(updates: List<AppUpdate>, log: AppInstallStatus) {
         if (log.snack) {
