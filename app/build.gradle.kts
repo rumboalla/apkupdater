@@ -1,6 +1,6 @@
-import java.util.Properties
-import java.io.FileInputStream
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.kotlin)
@@ -81,7 +81,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.bundles.androidx.core)
     implementation(libs.bundles.di)
     implementation(libs.bundles.network)
