@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.bundles.compose)
     debugImplementation(libs.bundles.compose.debug)
     implementation(platform(libs.compose.bom))
+    androidTestImplementation(platform(libs.compose.bom))
     implementation(libs.jsoup)
     implementation(libs.kryptoprefs)
     implementation(libs.kryptoprefs.gson)
