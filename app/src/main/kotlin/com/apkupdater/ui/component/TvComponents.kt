@@ -75,9 +75,7 @@ fun TvInstallButton(
     app: AppUpdate,
     onInstall: (String) -> Unit
 ) = ElevatedButton(
-    modifier = Modifier
-        .padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp)
-        .width(120.dp),
+    modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp).width(120.dp),
     onClick = { onInstall(app.packageName) }
 ) {
     if (app.isInstalling) {
@@ -114,13 +112,29 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
 }
 
 @Composable
-fun TvUpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
+fun TvIgnoreVersionButton(
+    app: AppUpdate,
+    onIgnoreVersion: (Int) -> Unit,
+) = ElevatedButton(
+    modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 0.dp, end = 0.dp),
+    onClick = { onIgnoreVersion(app.id) }
+) {
+    Text(stringResource(R.string.ignore_version))
+}
+
+@Composable
+fun TvUpdateItem(
+    app: AppUpdate,
+    onInstall: (String) -> Unit = {},
+    onIgnoreVersion: (Int) -> Unit
+) = Card {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode)
         WhatsNew(app.whatsNew, app.source)
         Box {
             TvSourceIcon(app)
             Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
+                TvIgnoreVersionButton(app, onIgnoreVersion)
                 TvInstallButton(app, onInstall)
             }
         }

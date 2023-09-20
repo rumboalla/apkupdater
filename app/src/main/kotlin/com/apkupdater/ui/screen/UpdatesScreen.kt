@@ -102,9 +102,11 @@ fun TvGrid(
 	handler: UriHandler
 ) = TvInstalledGrid {
 	items(updates) { update ->
-		TvUpdateItem(update) {
-			viewModel.install(update, handler)
-		}
+		TvUpdateItem(
+			update,
+			{ viewModel.install(update, handler) },
+			{ viewModel.ignoreVersion(update.id)}
+		)
 	}
 }
 

@@ -11,6 +11,7 @@ class Prefs(
 	isAndroidTv: Boolean
 ): KryptoContext(prefs) {
 	val ignoredApps = json("ignoredApps", emptyList<String>(), true)
+	val ignoredVersions = json("ignoredVersions", emptyList<Int>(), true)
 	val excludeSystem = boolean("excludeSystem", defValue = true, backed = true)
 	val excludeDisabled = boolean("excludeDisabled", defValue = true, backed = true)
 	val excludeStore = boolean("excludeStore", defValue = false, backed = true)

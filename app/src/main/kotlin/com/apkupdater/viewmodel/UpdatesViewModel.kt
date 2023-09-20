@@ -21,17 +21,15 @@ class UpdatesViewModel(
 	private val mainViewModel: MainViewModel,
 	private val updatesRepository: UpdatesRepository,
 	private val installer: SessionInstaller,
-	downloader: Downloader,
-	prefs: Prefs
+	private val prefs: Prefs,
+	downloader: Downloader
 ) : InstallViewModel(mainViewModel, downloader, installer, prefs) {
 
 	private val mutex = Mutex()
 	private val state = MutableStateFlow<UpdatesUiState>(UpdatesUiState.Loading)
 
 	init {
-		subscribeToInstallLog { log ->
-			sendInstallSnack(state.value.updates(), log)
-		}
+		subscribeToInstallLog { log -> sendInstallSnack(state.value.updates(), log) }
 	}
 
 	fun state(): StateFlow<UpdatesUiState> = state
@@ -40,9 +38,15 @@ class UpdatesViewModel(
 		if (load) state.value = UpdatesUiState.Loading
 		mainViewModel.changeUpdatesBadge("")
 		updatesRepository.updates().collect {
-			state.value = UpdatesUiState.Success(it)
-			mainViewModel.changeUpdatesBadge(it.size.toString())
+			setSuccess(it)
 		}
+	}
+
+	fun ignoreVersion(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+		val ignored = prefs.ignoredVersions.get().toMutableList()
+		if (ignored.contains(id)) ignored.remove(id) else ignored.add(id)
+		prefs.ignoredVersions.put(ignored)
+		setSuccess(state.value.mutableUpdates())
 	}
 
 	override fun cancelInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
@@ -51,9 +55,7 @@ class UpdatesViewModel(
 	}
 
 	override fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-		val updates = state.value.mutableUpdates().removeId(id)
-		state.value = UpdatesUiState.Success(updates)
-		mainViewModel.changeUpdatesBadge(updates.size.toString())
+		setSuccess(state.value.mutableUpdates().removeId(id))
 		installer.finish()
 	}
 
@@ -68,5 +70,15 @@ class UpdatesViewModel(
 			downloadAndInstall(update.id, update.packageName, update.link)
 		}
 	}
+
+	private fun List<AppUpdate>.filterIgnoredVersions(ignoredVersions: List<Int>) = this
+		.filter { !ignoredVersions.contains(it.id) }
+
+	private fun setSuccess(updates: List<AppUpdate>) = updates
+		.filterIgnoredVersions(prefs.ignoredVersions.get())
+		.let {
+			state.value = UpdatesUiState.Success(it)
+			mainViewModel.changeUpdatesBadge(it.size.toString())
+		}
 
 }
