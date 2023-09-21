@@ -19,6 +19,7 @@ import com.apkupdater.service.ApkPureService
 import com.apkupdater.service.AptoideService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
+import com.apkupdater.service.GitLabService
 import com.apkupdater.util.Clipboard
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
@@ -80,6 +81,15 @@ val mainModule = module {
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()
 			.create(GitHubService::class.java)
+	}
+
+	single {
+		Retrofit.Builder()
+			.client(get())
+			.baseUrl("https://gitlab.com")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+			.create(GitLabService::class.java)
 	}
 
 	single {
