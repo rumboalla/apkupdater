@@ -89,7 +89,10 @@ val GitHubApps = listOf(
     GitHubApp("com.bnyro.translate", "you-apps", "TranslateYou"),
     GitHubApp("com.bnyro.recorder", "you-apps", "RecordYou"),
     GitHubApp("keepass2android.keepass2android_nonet", "PhilippC", "keepass2android", contains("nonet")),
-    GitHubApp("keepass2android.keepass2android", "PhilippC", "keepass2android", notContains("nonet"))
+    GitHubApp("keepass2android.keepass2android", "PhilippC", "keepass2android", notContains("nonet")),
+    GitHubApp("com.fsck.k9", "thundernest", "k-9"),
+    GitHubApp("eu.darken.sdmse", "d4rken-org", "sdmaid"),
+    GitHubApp("oss.krtirtho.spotube", "KRTirtho", "spotube")
 )
 
 fun contains(text: String) = Regex("^.*$text.*\$")
