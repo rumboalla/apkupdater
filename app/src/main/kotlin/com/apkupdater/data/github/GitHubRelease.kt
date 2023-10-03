@@ -9,4 +9,3 @@ data class GitHubRelease(
     val author: GitHubAuthor,
     val body: String = ""
 )
-
