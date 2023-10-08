@@ -14,6 +14,7 @@ import com.apkupdater.data.ui.getApp
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.GitHubService
 import com.apkupdater.util.combine
+import com.apkupdater.util.filterVersionTag
 import io.github.g00fy2.versioncompare.Version
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -105,7 +106,7 @@ class GitHubRepository(
             .filter { filterPreRelease(it) }
             .filter { findApkAsset(it.assets).isNotEmpty() }
 
-        if (releases.isNotEmpty() && Version(filterVersion(releases[0].tag_name)) > Version(currentVersion)) {
+        if (releases.isNotEmpty() && Version(filterVersionTag(releases[0].tag_name)) > Version(currentVersion)) {
             val app = apps?.getApp(packageName)
             emit(listOf(AppUpdate(
                 name = repo,
@@ -138,10 +139,6 @@ class GitHubRepository(
         prefs.ignorePreRelease.get() && release.prerelease -> false
         else -> true
     }
-
-    private fun filterVersion(version: String) = version
-        .replace(Regex("^\\D*"), "")
-        //.replace(Regex("\\D+\$"), "") // In case we want to remove non-numeric at end too
 
     private fun findApkAsset(assets: List<GitHubReleaseAsset>) = assets
         .filter { it.browser_download_url.endsWith(".apk", true) }

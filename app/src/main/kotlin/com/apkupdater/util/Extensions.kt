@@ -149,3 +149,7 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
 fun OkHttpClient.Builder.addUserAgentInterceptor(agent: String) = addNetworkInterceptor {
 	it.proceed(it.request().newBuilder().header("User-Agent", agent).build())
 }
+
+fun filterVersionTag(version: String) = version
+	.replace(Regex("^\\D*"), "")
+	//.replace(Regex("\\D+\$"), "") // In case we want to remove non-numeric at end too
