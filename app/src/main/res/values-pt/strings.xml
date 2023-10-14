@@ -18,8 +18,8 @@
     <string name="include_disabled_apps">"Incluir as apps desativadas"</string>
     <string name="install_cd">"Instalar a app"</string>
     <string name="app_cd">"Ícone da app"</string>
-    <string name="install_success">"%1$s instalado com sucesso"</string>
-    <string name="install_failure">"%1$s a instalação falhou"</string>
+    <string name="install_success">"%1$s instalado com sucesso."</string>
+    <string name="install_failure">"%1$s a instalação falhou."</string>
 
     // Settings
     <string name="settings_portrait_columns">"Colunas em modo retrato"</string>
