@@ -18,8 +18,8 @@
     <string name="include_disabled_apps">Incluir aplicaciones deshabilitadas</string>
     <string name="install_cd">Instalar Aplicación</string>
     <string name="app_cd">Icono de la Applicación</string>
-    <string name="install_success">%1$s instalado</string>
-    <string name="install_failure">%1$s fallo en la instalación</string>
+    <string name="install_success">%1$s instalado.</string>
+    <string name="install_failure">%1$s fallo en la instalación.</string>
 
     // Settings
     <string name="settings_portrait_columns">Columnas en modo Retrato</string>
@@ -57,7 +57,7 @@
 
     // Notifications
     <string name="notification_channel_name">Actualizaciones</string>
-    <string name="notification_channel_description">Canal para las notificaciones de las actualizaciones</string>
+    <string name="notification_channel_description">Canal para las notificaciones de las actualizaciones.</string>
     <string name="notification_channel_id" translatable="false">Actualizar canal</string>
     <string name="notification_update_title">Actualizaciones</string>
     <plurals name="notification_update_description">
