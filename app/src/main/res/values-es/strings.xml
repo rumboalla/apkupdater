@@ -58,7 +58,7 @@
     // Notifications
     <string name="notification_channel_name">Actualizaciones</string>
     <string name="notification_channel_description">Canal para las notificaciones de las actualizaciones.</string>
-    <string name="notification_channel_id" translatable="false">Actualizar canal</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Actualizaciones</string>
     <plurals name="notification_update_description">
         <item quantity="zero">No se encontraron actualizaciones.</item>
