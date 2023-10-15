@@ -1,24 +1,25 @@
 <resources>
 
-    <string name="app_name" translatable="false">APKAtualizador</string>
-    <string name="tab_apps">"Apps"</string>
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">"Aplicações"</string>
     <string name="tab_search">"Procurar"</string>
     <string name="tab_updates">"Atualizações"</string>
     <string name="tab_settings">"Configurações"</string>
     <string name="something_went_wrong">"Aconteceu algo de errado\n\uD83E\uDD26"</string>
-    <string name="ignore_cd">"Ignorar app"</string>
-    <string name="unignore_cd">"Não ignorar app"</string>
+    <string name="ignore_version">Ignorar a versão</string>
+    <string name="ignore_cd">"Ignorar a aplicação"</string>
+    <string name="unignore_cd">"Não ignorar a aplicação"</string>
     <string name="refresh_updates">"Procurar atualizações"</string>
-    <string name="exclude_system_apps">"Excluir apps do sistema"</string>
-    <string name="include_system_apps">"Incluir apps do sistema"</string>
-    <string name="exclude_app_store">"Excluir App Store"</string>
-    <string name="include_app_store">"Incluir App Store"</string>
-    <string name="exclude_disabled_apps">"Excluir apps desativadas"</string>
-    <string name="include_disabled_apps">"Incluir apps desativadas"</string>
-    <string name="install_cd">"Instalar app"</string>
-    <string name="app_cd">"App ícone"</string>
-    <string name="install_success">"%1$s instalada."</string>
-    <string name="install_failure">"%1$s falhou a instalação."</string>
+    <string name="exclude_system_apps">"Excluir a Loja de Aplicações"</string>
+    <string name="include_system_apps">"Incluir aplicações do sistema"</string>
+    <string name="exclude_app_store">"Excluir a Loja de Aplicações"</string>
+    <string name="include_app_store">"Incluir a Loja de Aplicações"</string>
+    <string name="exclude_disabled_apps">"Excluir aplicações desativadas"</string>
+    <string name="include_disabled_apps">"Incluir aplicações desativadas"</string>
+    <string name="install_cd">"Instalar aplicação"</string>
+    <string name="app_cd">"Ícone da aplicação"</string>
+    <string name="install_success">"%1$s foi instalado com sucesso."</string>
+    <string name="install_failure">A instalação de "%1$s falhou."</string>
 
     // Settings
     <string name="settings_portrait_columns">"Colunas em modo retrato"</string>
@@ -29,9 +30,9 @@
     <string name="settings_options">"Opções"</string>
     <string name="settings_hour">"Intervalo de horas"</string>
     <string name="settings_alarm_daily">"Diário"</string>
-    <string name="settings_alarm_3day">"Cada 3 dias"</string>
+    <string name="settings_alarm_3day">"A cada 3 dias"</string>
     <string name="settings_alarm_weekly">"Semanalmente"</string>
-    <string name="settings_android_tv_ui" translatable="false">Android TV</string>
+    <string name="settings_android_tv_ui" translatable="false">Interface do Android TV</string>
     <string name="ignore_alpha">"Ignorar alpha"</string>
     <string name="ignore_beta">"Ignorar beta"</string>
     <string name="ignore_preRelease">"Ignorar pré-lançamento"</string>
@@ -42,6 +43,7 @@
     <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_apkpure" translatable="false">APKPure (Beta)</string>
     <string name="about">"Sobre"</string>
     <string name="frequency">"Frequência"</string>
     <string name="theme">"Tema"</string>
@@ -50,6 +52,8 @@
     <string name="theme_light">"Claro"</string>
     <string name="about_github">"Obter código fonte, reportar bugs, requisitar novas funcionalidades e traduções."</string>
     <string name="about_donate">"Se gostas da app, considera fazer um donativo para uma causa justa."</string>
+    <string name="copy_to_clipboard">Copiar para a área de transferência</string>
+    <string name="copy_app_list">Copiar lista da app</string>
 
     // Notifications
     <string name="notification_channel_name">Atualizações</string>
@@ -58,8 +62,8 @@
     <string name="notification_update_title">Atualizações</string>
     <plurals name="notification_update_description">
         <item quantity="zero">Nenhuma atualização encontrada.</item>
-        <item quantity="one">Encontrada %1$d atualização.</item>
-        <item quantity="other">Encontradas %1$d atualizações.</item>
+        <item quantity="one">Foi encontrada %1$d atualização.</item>
+        <item quantity="other">Foram encontradas %1$d atualizações.</item>
     </plurals>
 
 </resources>

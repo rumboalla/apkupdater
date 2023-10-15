@@ -1,21 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <string name="app_name" translatable="false">APKUpdater</string>
     <string name="tab_apps">Applicazioni</string>
     <string name="tab_search">Cerca</string>
     <string name="tab_updates">Aggiornamenti</string>
     <string name="tab_settings">Impostazioni</string>
     <string name="something_went_wrong">Qualcosa è andato storto\n\uD83E\uDD26</string>
-    <string name="ignore_cd">Ignora app</string>
-    <string name="unignore_cd">Includi app</string>
+    <string name="ignore_version">Salta questa versione</string>
+    <string name="ignore_cd">Ignora applicazioni</string>
+    <string name="unignore_cd">Includi applicazioni</string>
     <string name="refresh_updates">Cerca aggiornamenti</string>
-    <string name="exclude_system_apps">Escludi app di sistema</string>
-    <string name="include_system_apps">Includi app di sistema</string>
-    <string name="exclude_app_store">Escludi app store</string>
-    <string name="include_app_store">Includi app store</string>
-    <string name="exclude_disabled_apps">Escludi app disattivate</string>
-    <string name="include_disabled_apps">Includi app disattivate</string>
-    <string name="install_cd">Installa app</string>
-    <string name="app_cd">Icona app</string>
+    <string name="exclude_system_apps">Escludi applicazioni di sistema</string>
+    <string name="include_system_apps">Includi applicazioni di sistema</string>
+    <string name="exclude_app_store">Escludi applicazioni store</string>
+    <string name="include_app_store">Includi applicazioni store</string>
+    <string name="exclude_disabled_apps">Escludi applicazioni disattivate</string>
+    <string name="include_disabled_apps">Includi applicazioni disattivate</string>
+    <string name="install_cd">Installa applicazioni</string>
+    <string name="app_cd">Icona dell\'applicazione</string>
     <string name="install_success">%1$s installate.</string>
     <string name="install_failure">%1$s installazioni fallite.</string>
 
@@ -31,11 +33,18 @@
     <string name="settings_alarm_daily">Giornaliera</string>
     <string name="settings_alarm_3day">Ogni 3 giorni</string>
     <string name="settings_alarm_weekly">Settimanale</string>
+    <string name="settings_android_tv_ui" translatable="false">Interfaccia grafica del Android TV</string>
     <string name="ignore_alpha">Ignora Alpha</string>
     <string name="ignore_beta">Ignora Beta</string>
-    <string name="ignore_preRelease">Ignora Pre-release</string>
-    <string name="use_safe_stores">Usa store sicuri (Aptoide)</string>
+    <string name="ignore_preRelease">Ignora pre-rilascio</string>
+    <string name="use_safe_stores">Utilizzare store sicuri (Aptoide)</string>
     <string name="root_install">Installa con root</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_apkpure" translatable="false">APKPure (Beta)</string>
     <string name="about">Informazioni</string>
     <string name="frequency">Frequenza</string>
     <string name="theme">Tema</string>
@@ -50,11 +59,12 @@
     // Notifications
     <string name="notification_channel_name">Aggiornamenti</string>
     <string name="notification_channel_description">Canale per notifiche di aggiornamento.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Aggiornamenti</string>
     <plurals name="notification_update_description">
         <item quantity="zero">Nessun aggiornamento trovato.</item>
-        <item quantity="one">%1$d aggiornamento trovato.</item>
-        <item quantity="other">%1$d aggiornamenti trovati.</item>
+        <item quantity="one">Trovato %1$d aggiornamento.</item>
+        <item quantity="other">Trovato %1$d aggiornamenti.</item>
     </plurals>
 
 </resources>
