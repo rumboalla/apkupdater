@@ -17,7 +17,7 @@
     <string name="exclude_disabled_apps">Escludi applicazioni disattivate</string>
     <string name="include_disabled_apps">Includi applicazioni disattivate</string>
     <string name="install_cd">Installa applicazioni</string>
-    <string name="app_cd">Icona dell'applicazione</string>
+    <string name="app_cd">Icona dell\'applicazione</string>
     <string name="install_success">%1$s installate.</string>
     <string name="install_failure">%1$s installazioni fallite.</string>
 
