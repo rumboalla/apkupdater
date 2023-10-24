@@ -200,6 +200,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_github
 		)
 		SwitchSetting(
+			{ viewModel.getUseGitLab() },
+			{ viewModel.setUseGitLab(it) },
+			stringResource(R.string.source_gitlab),
+			R.drawable.ic_gitlab
+		)
+		SwitchSetting(
 			{ viewModel.getUseApkMirror() },
 			{ viewModel.setUseApkMirror(it) },
 			stringResource(R.string.source_apkmirror),

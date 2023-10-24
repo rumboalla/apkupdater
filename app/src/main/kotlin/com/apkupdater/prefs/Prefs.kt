@@ -23,6 +23,7 @@ class Prefs(
 	val useSafeStores = boolean("useSafeStores", defValue = true, backed = true)
 	val useApkMirror = boolean("useApkMirror", defValue = !isAndroidTv, backed = true)
 	val useGitHub = boolean("useGitHub", defValue = true, backed = true)
+	val useGitLab = boolean("useGitLab", defValue = true, backed = true)
 	val useFdroid = boolean("useFdroid", defValue = true, backed = true)
 	val useIzzy = boolean("useIzzy", defValue = true, backed = true)
 	val useAptoide = boolean("useAptoide", defValue = true, backed = true)
