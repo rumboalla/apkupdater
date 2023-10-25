@@ -8,6 +8,7 @@
     <string name="tab_settings">Setup</string>
     <string name="something_went_wrong">"Etwas ist schiefgelaufen\n\uD83E\uDD26"</string>
     <string name="ignore_cd">Ignorieren</string>
+    <string name="ignore_cd">Ausblenden</string>
     <string name="unignore_cd">Überprüfen</string>
     <string name="refresh_updates">Suche nach Updates</string>
     <string name="exclude_system_apps">System-Apps ignorieren</string>
@@ -40,10 +41,12 @@
     <string name="use_safe_stores">Sichere Stores nutzen (Aptoide)</string>
     <string name="root_install">Root-Installation</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
-    <string name="source_fdroid" translatable="false">F-Droid (Main)</string>
-    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
+    <string name="source_fdroid" translatable="false">F-Droid Offizielle Repo</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy's Repo/string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
     <string name="about">Über</string>
     <string name="frequency">Häufigkeit</string>
     <string name="theme">Thema</string>
@@ -58,7 +61,7 @@
     // Notifications
     <string name="notification_channel_name">Updates</string>
     <string name="notification_channel_description">Kanal für Update-Benachrichtigungen.</string>
-    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_channel_id" translatable="false">UpdateKanal</string>
     <string name="notification_update_title">Updates</string>
     <plurals name="notification_update_description">
         <item quantity="zero">Keine Updates gefunden.</item>
