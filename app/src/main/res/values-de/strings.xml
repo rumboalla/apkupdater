@@ -7,8 +7,8 @@
     <string name="tab_updates">Updates</string>
     <string name="tab_settings">Setup</string>
     <string name="something_went_wrong">"Etwas ist schiefgelaufen\n\uD83E\uDD26"</string>
+    <string name="ignore_version">Ausblenden</string>
     <string name="ignore_cd">Ignorieren</string>
-    <string name="ignore_cd">Ausblenden</string>
     <string name="unignore_cd">Überprüfen</string>
     <string name="refresh_updates">Suche nach Updates</string>
     <string name="exclude_system_apps">System-Apps ignorieren</string>
