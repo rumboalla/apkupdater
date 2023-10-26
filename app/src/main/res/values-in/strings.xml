@@ -6,6 +6,7 @@
     <string name="tab_updates">Pembaruan</string>
     <string name="tab_settings">Pengaturan</string>
     <string name="something_went_wrong">"Ada yang salah\n\uD83E\uDD26"</string>
+    <string name="ignore_version">Abaikan Versi</string>
     <string name="ignore_cd">Abaikan Aplikasi</string>
     <string name="unignore_cd">Abaikan Aplikasi</string>
     <string name="refresh_updates">Cari Pembaruan</string>
