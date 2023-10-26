@@ -43,7 +43,8 @@
     <string name="source_izzy" translatable="false">F-Droid Izzy</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
-    <string name="source_apkpure" translatable="false">APKPure (Beta)</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
     <string name="about">Tentang</string>
     <string name="frequency">Frequency</string>
     <string name="theme">Tema</string>
