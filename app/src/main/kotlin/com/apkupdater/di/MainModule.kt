@@ -12,6 +12,7 @@ import com.apkupdater.repository.AppsRepository
 import com.apkupdater.repository.AptoideRepository
 import com.apkupdater.repository.FdroidRepository
 import com.apkupdater.repository.GitHubRepository
+import com.apkupdater.repository.GitLabRepository
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
@@ -137,6 +138,8 @@ val mainModule = module {
 
 	single { GitHubRepository(get(), get()) }
 
+	single { GitLabRepository(get(), get()) }
+
 	single { ApkPureRepository(get(), get(), get()) }
 
 	single { AptoideRepository(get(), get(), get()) }
@@ -145,7 +148,7 @@ val mainModule = module {
 
 	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get()) }
 
-	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get(), get()) }
+	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get(), get(), get()) }
 
 	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get(), get(), get()) }
 

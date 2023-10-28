@@ -18,6 +18,7 @@ class UpdatesRepository(
     private val izzyRepository: FdroidRepository,
     private val aptoideRepository: AptoideRepository,
     private val apkPureRepository: ApkPureRepository,
+    private val gitLabRepository: GitLabRepository,
     private val prefs: Prefs
 ) {
 
@@ -32,6 +33,7 @@ class UpdatesRepository(
                 if (prefs.useIzzy.get()) sources.add(izzyRepository.updates(filtered))
                 if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(filtered))
                 if (prefs.useApkPure.get()) sources.add(apkPureRepository.updates(filtered))
+                if (prefs.useGitLab.get()) sources.add(gitLabRepository.updates(filtered))
 
                 if (sources.isNotEmpty()) {
                     sources

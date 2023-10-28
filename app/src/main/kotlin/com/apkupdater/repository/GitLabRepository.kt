@@ -5,7 +5,7 @@ import android.util.Log
 import com.apkupdater.data.gitlab.GitLabApps
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
-import com.apkupdater.data.ui.GitHubSource
+import com.apkupdater.data.ui.GitLabSource
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.GitLabService
@@ -31,9 +31,9 @@ class GitLabRepository(
             }
         }
         if (checks.isEmpty()) {
-            emit(Result.success(emptyList()))
+            emit(emptyList())
         } else {
-            checks.combine { all -> emit(Result.success(all.flatMap { it })) }.collect()
+            checks.combine { all -> emit(all.flatMap { it }) }.collect()
         }
     }
 
@@ -47,7 +47,7 @@ class GitLabRepository(
     ) = flow {
         val releases = service.getReleases(user, repo)
             .filter { Version(filterVersionTag(it.tag_name)) > Version(currentVersion) }
-            //.filter { it.assets.sources.find { url -> url.url.endsWith(".apk", true) } != null }
+//            .filter { it.assets.sources.find { url -> url.url.endsWith(".apk", true) } != null }
 
         if (releases.isNotEmpty()) {
             val app = apps?.getApp(packageName)
@@ -59,7 +59,7 @@ class GitLabRepository(
                 oldVersion = app?.version ?: "?",
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
-                source = GitHubSource,
+                source = GitLabSource,
                 link = releases[0].assets.sources.find { url -> url.url.endsWith(".apk", true) }?.url.orEmpty(),
                 whatsNew = releases[0].description,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
