@@ -13,6 +13,7 @@ import com.apkupdater.util.millisUntilHour
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 
 class UpdatesWorker(
@@ -28,10 +29,14 @@ class UpdatesWorker(
 
         fun launch(workManager: WorkManager) {
             val request = PeriodicWorkRequestBuilder<UpdatesWorker>(getDays(), TimeUnit.DAYS)
-                .setInitialDelay(millisUntilHour(prefs.alarmHour.get()), TimeUnit.MILLISECONDS)
-                .build()
+                .setInitialDelay(
+                    millisUntilHour(prefs.alarmHour.get()) + randomDelay(),
+                    TimeUnit.MILLISECONDS
+                ).build()
             workManager.enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.UPDATE, request)
         }
+
+        private fun randomDelay() = Random.nextLong(-900000, 900000)
 
         private fun getDays() = when(prefs.alarmFrequency.get()) {
             0 -> 1L
