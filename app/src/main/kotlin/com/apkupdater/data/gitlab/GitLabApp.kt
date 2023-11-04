@@ -7,6 +7,5 @@ data class GitLabApp(
 )
 
 val GitLabApps = listOf(
-    GitLabApp("com.aurora.store", "AuroraOSS", "AuroraStore"),
-    GitLabApp("com.github.axet.bookreader", "axet", "android-book-reader")
+    GitLabApp("com.aurora.store", "AuroraOSS", "AuroraStore")
 )

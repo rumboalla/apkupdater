@@ -3,6 +3,7 @@ package com.apkupdater.repository
 import android.net.Uri
 import android.util.Log
 import com.apkupdater.data.gitlab.GitLabApps
+import com.apkupdater.data.gitlab.GitLabRelease
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.GitLabSource
@@ -60,7 +61,7 @@ class GitLabRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitLabSource,
-                link = releases[0].assets.sources.find { url -> url.url.endsWith(".apk", true) }?.url.orEmpty(),
+                link = getApkUrl(packageName, releases[0]),
                 whatsNew = releases[0].description,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))
@@ -70,6 +71,24 @@ class GitLabRepository(
     }.catch {
         emit(emptyList())
         Log.e("GitLabRepository", "Error fetching releases for $packageName.", it)
+    }
+
+    private fun getApkUrl(
+        packageName: String,
+        release: GitLabRelease
+    ): String {
+        // TODO: Take into account arch
+        val source = release.assets.sources.find { it.url.endsWith(".apk", true) }
+        if (source != null) {
+            return source.url
+        } else if (packageName == "com.aurora.store") {
+            // For whatever reason Aurora doesn't store the APK as an asset.
+            // Instead there is a markdown link to the APK.
+            Regex("\\[(.+)]\\(([^ ]+?)( \"(.+)\")?\\)").find(release.description)?.let {
+                return "https://gitlab.com/AuroraOSS/AuroraStore" + it.groups[2]!!.value
+            }
+        }
+        return ""
     }
 
 }
