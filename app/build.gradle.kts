@@ -15,8 +15,8 @@ android {
         applicationId = "com.apkupdater"
         minSdk = 21
         targetSdk = 34
-        versionCode = 50
-        versionName = "3.0.1"
+        versionCode = 51
+        versionName = "3.0.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

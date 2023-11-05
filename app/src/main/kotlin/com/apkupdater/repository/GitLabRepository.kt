@@ -48,7 +48,6 @@ class GitLabRepository(
     ) = flow {
         val releases = service.getReleases(user, repo)
             .filter { Version(filterVersionTag(it.tag_name)) > Version(currentVersion) }
-//            .filter { it.assets.sources.find { url -> url.url.endsWith(".apk", true) } != null }
 
         if (releases.isNotEmpty()) {
             val app = apps?.getApp(packageName)
@@ -71,6 +70,28 @@ class GitLabRepository(
     }.catch {
         emit(emptyList())
         Log.e("GitLabRepository", "Error fetching releases for $packageName.", it)
+    }
+
+    suspend fun search(text: String) = flow {
+        val checks = mutableListOf<Flow<List<AppUpdate>>>()
+
+        GitLabApps.forEach { app ->
+            if (app.repo.contains(text, true) || app.user.contains(text, true) || app.packageName.contains(text, true)) {
+                checks.add(checkApp(null, app.user, app.repo, app.packageName, "?", null))
+            }
+        }
+
+        if (checks.isEmpty()) {
+            emit(Result.success(emptyList()))
+        } else {
+            checks.combine { all ->
+                val r = all.flatMap { it }
+                emit(Result.success(r))
+            }.collect()
+        }
+    }.catch {
+        emit(Result.failure(it))
+        Log.e("GitLabRepository", "Error searching.", it)
     }
 
     private fun getApkUrl(

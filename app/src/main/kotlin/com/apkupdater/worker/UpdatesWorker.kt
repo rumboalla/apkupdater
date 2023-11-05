@@ -36,7 +36,7 @@ class UpdatesWorker(
             workManager.enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.UPDATE, request)
         }
 
-        private fun randomDelay() = Random.nextLong(-900000, 900000)
+        private fun randomDelay() = Random.nextLong(0, 59 * 60 * 1_000)
 
         private fun getDays() = when(prefs.alarmFrequency.get()) {
             0 -> 1L
