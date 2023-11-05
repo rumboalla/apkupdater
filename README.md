@@ -35,6 +35,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 * Russian by [Xenorant](https://github.com/Xenorant)
 * Turkish by [kyoyacchi](https://github.com/kyoyacchi)
 * Indonesian by [HazakuraID](https://github.com/HazakuraID)
+* Malay by [HazakuraID](https://github.com/HazakuraID)
 * Burmese by [kyawlinnthant](https://github.com/kyawlinnthant)
 
 # Feedback
