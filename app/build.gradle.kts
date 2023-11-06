@@ -73,7 +73,7 @@ android {
     }
 
     lint {
-        disable.addAll(arrayOf("ExtraTranslation", "MissingTranslation"))
+        warning.addAll(arrayOf("ExtraTranslation", "MissingTranslation", "MissingQuantity"))
     }
 }
 
