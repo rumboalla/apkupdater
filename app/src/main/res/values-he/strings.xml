@@ -1,0 +1,71 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">ישומים</string>
+    <string name="tab_search">חיפוש</string>
+    <string name="tab_updates">עדכונים</string>
+    <string name="tab_settings">הגדרות</string>
+    <string name="something_went_wrong">"קרתה שגיאה\n\uD83E\uDD26"</string>
+    <string name="ignore_version">התעלם מגירסה</string>
+    <string name="ignore_cd">התעלמות מישומון</string>
+    <string name="unignore_cd">בטל התעלמות מישומון</string>
+    <string name="refresh_updates">חפש עדכונים</string>
+    <string name="exclude_system_apps">החרג ישומוני מערכת</string>
+    <string name="include_system_apps">כלול ישומוני מערכת</string>
+    <string name="exclude_app_store">החרג ישומוני חנות</string>
+    <string name="include_app_store">כלול ישומוני חנות</string>
+    <string name="exclude_disabled_apps">החרג ישומונים מבוטלים</string>
+    <string name="include_disabled_apps">כלול ישומונים מבוטלים</string>
+    <string name="install_cd">התקן ישומון</string>
+    <string name="app_cd">צלמית ישומון</string>
+    <string name="install_success">%1$s ההתקנה הצליחה.</string>
+    <string name="install_failure">%1$s ההתקנה נכשלה.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">עמודות לרוחב</string>
+    <string name="settings_landscape_columns">עמודות לאורך</string>
+    <string name="settings_sources">מקורות</string>
+    <string name="settings_ui">ממשק משתמש</string>
+    <string name="settings_alarm">התרעה</string>
+    <string name="settings_options">אפשרויות</string>
+    <string name="settings_utils">כלים</string>
+    <string name="settings_hour">שעת התרעה</string>
+    <string name="settings_alarm_daily">יומי</string>
+    <string name="settings_alarm_3day">תלת-יומי</string>
+    <string name="settings_alarm_weekly">שבועי</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV ממשק משתמש עבור</string>
+    <string name="ignore_alpha">התעלם מאלפא</string>
+    <string name="ignore_beta">התעלם מביטא</string>
+    <string name="ignore_preRelease">התעלם משחרור מוקדם</string>
+    <string name="use_safe_stores">השתמש בחנות בטוחה (Aptoide)</string>
+    <string name="root_install">התקנת שורש</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
+    <string name="about">אודות</string>
+    <string name="frequency">תדירות</string>
+    <string name="theme">ערכת נושא</string>
+    <string name="theme_system">מערכת</string>
+    <string name="theme_dark">כהה</string>
+    <string name="theme_light">בהיר</string>
+    <string name="about_github">לקוד מקור, דיווח שגיאות, בקשה לתכוניות חדשות ותרגומים.</string>
+    <string name="about_donate">אם אהבת את הישומון, שקול לתרום למטרה הנעלה.</string>
+    <string name="copy_to_clipboard">העתק לזיכרון</string>
+    <string name="copy_app_list">העתק רשימת ישומונים</string>
+
+    // Notifications
+    <string name="notification_channel_name">עדכונים</string>
+    <string name="notification_channel_description">ערוץ עבור הודעות עדכונים.</string>
+    <string name="notification_channel_id" translatable="false">עדכן ערוץ</string>
+    <string name="notification_update_title">עדכונים</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">לא נמצאו עדכונים.</item>
+        <item quantity="one">נמצאו %1$d עדכונים.</item>
+        <item quantity="other">נמצאו %1$d עדכונים.</item>
+    </plurals>
+
+</resources>
