@@ -66,6 +66,7 @@
         <item quantity="zero">לא נמצאו עדכונים.</item>
         <item quantity="one">נמצאו %1$d עדכונים.</item>
         <item quantity="other">נמצאו %1$d עדכונים.</item>
+        <item quantity="two">נמצאו %1$d עדכונים.</item>
     </plurals>
 
 </resources>
