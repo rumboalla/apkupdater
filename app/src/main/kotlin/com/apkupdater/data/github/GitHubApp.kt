@@ -18,7 +18,7 @@ val GitHubApps = listOf(
     GitHubApp("dev.imranr.obtainium", "ImranR98", "Obtainium"),
     GitHubApp("org.proninyaroslav.libretorrent", "proninyaroslav", "libretorrent"),
     GitHubApp("eu.faircode.email", "M66B", "FairEmail"),
-    GitHubApp("com.fsck.k9", "thunderbird", "android"),
+    GitHubApp("com.fsck.k9", "thunderbird", "thunderbird-android"),
     GitHubApp("de.tutao.tutanota", "tutao", "tutanota"),
     GitHubApp("com.shabinder.spotiflyer", "Shabinder", "SpotiFlyer"),
     GitHubApp("org.koreader.launcher", "koreader", "koreader"),
