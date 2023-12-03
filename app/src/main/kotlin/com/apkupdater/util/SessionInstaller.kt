@@ -47,24 +47,24 @@ class SessionInstaller(private val context: Context) {
         }
 
         val sessionId = packageInstaller.createSession(params)
-        val session = packageInstaller.openSession(sessionId)
-
-        streams.forEach {
-            session.openWrite("$packageName.${randomUUID()}", 0, -1).use { output ->
-                it.copyTo(output)
-                it.close()
-                session.fsync(output)
+        packageInstaller.openSession(sessionId).use { session ->
+            streams.forEach {
+                session.openWrite("$packageName.${randomUUID()}", 0, -1).use { output ->
+                    it.copyTo(output)
+                    it.close()
+                    session.fsync(output)
+                }
             }
-        }
 
-        val intent = Intent(context, MainActivity::class.java).apply {
-            action = "$InstallAction.$id"
-        }
+            val intent = Intent(context, MainActivity::class.java).apply {
+                action = "$InstallAction.$id"
+            }
 
-        installMutex.lock()
-        val pending = PendingIntent.getActivity(context, 0, intent, FLAG_MUTABLE)
-        session.commit(pending.intentSender)
-        session.close()
+            installMutex.lock()
+            val pending = PendingIntent.getActivity(context, 0, intent, FLAG_MUTABLE)
+            session.commit(pending.intentSender)
+            session.close()
+        }
     }
 
     fun rootInstall(file: File): Boolean {
