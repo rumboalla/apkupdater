@@ -11,7 +11,7 @@ import android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES
 import androidx.core.content.ContextCompat.startActivity
 import com.apkupdater.BuildConfig
 import com.apkupdater.ui.activity.MainActivity
-import eu.chainfire.libsuperuser.Shell
+import com.topjohnwu.superuser.Shell
 import java.io.File
 import java.io.InputStream
 import java.util.concurrent.atomic.AtomicBoolean
@@ -68,7 +68,7 @@ class SessionInstaller(private val context: Context) {
     }
 
     fun rootInstall(file: File): Boolean {
-        val res = Shell.Pool.SU.run("pm install -r ${file.absolutePath}") == 0
+        val res = Shell.cmd("pm install -r ${file.absolutePath}").exec().isSuccess
         file.delete()
         return res
     }

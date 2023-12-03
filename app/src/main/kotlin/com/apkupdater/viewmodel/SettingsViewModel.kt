@@ -13,7 +13,7 @@ import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import eu.chainfire.libsuperuser.Shell
+import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -72,7 +72,7 @@ class SettingsViewModel(
 	}
 
 	fun setRootInstall(b: Boolean) {
-		if (b && Shell.SU.available()) {
+		if (b && Shell.isAppGrantedRoot() == true) {
 			prefs.rootInstall.put(true)
 		} else {
 			prefs.rootInstall.put(false)

@@ -97,7 +97,7 @@ dependencies {
     implementation("com.github.rumboalla.KryptoPrefs:kryptoprefs:0.4.3")
     implementation("com.github.rumboalla.KryptoPrefs:kryptoprefs-gson:0.4.3")
     implementation("org.jsoup:jsoup:1.16.1")
-    implementation("eu.chainfire:libsuperuser:1.1.1")
+    implementation("com.github.topjohnwu.libsu:core:5.2.1")
     implementation("io.github.g00fy2:versioncompare:1.5.0")
 
     testImplementation("junit:junit:4.13.2")
