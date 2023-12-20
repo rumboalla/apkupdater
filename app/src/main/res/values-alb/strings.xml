@@ -1,0 +1,71 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Aplikacionet</string>
+    <string name="tab_search">Kërko</string>
+    <string name="tab_updates">Përditësime</string>
+    <string name="tab_settings">Cilësimet</string>
+    <string name="something_went_wrong">"Diçka shkoi keq\n\uD83E\uDD26"</string>
+    <string name="ignore_version">Ignoro Versionin</string>
+    <string name="ignore_cd">Ignoro Aplikacionin</string>
+    <string name="unignore_cd">Mos e Ignoro Aplikacionin</string>
+    <string name="refresh_updates">Kërko për Përditësime</string>
+    <string name="exclude_system_apps">Përjashto Aplikacionet e Sistemit</string>
+    <string name="include_system_apps">Përfshij Aplikacionet e Sistemit</string>
+    <string name="exclude_app_store">Përjashto Dyqanin e Aplikacioneve</string>
+    <string name="include_app_store">Përfshij Dyqanin e Aplikacioneve</string>
+    <string name="exclude_disabled_apps">Përjashto Aplikacionet e Çaktivizuara</string>
+    <string name="include_disabled_apps">Përfshij Aplikacionet e Çaktivizuara</string>
+    <string name="install_cd">Instalo Aplikacionin</string>
+    <string name="app_cd">Ikona e Aplikacionit</string>
+    <string name="install_success">%1$s u instalua.</string>
+    <string name="install_failure">%1$s dështoi të instalohet.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Kolonat në Portret</string>
+    <string name="settings_landscape_columns">Kolonat në Peizazh</string>
+    <string name="settings_sources">Burimet</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">Alarmi</string>
+    <string name="settings_options">Opsionet</string>
+    <string name="settings_utils">Utilitetet</string>
+    <string name="settings_hour">Ora e Alarmit</string>
+    <string name="settings_alarm_daily">Çdo Ditë</string>
+    <string name="settings_alarm_3day">Çdo 3 Ditë</string>
+    <string name="settings_alarm_weekly">Çdo Javë</string>
+    <string name="settings_android_tv_ui" translatable="false">UI i Android TV</string>
+    <string name="ignore_alpha">Ignoro Alpha</string>
+    <string name="ignore_beta">Ignoro Beta</string>
+    <string name="ignore_preRelease">Ignoro Para-lirim</string>
+    <string name="use_safe_stores">Përdor Dyqane të Sigurta (Aptoide)</string>
+    <string name="root_install">Instalim me Root</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Kryesor</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
+    <string name="about">Rreth</string>
+    <string name="frequency">Frekuenca</string>
+    <string name="theme">Tema</string>
+    <string name="theme_system">Sistemi</string>
+    <string name="theme_dark">Errët</string>
+    <string name="theme_light">Dritë</string>
+    <string name="about_github">Merr kodin burim, raporto gabimet, kërko karakteristika të reja dhe shto përkthimet.</string>
+    <string name="about_donate">Nëse ju pëlqen aplikacioni, mendoni për dhurimin për një shkak të vlefshëm.</string>
+    <string name="copy_to_clipboard">Kopjo në të kujtesë</string>
+    <string name="copy_app_list">Kopjo Listën e Aplikacioneve</string>
+
+    // Notifications
+    <string name="notification_channel_name">Përditësime</string>
+    <string name="notification_channel_description">Kanali për njoftimet e përditësimeve.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Përditësime</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Asnjë përditësim i gjetur.</item>
+        <item quantity="one">Gjeti %1$d përditësim.</item>
+        <item quantity="other">Gjeti %1$d përditësime.</item>
+    </plurals>
+
+</resources>
