@@ -81,7 +81,7 @@ GitHubApp("com.donnnno.arcticons.daynight", "Arcticons-Team", "Arcticons", conta
     GitHubApp("org.cromite.cromite", "uazo", "cromite"),
     GitHubApp("id.psw.vshlauncher", "EmiyaSyahriel", "CrossLauncher"),
     GitHubApp("com.nathanatos.Cuppa", "ncosgray", "cuppa_mobile"),
-    GitHubApp("com.froxot.cuscon", "MiepHD", "cuscon"),
+    GitHubApp("com.froxot.cuscon.foss", "MiepHD", "cuscon"),
     GitHubApp("com.brunochanrio.dangoplayeruni", "brunochanrio", "DangoPlayer"),
     GitHubApp("at.bitfire.davdroid", "bitfireAT", "davx5-ose"),
     GitHubApp("org.fossify.dialer", "FossifyOrg", "Dialer"),
