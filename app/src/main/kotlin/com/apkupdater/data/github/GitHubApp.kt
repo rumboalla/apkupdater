@@ -205,6 +205,7 @@ val GitHubApps = listOf(
     GitHubApp("hr.dtakac.prognoza", "davidtakac", "prognoza"),
     GitHubApp("com.prateekmedia.pstube", "prateekmedia", "pstube"),
     GitHubApp("com.utopia.pxviewr", "alphasp", "pxview"),
+    GitHubApp("org.mavlink.qgroundcontrolbeta", "mavlink", "QGroundControl"),
     GitHubApp("com.lagradost.quicknovel", "LagradOst", "QuickNovel"),
     GitHubApp("net.programmierecke.radiodroid2", "segler-alex", "RadioDroid"),
     GitHubApp("com.yoshi.rain", "DarkMooNight", "Rain"),
@@ -293,7 +294,6 @@ val GitHubApps = listOf(
     GitHubApp("com.Frontesque.vuetube", "VueTubeApp", "VueTube"),
     GitHubApp("org.wordpress.android", "wordpress-mobile", "WordPress-Android"),
     GitHubApp("com.xc3fff0e.xmanager", "Team-xManager", "xManager"),
-    GitHubApp("org.mavlink.qgroundcontrolbeta", "mavlink", "QGroundControl")
     GitHubApp("com.github.andreyasadchy.xtra", "crackededed", "Xtra"),
     GitHubApp("com.deniscerri.ytdl", "deniscerri", "ytdlnis"),
     GitHubApp("com.yubico.yubioath", "Yubico", "yubioath-flutter"),
