@@ -45,11 +45,11 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 	private var currentInstallId = 0
 
 	fun refresh(
-		appsViewModel: AppsViewModel,
+		appsViewModel: AppsViewModel? = null,
 		updatesViewModel: UpdatesViewModel
 	) = viewModelScope.launch {
 		isRefreshing.value = true
-		appsViewModel.refresh(false)
+		appsViewModel?.refresh(false)
 		updatesViewModel.refresh(false).invokeOnCompletion {
 			isRefreshing.value = false
 		}

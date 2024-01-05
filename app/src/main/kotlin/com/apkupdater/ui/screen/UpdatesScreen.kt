@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.tv.foundation.lazy.grid.items
@@ -34,31 +35,40 @@ import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.component.TvInstalledGrid
 import com.apkupdater.ui.component.TvUpdateItem
 import com.apkupdater.ui.component.UpdateItem
+import com.apkupdater.ui.theme.AppTheme
 import com.apkupdater.ui.theme.statusBarColor
+import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
 import org.koin.androidx.compose.get
 
 
 @Composable
-fun UpdatesScreen(viewModel: UpdatesViewModel) {
-	viewModel.state().collectAsStateWithLifecycle().value.onLoading {
-		UpdatesScreenLoading(viewModel)
+fun UpdatesScreen(
+	mainViewModel: MainViewModel,
+	updatesViewModel: UpdatesViewModel
+) {
+	updatesViewModel.state().collectAsStateWithLifecycle().value.onLoading {
+		UpdatesScreenLoading()
 	}.onError {
 		UpdatesScreenError()
 	}.onSuccess {
-		UpdatesScreenSuccess(viewModel, it.updates)
+		UpdatesScreenSuccess(
+			mainViewModel = mainViewModel,
+			updatesViewModel = updatesViewModel,
+			updates = it.updates
+		)
 	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
+fun UpdatesTopBar(onRefresh: () -> Unit) = TopAppBar(
 	title = {
 		Text(stringResource(R.string.tab_updates))
 	},
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
-		IconButton(onClick = { viewModel.refresh() }) {
+		IconButton(onClick = onRefresh) {
 			RefreshIcon(stringResource(R.string.refresh_updates))
 		}
 	},
@@ -69,9 +79,17 @@ fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
 	}
 )
 
+@Preview
 @Composable
-fun UpdatesScreenLoading(viewModel: UpdatesViewModel) = Column {
-	UpdatesTopBar(viewModel)
+fun UpdatesTopBarPreview() {
+    AppTheme(darkTheme = false) {
+        UpdatesTopBar { }
+    }
+}
+
+@Composable
+fun UpdatesScreenLoading() = Column {
+	UpdatesTopBar {}
 	LoadingGrid()
 }
 
@@ -80,18 +98,21 @@ fun UpdatesScreenError() = DefaultErrorScreen()
 
 @Composable
 fun UpdatesScreenSuccess(
-	viewModel: UpdatesViewModel,
+	mainViewModel: MainViewModel,
+	updatesViewModel: UpdatesViewModel,
 	updates: List<AppUpdate>
 ) = Column {
+	UpdatesTopBar {
+		mainViewModel.refresh(updatesViewModel = updatesViewModel)
+	}
+
 	val handler = LocalUriHandler.current
 	val tv = get<Prefs>().androidTvUi.get()
 
-	UpdatesTopBar(viewModel)
-
 	when {
 		updates.isEmpty() -> EmptyGrid()
-		tv -> TvGrid(viewModel, updates, handler)
-		!tv -> Grid(viewModel, updates, handler)
+		tv -> TvGrid(updatesViewModel, updates, handler)
+		!tv -> Grid(updatesViewModel, updates, handler)
 	}
 }
 

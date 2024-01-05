@@ -239,6 +239,6 @@ fun NavHost(
 ) {
 	composable(Screen.Apps.route) { AppsScreen(appsViewModel) }
 	composable(Screen.Search.route) { SearchScreen(searchViewModel) }
-	composable(Screen.Updates.route) { UpdatesScreen(updatesViewModel) }
+	composable(Screen.Updates.route) { UpdatesScreen(mainViewModel, updatesViewModel) }
 	composable(Screen.Settings.route) { SettingsScreen(settingsViewModel) }
 }
