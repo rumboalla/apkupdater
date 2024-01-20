@@ -1,6 +1,5 @@
 package com.apkupdater.ui.component
 
-import android.provider.Settings
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -26,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -114,34 +112,28 @@ fun ScrollableText(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit
 ) {
-    val systemAnimDurScale = with(LocalContext.current) {
-        remember { Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE) }
-    }
     val state = rememberScrollState()
     val inner = remember { mutableStateOf(IntSize.Zero) }
     val outer = remember { mutableStateOf(IntSize.Zero) }
 
-    if (systemAnimDurScale >= 0.25f) {
-        val effect: suspend (ScrollState) -> Unit = {
-            state.scrollTo(0)
-            val scroll = (inner.value.width - outer.value.width)
-            if (scroll > 0) {
-                while(true) {
-                    state.animateScrollTo(
-                        scroll,
-                        tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
-                    )
-                    state.animateScrollTo(
-                        0,
-                        tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
-                    )
-                }
-    
+    val effect: suspend (ScrollState) -> Unit = {
+        state.scrollTo(0)
+        val scroll = (inner.value.width - outer.value.width)
+        if (scroll > 0) {
+            while(true) {
+                state.animateScrollTo(
+                    scroll,
+                    tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
+                )
+                state.animateScrollTo(
+                    0,
+                    tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
+                )
             }
+
         }
-        LaunchedEffect(outer.value) { effect(state) }
     }
-    
+    LaunchedEffect(outer.value) { effect(state) }
     Row(Modifier.onSizeChanged { outer.value = it }) {
         Row(
             modifier = Modifier
