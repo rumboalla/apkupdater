@@ -6,6 +6,7 @@
     <string name="tab_updates">Обновления</string>
     <string name="tab_settings">Настройки</string>
     <string name="something_went_wrong">"Что-то пошло не так\n\uD83E\uDD26"</string>
+    <string name="ignore_version">Проигнорировать версию</string>
     <string name="ignore_cd">Игнорировать приложение</string>
     <string name="unignore_cd">Перестать игнорировать приложение</string>
     <string name="refresh_updates">Следить за обновлениями</string>
@@ -20,28 +21,32 @@
     <string name="install_success">%1$s установлено.</string>
     <string name="install_failure">%1$s не удалось установить.</string>
 
-        // Settings
+    // Settings
     <string name="settings_portrait_columns">Вертикальные столбцы</string>
     <string name="settings_landscape_columns">Горизонтальные столбцы</string>
+    <string name="play_text_animations">Проигрывать анимации текста</string>
     <string name="settings_sources">Источники</string>
     <string name="settings_ui">Интерфейс</string>
     <string name="settings_alarm">Будильник</string>
     <string name="settings_options">Настройки</string>
+    <string name="settings_utils">Утилиты</string>
     <string name="settings_hour">Время звонка</string>
     <string name="settings_alarm_daily">Ежедневно</string>
     <string name="settings_alarm_3day">3 Дня</string>
     <string name="settings_alarm_weekly">Еженедельно</string>
     <string name="settings_android_tv_ui" translatable="false">Интерфейс Android TV</string>
-    <string name="ignore_alpha">Игнорировать Alpha</string>
-    <string name="ignore_beta">Игнорировать Beta</string>
-    <string name="ignore_preRelease">Игнорировать Предрелиз</string>
+    <string name="ignore_alpha">Игнорировать alpha-версии</string>
+    <string name="ignore_beta">Игнорировать beta-версии</string>
+    <string name="ignore_preRelease">Игнорировать предрелизные версии</string>
     <string name="use_safe_stores">Использовать безопасные магазины (Aptoide)</string>
     <string name="root_install">Root установка</string>
     <string name="source_apkmirror" translatable="false">ApkMirror</string>
-    <string name="source_fdroid" translatable="false">F-Droid (Main)</string>
-    <string name="source_izzy" translatable="false">F-Droid (Izzy)</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
     <string name="source_aptoide" translatable="false">Aptoide</string>
     <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
     <string name="about">О нас</string>
     <string name="frequency">Частота</string>
     <string name="theme">Тема</string>
@@ -50,8 +55,10 @@
     <string name="theme_light">Светлая</string>
     <string name="about_github">Получить исходный код, сообщить об ошибках, запросить новые функции и добавить переводы.</string>
     <string name="about_donate">Если вам нравится приложение, подумайте о пожертвовании на достойное дело.</string>
+    <string name="copy_to_clipboard">Копировать в буфер обмена</string>
+    <string name="copy_app_list">Скопировать список приложений</string>
 
-        // Notifications
+    // Notifications
     <string name="notification_channel_name">Обновления</string>
     <string name="notification_channel_description">Канал для уведомлений об обновлениях.</string>
     <string name="notification_channel_id" translatable="false">updateChannel</string>
