@@ -178,6 +178,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 				R.drawable.ic_landscape
 			)
 		}
+		SwitchSetting(
+			{ viewModel.getPlayTextAnimations() },
+			{ viewModel.setPlayTextAnimations(it) },
+			stringResource(R.string.play_text_animations),
+			R.drawable.ic_animation
+		)
 		SegmentedButtonSetting(
 			stringResource(R.string.theme),
 			listOf(

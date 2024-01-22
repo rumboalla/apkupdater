@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import com.apkupdater.prefs.Prefs
+import org.koin.androidx.compose.get
 
 
 @Composable
@@ -116,24 +118,27 @@ fun ScrollableText(
     val inner = remember { mutableStateOf(IntSize.Zero) }
     val outer = remember { mutableStateOf(IntSize.Zero) }
 
-    val effect: suspend (ScrollState) -> Unit = {
-        state.scrollTo(0)
-        val scroll = (inner.value.width - outer.value.width)
-        if (scroll > 0) {
-            while(true) {
-                state.animateScrollTo(
-                    scroll,
-                    tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
-                )
-                state.animateScrollTo(
-                    0,
-                    tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
-                )
-            }
+    if (get<Prefs>().playTextAnimations.get()) {
+        val effect: suspend (ScrollState) -> Unit = {
+            state.scrollTo(0)
+            val scroll = (inner.value.width - outer.value.width)
+            if (scroll > 0) {
+                while(true) {
+                    state.animateScrollTo(
+                        scroll,
+                        tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
+                    )
+                    state.animateScrollTo(
+                        0,
+                        tween(delayMillis = 1000, durationMillis = scroll * 10, easing = LinearEasing)
+                    )
+                }
 
+            }
         }
+        LaunchedEffect(outer.value) { effect(state) }
     }
-    LaunchedEffect(outer.value) { effect(state) }
+    
     Row(Modifier.onSizeChanged { outer.value = it }) {
         Row(
             modifier = Modifier
