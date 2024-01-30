@@ -57,5 +57,5 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 * [KryptoPrefs](https://github.com/rumboalla/KryptoPrefs): Kotlin library for handling encrypted SharedPreferences.
 
 # License
-Copyright &copy; 2016-2023 rumboalla.  
+Copyright &copy; 2016-2024 rumboalla.  
 Licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
