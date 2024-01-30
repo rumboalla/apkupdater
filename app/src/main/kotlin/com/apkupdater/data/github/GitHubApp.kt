@@ -163,7 +163,7 @@ val GitHubApps = listOf(
     GitHubApp("info.shiosyakeyakini.miria", "shiosyakeyakini-info", "miria"),
     GitHubApp("miru.miaomint", "miru-project", "miru-app"),
     GitHubApp("com.x8bit.bitwarden", "bitwarden", "mobile"),
-    GitHubApp("org.thoughtcrime.securesms", "mollyim", "mollyim-android"),
+    GitHubApp("im.molly.app", "mollyim", "mollyim-android"),
     GitHubApp("com.limelight", "moonlight-stream", "moonlight-android"),
     GitHubApp("is.xyz.mpv", "mpv-android", "mpv-android"),
     GitHubApp("rocks.mucke.github", "moritz-weber", "mucke"),
