@@ -100,7 +100,7 @@ dependencies {
     implementation("com.github.topjohnwu.libsu:core:5.2.2")
     implementation("io.github.g00fy2:versioncompare:1.5.0")
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
