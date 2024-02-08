@@ -100,15 +100,11 @@ class GitLabRepository(
     ): String {
         // TODO: Take into account arch
         val source = release.assets.sources.find { it.url.endsWith(".apk", true) }
-        if (source != null) {
-            return source.url
-        } else if (packageName == "com.aurora.store") {
-            // For whatever reason Aurora doesn't store the APK as an asset.
-            // Instead there is a markdown link to the APK.
-            Regex("\\[(.+)]\\(([^ ]+?)( \"(.+)\")?\\)").find(release.description)?.let {
-                return "https://gitlab.com/AuroraOSS/AuroraStore" + it.groups[2]!!.value
-            }
-        }
+        if (source != null) return source.url
+
+        val link = release.assets.links.find { it.url.endsWith(".apk", true) }
+        if (link != null) return link.url
+
         return ""
     }
 

@@ -10,6 +10,7 @@ import java.io.InputStream
 class Downloader(
     private val client: OkHttpClient,
     private val apkPureClient: OkHttpClient,
+    private val auroraClient: OkHttpClient,
     private val dir: File
 ) {
 
@@ -26,6 +27,7 @@ class Downloader(
     fun downloadStream(url: String): InputStream? = runCatching {
         val c = when {
             url.contains("apkpure") -> apkPureClient
+            url.contains("aurora") -> auroraClient
             else -> client
         }
         val response = c.newCall(downloadRequest(url)).execute()
