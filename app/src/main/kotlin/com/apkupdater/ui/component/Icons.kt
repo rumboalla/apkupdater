@@ -5,21 +5,23 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.PlainTooltipState
+import androidx.compose.material3.TooltipBoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.apkupdater.R
 import com.apkupdater.data.ui.Source
 import com.apkupdater.util.clickableNoRipple
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,9 +34,16 @@ fun ExcludeIcon(
     @DrawableRes icon: Int = if (exclude) excludeIcon else includeIcon,
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
-) = PlainTooltip(text = { PlainTooltip(text = { Text(stringResource(string)) }) }) {
-    Icon(painterResource(icon), stringResource(contentDescription), Modifier.tooltipTrigger())
-}
+) = PlainTooltipBox(
+    tooltip = { Text(stringResource(string)) },
+    content = {
+        Icon(
+            painterResource(icon),
+            stringResource(contentDescription),
+            Modifier.tooltipTrigger()
+        )
+    }
+)
 
 @Composable
 fun ExcludeSystemIcon(exclude: Boolean) = ExcludeIcon(
@@ -110,10 +119,13 @@ fun BoxScope.InstallProgressIcon(
 fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
-) = PlainTooltip(text = { PlainTooltip(text = { Text(text) }) }) {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_refresh),
-        contentDescription = text,
-        modifier = Modifier.tooltipTrigger().then(modifier)
-    )
-}
+) = PlainTooltipBox(
+    tooltip = { Text(text) },
+    content = {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_refresh),
+            contentDescription = text,
+            modifier = Modifier.tooltipTrigger().then(modifier)
+        )
+    }
+)
