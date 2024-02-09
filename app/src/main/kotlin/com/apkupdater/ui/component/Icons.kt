@@ -9,8 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
-import androidx.compose.material3.Text
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +32,7 @@ fun ExcludeIcon(
     @DrawableRes icon: Int = if (exclude) excludeIcon else includeIcon,
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
-) = PlainTooltipBox(tooltip = { Text(stringResource(string)) }) {
+) = PlainTooltip(text = { PlainTooltip(text = { Text(stringResource(string)) }) }) {
     Icon(painterResource(icon), stringResource(contentDescription), Modifier.tooltipTrigger())
 }
 
@@ -111,7 +110,7 @@ fun BoxScope.InstallProgressIcon(
 fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
-) = PlainTooltipBox(tooltip = { Text(text) }) {
+) = PlainTooltip(text = { PlainTooltip(text = { Text(text) }) }) {
     Icon(
         painter = painterResource(id = R.drawable.ic_refresh),
         contentDescription = text,
