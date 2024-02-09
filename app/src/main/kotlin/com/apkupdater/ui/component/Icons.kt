@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.tooltip.PlainTooltip
+import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,13 +31,15 @@ fun ExcludeIcon(
     @DrawableRes icon: Int = if (exclude) excludeIcon else includeIcon,
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
-) = PlainTooltip(
-    tooltip = { androidx.compose.material3.Text(stringResource(string)) },
+) = PlainTooltipBox(
+    tooltip = {
+        androidx.compose.material3.Text(stringResource(string))
+    },
     content = {
         Icon(
             painterResource(icon),
             stringResource(contentDescription),
-            Modifier.tooltipTrigger()
+            modifier = Modifier.tooltipTrigger()
         )
     }
 )
@@ -79,7 +81,7 @@ fun SourceIcon(source: Source, modifier: Modifier = Modifier) = Icon(
 @Composable
 fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
     painter = painterResource(
-        id = if(ignored) R.drawable.ic_visible_off else R.drawable.ic_visible
+        id = if (ignored) R.drawable.ic_visible_off else R.drawable.ic_visible
     ),
     contentDescription = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
     modifier = Modifier.clickableNoRipple(onClick).then(modifier)
@@ -97,13 +99,12 @@ fun BoxScope.InstallProgressIcon(
     isInstalling: Boolean,
     onClick: () -> Unit
 ) {
-    if(isInstalling) {
+    if (isInstalling) {
         CircularProgressIndicator(
             Modifier.align(Alignment.TopEnd).size(30.dp).padding(4.dp),
             color = MaterialTheme.colorScheme.primary
         )
-    }
-    else {
+    } else {
         InstallIcon(
             { onClick() },
             Modifier.align(Alignment.TopEnd).padding(4.dp)
@@ -116,8 +117,10 @@ fun BoxScope.InstallProgressIcon(
 fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
-) = PlainTooltip(
-    tooltip = { androidx.compose.material3.Text(text) },
+) = PlainTooltipBox(
+    tooltip = {
+        androidx.compose.material3.Text(text)
+    },
     content = {
         Icon(
             painter = painterResource(id = R.drawable.ic_refresh),
