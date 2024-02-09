@@ -29,6 +29,8 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 
 	val screens = listOf(Screen.Apps, Screen.Search, Screen.Updates, Screen.Settings)
 
+	val navController = rememberNavController()
+
 	val theme = MutableStateFlow(isDarkTheme(prefs.theme.get()))
 
 	val badges = MutableStateFlow(mapOf(
