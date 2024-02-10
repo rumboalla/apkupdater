@@ -34,7 +34,7 @@ fun ExcludeIcon(
     val tooltipState = rememberTooltipState()
     val scope = rememberCoroutineScope()
 
-    PlainTooltipBox(
+    TooltipBox(
         tooltip = {
             androidx.compose.material3.Text(stringResource(string))
         },
@@ -126,7 +126,7 @@ fun RefreshIcon(
     val tooltipState = rememberTooltipState()
     val scope = rememberCoroutineScope()
 
-    PlainTooltipBox(
+    TooltipBox(
         tooltip = {
             androidx.compose.material3.Text(text)
         },
