@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -106,7 +107,7 @@ fun BoxScope.InstallProgressIcon(
         )
     } else {
         InstallIcon(
-            { onClick() },
+            onClick,
             Modifier.align(Alignment.TopEnd).padding(4.dp)
         )
     }
@@ -121,6 +122,7 @@ fun RefreshIcon(
     tooltip = {
         androidx.compose.material3.Text(text)
     },
+    tooltipState = rememberPlainTooltipState(),
     content = {
         Icon(
             painter = painterResource(id = R.drawable.ic_refresh),
