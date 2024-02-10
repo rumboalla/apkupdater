@@ -32,18 +32,24 @@ fun ExcludeIcon(
     @DrawableRes icon: Int = if (exclude) excludeIcon else includeIcon,
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
-) = PlainTooltipBox(
-    tooltip = {
-        androidx.compose.material3.Text(stringResource(string))
-    },
-    content = {
-        Icon(
-            painterResource(icon),
-            stringResource(contentDescription),
-            modifier = Modifier.tooltipTrigger()
-        )
-    }
-)
+) {
+    val tooltipState = rememberTooltipState()
+    val scope = rememberCoroutineScope()
+
+    PlainTooltipBox(
+        tooltip = {
+            androidx.compose.material3.Text(stringResource(string))
+        },
+        state = tooltipState,
+        content = {
+            Icon(
+                painterResource(icon),
+                stringResource(contentDescription),
+                modifier = Modifier.tooltipTrigger(onClick = { scope.launch { tooltipState.show() } })
+            )
+        }
+    )
+}
 
 @Composable
 fun ExcludeSystemIcon(exclude: Boolean) = ExcludeIcon(
@@ -118,16 +124,21 @@ fun BoxScope.InstallProgressIcon(
 fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
-) = PlainTooltipBox(
-    tooltip = {
-        androidx.compose.material3.Text(text)
-    },
-    tooltipState = rememberPlainTooltipState(),
-    content = {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_refresh),
-            contentDescription = text,
-            modifier = Modifier.tooltipTrigger().then(modifier)
-        )
-    }
-)
+) {
+    val tooltipState = rememberTooltipState()
+    val scope = rememberCoroutineScope()
+
+    PlainTooltipBox(
+        tooltip = {
+            androidx.compose.material3.Text(text)
+        },
+        state = tooltipState,
+        content = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_refresh),
+                contentDescription = text,
+                modifier = Modifier.tooltipTrigger(onClick = { scope.launch { tooltipState.show() } }).then(modifier)
+            )
+        }
+    )
+}
