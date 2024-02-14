@@ -39,6 +39,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 * Burmese by [kyawlinnthant](https://github.com/kyawlinnthant)
 * Hebrew by [electriquo](https://github.com/electriquo)
 * Albanian by [Jvr2022](https://github.com/Jvr2022)
+* Korean by [Apious](https://github.com/Apious)
 
 # Feedback
 - To give feedback and request new features go to [Discussions](https://github.com/rumboalla/apkupdater/discussions).
