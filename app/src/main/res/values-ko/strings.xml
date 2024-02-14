@@ -1,0 +1,72 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">모든 앱</string>
+    <string name="tab_search">검색</string>
+    <string name="tab_updates">업데이트</string>
+    <string name="tab_settings">설정</string>
+    <string name="something_went_wrong">"문제가 발생했습니다.\n\uD83E\uDD26"</string>
+    <string name="ignore_version">버전 무시</string>
+    <string name="ignore_cd">앱 무시</string>
+    <string name="unignore_cd">앱 무시 해제</string>
+    <string name="refresh_updates">업데이트 찾기</string>
+    <string name="exclude_system_apps">시스템 앱 제외</string>
+    <string name="include_system_apps">시스템 앱 포함</string>
+    <string name="exclude_app_store">앱스토어 제외</string>
+    <string name="include_app_store">앱스토어 포함</string>
+    <string name="exclude_disabled_apps">비활성화된 앱 제외</string>
+    <string name="include_disabled_apps">비활성화된 앱 포함</string>
+    <string name="install_cd">앱 설치</string>
+    <string name="app_cd">앱 아이콘</string>
+    <string name="install_success">%1$s 설치됨.</string>
+    <string name="install_failure">%1$s 설치 실패됨.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">세로 열</string>
+    <string name="settings_landscape_columns">가로 열</string>
+    <string name="play_text_animations">텍스트 애니메이션 재생</string>
+    <string name="settings_sources">출처</string>
+    <string name="settings_ui">UI</string>
+    <string name="settings_alarm">알람</string>
+    <string name="settings_options">옵션</string>
+    <string name="settings_utils">유틸리티</string>
+    <string name="settings_hour">알람 시간</string>
+    <string name="settings_alarm_daily">일일</string>
+    <string name="settings_alarm_3day">3일</string>
+    <string name="settings_alarm_weekly">주간</string>
+    <string name="settings_android_tv_ui" translatable="false">안드로이드TV UI</string>
+    <string name="ignore_alpha">알파 무시</string>
+    <string name="ignore_beta">베타 무시</string>
+    <string name="ignore_preRelease">시험판 무시</string>
+    <string name="use_safe_stores">안전한 상점 이용(Aptoide)</string>
+    <string name="root_install">루트 설치</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
+    <string name="about">도움말</string>
+    <string name="frequency">빈도</string>
+    <string name="theme">테마</string>
+    <string name="theme_system">시스템</string>
+    <string name="theme_dark">어둡게</string>
+    <string name="theme_light">밝게</string>
+    <string name="about_github">소스 코드, 버그 보고, 새로운 기능 요청, 번역 추가 해주세요.</string>
+    <string name="about_donate">앱이 마음에 든다면 기부 해주세요 :) .</string>
+    <string name="copy_to_clipboard">클립보드에 복사</string>
+    <string name="copy_app_list">앱 목록 복사</string>
+
+    // Notifications
+    <string name="notification_channel_name">업데이트</string>
+    <string name="notification_channel_description">업데이트 알림 채널.</string>
+    <string name="notification_channel_id" translatable="false">업데이트 채널</string>
+    <string name="notification_update_title">업데이트</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">업데이트를 찾을 수 없어요.</item>
+        <item quantity="one">%1$d 업데이트를 찾았어요.</item>
+        <item quantity="other">%1$d개의 업데이트를 찾았어요.</item>
+    </plurals>
+
+</resources>
