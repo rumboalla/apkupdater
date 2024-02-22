@@ -16,7 +16,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 * Supports **installs without user interaction** on Android 12+.
 * **Root install** of updates.
 * No ads. No tracking.
-* **Languages**: English, Spanish, Dutch, German, Traditional Chinese, Simplified Chinese, Romanian, Italian, Portuguese, Russian, Turkish, Indonesian, Burmese, Malay, Hebrew, Albanian.
+* **Languages**: Albanian, Burmese, Dutch, English, German, Hebrew, Chinese Simplified & Traditional, Dutch, Italian, Indonesian, Malay, Korean, Portuguese, Romanian, Russian, Spanish, Turkish.
 
 # Download
 * [Stable Release (3.0.3)](https://github.com/rumboalla/apkupdater/releases/latest/download/com.apkupdater-release.apk)
@@ -25,21 +25,19 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 # Translations
 If you want to help with translations, open a [Pull Request](https://github.com/rumboalla/apkupdater/pulls) or an [Issue](https://github.com/rumboalla/apkupdater/issues) with the translated [strings.xml](https://github.com/rumboalla/apkupdater/blob/3.x/app/src/main/res/values/strings.xml).
 
+* Albanian by [Jvr2022](https://github.com/Jvr2022)
+* Burmese by [kyawlinnthant](https://github.com/kyawlinnthant)
 * Dutch by [AnonymousWP](https://github.com/AnonymousWP)
 * German by [peat80](https://github.com/peat80)
-* Traditional Chinese by [abc0922001](https://github.com/abc0922001)
-* Simplified Chinese by [Nriver](https://github.com/Nriver)
-* Romanian by [StormProductionsMusic](https://github.com/StormProductionsMusic)
+* Hebrew by [electriquo](https://github.com/electriquo)
+* Chinese Simplified & Traditional by [Nriver](https://github.com/Nriver) & [abc0922001](https://github.com/abc0922001)
 * Italian by [NicKoehler](https://github.com/NicKoehler)
+* Indonesian & Malay by [HazakuraID](https://github.com/HazakuraID)
+* Korean by [Apious](https://github.com/Apious)
 * Portuguese by [zekabra](https://github.com/zekabra)
+* Romanian by [StormProductionsMusic](https://github.com/StormProductionsMusic)
 * Russian by [Xenorant](https://github.com/Xenorant)
 * Turkish by [kyoyacchi](https://github.com/kyoyacchi)
-* Indonesian by [HazakuraID](https://github.com/HazakuraID)
-* Malay by [HazakuraID](https://github.com/HazakuraID)
-* Burmese by [kyawlinnthant](https://github.com/kyawlinnthant)
-* Hebrew by [electriquo](https://github.com/electriquo)
-* Albanian by [Jvr2022](https://github.com/Jvr2022)
-* Korean by [Apious](https://github.com/Apious)
 
 # Feedback
 - To give feedback and request new features go to [Discussions](https://github.com/rumboalla/apkupdater/discussions).
