@@ -46,9 +46,12 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 
 	fun refresh(
 		appsViewModel: AppsViewModel,
-		updatesViewModel: UpdatesViewModel
+		updatesViewModel: UpdatesViewModel,
+		isFirstTime:Boolean
 	) = viewModelScope.launch {
-		isRefreshing.value = true
+		if (!isFirstTime){
+			isRefreshing.value = true
+		}
 		appsViewModel.refresh(false)
 		updatesViewModel.refresh(false).invokeOnCompletion {
 			isRefreshing.value = false

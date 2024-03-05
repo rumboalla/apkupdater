@@ -80,10 +80,10 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	// Pull to refresh
 	val isRefreshing = mainViewModel.isRefreshing.collectAsStateWithLifecycle()
 	val pullToRefresh = rememberPullRefreshState(isRefreshing.value, {
-		mainViewModel.refresh(appsViewModel, updatesViewModel)
+		mainViewModel.refresh(appsViewModel, updatesViewModel,false)
 	})
 	LaunchedEffect(pullToRefresh) {
-		mainViewModel.refresh(appsViewModel, updatesViewModel)
+		mainViewModel.refresh(appsViewModel, updatesViewModel,true)
 	}
 
 	// Used to launch the install intent and get dismissal result
