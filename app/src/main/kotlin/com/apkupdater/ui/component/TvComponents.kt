@@ -55,8 +55,12 @@ fun TvCommonItem(
         LargeTitle(name.ifEmpty { LocalContext.current.getAppName(packageName) })
         MediumText(packageName)
         if (oldVersion != null && !single) {
-            ScrollableText {
-                MediumText("$oldVersion -> $version")
+            if (oldVersion != version) {
+                ScrollableText {
+                    MediumText("$oldVersion -> $version")
+                }
+            } else {
+                MediumText(version)
             }
         } else {
             MediumText(version)
