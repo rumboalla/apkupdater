@@ -1,6 +1,6 @@
 package com.apkupdater.ui.theme
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Build
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +37,7 @@ fun AppTheme(
 	val view = LocalView.current
 	if (!view.isInEditMode) {
 		SideEffect {
-			val activity = view.context as Activity
+			val activity = view.context as AppCompatActivity
 
 			// Set Navigation Bar color
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
