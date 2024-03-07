@@ -1,6 +1,6 @@
 package com.apkupdater.ui.screen
 
-import android.app.Activity.RESULT_CANCELED
+import androidx.appcompat.app.AppCompatActivity.RESULT_CANCELED
 import android.content.Context
 import android.content.Intent
 import android.util.Log
