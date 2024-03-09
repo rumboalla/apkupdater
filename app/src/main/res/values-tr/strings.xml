@@ -7,8 +7,8 @@
   <string name="something_went_wrong">"Bir şeyler ters gitti\n\uD83E\uDD26"</string>
   <string name="ignore_version">Sürümü Yoksay</string>
   <string name="ignore_cd">Uygulamayı Yoksay</string>
-  <string name="unignore_cd">Unignore Uygulaması</string>
-  <string name="refresh_updates">Güncellemeleri Arayın</string>
+  <string name="unignore_cd">Uygulamayı Yoksayılanlardan Çıkar</string>
+  <string name="refresh_updates">Güncellemeleri Denetle</string>
   <string name="exclude_system_apps">Sistem Uygulamalarını Hariç Tut</string>
   <string name="include_system_apps">Sistem Uygulamalarını Dahil Et</string>
   <string name="exclude_app_store">App Store'u hariç tut</string>
@@ -20,7 +20,7 @@
   <string name="install_success">%1$s yüklendi.</string>
   <string name="install_failure">%1$s yüklenemedi.</string>
   <string name="settings_portrait_columns">Dikey Sütunlar</string>
-  <string name="settings_landscape_columns">Peyzaj Sütunları</string>
+  <string name="settings_landscape_columns">Yatay Sütunlar</string>
   <string name="play_text_animations">Metin Animasyonlarını Oynat</string>
   <string name="settings_sources">Kaynaklar</string>
   <string name="settings_ui">UI</string>
@@ -50,8 +50,8 @@
   <string name="theme_system">Sistem</string>
   <string name="theme_dark">Koyu</string>
   <string name="theme_light">Açık</string>
-  <string name="about_github">Kaynak kodunu alın, hataları bildirin, yeni özellikler isteyin ve çeviriler ekleyin.</string>
-  <string name="about_donate">Uygulamayı beğendiyseniz, değerli bir nedene bağış yapmayı düşünün.</string>
+  <string name="about_github">Kaynak kodunu inceleyin, hataları bildirin, yeni özellikler isteyin ve çeviriler ekleyin.</string>
+  <string name="about_donate">Uygulamayı beğendiyseniz bağış yapmayı düşünün.</string>
   <string name="copy_to_clipboard">Panoya kopyala</string>
   <string name="copy_app_list">Uygulama Listesini Kopyala</string>
   <string name="notification_channel_name">Güncellemeler</string>
