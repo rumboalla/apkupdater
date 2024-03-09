@@ -19,9 +19,48 @@
   <string name="app_cd">Uygulama Simgesi</string>
   <string name="install_success">%1$s yüklendi.</string>
   <string name="install_failure">%1$s yüklenemedi.</string>
-
-    // Ayarlar
-    <string name="settings_portrait_columns">Dikey Sütunlar</string><string name="settings_landscape_columns">Peyzaj Sütunları</string><string name="play_text_animations">Metin Animasyonlarını Oynat</string><string name="settings_sources">Kaynaklar</string><string name="settings_ui">UI</string><string name="settings_alarm">Alarm</string><string name="settings_options">Seçenekler</string><string name="settings_utils">UTILS</string><string name="settings_hour">Alarm Saati</string><string name="settings_alarm_daily">Günlük</string><string name="settings_alarm_3day">3 Gün</string><string name="settings_alarm_weekly">Haftalık</string><string name="settings_android_tv_ui" translatable="false">Android TV Kullanıcı Arayüzü</string><string name="ignore_alpha">Alfa'yı yoksay</string><string name="ignore_beta">Betayı Yoksay</string><string name="ignore_preRelease">Ön sürümü yoksay</string><string name="use_safe_stores">Güvenli Mağazaları Kullan (Aptoide)</string><string name="root_install">Root Kurulumu</string><string name="source_apkmirror" translatable="false">ApkMirror</string><string name="source_fdroid" translatable="false">F - Droid Ana</string><string name="source_izzy" translatable="false">F - Droid Izzy</string><string name="source_aptoide" translatable="false">Aptoide</string><string name="source_github" translatable="false">GitHub</string><string name="source_gitlab" translatable="false">GitLab</string><string name="source_apkpure" translatable="false">APKPure</string><string name="about">Hakkında</string><string name="frequency">Sıklık</string><string name="theme">Tema</string><string name="theme_system">Sistem</string><string name="theme_dark">Koyu</string><string name="theme_light">Açık</string><string name="about_github">Kaynak kodunu alın, hataları bildirin, yeni özellikler isteyin ve çeviriler ekleyin.</string><string name="about_donate">Uygulamayı beğendiyseniz, değerli bir nedene bağış yapmayı düşünün.</string><string name="copy_to_clipboard">Panoya kopyala</string><string name="copy_app_list">Uygulama Listesini Kopyala</string>
-
-    // Bildirimler
-    <string name="notification_channel_name">Güncellemeler</string><string name="notification_channel_description">Güncelleme bildirimleri için kanal.</string><string name="notification_channel_id" translatable="false">updateChannel</string><string name="notification_update_title">Güncellemeler</string><plurals name="notification_update_description"><item quantity="zero">Güncelleme bulunamadı.</item><item quantity="one">%1$d güncelleme bulundu.</item><item quantity="other">%1$d güncelleme bulundu.</item></plurals></resources>
+  <string name="settings_portrait_columns">Dikey Sütunlar</string>
+  <string name="settings_landscape_columns">Peyzaj Sütunları</string>
+  <string name="play_text_animations">Metin Animasyonlarını Oynat</string>
+  <string name="settings_sources">Kaynaklar</string>
+  <string name="settings_ui">UI</string>
+  <string name="settings_alarm">Alarm</string>
+  <string name="settings_options">Seçenekler</string>
+  <string name="settings_utils">UTILS</string>
+  <string name="settings_hour">Alarm Saati</string>
+  <string name="settings_alarm_daily">Günlük</string>
+  <string name="settings_alarm_3day">3 Gün</string>
+  <string name="settings_alarm_weekly">Haftalık</string>
+  <string name="settings_android_tv_ui" translatable="false">Android TV Kullanıcı Arayüzü</string>
+  <string name="ignore_alpha">Alfa'yı yoksay</string>
+  <string name="ignore_beta">Betayı Yoksay</string>
+  <string name="ignore_preRelease">Ön sürümü yoksay</string>
+  <string name="use_safe_stores">Güvenli Mağazaları Kullan (Aptoide)</string>
+  <string name="root_install">Root Kurulumu</string>
+  <string name="source_apkmirror" translatable="false">ApkMirror</string>
+  <string name="source_fdroid" translatable="false">F - Droid Ana</string>
+  <string name="source_izzy" translatable="false">F - Droid Izzy</string>
+  <string name="source_aptoide" translatable="false">Aptoide</string>
+  <string name="source_github" translatable="false">GitHub</string>
+  <string name="source_gitlab" translatable="false">GitLab</string>
+  <string name="source_apkpure" translatable="false">APKPure</string>
+  <string name="about">Hakkında</string>
+  <string name="frequency">Sıklık</string>
+  <string name="theme">Tema</string>
+  <string name="theme_system">Sistem</string>
+  <string name="theme_dark">Koyu</string>
+  <string name="theme_light">Açık</string>
+  <string name="about_github">Kaynak kodunu alın, hataları bildirin, yeni özellikler isteyin ve çeviriler ekleyin.</string>
+  <string name="about_donate">Uygulamayı beğendiyseniz, değerli bir nedene bağış yapmayı düşünün.</string>
+  <string name="copy_to_clipboard">Panoya kopyala</string>
+  <string name="copy_app_list">Uygulama Listesini Kopyala</string>
+  <string name="notification_channel_name">Güncellemeler</string>
+  <string name="notification_channel_description">Güncelleme bildirimleri için kanal.</string>
+  <string name="notification_channel_id" translatable="false">updateChannel</string>
+  <string name="notification_update_title">Güncellemeler</string>
+  <plurals name="notification_update_description">
+    <item quantity="zero">Güncelleme bulunamadı.</item>
+    <item quantity="one">%1$d güncelleme bulundu.</item>
+    <item quantity="other">%1$d güncelleme bulundu.</item>
+  </plurals>
+</resources>
