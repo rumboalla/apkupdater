@@ -216,6 +216,7 @@ val GitHubApps = listOf(
     GitHubApp("com.prateekmedia.pstube", "prateekmedia", "pstube"),
     GitHubApp("com.utopia.pxviewr", "alphasp", "pxview"),
     GitHubApp("org.mavlink.qgroundcontrolbeta", "mavlink", "QGroundControl"),
+    GitHubApp("com.example.barcodescanner", "wewewe718", "QrAndBarcodeScanner"),
     GitHubApp("com.lagradost.quicknovel", "LagradOst", "QuickNovel"),
     GitHubApp("net.programmierecke.radiodroid2", "segler-alex", "RadioDroid"),
     GitHubApp("com.yoshi.rain", "DarkMooNight", "Rain"),
