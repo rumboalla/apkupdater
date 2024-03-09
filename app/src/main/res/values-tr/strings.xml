@@ -11,8 +11,8 @@
   <string name="refresh_updates">Güncellemeleri Denetle</string>
   <string name="exclude_system_apps">Sistem Uygulamalarını Hariç Tut</string>
   <string name="include_system_apps">Sistem Uygulamalarını Dahil Et</string>
-  <string name="exclude_app_store">App Store'u hariç tut</string>
-  <string name="include_app_store">App Store'u dahil et</string>
+  <string name="exclude_app_store">App Storeyi hariç tut</string>
+  <string name="include_app_store">App Storeyi dahil et</string>
   <string name="exclude_disabled_apps">Devre Dışı Uygulamaları Hariç Tut</string>
   <string name="include_disabled_apps">Devre Dışı Uygulamaları Dahil Et</string>
   <string name="install_cd">Uygulamayı Yükle</string>
@@ -32,7 +32,7 @@
   <string name="settings_alarm_3day">3 Gün</string>
   <string name="settings_alarm_weekly">Haftalık</string>
   <string name="settings_android_tv_ui" translatable="false">Android TV Kullanıcı Arayüzü</string>
-  <string name="ignore_alpha">Alfa'yı yoksay</string>
+  <string name="ignore_alpha">Alfayı yoksay</string>
   <string name="ignore_beta">Betayı Yoksay</string>
   <string name="ignore_preRelease">Ön sürümü yoksay</string>
   <string name="use_safe_stores">Güvenli Mağazaları Kullan (Aptoide)</string>
