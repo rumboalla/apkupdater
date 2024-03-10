@@ -99,6 +99,7 @@ val GitHubApps = listOf(
     GitHubApp("com.tachibana.downloader", "TachibanaGeneralLaboratories", "download-navi"),
     GitHubApp("org.fossify.draw", "FossifyOrg", "Draw"),
     GitHubApp("ryey.easer", "renyuneyun", "Easer"),
+    GitHubApp("info.plateaukao.einkbro", "plateaukao", "einkbro"),
     GitHubApp("me.rosuh.easywatermark", "rosuH", "EasyWatermark"),
     GitHubApp("im.vector.app", "element-hq", "element-android"),
     GitHubApp("io.element.android.x", "element-hq", "element-x-android"),
