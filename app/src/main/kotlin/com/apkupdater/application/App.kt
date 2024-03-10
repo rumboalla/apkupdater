@@ -3,7 +3,6 @@ package com.apkupdater.application
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import coil.util.DebugLogger
 import com.apkupdater.di.mainModule
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
