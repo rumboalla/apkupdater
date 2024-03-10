@@ -8,6 +8,7 @@ data class GitHubApp(
 )
 
 val GitHubApps = listOf(
+    GitHubApp("mattecarra.accapp", "MatteCarra", "AccA"),
     GitHubApp("app.accrescent.client", "accrescent", "accrescent"),
     GitHubApp("org.adaway", "AdAway", "AdAway"),
     GitHubApp("com.beemdevelopment.aegis", "beemdevelopment", "Aegis"),
@@ -62,6 +63,8 @@ val GitHubApps = listOf(
     GitHubApp("org.oxycblt.auxio", "OxygenCobalt", "Auxio"),
     GitHubApp("deckers.thibault.aves", "deckerst", "aves"),
     GitHubApp("com.czy0729.bangumi", "czy0729", "Bangumi"),
+    GitHubApp("com.darshancomputing.BatteryIndicatorPro", "darshan-", "Battery-Indicator-Pro"),
+    GitHubApp("io.github.domi04151309.batterytool", "Domi04151309", "BatteryTool"),
     GitHubApp("org.kde.bettercounter", "albertvaka", "bettercounter"),
     GitHubApp("de.markusfisch.android.binaryeye", "markusfisch", "BinaryEye"),
     GitHubApp("com.minar.birday", "m-i-n-a-r", "birday"),
