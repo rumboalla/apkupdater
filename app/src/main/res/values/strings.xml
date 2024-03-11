@@ -47,6 +47,7 @@
     <string name="source_github" translatable="false">GitHub</string>
     <string name="source_gitlab" translatable="false">GitLab</string>
     <string name="source_apkpure" translatable="false">APKPure</string>
+    <string name="source_codeberg" translatable="false">CodeBerg</string>
     <string name="about">About</string>
     <string name="frequency">Frequency</string>
     <string name="theme">Theme</string>
