@@ -236,7 +236,7 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_aptoide
 		)
 		SwitchSetting(
-			{ viewModel.getUseCodeberg() },
+			{ viewModel.getUseCodeBerg() },
 			{ viewModel.setUseCodeBerg(it) },
 			stringResource(R.string.source_codeberg),
 			R.drawable.ic_codeberg
