@@ -54,6 +54,8 @@ class SettingsViewModel(
 	fun setUseIzzy(b: Boolean) = prefs.useIzzy.put(b)
 	fun getUseGitHub() = prefs.useGitHub.get()
 	fun setUseGitHub(b: Boolean) = prefs.useGitHub.put(b)
+	fun getUseCodeberg() = prefs.useGitHub.get()
+	fun setUseCodeBerg(b: Boolean) = prefs.useGitHub.put(b)
 	fun getUseGitLab() = prefs.useGitLab.get()
 	fun setUseGitLab(b: Boolean) = prefs.useGitLab.put(b)
 	fun getUseAptoide() = prefs.useAptoide.get()
