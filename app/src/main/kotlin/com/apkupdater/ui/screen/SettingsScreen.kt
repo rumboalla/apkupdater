@@ -236,6 +236,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_aptoide
 		)
 		SwitchSetting(
+			{ viewModel.getUseCodeberg() },
+			{ viewModel.setUseCodeBerg(it) },
+			stringResource(R.string.source_codeberg),
+			R.drawable.ic_codeberg
+		)
+		SwitchSetting(
 			{ viewModel.getUseApkPure() },
 			{ viewModel.setUseApkPure(it) },
 			stringResource(R.string.source_apkpure),
