@@ -13,6 +13,7 @@ import com.apkupdater.repository.AptoideRepository
 import com.apkupdater.repository.FdroidRepository
 import com.apkupdater.repository.GitHubRepository
 import com.apkupdater.repository.GitLabRepository
+import com.apkupdater.repository.CodeBergRepository
 import com.apkupdater.repository.SearchRepository
 import com.apkupdater.repository.UpdatesRepository
 import com.apkupdater.service.ApkMirrorService
@@ -21,6 +22,7 @@ import com.apkupdater.service.AptoideService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
 import com.apkupdater.service.GitLabService
+import com.apkupdater.service.CodeBergService
 import com.apkupdater.util.Clipboard
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
@@ -96,6 +98,15 @@ val mainModule = module {
 	single {
 		Retrofit.Builder()
 			.client(get())
+			.baseUrl("https://codeberg.org/api/v1/")
+			.addConverterFactory(GsonConverterFactory.create(get()))
+			.build()
+			.create(CodeBergService::class.java)
+	}
+
+	single {
+		Retrofit.Builder()
+			.client(get())
 			.baseUrl("https://f-droid.org/repo/")
 			.addConverterFactory(GsonConverterFactory.create(get()))
 			.build()
@@ -138,6 +149,8 @@ val mainModule = module {
 	single { AppsRepository(get(), get()) }
 
 	single { GitHubRepository(get(), get()) }
+
+	single { CodeBergRepository(get(), get()) }
 
 	single { GitLabRepository(get(), get()) }
 
