@@ -56,6 +56,7 @@ val GitHubApps = listOf(
     GitHubApp("com.donnnno.arcticons.light", "Arcticons-Team", "Arcticons", contains("black")),
     GitHubApp("com.donnnno.arcticons.daynight", "Arcticons-Team", "Arcticons", contains("dayNight")),
     GitHubApp("com.gianlu.aria2app", "devgianlu", "Aria2App"),
+    GitHubApp("org.woheller69.arity", "woheller69", "Arity"),
     GitHubApp("com.dimowner.audiorecorder", "Dimowner", "AudioRecorder"),
     GitHubApp("com.funkymuse.aurora", "FunkyMuse", "Aurora"),
     GitHubApp("io.ente.auth", "ente-io", "auth"),
