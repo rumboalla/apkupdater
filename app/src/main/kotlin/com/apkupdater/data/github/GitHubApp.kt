@@ -267,6 +267,7 @@ val GitHubApps = listOf(
     GitHubApp("app.skydroid", "redsolver", "skydroid"),
     GitHubApp("free.rm.skytube.extra", "SkyTubeTeam", "SkyTube"),
     GitHubApp("com.buzbuz.smartautoclicker", "Nain57", "Smart-AutoClicker"),
+    GitHubApp("com.cookiegames.smartcookie", "CookieJarApps", "SmartCookieWeb"),
     GitHubApp("com.liskovsoft.smarttubetv", "yuliskov", "SmartTube"),
     GitHubApp("org.fossify.smsmessenger", "FossifyOrg", "SMS-Messenger"),
     GitHubApp("com.katiearose.sobriety", "KiARC", "Sobriety"),
