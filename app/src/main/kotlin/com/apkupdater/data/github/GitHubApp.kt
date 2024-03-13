@@ -230,6 +230,8 @@ val GitHubApps = listOf(
     GitHubApp("org.quantumbadger.redreader", "QuantumBadger", "RedRReader"),
     GitHubApp("com.celzero.bravedns", "celzero", "rethink-app"),
     GitHubApp("code.name.monkey.retromusic", "RetroMusicPlayer", "RetroMusicPlayer"),
+    GitHubApp("app.revanced.android.youtube", "NoName-exe", "revanced"),
+    GitHubApp("app.revanced.android.apps.youtube.music", "NoName-exe", "revanced")
     GitHubApp("app.rvx.android.youtube", "NoName-exe", "revanced-extended"),
     GitHubApp("app.revanced.manager.flutter", "revanced", "revanced-manager"),
     GitHubApp("it.fast4x.rimusic", "fast4x", "RiMusic"),
