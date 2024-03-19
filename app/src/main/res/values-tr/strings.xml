@@ -26,7 +26,7 @@
   <string name="settings_ui">UI</string>
   <string name="settings_alarm">Alarm</string>
   <string name="settings_options">Seçenekler</string>
-  <string name="settings_utils">UTILS</string>
+  <string name="settings_utils">ARAÇLAR</string>
   <string name="settings_hour">Alarm Saati</string>
   <string name="settings_alarm_daily">Günlük</string>
   <string name="settings_alarm_3day">3 Gün</string>
