@@ -56,6 +56,7 @@ If you want to help with translations, open a [Pull Request](https://github.com/
 # Other Projects
 * [CoolRs](https://github.com/rumboalla/coolrs): A collection of Android RenderScript effects. 
 * [KryptoPrefs](https://github.com/rumboalla/KryptoPrefs): Kotlin library for handling encrypted SharedPreferences.
+* [KryptoStore](https://github.com/rumboalla/kryptostore): A thin wrapper around Jetpack Datastore Preferences that provides useful features.
 
 # License
 Copyright &copy; 2016-2024 rumboalla.  
