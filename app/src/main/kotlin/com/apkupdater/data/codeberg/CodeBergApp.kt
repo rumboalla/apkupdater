@@ -4,7 +4,6 @@ data class CodeBergApp(
     val packageName: String,
     val user: String,
     val repo: String,
-    val extra: Regex? = null
 )
 
 val CodeBergApps = listOf(
