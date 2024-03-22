@@ -9,7 +9,7 @@ interface CodeBergService {
     @GET("/repos/{user}/{repo}/releases")
     suspend fun getReleases(
         @Path("user") user: String,
-        @Path("repo") user: String,
+        @Path("repo") user: String
     ): List<CodeBergRelease>
 
 }
