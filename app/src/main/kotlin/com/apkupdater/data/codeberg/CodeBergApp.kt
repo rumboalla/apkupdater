@@ -3,7 +3,7 @@ package com.apkupdater.data.codeberg
 data class CodeBergApp(
     val packageName: String,
     val user: String,
-    val repo: String,
+    val repo: String
 )
 
 val CodeBergApps = listOf(
