@@ -102,9 +102,13 @@ class GitHubRepository(
         currentVersion: String,
         extra: Regex?
     ) = flow {
-        val releases = service.getReleases(user, repo)
-            .filter { filterPreRelease(it) }
-            .filter { findApkAsset(it.assets).isNotEmpty() }
+        val r = service.getReleases(user, repo)
+        val releases = if (packageName == "com.apkupdater.ci") {
+            // TODO: Find a better way to do this
+            r.filter { it.name.contains("CI-Release-3.x")}
+        } else {
+            r.filter { filterPreRelease(it) }.filter { findApkAsset(it.assets).isNotEmpty() }
+        }
 
         if (releases.isNotEmpty() && Version(filterVersionTag(releases[0].tag_name)) > Version(currentVersion)) {
             val app = apps?.getApp(packageName)

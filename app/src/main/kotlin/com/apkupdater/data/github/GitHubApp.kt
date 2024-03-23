@@ -42,7 +42,7 @@ val GitHubApps = listOf(
     GitHubApp("exa.lnx.a", "EXALAB", "AnLinux-App"),
     GitHubApp("com.menny.android.anysoftkeyboard", "AnySoftKeyboard", "AnySoftKeyboard"),
     GitHubApp("org.courville.nova", "nova-video-player", "aos-AVP"),
-    GitHubApp("com.apkupdater.ci", "rumboalla", "apkupdater", contains(".ci")),
+    GitHubApp("com.apkupdater.ci", "rumboalla", "apkupdater"),
     GitHubApp("com.standardnotes", "standardnotes", "app"),
     GitHubApp("com.xBrowserSync.android", "xbrowsersync", "app"),
     GitHubApp("org.fossify.applauncher", "FossifyOrg", "App-Launcher"),
