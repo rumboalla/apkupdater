@@ -9,8 +9,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,8 +36,12 @@ fun ExcludeIcon(
     @DrawableRes icon: Int = if (exclude) excludeIcon else includeIcon,
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
-) = PlainTooltipBox(tooltip = { Text(stringResource(string)) }) {
-    Icon(painterResource(icon), stringResource(contentDescription), Modifier.tooltipTrigger())
+) = TooltipBox(
+    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+    state = rememberTooltipState(),
+    tooltip = { PlainTooltip { Text(stringResource(string)) } }
+) {
+    Icon(painterResource(icon), stringResource(contentDescription))
 }
 
 @Composable
@@ -111,10 +118,14 @@ fun BoxScope.InstallProgressIcon(
 fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
-) = PlainTooltipBox(tooltip = { Text(text) }) {
+) = TooltipBox(
+    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+    state = rememberTooltipState(),
+    tooltip = { PlainTooltip { Text(text) } }
+) {
     Icon(
         painter = painterResource(id = R.drawable.ic_refresh),
         contentDescription = text,
-        modifier = Modifier.tooltipTrigger().then(modifier)
+        modifier = modifier
     )
 }

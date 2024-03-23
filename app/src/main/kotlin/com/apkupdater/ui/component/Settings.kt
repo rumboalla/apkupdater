@@ -100,7 +100,7 @@ fun SegmentedButtonSetting(
         SingleChoiceSegmentedButtonRow(Modifier.padding(8.dp).fillMaxWidth()) {
             options.forEachIndexed { index, label ->
                 SegmentedButton(
-                    shape = SegmentedButtonDefaults.shape(position = index, count = options.size),
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     onClick = {
                         position = index
                         setValue(position)
