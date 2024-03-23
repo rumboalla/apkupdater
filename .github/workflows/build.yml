@@ -7,10 +7,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Setup Java 17
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '17'
+
+    - name: Set BUILD_TAG
+      run: echo "BUILD_TAG=.ci" >> $GITHUB_ENV
+
+    - name: Decode Keystore
+      env:
+        KEYSTORE: ${{ secrets.KEYSTORE }}
+      run: echo $KEYSTORE | base64 --decode > ./app/ci.ks
+
+    - name: Decode Properties
+      env:
+        PROPERTIES: ${{ secrets.PROPERTIES }}
+      run: echo $PROPERTIES | base64 --decode > local.properties
+
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Get current branch name
+      run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      if: ${{ env.BRANCH }} == "3.x"
+      with:
+        tag_name: ci${{ github.run_number }}
+        name: CI-Release-${{ env.BRANCH }}-${{ github.run_number }}
+        files: ./app/build/outputs/apk/release/com.apkupdater.ci-release.apk
+        body: ${{ github.event.head_commit.message }}
+        prerelease: true
