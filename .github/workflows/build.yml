@@ -37,7 +37,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: ${{ env.BRANCH }} == "3.x"
       with:
-        tag_name: 3.1.${{ github.run_number }}-ci
+        tag_name: 0.0.${{ github.run_number }}-ci
         name: CI-Release-${{ env.BRANCH }}-${{ github.run_number }}
         files: ./app/build/outputs/apk/release/com.apkupdater.ci-release.apk
         body: ${{ github.event.head_commit.message }}

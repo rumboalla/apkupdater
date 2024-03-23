@@ -17,7 +17,7 @@ android {
         minSdk = 21
         targetSdk = 34
         versionCode = 52
-        versionName = if (buildNumber.isEmpty()) "3.0.3" else "3.1.$buildNumber"
+        versionName = if (buildNumber.isEmpty()) "3.0.3" else "0.0.$buildNumber"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
