@@ -20,6 +20,7 @@ The 3.x branch is a full rewrite using modern technologies like **Jetpack Compos
 
 # Download
 * [Stable Release (3.0.3)](https://github.com/rumboalla/apkupdater/releases/latest/download/com.apkupdater-release.apk)
+* [CI Pre-release Builds](https://github.com/rumboalla/apkupdater/releases?q=CI&expanded=true)
 * [Older releases](https://github.com/rumboalla/apkupdater/releases)
 
 # Translations
