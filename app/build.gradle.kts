@@ -11,12 +11,13 @@ android {
     namespace = "com.apkupdater"
     compileSdk = 34
 
+    val buildNumber = System.getenv("BUILD_NUMBER").orEmpty()
     defaultConfig {
         applicationId = "com.apkupdater" + System.getenv("BUILD_TAG").orEmpty()
         minSdk = 21
         targetSdk = 34
         versionCode = 52
-        versionName = "3.0.3"
+        versionName = if (buildNumber.isEmpty()) "3.0.3" else "3.1.$buildNumber"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

@@ -14,9 +14,6 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Set BUILD_TAG
-      run: echo "BUILD_TAG=.ci" >> $GITHUB_ENV
-
     - name: Decode Keystore
       env:
         KEYSTORE: ${{ secrets.KEYSTORE }}
@@ -28,6 +25,9 @@ jobs:
       run: echo $PROPERTIES | base64 --decode > local.properties
 
     - name: Build with Gradle
+      env:
+        BUILD_TAG: ".ci"
+        BUILD_NUMBER: ${{ github.run_number }}
       run: ./gradlew build
 
     - name: Get current branch name
@@ -37,7 +37,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: ${{ env.BRANCH }} == "3.x"
       with:
-        tag_name: 0.0.${{ github.run_number }}-ci
+        tag_name: 3.1.${{ github.run_number }}-ci
         name: CI-Release-${{ env.BRANCH }}-${{ github.run_number }}
         files: ./app/build/outputs/apk/release/com.apkupdater.ci-release.apk
         body: ${{ github.event.head_commit.message }}
