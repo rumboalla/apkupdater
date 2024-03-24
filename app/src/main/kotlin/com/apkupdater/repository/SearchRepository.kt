@@ -17,6 +17,7 @@ class SearchRepository(
     private val gitHubRepository: GitHubRepository,
     private val apkPureRepository: ApkPureRepository,
     private val gitLabRepository: GitLabRepository,
+    private val playRepository: PlayRepository,
     private val prefs: Prefs
 ) {
 
@@ -29,6 +30,7 @@ class SearchRepository(
         if (prefs.useGitHub.get()) sources.add(gitHubRepository.search(text))
         if (prefs.useApkPure.get()) sources.add(apkPureRepository.search(text))
         if (prefs.useGitLab.get()) sources.add(gitLabRepository.search(text))
+        if (prefs.usePlay.get()) sources.add(playRepository.search(text))
 
         if (sources.isNotEmpty()) {
             sources.combine { updates ->

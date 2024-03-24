@@ -241,6 +241,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			stringResource(R.string.source_apkpure),
 			R.drawable.ic_apkpure
 		)
+		SwitchSetting(
+			{ viewModel.getUsePlay() },
+			{ viewModel.setUsePlay(it) },
+			stringResource(R.string.source_play) + " (Alpha)",
+			R.drawable.ic_play
+		)
 	}
 
 	item {

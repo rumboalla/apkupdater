@@ -60,6 +60,8 @@ class SettingsViewModel(
 	fun setUseAptoide(b: Boolean) = prefs.useAptoide.put(b)
 	fun getUseApkPure() = prefs.useApkPure.get()
 	fun setUseApkPure(b: Boolean) = prefs.useApkPure.put(b)
+	fun getUsePlay() = prefs.usePlay.get()
+	fun setUsePlay(b: Boolean) = prefs.usePlay.put(b)
 	fun getAndroidTvUi() = prefs.androidTvUi.get()
 	fun setAndroidTvUi(b: Boolean) = prefs.androidTvUi.put(b)
 	fun getEnableAlarm() = prefs.enableAlarm.get()

@@ -63,6 +63,10 @@ abstract class InstallViewModel(
     }
 
     protected suspend fun downloadAndInstall(id: Int, packageName: String, link: String) = runCatching {
+        if (link.contains(",")) {
+            playDownloadAndInstall(id, packageName, link)
+            return@runCatching
+        }
         val stream = downloader.downloadStream(link)
         if (stream != null) {
             if (link.contains("/XAPK")) {
@@ -78,6 +82,14 @@ abstract class InstallViewModel(
         cancelInstall(id)
     }
 
+    private suspend fun playDownloadAndInstall(id: Int, packageName: String, link: String) = runCatching {
+        val urls = link.split(",")
+        val streams = urls.map { downloader.downloadStream(it)!! }
+        installer.playInstall(id, packageName, streams)
+    }.getOrElse {
+        Log.e("InstallViewModel", "Error in playDownloadAndInstall.", it)
+        cancelInstall(id)
+    }
 
     protected fun sendInstallSnack(updates: List<AppUpdate>, log: AppInstallStatus) {
         if (log.snack) {

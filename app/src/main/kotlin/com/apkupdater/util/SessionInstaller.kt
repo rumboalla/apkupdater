@@ -110,4 +110,7 @@ class SessionInstaller(private val context: Context) {
         file.delete()
     }
 
+    suspend fun playInstall(id: Int, packageName: String, streams: List<InputStream>) =
+        install(id, packageName, streams)
+
 }
