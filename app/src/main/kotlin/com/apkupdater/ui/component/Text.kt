@@ -151,7 +151,6 @@ fun ScrollableText(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BadgeText(number: String) {
     if (number.isNotEmpty()) {

@@ -3,11 +3,16 @@ package com.apkupdater.repository
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.PlaySource
+import com.apkupdater.data.ui.getPackageNames
+import com.apkupdater.data.ui.getVersion
+import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.play.NativeDeviceInfoProvider
 import com.apkupdater.util.play.PlayHttpClient
+import com.aurora.gplayapi.data.models.App
 import com.aurora.gplayapi.data.models.AuthData
 import com.aurora.gplayapi.helpers.AppDetailsHelper
 import com.aurora.gplayapi.helpers.PurchaseHelper
@@ -45,26 +50,46 @@ class PlayRepository(
             return@flow
         }
         val authData = auth()
-        val details = AppDetailsHelper(authData).using(PlayHttpClient)
-        val app = details.getAppByPackageName(text)
-        val files = PurchaseHelper(authData).purchase(app.packageName, app.versionCode, app.offerType)
-        val link = files.joinToString(separator = ",") { it.url }
-        val update = AppUpdate(
-            app.displayName,
-            app.packageName,
-            app.versionName,
-            "",
-            app.versionCode.toLong(),
-            0L,
-            PlaySource,
-            Uri.parse(app.iconArtwork.url),
-            link,
-            whatsNew = app.changes
-        )
+        val app = AppDetailsHelper(authData)
+            .using(PlayHttpClient)
+            .getAppByPackageName(text)
+        val update = app.toAppUpdate(PurchaseHelper(authData))
         emit(Result.success(listOf(update)))
     }.catch {
         emit(Result.failure(it))
         Log.e("PlayRepository", "Error searching.", it)
     }
 
+    suspend fun updates(apps: List<AppInstalled>) = flow {
+        val authData = auth()
+        val details = AppDetailsHelper(authData)
+            .using(PlayHttpClient)
+            .getAppByPackageName(apps.getPackageNames())
+        val purchaseHelper = PurchaseHelper(authData)
+        val updates = details
+            .filter { it.versionCode > apps.getVersionCode(it.packageName) }
+            .map { it.toAppUpdate(purchaseHelper, apps.getVersion(it.packageName), apps.getVersionCode(it.packageName)) }
+        emit(updates)
+    }.catch {
+        emit(emptyList())
+        Log.e("AptoideRepository", "Error looking for updates.", it)
+    }
+
 }
+
+fun App.toAppUpdate(
+    purchaseHelper: PurchaseHelper,
+    oldVersion: String = "",
+    oldVersionCode: Long = 0L
+) = AppUpdate(
+    displayName,
+    packageName,
+    versionName,
+    oldVersion,
+    versionCode.toLong(),
+    oldVersionCode,
+    PlaySource,
+    Uri.parse(iconArtwork.url),
+    purchaseHelper.purchase(packageName, versionCode, offerType).joinToString(",") { it.url },
+    whatsNew = changes
+)

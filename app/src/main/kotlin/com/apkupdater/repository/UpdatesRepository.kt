@@ -19,6 +19,7 @@ class UpdatesRepository(
     private val aptoideRepository: AptoideRepository,
     private val apkPureRepository: ApkPureRepository,
     private val gitLabRepository: GitLabRepository,
+    private val playRepository: PlayRepository,
     private val prefs: Prefs
 ) {
 
@@ -34,6 +35,7 @@ class UpdatesRepository(
                 if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(filtered))
                 if (prefs.useApkPure.get()) sources.add(apkPureRepository.updates(filtered))
                 if (prefs.useGitLab.get()) sources.add(gitLabRepository.updates(filtered))
+                if (prefs.usePlay.get()) sources.add(playRepository.updates(filtered))
 
                 if (sources.isNotEmpty()) {
                     sources
