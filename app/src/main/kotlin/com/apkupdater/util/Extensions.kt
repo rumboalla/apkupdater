@@ -66,7 +66,9 @@ fun Context.getAppIcon(packageName: String) = runCatching {
 	ContextCompat.getDrawable(this, R.drawable.ic_root)
 }
 
-fun Context.getAppName(packageName: String): String = packageManager.getPackageInfo(packageName, 0).name(this)
+fun Context.getAppName(packageName: String): String = runCatching {
+	packageManager.getPackageInfo(packageName, 0).name(this)
+}.getOrDefault("")
 
 inline fun <reified T> List<Flow<T>>.combine(crossinline block: suspend (Array<T>) -> Unit) =
 	combine(this) { block(it) }

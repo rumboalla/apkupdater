@@ -330,6 +330,12 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			R.drawable.ic_root,
 			R.drawable.ic_copy
 		)
+		ButtonSetting(
+			stringResource(R.string.copy_app_logs),
+			{ viewModel.copyAppLogs() },
+			R.drawable.ic_root,
+			R.drawable.ic_copy
+		)
 	}
 }
 

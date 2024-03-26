@@ -3,6 +3,7 @@ package com.apkupdater.data.fdroid
 import androidx.core.net.toUri
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.Source
 
 data class FdroidUpdate(
@@ -22,6 +23,6 @@ fun FdroidUpdate.toAppUpdate(current: AppInstalled?, source: Source, url: String
         "https://f-droid.org/assets/ic_repo_app_default.png".toUri()
     else
         "${url}icons-640/${app.icon}".toUri(),
-    "$url${apk.apkName}",
+    Link.Url("$url${apk.apkName}"),
     if (current != null) app.localized["en-US"]?.whatsNew.orEmpty() else app.localized["en-US"]?.summary.orEmpty()
 )

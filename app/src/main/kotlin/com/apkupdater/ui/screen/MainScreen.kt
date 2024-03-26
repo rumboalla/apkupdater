@@ -48,6 +48,8 @@ import androidx.navigation.compose.rememberNavController
 import com.apkupdater.R
 import com.apkupdater.data.snack.ISnack
 import com.apkupdater.data.snack.InstallSnack
+import com.apkupdater.data.snack.TextIdSnack
+import com.apkupdater.data.snack.TextSnack
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
 import com.apkupdater.ui.theme.AppTheme
@@ -129,19 +131,21 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 
 suspend fun handleSnack(
 	context: Context,
-	snackbarHostState: SnackbarHostState,
+	snackBarHostState: SnackbarHostState,
 	snack: ISnack
 ) {
 	when (snack) {
 		is InstallSnack -> {
 			val message = if (snack.success) R.string.install_success else R.string.install_failure
-			snackbarHostState.showSnackbar(
+			snackBarHostState.showSnackbar(
 				context.getString(message, snack.name),
 				null,
 				true,
 				SnackbarDuration.Short
 			)
 		}
+		is TextSnack -> snackBarHostState.showSnackbar(snack.message, null, true, SnackbarDuration.Short)
+		is TextIdSnack -> snackBarHostState.showSnackbar(context.getString(snack.id), null, true, SnackbarDuration.Short)
 		else -> Log.e("MainScreen", "Invalid snack type.")
 	}
 }

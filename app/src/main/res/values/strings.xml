@@ -20,6 +20,7 @@
     <string name="app_cd">App Icon</string>
     <string name="install_success">%1$s installed.</string>
     <string name="install_failure">%1$s failed to install.</string>
+    <string name="root_install_not_supported">Root install of this app is not supported.</string>
 
     // Settings
     <string name="settings_portrait_columns">Portrait Columns</string>
@@ -58,6 +59,7 @@
     <string name="about_donate">If you like the app, consider donating to a worthy cause.</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="copy_app_list">Copy App List</string>
+    <string name="copy_app_logs">Copy App Logs</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>

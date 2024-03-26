@@ -4,10 +4,13 @@ import android.util.Log
 import androidx.compose.ui.platform.UriHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apkupdater.R
 import com.apkupdater.data.snack.InstallSnack
+import com.apkupdater.data.snack.TextIdSnack
 import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.data.ui.Link
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.Downloader
 import com.apkupdater.util.SessionInstaller
@@ -25,7 +28,7 @@ abstract class InstallViewModel(
 
     fun install(update: AppUpdate, uriHandler: UriHandler) {
         when (update.source) {
-            ApkMirrorSource -> uriHandler.openUri(update.link)
+            ApkMirrorSource -> uriHandler.openUri((update.link as Link.Url).link)
             else -> {
                 if (prefs.rootInstall.get()) {
                     downloadAndRootInstall(update)
@@ -49,45 +52,32 @@ abstract class InstallViewModel(
         }
     }
 
-    protected fun downloadAndRootInstall(id: Int, link: String) = runCatching {
-        val file = downloader.download(link)
-        val res = installer.rootInstall(file)
-        if (res) {
-            finishInstall(id)
-        } else {
-            cancelInstall(id)
+    protected fun downloadAndRootInstall(id: Int, link: Link) = runCatching {
+        when (link) {
+            is Link.Url -> {
+                if (installer.rootInstall(downloader.download(link.link))) {
+                    finishInstall(id)
+                } else {
+                    cancelInstall(id)
+                }
+            }
+            else -> { mainViewModel.sendSnack(TextIdSnack(R.string.root_install_not_supported))}
         }
+
     }.getOrElse {
         Log.e("InstallViewModel", "Error in downloadAndRootInstall.", it)
         cancelInstall(id)
     }
 
-    protected suspend fun downloadAndInstall(id: Int, packageName: String, link: String) = runCatching {
-        if (link.contains(",")) {
-            playDownloadAndInstall(id, packageName, link)
-            return@runCatching
-        }
-        val stream = downloader.downloadStream(link)
-        if (stream != null) {
-            if (link.contains("/XAPK")) {
-                installer.installXapk(id, packageName, stream)
-            } else {
-                installer.install(id, packageName, stream)
-            }
-        } else {
-            cancelInstall(id)
+    protected suspend fun downloadAndInstall(id: Int, packageName: String, link: Link) = runCatching {
+        when (link) {
+            Link.Empty -> { Log.e("InstallViewModel", "downloadAndInstall: Unsupported.")}
+            is Link.Play -> installer.playInstall(id, packageName, link.getInstallFiles().map { downloader.downloadStream(it)!! })
+            is Link.Url -> installer.install(id, packageName, downloader.downloadStream(link.link)!!)
+            is Link.Xapk -> installer.installXapk(id, packageName, downloader.downloadStream(link.link)!!)
         }
     }.getOrElse {
         Log.e("InstallViewModel", "Error in downloadAndInstall.", it)
-        cancelInstall(id)
-    }
-
-    private suspend fun playDownloadAndInstall(id: Int, packageName: String, link: String) = runCatching {
-        val urls = link.split(",")
-        val streams = urls.map { downloader.downloadStream(it)!! }
-        installer.playInstall(id, packageName, streams)
-    }.getOrElse {
-        Log.e("InstallViewModel", "Error in playDownloadAndInstall.", it)
         cancelInstall(id)
     }
 

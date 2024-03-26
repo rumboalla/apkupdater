@@ -11,7 +11,7 @@ data class AppUpdate(
 	val oldVersionCode: Long,
 	val source: Source,
 	val iconUri: Uri = Uri.EMPTY,
-	val link: String = "",
+	val link: Link = Link.Empty,
 	val whatsNew: String = "",
 	val isInstalling: Boolean = false,
 	val id: Int = "${source.name}.$packageName.$versionCode.$version".hashCode()

@@ -119,4 +119,10 @@ class SettingsViewModel(
 		}
 	}
 
+	fun copyAppLogs() =viewModelScope.launch(Dispatchers.IO) {
+		val process = Runtime.getRuntime().exec("logcat -d")
+		val data = process.inputStream.readBytes()
+		clipboard.copy(data.decodeToString(), "App Logs")
+	}
+
 }

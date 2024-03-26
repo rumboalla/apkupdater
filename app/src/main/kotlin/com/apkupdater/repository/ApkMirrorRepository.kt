@@ -11,6 +11,7 @@ import com.apkupdater.data.apkmirror.toAppUpdate
 import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.getPackageNames
 import com.apkupdater.data.ui.getSignature
@@ -63,7 +64,7 @@ class ApkMirrorRepository(
         val result = (0 until a.size).map {
             AppUpdate(
                 name = h5[it].attr("title"),
-                link = "$baseUrl${h5[it].selectFirst("a")?.attr("href")}",
+                link = Link.Url("$baseUrl${h5[it].selectFirst("a")?.attr("href")}"),
                 iconUri = Uri.parse("$baseUrl${img[it].attr("src")}".replace("=32", "=128")),
                 version = "?",
                 oldVersion = "?",

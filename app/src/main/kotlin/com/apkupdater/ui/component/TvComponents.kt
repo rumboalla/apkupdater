@@ -52,7 +52,7 @@ fun TvCommonItem(
         LoadingImage(uri, Modifier.height(100.dp).align(Alignment.CenterVertically).padding(top = 8.dp))
     }
     Column(Modifier.align(Alignment.CenterVertically).padding(start = 8.dp, end = 8.dp, top = 8.dp)) {
-        LargeTitle(name.ifEmpty { LocalContext.current.getAppName(packageName) })
+        LargeTitle(name.ifEmpty { LocalContext.current.getAppName(packageName) }.ifEmpty { packageName })
         MediumText(packageName)
         if (oldVersion != null && !single) {
             ScrollableText {

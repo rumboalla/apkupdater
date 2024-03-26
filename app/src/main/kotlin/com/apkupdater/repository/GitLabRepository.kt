@@ -7,6 +7,7 @@ import com.apkupdater.data.gitlab.GitLabRelease
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.GitLabSource
+import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.GitLabService
@@ -60,7 +61,7 @@ class GitLabRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitLabSource,
-                link = getApkUrl(packageName, releases[0]),
+                link = Link.Url(getApkUrl(packageName, releases[0])),
                 whatsNew = releases[0].description,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))

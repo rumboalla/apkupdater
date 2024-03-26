@@ -15,6 +15,7 @@ package com.apkupdater.ui.component
  import com.apkupdater.R
  import com.apkupdater.data.ui.AppInstalled
  import com.apkupdater.data.ui.AppUpdate
+ import com.apkupdater.data.ui.Link
  import com.apkupdater.util.getAppName
 
 
@@ -25,38 +26,30 @@ fun AppImage(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Box {
 	IgnoreIcon(
 		app.ignored,
 		{ onIgnore(app.packageName) },
-		Modifier
-			.align(Alignment.TopEnd)
-			.padding(4.dp)
+		Modifier.align(Alignment.TopEnd).padding(4.dp)
 	)
 }
 
 @Composable
-fun UpdateImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
+fun UpdateImage(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Box {
 	LoadingImageApp(app.packageName)
 	TextBubble(app.versionCode, Modifier.align(Alignment.BottomStart))
 	InstallProgressIcon(app.isInstalling) { onInstall(app.link) }
 	SourceIcon(
 		app.source,
-		Modifier
-			.align(Alignment.TopStart)
-			.padding(4.dp)
-			.size(28.dp)
+		Modifier.align(Alignment.TopStart).padding(4.dp).size(28.dp)
 	)
 }
 
 
 @Composable
-fun SearchImage(app: AppUpdate, onInstall: (String) -> Unit = {}) = Box {
+fun SearchImage(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Box {
 	LoadingImage(app.iconUri)
 	TextBubble(app.versionCode, Modifier.align(Alignment.BottomStart))
 	InstallProgressIcon(app.isInstalling) { onInstall(app.link) }
 	SourceIcon(
 		app.source,
-		Modifier
-			.align(Alignment.TopStart)
-			.padding(4.dp)
-			.size(28.dp)
+		Modifier.align(Alignment.TopStart).padding(4.dp).size(28.dp)
 	)
 }
 
@@ -72,7 +65,7 @@ fun InstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Column(
 }
 
 @Composable
-fun UpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
+fun UpdateItem(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Column {
 	UpdateImage(app, onInstall)
 	Column(Modifier.padding(top = 4.dp)) {
 		ScrollableText { SmallText(app.packageName) }
@@ -81,7 +74,7 @@ fun UpdateItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
 }
 
 @Composable
-fun SearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Column {
+fun SearchItem(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Column {
 	SearchImage(app, onInstall)
 	Column(Modifier.padding(top = 4.dp)) {
 		ScrollableText { SmallText(app.packageName) }

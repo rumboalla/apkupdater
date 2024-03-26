@@ -10,6 +10,7 @@ import com.apkupdater.data.github.GitHubReleaseAsset
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.GitHubSource
+import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.GitHubService
@@ -82,7 +83,7 @@ class GitHubRepository(
                 versionCode = versions.second,
                 oldVersionCode = BuildConfig.VERSION_CODE.toLong(),
                 source = GitHubSource,
-                link = releases[0].assets[0].browser_download_url,
+                link = Link.Url(releases[0].assets[0].browser_download_url),
                 whatsNew = releases[0].body
             )))
         } else {
@@ -120,7 +121,7 @@ class GitHubRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
-                link = findApkAssetArch(releases[0].assets, extra),
+                link = Link.Url(findApkAssetArch(releases[0].assets, extra)),
                 whatsNew = releases[0].body,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))
