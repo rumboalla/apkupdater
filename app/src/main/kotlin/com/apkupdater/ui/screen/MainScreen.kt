@@ -1,7 +1,6 @@
 package com.apkupdater.ui.screen
 
 import android.app.Activity.RESULT_CANCELED
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -15,12 +14,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -30,7 +27,6 @@ import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,14 +41,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apkupdater.R
-import com.apkupdater.data.snack.ISnack
-import com.apkupdater.data.snack.InstallSnack
-import com.apkupdater.data.snack.TextIdSnack
-import com.apkupdater.data.snack.TextSnack
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.ui.component.BadgeText
 import com.apkupdater.ui.theme.AppTheme
+import com.apkupdater.util.Badger
+import com.apkupdater.util.InstallLog
+import com.apkupdater.util.SnackBar
+import com.apkupdater.util.Themer
 import com.apkupdater.viewmodel.AppsViewModel
 import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
@@ -63,18 +58,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 import kotlin.coroutines.CoroutineContext
 
 
 @Composable
 fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	// ViewModels
-	val appsViewModel: AppsViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
-	val updatesViewModel: UpdatesViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
-	val searchViewModel: SearchViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
-	val settingsViewModel: SettingsViewModel = koinViewModel(parameters = { parametersOf(mainViewModel) })
+	val appsViewModel: AppsViewModel = koinViewModel()
+	val updatesViewModel: UpdatesViewModel = koinViewModel()
+	val searchViewModel: SearchViewModel = koinViewModel()
+	val settingsViewModel: SettingsViewModel = koinViewModel()
 
 	// Navigation
 	val navController = rememberNavController()
@@ -89,9 +84,10 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	}
 
 	// Used to launch the install intent and get dismissal result
+	val installLog = get<InstallLog>()
 	val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 		if (it.resultCode == RESULT_CANCELED) {
-			mainViewModel.cancelCurrentInstall()
+			installLog.cancelCurrentInstall()
 		}
 	}
 
@@ -102,14 +98,10 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	intentListener(mainViewModel, updatesViewModel, navController, launcher)
 
 	// Theme
-	val theme = mainViewModel.theme.collectAsStateWithLifecycle().value
+	val theme = get<Themer>().flow().collectAsStateWithLifecycle().value
 
 	// SnackBar
-	val context = LocalContext.current
-	val snackBarHostState = remember { SnackbarHostState() }
-	mainViewModel.snackBar.CollectAsEffect {
-		handleSnack(context, snackBarHostState, it)
-	}
+	val snackBarHostState = handleSnackBar()
 
 	AppTheme(theme) {
 		Scaffold(
@@ -129,35 +121,21 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	}
 }
 
-suspend fun handleSnack(
-	context: Context,
-	snackBarHostState: SnackbarHostState,
-	snack: ISnack
-) {
-	when (snack) {
-		is InstallSnack -> {
-			val message = if (snack.success) R.string.install_success else R.string.install_failure
-			snackBarHostState.showSnackbar(
-				context.getString(message, snack.name),
-				null,
-				true,
-				SnackbarDuration.Short
-			)
-		}
-		is TextSnack -> snackBarHostState.showSnackbar(snack.message, null, true, SnackbarDuration.Short)
-		is TextIdSnack -> snackBarHostState.showSnackbar(context.getString(snack.id), null, true, SnackbarDuration.Short)
-		else -> Log.e("MainScreen", "Invalid snack type.")
+@Composable
+fun handleSnackBar(): SnackbarHostState {
+	val snackBarHostState = remember { SnackbarHostState() }
+	get<SnackBar>().flow().CollectAsEffect(Dispatchers.IO) {
+		snackBarHostState.showSnackbar(it)
 	}
+	return snackBarHostState
 }
 
 @Composable
 fun <T> Flow<T>.CollectAsEffect(
 	context: CoroutineContext = Dispatchers.IO,
 	block: suspend (T) -> Unit
-) {
-	LaunchedEffect(Unit) {
-		onEach(block).flowOn(context).launchIn(this)
-	}
+) = LaunchedEffect(Unit) {
+	onEach(block).flowOn(context).launchIn(this)
 }
 
 @Composable
@@ -194,7 +172,7 @@ fun checkNotificationIntent(
 
 @Composable
 fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = BottomAppBar {
-	val badges = mainViewModel.badges.collectAsState().value
+	val badges = get<Badger>().flow().collectAsStateWithLifecycle().value
 	mainViewModel.screens.forEach { screen ->
 		val state = navController.currentBackStackEntryAsState().value
 		val selected = state?.destination?.route  == screen.route
@@ -202,7 +180,6 @@ fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = Bott
 	}
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RowScope.BottomBarItem(
 	mainViewModel: MainViewModel,

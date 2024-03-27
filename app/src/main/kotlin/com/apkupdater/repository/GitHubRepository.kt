@@ -121,7 +121,7 @@ class GitHubRepository(
                 versionCode = 0L,
                 oldVersionCode = app?.versionCode ?: 0L,
                 source = GitHubSource,
-                link = Link.Url(findApkAssetArch(releases[0].assets, extra)),
+                link = findApkAssetArch(releases[0].assets, extra).let { Link.Url(it.browser_download_url, it.size) },
                 whatsNew = releases[0].body,
                 iconUri = if (apps == null) Uri.parse(releases[0].author.avatar_url) else Uri.EMPTY
             )))
@@ -154,20 +154,20 @@ class GitHubRepository(
     private fun findApkAssetArch(
         assets: List<GitHubReleaseAsset>,
         extra: Regex?
-    ): String {
+    ): GitHubReleaseAsset {
         val apks = assets
             .filter { it.browser_download_url.endsWith(".apk", true) }
             .filter { filterExtra(it, extra) }
 
         when {
-            apks.isEmpty() -> return ""
-            apks.size == 1 -> return apks.first().browser_download_url
+            apks.isEmpty() -> return GitHubReleaseAsset(0L, "")
+            apks.size == 1 -> return apks.first()
             else -> {
                 // Try to match exact arch
                 Build.SUPPORTED_ABIS.forEach { arch ->
                     apks.forEach { apk ->
                         if (apk.browser_download_url.contains(arch, true)) {
-                            return apk.browser_download_url
+                            return apk
                         }
                     }
                 }
@@ -175,7 +175,7 @@ class GitHubRepository(
                 if (Build.SUPPORTED_ABIS.contains("arm64-v8a")) {
                     apks.forEach { apk ->
                         if (apk.browser_download_url.contains("arm64", true)) {
-                            return apk.browser_download_url
+                            return apk
                         }
                     }
                 }
@@ -183,7 +183,7 @@ class GitHubRepository(
                 if (Build.SUPPORTED_ABIS.contains("x86_64")) {
                     apks.forEach { apk ->
                         if (apk.browser_download_url.contains("x64", true)) {
-                            return apk.browser_download_url
+                            return apk
                         }
                     }
                 }
@@ -191,12 +191,12 @@ class GitHubRepository(
                 if (Build.SUPPORTED_ABIS.contains("armeabi-v7a")) {
                     apks.forEach { apk ->
                         if (apk.browser_download_url.contains("arm", true)) {
-                            return apk.browser_download_url
+                            return apk
                         }
                     }
                 }
                 // If no match, return biggest apk in the hope it's universal
-                return apks.maxByOrNull { it.size }?.browser_download_url.orEmpty()
+                return apks.maxByOrNull { it.size } ?: GitHubReleaseAsset(0L, "")
             }
         }
     }

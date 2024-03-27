@@ -10,18 +10,23 @@ import android.os.Build
 import android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES
 import androidx.core.content.ContextCompat.startActivity
 import com.apkupdater.BuildConfig
+import com.apkupdater.data.ui.AppInstallProgress
 import com.apkupdater.ui.activity.MainActivity
 import com.topjohnwu.superuser.Shell
 import java.io.File
 import java.io.InputStream
+import java.io.OutputStream
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.zip.ZipFile
 
 
-class SessionInstaller(private val context: Context) {
+class SessionInstaller(
+    private val context: Context,
+    private val installLog: InstallLog
+) {
 
     companion object {
-        const val InstallAction = "installAction"
+        const val INSTALL_ACTION = "installAction"
     }
 
     private val installMutex = AtomicBoolean(false)
@@ -47,17 +52,18 @@ class SessionInstaller(private val context: Context) {
         }
 
         val sessionId = packageInstaller.createSession(params)
+        var bytes = 0L
         packageInstaller.openSession(sessionId).use { session ->
             streams.forEach {
                 session.openWrite("$packageName.${randomUUID()}", 0, -1).use { output ->
-                    it.copyTo(output)
+                    bytes += it.copyToAndNotify(output, id, installLog, bytes)
                     it.close()
                     session.fsync(output)
                 }
             }
 
             val intent = Intent(context, MainActivity::class.java).apply {
-                action = "$InstallAction.$id"
+                action = "$INSTALL_ACTION.$id"
             }
 
             installMutex.lock()
@@ -113,4 +119,17 @@ class SessionInstaller(private val context: Context) {
     suspend fun playInstall(id: Int, packageName: String, streams: List<InputStream>) =
         install(id, packageName, streams)
 
+}
+
+fun InputStream.copyToAndNotify(out: OutputStream, id: Int, installLog: InstallLog, total: Long, bufferSize: Int = DEFAULT_BUFFER_SIZE): Long {
+    var bytesCopied: Long = 0
+    val buffer = ByteArray(bufferSize)
+    var bytes = read(buffer)
+    while (bytes >= 0) {
+        out.write(buffer, 0, bytes)
+        bytesCopied += bytes
+        installLog.emitProgress(AppInstallProgress(id, progress = total + bytesCopied))
+        bytes = read(buffer)
+    }
+    return bytesCopied
 }

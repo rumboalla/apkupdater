@@ -32,6 +32,7 @@ import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Source
 import com.apkupdater.util.getAppName
+import com.apkupdater.util.to2f
 import com.apkupdater.util.toAnnotatedString
 
 
@@ -79,7 +80,12 @@ fun TvInstallButton(
     onClick = { onInstall(app.packageName) }
 ) {
     if (app.isInstalling) {
-        CircularProgressIndicator(Modifier.size(24.dp))
+        if (app.total != 0L && app.progress != 0L) {
+            val p = (app.progress.toFloat() / app.total) * 100f
+            Text("${p.to2f()}%")
+        } else {
+            CircularProgressIndicator(Modifier.size(24.dp))
+        }
     } else {
         Text(stringResource(R.string.install_cd))
     }

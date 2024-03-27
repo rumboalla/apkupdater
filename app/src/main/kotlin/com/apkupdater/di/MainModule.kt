@@ -22,9 +22,14 @@ import com.apkupdater.service.AptoideService
 import com.apkupdater.service.FdroidService
 import com.apkupdater.service.GitHubService
 import com.apkupdater.service.GitLabService
+import com.apkupdater.util.Badger
 import com.apkupdater.util.Clipboard
 import com.apkupdater.util.Downloader
+import com.apkupdater.util.InstallLog
 import com.apkupdater.util.SessionInstaller
+import com.apkupdater.util.SnackBar
+import com.apkupdater.util.Stringer
+import com.apkupdater.util.Themer
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.util.addUserAgentInterceptor
 import com.apkupdater.util.isAndroidTv
@@ -164,16 +169,26 @@ val mainModule = module {
 
 	single { Clipboard(androidContext()) }
 
-	single { SessionInstaller(get()) }
+	single { SessionInstaller(get(), get()) }
 
-	viewModel { MainViewModel(get()) }
+	single { SnackBar() }
 
-	viewModel { parameters -> AppsViewModel(parameters.get(), get(), get()) }
+	single { Badger() }
 
-	viewModel { parameters -> UpdatesViewModel(parameters.get(), get(), get(), get(), get()) }
+	single { Themer(get()) }
 
-	viewModel { parameters -> SettingsViewModel(parameters.get(), get(), get(), WorkManager.getInstance(get()), get(), get()) }
+	single { Stringer(androidContext()) }
 
-	viewModel { parameters -> SearchViewModel(parameters.get(), get(), get(), get(), get()) }
+	single { InstallLog() }
+
+	viewModel { MainViewModel(get(), get()) }
+
+	viewModel { AppsViewModel(get(), get(), get()) }
+
+	viewModel { UpdatesViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+
+	viewModel { SettingsViewModel(get(), get(), WorkManager.getInstance(get()), get(), get(), get(), get()) }
+
+	viewModel { SearchViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
 
 }

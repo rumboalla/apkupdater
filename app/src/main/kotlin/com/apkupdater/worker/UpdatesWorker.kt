@@ -36,7 +36,10 @@ class UpdatesWorker(
             workManager.enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.UPDATE, request)
         }
 
-        private fun randomDelay() = Random.nextLong(0, 59 * 60 * 1_000)
+        private fun randomDelay() = if (prefs.useApkMirror.get())
+            Random.nextLong(0, 59 * 60 * 1_000)
+        else
+            Random.nextLong(-5 * 60 * 1_000, 5 * 60 * 1_000)
 
         private fun getDays() = when(prefs.alarmFrequency.get()) {
             0 -> 1L

@@ -34,14 +34,16 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.yield
 import okhttp3.OkHttpClient
 import java.security.MessageDigest
+import java.text.DecimalFormatSymbols
 import java.util.Calendar
+import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 // A clickable modifier that will disable the default ripple
-fun Modifier.clickableNoRipple(onClick: () -> Unit) =
+fun Modifier.clickableNoRipple(onClick: () -> Unit) = this.
 	clickable(MutableInteractionSource(), null, onClick = onClick)
 
 // Launches a coroutine and executes it inside the mutex
@@ -155,3 +157,7 @@ fun OkHttpClient.Builder.addUserAgentInterceptor(agent: String) = addNetworkInte
 fun filterVersionTag(version: String) = version
 	.replace(Regex("^\\D*"), "")
 	//.replace(Regex("\\D+\$"), "") // In case we want to remove non-numeric at end too
+
+fun Float.to2f() = String
+	.format("%.2f", this)
+	.replace('.', DecimalFormatSymbols.getInstance(Locale.getDefault()).decimalSeparator)

@@ -9,39 +9,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.apkupdater.data.snack.ISnack
 import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.Screen
 import com.apkupdater.prefs.Prefs
-import com.apkupdater.ui.theme.isDarkTheme
+import com.apkupdater.util.InstallLog
 import com.apkupdater.util.SessionInstaller
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.util.getAppId
 import com.apkupdater.util.getIntentExtra
 import com.apkupdater.util.orFalse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 
-class MainViewModel(private val prefs: Prefs) : ViewModel() {
+class MainViewModel(
+	private val prefs: Prefs,
+	private val installLog: InstallLog
+) : ViewModel() {
 
 	val screens = listOf(Screen.Apps, Screen.Search, Screen.Updates, Screen.Settings)
 
-	val theme = MutableStateFlow(isDarkTheme(prefs.theme.get()))
-
-	val badges = MutableStateFlow(mapOf(
-		Screen.Apps.route to "",
-		Screen.Search.route to "",
-		Screen.Updates.route to "",
-		Screen.Settings.route to ""
-	))
-
-	val snackBar = MutableSharedFlow<ISnack>()
-
 	val isRefreshing = MutableStateFlow(false)
-	val appInstallLog = MutableSharedFlow<AppInstallStatus>()
+
 	private var currentInstallId = 0
 
 	fun refresh(
@@ -55,20 +45,6 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 		}
 	}
 
-	fun sendSnack(snack: ISnack) = viewModelScope.launch { snackBar.emit(snack) }
-
-	fun setTheme(theme: Boolean) = this.theme.apply { value = theme }
-
-	fun changeSearchBadge(number: String) = changeBadge(Screen.Search.route, number)
-
-	fun changeAppsBadge(number: String) = changeBadge(Screen.Apps.route, number)
-
-	fun changeUpdatesBadge(number: String) = changeBadge(Screen.Updates.route, number)
-
-	fun cancelCurrentInstall() = viewModelScope.launch(Dispatchers.IO) {
-		appInstallLog.emit(AppInstallStatus(false, currentInstallId, false))
-	}
-
 	fun processIntent(
 		intent: Intent,
 		launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
@@ -77,7 +53,7 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 	) {
 		when {
 			intent.action == UpdatesNotification.UpdateAction -> processUpdateIntent(navController, updatesViewModel)
-			intent.action?.contains(SessionInstaller.InstallAction).orFalse() -> processInstallIntent(intent, launcher)
+			intent.action?.contains(SessionInstaller.INSTALL_ACTION).orFalse() -> processInstallIntent(intent, launcher)
 			else -> {}
 		}
 	}
@@ -106,13 +82,13 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 			}
 			PackageInstaller.STATUS_SUCCESS -> {
 				intent.getAppId()?.let {
-					appInstallLog.emit(AppInstallStatus(true, it))
+					installLog.emitStatus(AppInstallStatus(true, it))
 				}
 			}
 			else -> {
 				// We assume error and cancel the install
 				intent.getAppId()?.let {
-					appInstallLog.emit(AppInstallStatus(false, it))
+					installLog.emitStatus(AppInstallStatus(false, it))
 				}
 				val message = intent.extras?.getString(PackageInstaller.EXTRA_STATUS_MESSAGE)
 				Log.e("MainViewModel", "Failed to install app: $message $intent")
@@ -126,13 +102,6 @@ class MainViewModel(private val prefs: Prefs) : ViewModel() {
 	) {
 		navigateTo(navController, Screen.Updates.route)
 		updatesViewModel.refresh()
-	}
-
-	private fun changeBadge(route: String, number: String) {
-		val finalNumber = if (number.toIntOrNull() == 0) "" else number
-		val newBadges = badges.value.toMutableMap()
-		newBadges[route] = finalNumber
-		badges.value = newBadges
 	}
 
 }

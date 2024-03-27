@@ -5,25 +5,30 @@ import androidx.compose.ui.platform.UriHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apkupdater.R
-import com.apkupdater.data.snack.InstallSnack
-import com.apkupdater.data.snack.TextIdSnack
+import com.apkupdater.data.snack.TextSnack
 import com.apkupdater.data.ui.ApkMirrorSource
+import com.apkupdater.data.ui.AppInstallProgress
 import com.apkupdater.data.ui.AppInstallStatus
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Link
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.util.Downloader
+import com.apkupdater.util.InstallLog
 import com.apkupdater.util.SessionInstaller
-import kotlinx.coroutines.Dispatchers
+import com.apkupdater.util.SnackBar
+import com.apkupdater.util.Stringer
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 abstract class InstallViewModel(
-    private val mainViewModel: MainViewModel,
     private val downloader: Downloader,
     private val installer: SessionInstaller,
-    private val prefs: Prefs
+    private val prefs: Prefs,
+    private val snackBar: SnackBar,
+    private val stringer: Stringer,
+    private val installLog: InstallLog
 ): ViewModel() {
 
     fun install(update: AppUpdate, uriHandler: UriHandler) {
@@ -39,18 +44,22 @@ abstract class InstallViewModel(
         }
     }
 
-    protected fun subscribeToInstallLog(
+    protected fun subscribeToInstallStatus(
         block: (AppInstallStatus) -> Unit
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        mainViewModel.appInstallLog.collect {
-            block(it)
-            if (it.success) {
-                finishInstall(it.id).join()
-            } else {
-                cancelInstall(it.id).join()
-            }
+    ) = installLog.status().onEach {
+        block(it)
+        if (it.success) {
+            finishInstall(it.id).join()
+        } else {
+            cancelInstall(it.id).join()
         }
-    }
+    }.launchIn(viewModelScope)
+
+    protected fun subscribeToInstallProgress(
+        block: (AppInstallProgress) -> Unit
+    ) = installLog.progress().onEach {
+        block(it)
+    }.launchIn(viewModelScope)
 
     protected fun downloadAndRootInstall(id: Int, link: Link) = runCatching {
         when (link) {
@@ -61,9 +70,11 @@ abstract class InstallViewModel(
                     cancelInstall(id)
                 }
             }
-            else -> { mainViewModel.sendSnack(TextIdSnack(R.string.root_install_not_supported))}
+            else -> snackBar.snackBar(
+                viewModelScope,
+                TextSnack(stringer.get(R.string.root_install_not_supported))
+            )
         }
-
     }.getOrElse {
         Log.e("InstallViewModel", "Error in downloadAndRootInstall.", it)
         cancelInstall(id)
@@ -72,8 +83,15 @@ abstract class InstallViewModel(
     protected suspend fun downloadAndInstall(id: Int, packageName: String, link: Link) = runCatching {
         when (link) {
             Link.Empty -> { Log.e("InstallViewModel", "downloadAndInstall: Unsupported.")}
-            is Link.Play -> installer.playInstall(id, packageName, link.getInstallFiles().map { downloader.downloadStream(it)!! })
-            is Link.Url -> installer.install(id, packageName, downloader.downloadStream(link.link)!!)
+            is Link.Play -> {
+                val files = link.getInstallFiles()
+                installLog.emitProgress(AppInstallProgress(id, 0L, files.sumOf { it.size }))
+                installer.playInstall(id, packageName, files.map { downloader.downloadStream(it.url)!! })
+            }
+            is Link.Url -> {
+                installLog.emitProgress(AppInstallProgress(id, 0L, link.size))
+                installer.install(id, packageName, downloader.downloadStream(link.link)!!)
+            }
             is Link.Xapk -> installer.installXapk(id, packageName, downloader.downloadStream(link.link)!!)
         }
     }.getOrElse {
@@ -84,7 +102,8 @@ abstract class InstallViewModel(
     protected fun sendInstallSnack(updates: List<AppUpdate>, log: AppInstallStatus) {
         if (log.snack) {
             updates.find { log.id == it.id }?.let { app ->
-                mainViewModel.sendSnack(InstallSnack(log.success, app.name))
+                val message = if (log.success) R.string.install_success else R.string.install_failure
+                snackBar.snackBar(viewModelScope, TextSnack(stringer.get(message, app.name)))
             }
         }
     }

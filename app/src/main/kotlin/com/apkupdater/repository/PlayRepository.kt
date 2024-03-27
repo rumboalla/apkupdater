@@ -20,18 +20,10 @@ import com.aurora.gplayapi.helpers.AppDetailsHelper
 import com.aurora.gplayapi.helpers.PurchaseHelper
 import com.aurora.gplayapi.helpers.SearchHelper
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 
-@OptIn(FlowPreview::class)
 class PlayRepository(
     private val context: Context,
     private val gson: Gson,
@@ -41,16 +33,8 @@ class PlayRepository(
         const val AUTH_URL = "https://auroraoss.com/api/auth"
     }
 
-    init {
-        // TODO: Needs testing.
-        PlayHttpClient.responseCode
-            .filter { it == 401 }
-            .debounce(60 * 5 * 1_000)
-            .onEach { runCatching { refreshAuth() }.getOrNull() }
-            .launchIn(CoroutineScope(Dispatchers.IO))
-    }
-
     private fun refreshAuth(): AuthData {
+        Log.i("PlayRepository", "Refreshing token.")
         val properties = NativeDeviceInfoProvider(context).getNativeDeviceProperties()
         val playResponse = PlayHttpClient.postAuth(AUTH_URL, gson.toJson(properties).toByteArray())
         if (playResponse.isSuccessful) {
@@ -66,6 +50,21 @@ class PlayRepository(
         if (savedData.email.isEmpty()) {
             return refreshAuth()
         }
+        if (System.currentTimeMillis() - prefs.lastPlayCheck.get() > 60 * 60 * 1_000) {
+            // Update check time
+            prefs.lastPlayCheck.put(System.currentTimeMillis())
+            Log.i("PlayRepository", "Checking token validity.")
+
+            // 1h has passed check if token still works
+            val app = AppDetailsHelper(savedData)
+                .using(PlayHttpClient)
+                .getAppByPackageName("com.google.android.gm")
+
+            if (app.packageName.isEmpty()) {
+                return refreshAuth()
+            }
+            Log.i("PlayRepository", "Token still valid.")
+        }
         return savedData
     }
 
@@ -77,7 +76,7 @@ class PlayRepository(
                 .using(PlayHttpClient)
                 .searchResults(text)
                 .appList
-                .take(5)
+                .take(10)
                 .map { it.toAppUpdate(::getInstallFiles) }
             emit(Result.success(updates))
         } else {
@@ -118,12 +117,11 @@ class PlayRepository(
         .using(PlayHttpClient)
         .purchase(app.packageName, app.versionCode, app.offerType)
         .filter { it.type == File.FileType.BASE || it.type == File.FileType.SPLIT }
-        .map { it.url }
 
 }
 
 fun App.toAppUpdate(
-    getInstallFiles: (App) -> List<String>,
+    getInstallFiles: (App) -> List<File>,
     oldVersion: String = "",
     oldVersionCode: Long = 0L
 ) = AppUpdate(
