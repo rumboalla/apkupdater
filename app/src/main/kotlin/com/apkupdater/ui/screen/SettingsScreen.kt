@@ -78,7 +78,7 @@ fun About() = LazyColumn(
 			LoadingImageApp(BuildConfig.APPLICATION_ID)
 			LargeTitle(stringResource(R.string.app_name), Modifier.align(CenterHorizontally))
 			MediumText("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})", Modifier.align(CenterHorizontally))
-			MediumText("Copyright © 2016-2023 rumboalla", Modifier.align(CenterHorizontally))
+			MediumText("Copyright © 2016-2024 rumboalla", Modifier.align(CenterHorizontally))
 		}
 	}
 	item {
