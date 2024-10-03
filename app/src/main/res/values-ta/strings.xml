@@ -1,0 +1,76 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">செயலிகள்</string>
+    <string name="tab_search">தேடல்</string>
+    <string name="tab_updates">புதுப்பிப்புகள்</string>
+    <string name="tab_settings">அமைப்புகள்</string>
+    <string name="something_went_wrong">"ஏதோ தவறாகிவிட்டது\n\uD83E\uDD26"</string>
+    <string name="ignore_version">பதிப்பைப் புறக்கணிக்கவும்</string>
+    <string name="ignore_cd">செயலியைப் புறக்கணிக்கவும்</string>
+    <string name="unignore_cd">செயலியைப் புறக்கணிக்க வேண்டாம்</string>
+    <string name="refresh_updates">புதுப்பிப்புகளைத் தேடு</string>
+    <string name="exclude_system_apps">அமைப்பின் செயலிகளை விலக்கு</string>
+    <string name="include_system_apps">அமைப்பின் செயலிகளை உள்ளடக்கு</string>
+    <string name="exclude_app_store">செயலி அங்காடியை விலக்கு</string>
+    <string name="include_app_store">செயலி அங்காடியை உள்ளடக்கு</string>
+    <string name="exclude_disabled_apps">முடக்கப்பட்ட செயலிகளை விலக்கு/string>
+    <string name="include_disabled_apps">முடக்கப்பட்ட செயலிகளை உள்ளடக்கு/string>
+    <string name="install_cd">செயலியை நிறுவவும்</string>
+    <string name="app_cd">செயலி உருச்சின்னம்</string>
+    <string name="install_success">%1$s நிறுவப்பட்டது.</string>
+    <string name="install_failure">%1$s நிறுவ முடியவில்லை.</string>
+    <string name="root_install_not_supported">இந்த செயலியை ரூட் மூலம் நிறுவு இயலாது.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">செங்குத்து நெடுவரிசைகள்</string>
+    <string name="settings_landscape_columns">கிடைமட்ட நெடுவரிசைகள்</string>
+    <string name="play_text_animations">எழுத்து அனிமேஷன்களை இயக்கவும்</string>
+    <string name="settings_sources">மூலங்கள்</string>
+    <string name="settings_ui">பயனர் இடைமுகம்</string>
+    <string name="settings_alarm">அலறி</string>
+    <string name="settings_options">விருப்பங்கள்</string>
+    <string name="settings_utils">உபயோகங்கள்</string>
+    <string name="settings_hour">அலறி மணி</string>
+    <string name="settings_alarm_daily">தினசரி</string>
+    <string name="settings_alarm_3day">3-நாட்கள்</string>
+    <string name="settings_alarm_weekly">வாரந்தோறும்</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">ஆல்ஃபா வெளியீட்டைப் விளக்கவும்</string>
+    <string name="ignore_beta">பீட்டா வெளியீட்டைப் விளக்கவும்</string>
+    <string name="ignore_preRelease">முன் வெளியீட்டைப் விளக்கவும்</string>
+    <string name="use_safe_stores">பாதுகாப்பான கடைகளைப் பயன்படுத்தவும் (Aptoide)</string>
+    <string name="root_install">ரூட் நிறுவல்</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
+    <string name="source_play" translatable="false">Play</string>
+    <string name="about">செயலி குறித்து</string>
+    <string name="frequency">நிகழ்வது</string>
+    <string name="theme">வண்ணம்</string>
+    <string name="theme_system">அமைப்பு</string>
+    <string name="theme_dark">இருள்</string>
+    <string name="theme_light">வெளிர்</string>
+    <string name="about_github">மூலக் குறியீட்டைப் பெறவும், பிழைகளைப் புகாரளிக்கவும், புதிய அம்சங்களைக் கோரவும் மற்றும் மொழிபெயர்ப்புகளைச் சேர்க்கவும்.</string>
+    <string name="about_donate">நீங்கள் செயலியை விரும்பினால், நன்மை பயக்கும் காரணத்திற்காக நன்கொடை அளிக்கவும்.</string>
+    <string name="copy_to_clipboard">கிளிப்போர்டுக்கு நகலெடுக்கவும்</string>
+    <string name="copy_app_list">செயலி பட்டியலை நகலெடுக்கவும்</string>
+    <string name="copy_app_logs">செயலி பயன்பாட்டை நகலெடுக்கவும்</string>
+
+    // Notifications
+    <string name="notification_channel_name">புதுப்பிப்புகள்</string>
+    <string name="notification_channel_description">புதுப்பிப்பு அறிவிப்புகளுக்கான தடம்.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">புதுப்பிப்புகள்</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">புதுப்பிப்புகள் எதுவும் இல்லை.</item>
+        <item quantity="one">%1$d புதுப்பிப்பு கிடைத்தது.</item>
+        <item quantity="other">%1$d புதுப்பிப்புகள் உள்ளன.</item>
+    </plurals>
+
+</resources>
+      
