@@ -58,7 +58,7 @@
     <string name="about_github">احصل على الكود المصدري، وأبلغ عن الأخطاء، واطلب ميزات جديدة، وأضف الترجمات.</string>
     <string name="about_donate">إذا أعجبك التطبيق، فكر في التبرع لقضية نبيلة.</string>
     <string name="copy_to_clipboard">نسخ إلى الحافظة</string>
-    <string name="copy_app_list">انسخ قائمة التطبيقات</string>
+    <string name="copy_app_list">نسخ قائمة التطبيقات</string>
     <string name="copy_app_logs">نسخ سجلات التطبيق</string>
 
     // Notifications
