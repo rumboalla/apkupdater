@@ -14,8 +14,8 @@
     <string name="include_system_apps">அமைப்பின் செயலிகளை உள்ளடக்கு</string>
     <string name="exclude_app_store">செயலி அங்காடியை விலக்கு</string>
     <string name="include_app_store">செயலி அங்காடியை உள்ளடக்கு</string>
-    <string name="exclude_disabled_apps">முடக்கப்பட்ட செயலிகளை விலக்கு/string>
-    <string name="include_disabled_apps">முடக்கப்பட்ட செயலிகளை உள்ளடக்கு/string>
+    <string name="exclude_disabled_apps">முடக்கப்பட்ட செயலிகளை விலக்கு</string>
+    <string name="include_disabled_apps">முடக்கப்பட்ட செயலிகளை உள்ளடக்கு</string>
     <string name="install_cd">செயலியை நிறுவவும்</string>
     <string name="app_cd">செயலி உருச்சின்னம்</string>
     <string name="install_success">%1$s நிறுவப்பட்டது.</string>
