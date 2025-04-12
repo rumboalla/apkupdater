@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: xml-tools
+Upstream-Contact: Shachar Soel <shachar.soel@sap.com>
+Source: https://github.com/SAP/xml-tools
+
+Files: *
+Copyright: 2019-2021 SAP SE or an SAP affiliate company and XML Tools contributors
+License: Apache-2.0

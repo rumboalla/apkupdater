@@ -33,7 +33,10 @@
     <string name="settings_alarm_daily">Giornaliera</string>
     <string name="settings_alarm_3day">Ogni 3 giorni</string>
     <string name="settings_alarm_weekly">Settimanale</string>
-    <string name="settings_android_tv_ui" translatable="false">Interfaccia grafica del Android TV</string>
+    <string
+    name="settings_android_tv_ui"
+    translatable="false"
+  >Interfaccia grafica del Android TV</string>
     <string name="ignore_alpha">Ignora Alpha</string>
     <string name="ignore_beta">Ignora Beta</string>
     <string name="ignore_preRelease">Ignora pre-rilascio</string>
@@ -51,8 +54,12 @@
     <string name="theme_system">Sistema</string>
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
-    <string name="about_github">Ottieni il codice sorgente, segnala bug, richiedi nuove funzionalità e aggiungi traduzioni.</string>
-    <string name="about_donate">Se ti piace l\'applicazione, considera l\'idea di fare una donazione per una buona causa.</string>
+    <string
+    name="about_github"
+  >Ottieni il codice sorgente, segnala bug, richiedi nuove funzionalità e aggiungi traduzioni.</string>
+    <string
+    name="about_donate"
+  >Se ti piace l\'applicazione, considera l\'idea di fare una donazione per una buona causa.</string>
     <string name="copy_to_clipboard">Copia negli appunti</string>
     <string name="copy_app_list">Copia lista app</string>
 

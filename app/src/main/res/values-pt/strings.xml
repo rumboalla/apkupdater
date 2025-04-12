@@ -50,14 +50,20 @@
     <string name="theme_system">"Sistema"</string>
     <string name="theme_dark">"Escuro"</string>
     <string name="theme_light">"Claro"</string>
-    <string name="about_github">"Obter código fonte, reportar bugs, requisitar novas funcionalidades e traduções."</string>
-    <string name="about_donate">"Se gostas da app, considera fazer um donativo para uma causa justa."</string>
+    <string
+    name="about_github"
+  >"Obter código fonte, reportar bugs, requisitar novas funcionalidades e traduções."</string>
+    <string
+    name="about_donate"
+  >"Se gostas da app, considera fazer um donativo para uma causa justa."</string>
     <string name="copy_to_clipboard">Copiar para a área de transferência</string>
     <string name="copy_app_list">Copiar lista da app</string>
 
     // Notifications
     <string name="notification_channel_name">Atualizações</string>
-    <string name="notification_channel_description">Canal para notificações de atualizações.</string>
+    <string
+    name="notification_channel_description"
+  >Canal para notificações de atualizações.</string>
     <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Atualizações</string>
     <plurals name="notification_update_description">

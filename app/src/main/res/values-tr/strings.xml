@@ -50,7 +50,9 @@
   <string name="theme_system">Sistem</string>
   <string name="theme_dark">Koyu</string>
   <string name="theme_light">Açık</string>
-  <string name="about_github">Kaynak kodunu inceleyin, hataları bildirin, yeni özellikler isteyin ve çeviriler ekleyin.</string>
+  <string
+    name="about_github"
+  >Kaynak kodunu inceleyin, hataları bildirin, yeni özellikler isteyin ve çeviriler ekleyin.</string>
   <string name="about_donate">Uygulamayı beğendiyseniz bağış yapmayı düşünün.</string>
   <string name="copy_to_clipboard">Panoya kopyala</string>
   <string name="copy_app_list">Uygulama Listesini Kopyala</string>

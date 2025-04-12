@@ -1,0 +1,47 @@
+{
+  "name": "@xml-tools/parser",
+  "version": "1.0.11",
+  "description": "XML Parser Implemented in JavaScript",
+  "keywords": [
+    "xml",
+    "parser"
+  ],
+  "main": "lib/api.js",
+  "repository": "https://github.com/sap/xml-tools/",
+  "license": "Apache-2.0",
+  "typings": "./api.d.ts",
+  "files": [
+    "lib",
+    ".reuse",
+    "LICENSES",
+    "api.d.ts"
+  ],
+  "dependencies": {
+    "chevrotain": "7.1.1"
+  },
+  "devDependencies": {
+    "klaw-sync": "6.0.0"
+  },
+  "scripts": {
+    "ci": "npm-run-all clean type-check coverage:*",
+    "clean": "rimraf ./coverage ./nyc_output",
+    "test": "mocha \"./test/**/*spec.js\"",
+    "coverage:run": "nyc mocha \"./test/**/*spec.js\"",
+    "coverage:check": "nyc check-coverage --lines 100 --branches 100 --statements 100 --functions 100",
+    "snapshots:update": "node ./scripts/update-snapshots.js",
+    "type-check": "tsc api.d.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "nyc": {
+    "include": [
+      "lib/**/*.js"
+    ],
+    "reporter": [
+      "text",
+      "lcov"
+    ]
+  },
+  "gitHead": "6ce4d58f85eff0c993cc34535b8ca1b23c1e2fa0"
+}

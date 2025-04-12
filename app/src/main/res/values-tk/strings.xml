@@ -20,7 +20,9 @@
     <string name="app_cd">Ýükleme suraty</string>
     <string name="install_success">%1$s ýüklendi.</string>
     <string name="install_failure">%1$s ýükläp bolmady.</string>
-    <string name="root_install_not_supported">Bu programmanyň "root" gurnamagy goldanylmaýar.</string>
+    <string
+    name="root_install_not_supported"
+  >Bu programmanyň "root" gurnamagy goldanylmaýar.</string>
 
     // Settings
     <string name="settings_portrait_columns">Portret sütünler</string>
@@ -55,8 +57,12 @@
     <string name="theme_system">Sistema</string>
     <string name="theme_dark">Garaňky</string>
     <string name="theme_light">Ýagty</string>
-    <string name="about_github">Çeşme koduny alyň, kemçilikleri habar beriň, täze aýratynlyklary soraň we terjime goşuň.</string>
-    <string name="about_donate">Programmany halaýan bolsaňyz, mynasyp sebäplere bagyş etmegi göz öňünde tutuň.</string>
+    <string
+    name="about_github"
+  >Çeşme koduny alyň, kemçilikleri habar beriň, täze aýratynlyklary soraň we terjime goşuň.</string>
+    <string
+    name="about_donate"
+  >Programmany halaýan bolsaňyz, mynasyp sebäplere bagyş etmegi göz öňünde tutuň.</string>
     <string name="copy_to_clipboard">Kopýala</string>
     <string name="copy_app_list">Ýükleme sanawyny kopýala</string>
     <string name="copy_app_logs">Ýükleme loglaryny kopýala</string>

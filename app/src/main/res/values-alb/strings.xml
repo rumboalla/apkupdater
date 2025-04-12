@@ -52,8 +52,12 @@
     <string name="theme_system">Sistemi</string>
     <string name="theme_dark">Errët</string>
     <string name="theme_light">Dritë</string>
-    <string name="about_github">Merr kodin burim, raporto gabimet, kërko karakteristika të reja dhe shto përkthimet.</string>
-    <string name="about_donate">Nëse ju pëlqen aplikacioni, mendoni për dhurimin për një shkak të vlefshëm.</string>
+    <string
+    name="about_github"
+  >Merr kodin burim, raporto gabimet, kërko karakteristika të reja dhe shto përkthimet.</string>
+    <string
+    name="about_donate"
+  >Nëse ju pëlqen aplikacioni, mendoni për dhurimin për një shkak të vlefshëm.</string>
     <string name="copy_to_clipboard">Kopjo në të kujtesë</string>
     <string name="copy_app_list">Kopjo Listën e Aplikacioneve</string>
 

@@ -55,8 +55,12 @@
     <string name="theme_system">Rendszer</string>
     <string name="theme_dark">Sötét</string>
     <string name="theme_light">Világos</string>
-    <string name="about_github">Szerezze be a forráskódot, jelezze a hibákat, kérjen új funkciókat és adjon hozzá fordításokat.</string>
-    <string name="about_donate">Ha tetszik az alkalmazás, fontolja meg az adományozást egy méltó célra.</string>
+    <string
+    name="about_github"
+  >Szerezze be a forráskódot, jelezze a hibákat, kérjen új funkciókat és adjon hozzá fordításokat.</string>
+    <string
+    name="about_donate"
+  >Ha tetszik az alkalmazás, fontolja meg az adományozást egy méltó célra.</string>
     <string name="copy_to_clipboard">Másolja a vágólapra</string>
     <string name="copy_app_list">App lista másolása</string>
     <string name="copy_app_logs">App naplók másolása</string>

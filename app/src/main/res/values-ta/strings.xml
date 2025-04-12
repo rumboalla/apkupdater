@@ -55,8 +55,12 @@
     <string name="theme_system">அமைப்பு</string>
     <string name="theme_dark">இருள்</string>
     <string name="theme_light">வெளிர்</string>
-    <string name="about_github">மூலக் குறியீட்டைப் பெறவும், பிழைகளைப் புகாரளிக்கவும், புதிய அம்சங்களைக் கோரவும் மற்றும் மொழிபெயர்ப்புகளைச் சேர்க்கவும்.</string>
-    <string name="about_donate">நீங்கள் செயலியை விரும்பினால், நன்மை பயக்கும் காரணத்திற்காக நன்கொடை அளிக்கவும்.</string>
+    <string
+    name="about_github"
+  >மூலக் குறியீட்டைப் பெறவும், பிழைகளைப் புகாரளிக்கவும், புதிய அம்சங்களைக் கோரவும் மற்றும் மொழிபெயர்ப்புகளைச் சேர்க்கவும்.</string>
+    <string
+    name="about_donate"
+  >நீங்கள் செயலியை விரும்பினால், நன்மை பயக்கும் காரணத்திற்காக நன்கொடை அளிக்கவும்.</string>
     <string name="copy_to_clipboard">கிளிப்போர்டுக்கு நகலெடுக்கவும்</string>
     <string name="copy_app_list">செயலி பட்டியலை நகலெடுக்கவும்</string>
     <string name="copy_app_logs">செயலி பயன்பாட்டை நகலெடுக்கவும்</string>
@@ -73,4 +77,3 @@
     </plurals>
 
 </resources>
-      

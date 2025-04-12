@@ -20,7 +20,9 @@
     <string name="app_cd">Icono de la Aplicación</string>
     <string name="install_success">%1$s instalado.</string>
     <string name="install_failure">%1$s falló en la instalación.</string>
-    <string name="root_install_not_supported">La instalación root de esta aplicación no es compatible.</string>
+    <string
+    name="root_install_not_supported"
+  >La instalación root de esta aplicación no es compatible.</string>
 
     <!-- Settings -->
     <string name="settings_portrait_columns">Columnas en modo Retrato</string>
@@ -55,15 +57,21 @@
     <string name="theme_system">Sistema</string>
     <string name="theme_dark">Oscuro</string>
     <string name="theme_light">Claro</string>
-    <string name="about_github">Acceda al código fuente, reporte errores, solicite nuevas funciones y contribuya con traducciones.</string>
-    <string name="about_donate">Si te gusta la aplicación, considera donar a una buena causa.</string>
+    <string
+    name="about_github"
+  >Acceda al código fuente, reporte errores, solicite nuevas funciones y contribuya con traducciones.</string>
+    <string
+    name="about_donate"
+  >Si te gusta la aplicación, considera donar a una buena causa.</string>
     <string name="copy_to_clipboard">Copiar al portapapeles</string>
     <string name="copy_app_list">Copiar lista de aplicaciones</string>
     <string name="copy_app_logs">Copiar logs de la aplicación</string>
 
     <!-- Notifications -->
     <string name="notification_channel_name">Actualizaciones</string>
-    <string name="notification_channel_description">Canal para las notificaciones de las actualizaciones.</string>
+    <string
+    name="notification_channel_description"
+  >Canal para las notificaciones de las actualizaciones.</string>
     <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Actualizaciones</string>
     <plurals name="notification_update_description">

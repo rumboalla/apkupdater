@@ -1,4 +1,3 @@
-									  
 <resources>
 
     <string name="tab_apps">Apps</string>
@@ -20,7 +19,9 @@
     <string name="app_cd">App-Icon</string>
     <string name="install_success">%1$s installiert.</string>
     <string name="install_failure">%1$s wurde nicht installiert.</string>
-    <string name="root_install_not_supported">Root-Installation dieser App wird nicht unterstützt.</string>
+    <string
+    name="root_install_not_supported"
+  >Root-Installation dieser App wird nicht unterstützt.</string>
 
     // Settings
     <string name="settings_portrait_columns">Anzahl der Spalten</string>
@@ -46,8 +47,12 @@
     <string name="theme_system">System</string>
     <string name="theme_dark">Dunkel</string>
     <string name="theme_light">Hell</string>
-    <string name="about_github">Hol dir den Quellcode, melde Fehler und schlage Funktionen / Übersetzungen vor.</string>
-    <string name="about_donate">Wenn dir die App gefällt solltest du hier eine Spende in Betracht ziehen.</string>
+    <string
+    name="about_github"
+  >Hol dir den Quellcode, melde Fehler und schlage Funktionen / Übersetzungen vor.</string>
+    <string
+    name="about_donate"
+  >Wenn dir die App gefällt solltest du hier eine Spende in Betracht ziehen.</string>
     <string name="copy_to_clipboard">Kopiere in Zwischenablage</string>
     <string name="copy_app_list">App-Liste kopieren</string>
     <string name="copy_app_logs">App-Logs kopieren</string>

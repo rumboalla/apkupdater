@@ -53,8 +53,12 @@
     <string name="theme_system">Система</string>
     <string name="theme_dark">Тёмная</string>
     <string name="theme_light">Светлая</string>
-    <string name="about_github">Получить исходный код, сообщить об ошибках, запросить новые функции и добавить переводы.</string>
-    <string name="about_donate">Если вам нравится приложение, подумайте о пожертвовании на достойное дело.</string>
+    <string
+    name="about_github"
+  >Получить исходный код, сообщить об ошибках, запросить новые функции и добавить переводы.</string>
+    <string
+    name="about_donate"
+  >Если вам нравится приложение, подумайте о пожертвовании на достойное дело.</string>
     <string name="copy_to_clipboard">Копировать в буфер обмена</string>
     <string name="copy_app_list">Скопировать список приложений</string>
 

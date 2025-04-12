@@ -55,8 +55,12 @@
     <string name="theme_system">Sistem</string>
     <string name="theme_dark">Gelap</string>
     <string name="theme_light">Cahaya</string>
-    <string name="about_github">Dapatkan code sumber, laporkan pepijat, minta ciri baharu dan tambah terjemahan.</string>
-    <string name="about_donate">Jika anda menyukai apl itu, pertimbangkan untuk menderma untuk tujuan yang berbaloi.</string>
+    <string
+    name="about_github"
+  >Dapatkan code sumber, laporkan pepijat, minta ciri baharu dan tambah terjemahan.</string>
+    <string
+    name="about_donate"
+  >Jika anda menyukai apl itu, pertimbangkan untuk menderma untuk tujuan yang berbaloi.</string>
     <string name="copy_to_clipboard">Salin ke papan keratan</string>
     <string name="copy_app_list">Salin Senarai Apl</string>
     <string name="copy_app_logs">Salin Log Apl</string>

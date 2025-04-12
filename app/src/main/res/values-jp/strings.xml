@@ -20,7 +20,9 @@
     <string name="app_cd">アプリアイコン</string>
     <string name="install_success">%1$sをインストールしました。</string>
     <string name="install_failure">%1$sのインストールに失敗しました。</string>
-    <string name="root_install_not_supported">このアプリのrootインストールはサポートされていません。</string>
+    <string
+    name="root_install_not_supported"
+  >このアプリのrootインストールはサポートされていません。</string>
 
     // Settings
     <string name="settings_portrait_columns">ポートレートモードでの列数</string>
@@ -55,7 +57,9 @@
     <string name="theme_system">システムに合わせる</string>
     <string name="theme_dark">ダークテーマ</string>
     <string name="theme_light">ライトテーマ</string>
-    <string name="about_github">ソースコードの取得、バグの報告、新機能のリクエスト、翻訳の追加ができます。</string>
+    <string
+    name="about_github"
+  >ソースコードの取得、バグの報告、新機能のリクエスト、翻訳の追加ができます。</string>
     <string name="about_donate">このアプリが気に入ったら、寄付をお願いします。</string>
     <string name="copy_to_clipboard">クリップボードにコピー</string>
     <string name="copy_app_list">アプリ一覧をコピー</string>
@@ -63,7 +67,9 @@
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
-    <string name="notification_channel_description">アップデートの通知を受け取るチャンネルです。</string>
+    <string
+    name="notification_channel_description"
+  >アップデートの通知を受け取るチャンネルです。</string>
     <string name="notification_channel_id" translatable="false">アップデートチャンネル</string>
     <string name="notification_update_title">アップデート</string>
     <plurals name="notification_update_description">

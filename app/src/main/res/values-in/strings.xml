@@ -20,7 +20,9 @@
     <string name="app_cd">Ikon Aplikasi</string>
     <string name="install_success">%1$s dipasang.</string>
     <string name="install_failure">%1$s gagal memasang.</string>
-    <string name="root_install_not_supported">Pemasangan root pada aplikasi ini tidak didukung.</string>
+    <string
+    name="root_install_not_supported"
+  >Pemasangan root pada aplikasi ini tidak didukung.</string>
 
     // Settings
     <string name="settings_portrait_columns">Kolom Potret</string>
@@ -55,8 +57,12 @@
     <string name="theme_system">Sistem</string>
     <string name="theme_dark">Gelap</string>
     <string name="theme_light">Terang</string>
-    <string name="about_github">Dapatkan kode sumber, laporkan bug, minta fitur baru, dan tambahkan terjemahan.</string>
-    <string name="about_donate">Jika anda menyukai aplikasi ini, pertimbangkan untuk berdonasi untuk tujuan yang bermanfaat.</string>
+    <string
+    name="about_github"
+  >Dapatkan kode sumber, laporkan bug, minta fitur baru, dan tambahkan terjemahan.</string>
+    <string
+    name="about_donate"
+  >Jika anda menyukai aplikasi ini, pertimbangkan untuk berdonasi untuk tujuan yang bermanfaat.</string>
     <string name="copy_to_clipboard">Salin ke clipboard</string>
     <string name="copy_app_list">Salin Daftar Aplikasi</string>
     <string name="copy_app_logs">Salin Log Aplikasi</string>

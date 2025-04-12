@@ -42,7 +42,9 @@
 
     // Notifications
     <string name="notification_channel_name">Actualizări</string>
-    <string name="notification_channel_description">Canalul pentru notificări despre actualizări.</string>
+    <string
+    name="notification_channel_description"
+  >Canalul pentru notificări despre actualizări.</string>
     <string name="notification_channel_id" translatable="false">updateChannel</string>
     <string name="notification_update_title">Actualizări</string>
     <plurals name="notification_update_description">
