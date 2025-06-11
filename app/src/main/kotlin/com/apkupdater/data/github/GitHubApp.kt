@@ -234,6 +234,7 @@ val GitHubApps = listOf(
     GitHubApp("hu.vmiklos.plees_tracker", "vmiklos", "plees-tracker"),
     GitHubApp("com.spicychair.weather", "SpicyChair", "pluvia_weather_flutter"),
     GitHubApp("com.pocket_plan.j7_003", "RayLeaf-Studios", "PocketPlan"),
+    GitHubApp("luci.sixsixsix.powerampache2", "icefields", "Power-Ampache-2"),
     GitHubApp("org.secuso.privacyfriendly2048", "SecUSo", "privacy-friendly-2048"),
     GitHubApp("org.secuso.privacyfriendlybackup", "SecUSo", "privacy-friendly-backup"),
     GitHubApp("org.secuso.privacyfriendlybattleship", "SecUSo", "privacy-friendly-battleship"),
