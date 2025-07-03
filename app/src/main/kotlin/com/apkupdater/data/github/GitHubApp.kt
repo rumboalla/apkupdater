@@ -163,6 +163,7 @@ val GitHubApps = listOf(
     GitHubApp("com.perol.play.pixez", "Notsfsssf", "pixez-flutter"),
     GitHubApp("com.phaseshifter.canora", "vetux", "canora"),
     GitHubApp("com.phlox.tvwebbrowser", "truefedex", "tv-bro"),
+    GitHubApp("com.pikatorrent.PikaTorrent", "G-Ray", "pikatorrent"),
     GitHubApp("com.pocket_plan.j7_003", "RayLeaf-Studios", "PocketPlan"),
     GitHubApp("com.prateekmedia.pstube", "prateekmedia", "pstube"),
     GitHubApp("com.protonvpn.android", "ProtonVPN", "android-app"),
