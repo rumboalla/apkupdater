@@ -18,8 +18,8 @@ fun PackageInfo.toAppInstalled(context: Context, ignored: List<String>) = AppIns
 	if (Build.VERSION.SDK_INT >= 28) longVersionCode else versionCode.toLong(),
 	iconUri(packageName, applicationInfo?.icon ?: 0),
 	ignored.contains(packageName),
-	getSignatureSha1(),
-	getSignatureSha256()
+	"",
+	""
 )
 
 fun iconUri(packageName: String, id: Int): Uri = Uri.parse("android.resource://$packageName/$id")
