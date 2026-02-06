@@ -38,11 +38,13 @@ class AppsRepository(
 
 		val apps = packages
 			.asSequence()
-			.filter { it.applicationInfo != null }
-			.filter { !excludeSystem() || it.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
-			.filter { !excludeSystem() || it.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
-			.filter { !excludeDisabled() || it.applicationInfo!!.enabled }
-			.filter { !excludeStore() || !isAppStore(getInstallerPackageName(it.packageName)) }
+            .filter { packageInfo ->
+                packageInfo.applicationInfo?.let { appInfo ->
+                    (!excludeSystem() || (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 && appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0)) &&
+                    (!excludeDisabled() || appInfo.enabled) &&
+                    (!excludeStore() || !isAppStore(getInstallerPackageName(packageInfo.packageName)))
+                } ?: false
+            }
 			.map { it.toAppInstalled(context, ignoredApps()) }
 			.sortedBy { it.name }
 			.sortedBy { it.ignored }
