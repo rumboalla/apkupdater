@@ -11,7 +11,7 @@ import com.apkupdater.util.name
 
 
 @Suppress("DEPRECATION")
-fun PackageInfo.toAppInstalled(context: Context, ignored: List<String>) = AppInstalled(
+fun PackageInfo.toAppInstalled(context: Context, ignored: Collection<String>) = AppInstalled(
 	name(context),
 	packageName,
 	versionName.orEmpty(),
