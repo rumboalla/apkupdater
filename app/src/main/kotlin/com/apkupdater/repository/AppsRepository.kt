@@ -27,8 +27,11 @@ class AppsRepository(
         val packages = mutex.withLock {
             val currentCache = cachedPackages
             if (forceRefresh || currentCache == null) {
+                val flags = PackageManager.MATCH_ALL or
+                    if (Build.VERSION.SDK_INT >= 28) PackageManager.GET_SIGNING_CERTIFICATES
+                    else @Suppress("DEPRECATION") PackageManager.GET_SIGNATURES
                 val newPackages = context.packageManager
-                    .getInstalledPackages(PackageManager.MATCH_ALL)
+                    .getInstalledPackages(flags)
                 cachedPackages = newPackages
                 newPackages
             } else {
@@ -36,18 +39,22 @@ class AppsRepository(
             }
         }
 
+		val excludeSystem = excludeSystem()
+		val excludeDisabled = excludeDisabled()
+		val excludeStore = excludeStore()
+		val ignoredAppsSet = ignoredApps().toHashSet()
+
 		val apps = packages
 			.asSequence()
             .filter { packageInfo ->
                 packageInfo.applicationInfo?.let { appInfo ->
-                    (!excludeSystem() || (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 && appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0)) &&
-                    (!excludeDisabled() || appInfo.enabled) &&
-                    (!excludeStore() || !isAppStore(getInstallerPackageName(packageInfo.packageName)))
+                    (!excludeSystem || (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 && appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0)) &&
+                    (!excludeDisabled || appInfo.enabled) &&
+                    (!excludeStore || !isAppStore(getInstallerPackageName(packageInfo.packageName)))
                 } ?: false
             }
-			.map { it.toAppInstalled(context, ignoredApps()) }
-			.sortedBy { it.name }
-			.sortedBy { it.ignored }
+			.map { it.toAppInstalled(context, ignoredAppsSet) }
+			.sortedWith(compareBy({ it.ignored }, { it.name }))
 			.toList()
 		emit(Result.success(apps))
 	}.catch {
