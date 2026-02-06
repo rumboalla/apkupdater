@@ -9,13 +9,13 @@ plugins {
 
 android {
     namespace = "com.apkupdater"
-    compileSdk = 34
+    compileSdk = 35
 
     val buildNumber = System.getenv("BUILD_NUMBER").orEmpty()
     defaultConfig {
         applicationId = "com.apkupdater" + System.getenv("BUILD_TAG").orEmpty()
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 52
         versionName = if (buildNumber.isEmpty()) "3.0.3" else "0.0.$buildNumber"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -85,6 +85,7 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)

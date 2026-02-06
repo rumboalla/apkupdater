@@ -37,7 +37,7 @@ fun ExcludeIcon(
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
 ) = TooltipBox(
-    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
     state = rememberTooltipState(),
     tooltip = { PlainTooltip { Text(stringResource(string)) } }
 ) {
@@ -119,7 +119,7 @@ fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
 ) = TooltipBox(
-    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
     state = rememberTooltipState(),
     tooltip = { PlainTooltip { Text(text) } }
 ) {

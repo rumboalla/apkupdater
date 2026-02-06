@@ -22,6 +22,10 @@
     <string name="install_failure">%1$s failed to install.</string>
     <string name="root_install_not_supported">Root install of this app is not supported.</string>
 
+    <string name="filter_system">System</string>
+    <string name="filter_store">Store</string>
+    <string name="filter_disabled">Disabled</string>
+
     // Settings
     <string name="settings_portrait_columns">Portrait Columns</string>
     <string name="settings_landscape_columns">Landscape Columns</string>

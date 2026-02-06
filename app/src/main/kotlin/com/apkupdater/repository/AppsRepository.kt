@@ -25,18 +25,23 @@ class AppsRepository(
 
 	suspend fun getApps(forceRefresh: Boolean = false) = flow {
         val packages = mutex.withLock {
-            if (cachedPackages == null || forceRefresh) {
-                cachedPackages = context.packageManager
+            val currentCache = cachedPackages
+            if (forceRefresh || currentCache == null) {
+                val newPackages = context.packageManager
                     .getInstalledPackages(PackageManager.MATCH_ALL)
+                cachedPackages = newPackages
+                newPackages
+            } else {
+                currentCache
             }
-            cachedPackages!!
         }
 
 		val apps = packages
 			.asSequence()
-			.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
-			.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
-			.filter { !excludeDisabled() || it.applicationInfo.enabled }
+			.filter { it.applicationInfo != null }
+			.filter { !excludeSystem() || it.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
+			.filter { !excludeSystem() || it.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
+			.filter { !excludeDisabled() || it.applicationInfo!!.enabled }
 			.filter { !excludeStore() || !isAppStore(getInstallerPackageName(it.packageName)) }
 			.map { it.toAppInstalled(context, ignoredApps()) }
 			.sortedBy { it.name }

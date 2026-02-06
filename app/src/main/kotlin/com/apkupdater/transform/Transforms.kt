@@ -16,7 +16,7 @@ fun PackageInfo.toAppInstalled(context: Context, ignored: List<String>) = AppIns
 	packageName,
 	versionName.orEmpty(),
 	if (Build.VERSION.SDK_INT >= 28) longVersionCode else versionCode.toLong(),
-	iconUri(packageName, applicationInfo.icon),
+	iconUri(packageName, applicationInfo?.icon ?: 0),
 	ignored.contains(packageName),
 	getSignatureSha1(),
 	getSignatureSha256()

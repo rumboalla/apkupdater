@@ -98,19 +98,19 @@ fun AppsTopBar(
 			FilterChip(
 				selected = !excludeSystem,
 				onClick = { viewModel.onSystemClick() },
-				label = { Text("System") },
+				label = { Text(stringResource(R.string.filter_system)) },
 				leadingIcon = { ExcludeSystemIcon(excludeSystem) }
 			)
 			FilterChip(
 				selected = !excludeAppStore,
 				onClick = { viewModel.onAppStoreClick() },
-				label = { Text("Store") },
+				label = { Text(stringResource(R.string.filter_store)) },
 				leadingIcon = { ExcludeAppStoreIcon(excludeAppStore) }
 			)
 			FilterChip(
 				selected = !excludeDisabled,
 				onClick = { viewModel.onDisabledClick() },
-				label = { Text("Disabled") },
+				label = { Text(stringResource(R.string.filter_disabled)) },
 				leadingIcon = { ExcludeDisabledIcon(excludeDisabled) }
 			)
 		}

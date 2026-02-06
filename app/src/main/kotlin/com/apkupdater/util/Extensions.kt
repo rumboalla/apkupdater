@@ -59,7 +59,7 @@ fun CoroutineScope.launchWithMutex(
 
 fun Boolean?.orFalse() = this ?: false
 
-fun PackageInfo.name(context: Context) = applicationInfo.loadLabel(context.packageManager).toString()
+fun PackageInfo.name(context: Context) = applicationInfo?.loadLabel(context.packageManager)?.toString().orEmpty()
 
 fun Context.getAppIcon(packageName: String) = runCatching {
 	packageManager.getApplicationIcon(packageName)
@@ -89,12 +89,12 @@ fun ByteArray.toSha256(): String = MessageDigest
 
 fun PackageInfo.getSignature(): ByteArray = runCatching {
 	if (Build.VERSION.SDK_INT >= 28) {
-		signingInfo.apkContentsSigners[0].toByteArray()
+		signingInfo?.apkContentsSigners?.get(0)?.toByteArray()
 	} else {
 		@Suppress("DEPRECATION")
-		signatures[0].toByteArray()
+		signatures?.get(0)?.toByteArray()
 	}
-}.getOrDefault(ByteArray(0))
+}.getOrNull() ?: ByteArray(0)
 
 fun PackageInfo.getSignatureSha1(): String = getSignature().toSha1()
 
