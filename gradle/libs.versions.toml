@@ -1,0 +1,62 @@
+[versions]
+agp = "8.3.1"
+kotlin = "1.9.0"
+compose-material3 = "1.4.0-alpha04"
+activity-compose = "1.8.2"
+ui = "1.6.4"
+core-ktx = "1.12.0"
+lifecycle = "2.7.0"
+navigation = "2.7.7"
+tv-foundation = "1.0.0-alpha10"
+work = "2.9.0"
+kryptoprefs = "0.4.3"
+libsu = "5.2.1"
+gplayapi = "3.2.11"
+gson = "2.10.1"
+okhttp = "4.12.0"
+retrofit = "2.11.0"
+coil = "2.6.0"
+versioncompare = "1.5.0"
+koin = "3.5.3"
+jsoup = "1.16.1"
+junit = "4.13.2"
+ui-test-junit4 = "1.6.4"
+espresso = "3.5.1"
+junit-ext = "1.1.5"
+
+[libraries]
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
+androidx-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "tv-foundation" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
+
+kryptoprefs-gson = { group = "com.github.rumboalla.KryptoPrefs", name = "kryptoprefs-gson", version.ref = "kryptoprefs" }
+kryptoprefs = { group = "com.github.rumboalla.KryptoPrefs", name = "kryptoprefs", version.ref = "kryptoprefs" }
+libsu-core = { group = "com.github.topjohnwu.libsu", name = "core", version.ref = "libsu" }
+gplayapi = { group = "com.aurora", name = "gplayapi", version.ref = "gplayapi" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+versioncompare = { group = "io.github.g00fy2", name = "versioncompare", version.ref = "versioncompare" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "ui-test-junit4" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "ui-test-junit4" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "ui-test-junit4" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

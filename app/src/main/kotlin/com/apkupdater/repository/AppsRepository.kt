@@ -2,6 +2,7 @@ package com.apkupdater.repository
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -10,6 +11,8 @@ import com.apkupdater.transform.toAppInstalled
 import com.apkupdater.util.orFalse
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 
 class AppsRepository(
@@ -17,9 +20,19 @@ class AppsRepository(
 	private val prefs: Prefs
 ) {
 
-	suspend fun getApps() = flow {
-		val apps = context.packageManager
-			.getInstalledPackages(PackageManager.MATCH_ALL + getSignatureFlag())
+    private var cachedPackages: List<PackageInfo>? = null
+    private val mutex = Mutex()
+
+	suspend fun getApps(forceRefresh: Boolean = false) = flow {
+        val packages = mutex.withLock {
+            if (cachedPackages == null || forceRefresh) {
+                cachedPackages = context.packageManager
+                    .getInstalledPackages(PackageManager.MATCH_ALL)
+            }
+            cachedPackages!!
+        }
+
+		val apps = packages
 			.asSequence()
 			.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0 }
 			.filter { !excludeSystem() || it.applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }
@@ -39,15 +52,6 @@ class AppsRepository(
 	private fun excludeDisabled() = prefs.excludeDisabled.get()
 	private fun excludeStore() = prefs.excludeStore.get()
 	private fun ignoredApps() = prefs.ignoredApps.get()
-
-	@Suppress("DEPRECATION")
-	private fun getSignatureFlag(): Int {
-		return if (Build.VERSION.SDK_INT >= 28) {
-			PackageManager.GET_SIGNING_CERTIFICATES
-		} else {
-			PackageManager.GET_SIGNATURES
-		}
-	}
 
 	@Suppress("DEPRECATION")
 	private fun getInstallerPackageName(packageName: String): String {

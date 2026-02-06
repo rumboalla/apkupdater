@@ -1,12 +1,16 @@
 package com.apkupdater.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -87,14 +91,28 @@ fun AppsTopBar(
 	title = { Text(stringResource(R.string.tab_apps)) },
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
-		IconButton(onClick = { viewModel.onSystemClick() }) {
-			ExcludeSystemIcon(excludeSystem)
-		}
-		IconButton(onClick = { viewModel.onAppStoreClick() }) {
-			ExcludeAppStoreIcon(excludeAppStore)
-		}
-		IconButton(onClick = { viewModel.onDisabledClick() }) {
-			ExcludeDisabledIcon(excludeDisabled)
+		Row(
+			horizontalArrangement = Arrangement.spacedBy(8.dp),
+			modifier = Modifier.padding(end = 8.dp)
+		) {
+			FilterChip(
+				selected = !excludeSystem,
+				onClick = { viewModel.onSystemClick() },
+				label = { Text("System") },
+				leadingIcon = { ExcludeSystemIcon(excludeSystem) }
+			)
+			FilterChip(
+				selected = !excludeAppStore,
+				onClick = { viewModel.onAppStoreClick() },
+				label = { Text("Store") },
+				leadingIcon = { ExcludeAppStoreIcon(excludeAppStore) }
+			)
+			FilterChip(
+				selected = !excludeDisabled,
+				onClick = { viewModel.onDisabledClick() },
+				label = { Text("Disabled") },
+				leadingIcon = { ExcludeDisabledIcon(excludeDisabled) }
+			)
 		}
 	},
 	navigationIcon = {

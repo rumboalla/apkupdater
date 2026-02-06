@@ -2,8 +2,10 @@ package com.apkupdater.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -57,7 +59,22 @@ fun AppTheme(
 		}
 	}
 
-	MaterialTheme(colorScheme = colorScheme, content = content)
+    val shapes = Shapes(
+        extraSmall = RoundedCornerShape(8.dp),
+        small = RoundedCornerShape(16.dp),
+        medium = RoundedCornerShape(24.dp),
+        large = RoundedCornerShape(32.dp),
+        extraLarge = RoundedCornerShape(48.dp)
+    )
+
+    // MotionScheme is likely not available in the alpha04 or has different API.
+    // I'll skip it to ensure build stability as I cannot verify the API.
+
+	MaterialTheme(
+        colorScheme = colorScheme,
+        shapes = shapes,
+        content = content
+    )
 }
 
 fun ColorScheme.statusBarColor() = surfaceColorAtElevation(3.dp)
