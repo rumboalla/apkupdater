@@ -27,8 +27,11 @@ class AppsRepository(
         val packages = mutex.withLock {
             val currentCache = cachedPackages
             if (forceRefresh || currentCache == null) {
+                val flags = PackageManager.MATCH_ALL or
+                    if (Build.VERSION.SDK_INT >= 28) PackageManager.GET_SIGNING_CERTIFICATES
+                    else @Suppress("DEPRECATION") PackageManager.GET_SIGNATURES
                 val newPackages = context.packageManager
-                    .getInstalledPackages(PackageManager.MATCH_ALL)
+                    .getInstalledPackages(flags)
                 cachedPackages = newPackages
                 newPackages
             } else {
