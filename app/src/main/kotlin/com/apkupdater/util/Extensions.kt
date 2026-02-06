@@ -89,10 +89,11 @@ fun ByteArray.toSha256(): String = MessageDigest
 
 fun PackageInfo.getSignature(): ByteArray = runCatching {
 	if (Build.VERSION.SDK_INT >= 28) {
-		signingInfo?.apkContentsSigners?.get(0)?.toByteArray()
+		// Optimization: Use firstOrNull() to avoid IndexOutOfBoundsException and exception handling overhead
+		signingInfo?.apkContentsSigners?.firstOrNull()?.toByteArray()
 	} else {
 		@Suppress("DEPRECATION")
-		signatures?.get(0)?.toByteArray()
+		signatures?.firstOrNull()?.toByteArray()
 	}
 }.getOrNull() ?: ByteArray(0)
 
