@@ -23,11 +23,11 @@ interface JsonPreference<T> {
 
 class Prefs(
 	prefs: KryptoPrefs,
+	private val json: Json,
 	isAndroidTv: Boolean
 ): KryptoContext(prefs) {
 
 	private inline fun <reified T> json(key: String, defaultValue: T, backed: Boolean = false): JsonPreference<T> {
-		val json = Json { ignoreUnknownKeys = true }
 		val serializer = serializer<T>()
         val defaultStr = try {
             json.encodeToString(serializer, defaultValue)

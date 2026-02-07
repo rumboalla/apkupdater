@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import com.apkupdater.prefs.Prefs
@@ -27,19 +28,15 @@ class AppsRepository(
         val packages = mutex.withLock {
             val currentCache = cachedPackages
             if (forceRefresh || currentCache == null) {
-                // Fetch launchable apps only, without heavy flags
-                val intent = Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER)
-                val resolveInfos = context.packageManager.queryIntentActivities(intent, 0)
-
-                // Map to unique PackageInfos (lightweight)
-                val newPackages = resolveInfos
-                    .mapNotNull { resolveInfo ->
-                        runCatching {
-                            context.packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0)
-                        }.getOrNull()
-                    }
-                    .distinctBy { it.packageName }
-
+                // Fetch all installed apps but with lightweight flags (0)
+                // This avoids GET_SIGNATURES/GET_SIGNING_CERTIFICATES which are heavy
+                val flags = PackageManager.MATCH_ALL
+                val newPackages = if (Build.VERSION.SDK_INT >= 33) {
+                    context.packageManager.getInstalledPackages(PackageManager.PackageInfoFlags.of(flags.toLong()))
+                } else {
+                    @Suppress("DEPRECATION")
+                    context.packageManager.getInstalledPackages(flags)
+                }
                 cachedPackages = newPackages
                 newPackages
             } else {

@@ -165,7 +165,7 @@ val mainModule = module {
 
 	single { KryptoBuilder.nocrypt(androidContext(), androidContext().getString(R.string.app_name)) }
 
-	single { Prefs(get(), androidContext().isAndroidTv()) }
+	single { Prefs(get(), get(), androidContext().isAndroidTv()) }
 
 	single { UpdatesNotification(get()) }
 
