@@ -1,11 +1,14 @@
 package com.apkupdater.data.apkpure
 
+import kotlinx.serialization.Serializable
+
 import android.content.res.Resources
 import android.os.Build
 import okhttp3.internal.toHexString
 import kotlin.random.Random
 
 
+@Serializable
 data class DeviceInfo(
     val abis: List<String> = Build.SUPPORTED_ABIS.toList(),
     val android_id: String = Random.nextLong().toHexString(),

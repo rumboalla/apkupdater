@@ -1,5 +1,8 @@
 package com.apkupdater.data.fdroid
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class FdroidPackage(
     val apkName: String = "",
     val versionCode: Long = 0,

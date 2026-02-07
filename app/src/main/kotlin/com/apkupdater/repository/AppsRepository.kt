@@ -1,9 +1,9 @@
 package com.apkupdater.repository
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import com.apkupdater.prefs.Prefs
@@ -27,11 +27,19 @@ class AppsRepository(
         val packages = mutex.withLock {
             val currentCache = cachedPackages
             if (forceRefresh || currentCache == null) {
-                val flags = PackageManager.MATCH_ALL or
-                    if (Build.VERSION.SDK_INT >= 28) PackageManager.GET_SIGNING_CERTIFICATES
-                    else @Suppress("DEPRECATION") PackageManager.GET_SIGNATURES
-                val newPackages = context.packageManager
-                    .getInstalledPackages(flags)
+                // Fetch launchable apps only, without heavy flags
+                val intent = Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER)
+                val resolveInfos = context.packageManager.queryIntentActivities(intent, 0)
+
+                // Map to unique PackageInfos (lightweight)
+                val newPackages = resolveInfos
+                    .mapNotNull { resolveInfo ->
+                        runCatching {
+                            context.packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0)
+                        }.getOrNull()
+                    }
+                    .distinctBy { it.packageName }
+
                 cachedPackages = newPackages
                 newPackages
             } else {

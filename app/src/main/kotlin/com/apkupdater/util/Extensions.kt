@@ -101,6 +101,17 @@ fun PackageInfo.getSignatureSha1(): String = getSignature().toSha1()
 
 fun PackageInfo.getSignatureSha256(): String = getSignature().toSha256()
 
+fun Context.getSignature(packageName: String): ByteArray {
+	val flags = if (Build.VERSION.SDK_INT >= 28) PackageManager.GET_SIGNING_CERTIFICATES else @Suppress("DEPRECATION") PackageManager.GET_SIGNATURES
+	return runCatching {
+		packageManager.getPackageInfo(packageName, flags).getSignature()
+	}.getOrDefault(ByteArray(0))
+}
+
+fun Context.getSignatureSha1(packageName: String): String = getSignature(packageName).toSha1()
+
+fun Context.getSignatureSha256(packageName: String): String = getSignature(packageName).toSha256()
+
 fun millisUntilHour(hour: Int): Long {
 	val calendar = Calendar.getInstance()
 	if (calendar.get(Calendar.HOUR_OF_DAY) >= hour) calendar.add(Calendar.HOUR, 24)

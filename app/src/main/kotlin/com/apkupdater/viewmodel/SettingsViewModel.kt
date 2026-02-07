@@ -12,10 +12,10 @@ import com.apkupdater.util.Clipboard
 import com.apkupdater.util.Themer
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ class SettingsViewModel(
     private val workManager: WorkManager,
 	private val clipboard: Clipboard,
 	private val appsRepository: AppsRepository,
-	private val gson: Gson = GsonBuilder().setPrettyPrinting().create(),
+	private val json: Json = Json { prettyPrint = true; ignoreUnknownKeys = true },
 	private val themer: Themer
 ) : ViewModel() {
 
@@ -115,7 +115,7 @@ class SettingsViewModel(
 	fun copyAppList() = viewModelScope.launch(Dispatchers.IO) {
 		appsRepository.getApps().collectLatest { apps ->
 			apps.onSuccess {
-				clipboard.copy(gson.toJson(it), "App List")
+				clipboard.copy(json.encodeToString(it), "App List")
 			}
 		}
 	}

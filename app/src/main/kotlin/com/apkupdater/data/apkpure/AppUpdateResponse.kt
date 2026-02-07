@@ -1,5 +1,7 @@
 package com.apkupdater.data.apkpure
 
+import kotlinx.serialization.Serializable
+
 import android.net.Uri
 import com.apkupdater.data.ui.ApkPureSource
 import com.apkupdater.data.ui.AppInstalled
@@ -7,6 +9,7 @@ import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Link
 
 
+@Serializable
 data class AppUpdateResponse(
     val package_name: String,
     val version_code: Long,

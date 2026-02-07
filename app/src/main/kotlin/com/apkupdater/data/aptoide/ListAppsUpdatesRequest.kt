@@ -1,6 +1,9 @@
 package com.apkupdater.data.aptoide
 
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class ListAppsUpdatesRequest(
     val apks_data: List<ApksData>,
     val q: String,

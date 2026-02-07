@@ -1,9 +1,12 @@
 package com.apkupdater.data.aptoide
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+import kotlinx.serialization.SerialName
+
+@Serializable
 data class ApksData(
-	@SerializedName("package") val packageName: String = "",
+	@SerialName("package") val packageName: String = "",
 	val vercode: String = "0",
 	val signature: String?,
 	val isEnabled: Boolean = true

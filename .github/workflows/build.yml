@@ -30,6 +30,12 @@ jobs:
         BUILD_NUMBER: ${{ github.run_number }}
       run: ./gradlew build
 
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: apk
+        path: app/build/outputs/apk/release/*.apk
+
     - name: Get current branch name
       run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
 

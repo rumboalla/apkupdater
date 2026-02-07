@@ -5,30 +5,33 @@ import com.apkupdater.data.apkpure.AppInfoForUpdate
 import com.apkupdater.data.apkpure.AppUpdateResponse
 import com.apkupdater.data.apkpure.DeviceHeader
 import com.apkupdater.data.apkpure.GetAppUpdate
+import android.content.Context
 import com.apkupdater.data.apkpure.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.getApp
-import com.apkupdater.data.ui.getSignature
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.ApkPureService
-import com.google.gson.Gson
+import com.apkupdater.util.getSignatureSha1
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 
 class ApkPureRepository(
-    gson: Gson,
+    private val context: Context,
+    json: Json,
     private val service: ApkPureService,
     private val prefs: Prefs
 ) {
 
-    private val header = gson.toJson(DeviceHeader())
+    private val header = json.encodeToString(DeviceHeader())
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val info = apps.map { AppInfoForUpdate(it.packageName, it.versionCode) }
         val r = service.getAppUpdate(header, GetAppUpdate(info))
         val updates = r.app_update_response
-            .filter { filterSignature(it.sign, apps.getSignature(it.package_name)) }
+            .filter { filterSignature(it.sign, context.getSignatureSha1(it.package_name)) }
             .filter { filterAlpha(it) }
             .filter { filterBeta(it) }
             .map { it.toAppUpdate(apps.getApp(it.package_name)) }
