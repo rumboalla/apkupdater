@@ -27,7 +27,7 @@ class SettingsViewModel(
     private val workManager: WorkManager,
 	private val clipboard: Clipboard,
 	private val appsRepository: AppsRepository,
-	private val json: Json = Json { prettyPrint = true; ignoreUnknownKeys = true },
+	private val json: Json,
 	private val themer: Themer
 ) : ViewModel() {
 
