@@ -1,5 +1,8 @@
 package com.apkupdater.data.apkmirror
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AppExistsResponseData(
 	val pname: String = "",
 	val exists: Boolean? = null,

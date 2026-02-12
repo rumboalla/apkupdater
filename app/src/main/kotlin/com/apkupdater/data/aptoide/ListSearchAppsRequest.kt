@@ -1,6 +1,9 @@
 package com.apkupdater.data.aptoide
 
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class ListSearchAppsRequest(
 	val query: String = "",
 	val limit: String = "10",

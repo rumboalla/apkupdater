@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +33,7 @@ import com.apkupdater.ui.component.RefreshIcon
 import com.apkupdater.ui.component.TvInstalledGrid
 import com.apkupdater.ui.component.TvUpdateItem
 import com.apkupdater.ui.component.UpdateItem
+import com.apkupdater.ui.icons.ThumbUpFilled
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.UpdatesViewModel
 import org.koin.androidx.compose.get
@@ -64,7 +64,7 @@ fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
 	},
 	navigationIcon = {
 		Box(Modifier.minimumInteractiveComponentSize().size(40.dp), Alignment.Center) {
-			Icon(Icons.Filled.ThumbUp, "Tab Icon")
+			Icon(ThumbUpFilled, "Tab Icon")
 		}
 	}
 )

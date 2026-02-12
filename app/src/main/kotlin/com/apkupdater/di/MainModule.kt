@@ -39,8 +39,10 @@ import com.apkupdater.viewmodel.MainViewModel
 import com.apkupdater.viewmodel.SearchViewModel
 import com.apkupdater.viewmodel.SettingsViewModel
 import com.apkupdater.viewmodel.UpdatesViewModel
-import com.google.gson.GsonBuilder
 import com.kryptoprefs.preferences.KryptoBuilder
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -49,13 +51,12 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 
 
 val mainModule = module {
 
-	single { GsonBuilder().create() }
+	single { Json { ignoreUnknownKeys = true; coerceInputValues = true; encodeDefaults = true } }
 
 	single { Cache(androidContext().cacheDir, 1024 * 1024 * 1024) }
 
@@ -77,7 +78,7 @@ val mainModule = module {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://www.apkmirror.com")
-			.addConverterFactory(GsonConverterFactory.create(get()))
+			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
 			.create(ApkMirrorService::class.java)
 	}
@@ -86,7 +87,7 @@ val mainModule = module {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://api.github.com")
-			.addConverterFactory(GsonConverterFactory.create(get()))
+			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
 			.create(GitHubService::class.java)
 	}
@@ -95,7 +96,7 @@ val mainModule = module {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://gitlab.com")
-			.addConverterFactory(GsonConverterFactory.create(get()))
+			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
 			.create(GitLabService::class.java)
 	}
@@ -104,7 +105,7 @@ val mainModule = module {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://f-droid.org/repo/")
-			.addConverterFactory(GsonConverterFactory.create(get()))
+			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
 			.create(FdroidService::class.java)
 	}
@@ -118,7 +119,7 @@ val mainModule = module {
 		Retrofit.Builder()
 			.client(client)
 			.baseUrl("https://ws75.aptoide.com/api/7/")
-			.addConverterFactory(GsonConverterFactory.create(get()))
+			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
 			.create(AptoideService::class.java)
 	}
@@ -127,7 +128,7 @@ val mainModule = module {
 		Retrofit.Builder()
 			.client(get())
 			.baseUrl("https://tapi.pureapk.com/")
-			.addConverterFactory(GsonConverterFactory.create(get()))
+			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
 			.create(ApkPureService::class.java)
 	}
@@ -140,7 +141,7 @@ val mainModule = module {
 		Downloader(client, apkPureClient, auroraClient, dir)
 	}
 
-	single { ApkMirrorRepository(get(), get(), androidContext().packageManager) }
+	single { ApkMirrorRepository(androidContext(), get(), get()) }
 
 	single { AppsRepository(get(), get()) }
 
@@ -148,23 +149,23 @@ val mainModule = module {
 
 	single { GitLabRepository(get(), get()) }
 
-	single { ApkPureRepository(get(), get(), get()) }
+	single { ApkPureRepository(androidContext(), get(), get(), get()) }
 
 	single { AptoideRepository(get(), get(), get()) }
 
-	single { PlayRepository(get(), get(), get(), get()) }
+	single { PlayRepository(androidContext(), get(), get(), get()) }
 
-	single(named("main")) { FdroidRepository(get(), "https://f-droid.org/repo/", FdroidSource, get()) }
+	single(named("main")) { FdroidRepository(androidContext(), get(), "https://f-droid.org/repo/", FdroidSource, get<Prefs>()) }
 
-	single(named("izzy")) { FdroidRepository(get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get()) }
+	single(named("izzy")) { FdroidRepository(androidContext(), get(), "https://apt.izzysoft.de/fdroid/repo/", IzzySource, get<Prefs>()) }
 
 	single { UpdatesRepository(get(), get(), get(), get(named("main")), get(named("izzy")), get(), get(), get(), get(), get()) }
 
 	single { SearchRepository(get(), get(named("main")), get(named("izzy")), get(), get(), get(), get(), get(), get()) }
 
-	single { KryptoBuilder.nocrypt(get(), androidContext().getString(R.string.app_name)) }
+	single { KryptoBuilder.nocrypt(androidContext(), androidContext().getString(R.string.app_name)) }
 
-	single { Prefs(get(), androidContext().isAndroidTv()) }
+	single { Prefs(get(), get(), androidContext().isAndroidTv()) }
 
 	single { UpdatesNotification(get()) }
 

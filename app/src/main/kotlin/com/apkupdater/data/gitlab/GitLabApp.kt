@@ -1,5 +1,8 @@
 package com.apkupdater.data.gitlab
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GitLabApp(
     val packageName: String,
     val user: String,

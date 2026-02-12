@@ -1,11 +1,14 @@
 package com.apkupdater.data.fdroid
 
+import kotlinx.serialization.Serializable
+
 import androidx.core.net.toUri
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.Source
 
+@Serializable
 data class FdroidUpdate(
     val apk: FdroidPackage,
     val app: FdroidApp

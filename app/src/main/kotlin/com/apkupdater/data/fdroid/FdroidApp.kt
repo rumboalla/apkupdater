@@ -1,5 +1,8 @@
 package com.apkupdater.data.fdroid
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class FdroidApp(
     //val description: String = "",
     val packageName: String = "",

@@ -1,6 +1,6 @@
 package com.apkupdater.repository
 
-import android.content.pm.PackageManager
+import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -14,11 +14,11 @@ import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.getPackageNames
-import com.apkupdater.data.ui.getSignature
 import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.ApkMirrorService
 import com.apkupdater.util.combine
+import com.apkupdater.util.getSignatureSha1
 import com.apkupdater.util.isAndroidTv
 import com.apkupdater.util.orFalse
 import kotlinx.coroutines.flow.catch
@@ -28,9 +28,9 @@ import org.jsoup.Jsoup
 
 
 class ApkMirrorRepository(
+    private val context: Context,
     private val service: ApkMirrorService,
-    private val prefs: Prefs,
-    packageManager: PackageManager
+    private val prefs: Prefs
 ) {
 
     private val arch = when {
@@ -41,7 +41,7 @@ class ApkMirrorRepository(
         else -> "arm"
     }
 
-    private val isAndroidTV = packageManager.isAndroidTv()
+    private val isAndroidTV = context.isAndroidTv()
     private val api = Build.VERSION.SDK_INT
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
@@ -93,7 +93,7 @@ class ApkMirrorRepository(
         .mapNotNull { data ->
             data.apks
                 .asSequence()
-                .filter { filterSignature(it, apps.getSignature(data.pname))}
+                .filter { filterSignature(it, context.getSignatureSha1(data.pname)) }
                 .filter { filterArch(it) }
                 .filter { it.versionCode > apps.getVersionCode(data.pname) }
                 .filter { filterMinApi(it) }

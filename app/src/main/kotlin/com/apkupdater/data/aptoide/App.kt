@@ -1,16 +1,19 @@
 package com.apkupdater.data.aptoide
 
+import kotlinx.serialization.Serializable
+
 import android.net.Uri
 import androidx.core.net.toUri
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.AptoideSource
 import com.apkupdater.data.ui.Link
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 
+@Serializable
 data class App(
 	val name: String = "",
-	@SerializedName("package") val packageName:String = "",
+	@SerialName("package") val packageName:String = "",
 	val icon: String? = "",
 	val file: File,
 	val store: Store

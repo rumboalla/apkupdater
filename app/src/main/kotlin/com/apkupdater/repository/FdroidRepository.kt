@@ -1,5 +1,6 @@
 package com.apkupdater.repository
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import com.apkupdater.data.fdroid.FdroidApp
@@ -12,7 +13,8 @@ import com.apkupdater.data.ui.getApp
 import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.FdroidService
-import com.google.gson.Gson
+import com.apkupdater.util.getSignatureSha256
+import kotlinx.serialization.json.Json
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import java.io.InputStream
@@ -20,6 +22,7 @@ import java.util.jar.JarInputStream
 
 
 class FdroidRepository(
+    private val context: Context,
     private val service: FdroidService,
     private val url: String,
     private val source: Source,
@@ -69,7 +72,7 @@ class FdroidRepository(
 
     private fun filterSignature(installed: AppInstalled, update: FdroidApp) = when {
         update.allowedAPKSigningKeys.isEmpty() -> true
-        update.allowedAPKSigningKeys.contains(installed.signatureSha256) -> true
+        update.allowedAPKSigningKeys.contains(context.getSignatureSha256(installed.packageName)) -> true
         else -> false
     }
 
@@ -92,9 +95,10 @@ class FdroidRepository(
     private fun jarToJson(stream: InputStream): FdroidData {
         val jar = JarInputStream(stream)
         var entry = jar.nextJarEntry
+        val json = Json { ignoreUnknownKeys = true }
         while (entry != null) {
             if (entry.name == "index-v1.json") {
-                return Gson().fromJson(jar.reader(), FdroidData::class.java)
+                return json.decodeFromString<FdroidData>(jar.reader().readText())
             }
             entry = jar.nextJarEntry
         }

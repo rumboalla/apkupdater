@@ -1,23 +1,26 @@
 package com.apkupdater.data.apkmirror
 
+import kotlinx.serialization.Serializable
+
 import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.data.ui.Link
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 
+@Serializable
 data class AppExistsResponseApk(
-	@SerializedName("version_code") val versionCode: Long = 0,
+	@SerialName("version_code") val versionCode: Long = 0,
 	val link: String = "",
-	@SerializedName("publish_date") val publishDate: String? = null,
+	@SerialName("publish_date") val publishDate: String? = null,
 	val arches: List<String> = emptyList(),
 	val dpis: List<String>? = null,
 	val minapi: String = "0",
 	val description: String? = null,
 	val capabilities: List<String>? = null,
-	@SerializedName("signatures-sha1")
+	@SerialName("signatures-sha1")
 	val signaturesSha1: List<String>? = emptyList(),
-	@SerializedName("signatures-sha256")
+	@SerialName("signatures-sha256")
 	val signaturesSha256: List<String>? = emptyList()
 )
 

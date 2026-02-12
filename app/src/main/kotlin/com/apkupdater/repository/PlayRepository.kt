@@ -10,7 +10,9 @@ import com.apkupdater.data.ui.PlaySource
 import com.apkupdater.data.ui.getPackageNames
 import com.apkupdater.data.ui.getVersion
 import com.apkupdater.data.ui.getVersionCode
+import com.apkupdater.prefs.AppAuthData
 import com.apkupdater.prefs.Prefs
+import com.apkupdater.prefs.toAuthData
 import com.apkupdater.util.play.NativeDeviceInfoProvider
 import com.apkupdater.util.play.PlayHttpClient
 import com.aurora.gplayapi.data.models.App
@@ -19,7 +21,8 @@ import com.aurora.gplayapi.data.models.File
 import com.aurora.gplayapi.helpers.AppDetailsHelper
 import com.aurora.gplayapi.helpers.PurchaseHelper
 import com.aurora.gplayapi.helpers.SearchHelper
-import com.google.gson.Gson
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
@@ -27,7 +30,7 @@ import kotlinx.coroutines.flow.flow
 class PlayRepository(
     private val context: Context,
     private val playHttpClient: PlayHttpClient,
-    private val gson: Gson,
+    private val json: Json,
     private val prefs: Prefs
 ) {
     companion object {
@@ -37,11 +40,12 @@ class PlayRepository(
     private fun refreshAuth(): AuthData {
         Log.i("PlayRepository", "Refreshing token.")
         val properties = NativeDeviceInfoProvider(context).getNativeDeviceProperties()
-        val playResponse = playHttpClient.postAuth(AUTH_URL, gson.toJson(properties).toByteArray())
+        val propsMap = properties.map { it.key.toString() to it.value.toString() }.toMap()
+        val playResponse = playHttpClient.postAuth(AUTH_URL, json.encodeToString(propsMap).toByteArray())
         if (playResponse.isSuccessful) {
-            val authData = gson.fromJson(String(playResponse.responseBytes), AuthData::class.java)
-            prefs.playAuthData.put(authData)
-            return authData
+            val appAuthData = json.decodeFromString<AppAuthData>(String(playResponse.responseBytes))
+            prefs.playAuthData.set(appAuthData)
+            return appAuthData.toAuthData()
         }
         throw IllegalStateException("Auth not successful.")
     }
@@ -58,7 +62,7 @@ class PlayRepository(
 
             // 1h has passed check if token still works
             val app = runCatching {
-                AppDetailsHelper(savedData)
+                AppDetailsHelper(savedData.toAuthData())
                     .using(playHttpClient)
                     .getAppByPackageName("com.google.android.gm")
             }.getOrElse {
@@ -70,7 +74,7 @@ class PlayRepository(
             }
             Log.i("PlayRepository", "Token still valid.")
         }
-        return savedData
+        return savedData.toAuthData()
     }
 
     suspend fun search(text: String) = flow {

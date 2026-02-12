@@ -1,5 +1,8 @@
 package com.apkupdater.data.apkmirror
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
-data class AppExistsResponseHeaders(@SerializedName("Allow") val allow: String? = null)
+import kotlinx.serialization.SerialName
+
+@Serializable
+data class AppExistsResponseHeaders(@SerialName("Allow") val allow: String? = null)

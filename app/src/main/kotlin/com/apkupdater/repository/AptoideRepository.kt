@@ -42,7 +42,7 @@ class AptoideRepository(
     }
 
     suspend fun updates(apps: List<AppInstalled>) = flow {
-        val data = apps.map(AppInstalled::toApksData)
+        val data = apps.map { it.toApksData(context) }
         val r = service
             .findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList(), buildStoreList()))
             .list

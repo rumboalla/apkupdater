@@ -1,6 +1,9 @@
 package com.apkupdater.data.apkpure
 
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class AppInfoForUpdate(
     val package_name: String,
     val version_code: Long,
