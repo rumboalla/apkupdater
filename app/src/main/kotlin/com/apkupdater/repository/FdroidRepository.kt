@@ -36,13 +36,10 @@ class FdroidRepository(
         val updates = data.apps
             .asSequence()
             .mapNotNull { app ->
-                val installed = appMap[app.packageName] ?: return@mapNotNull null
-                val latestPkg = data.packages[app.packageName]?.firstOrNull() ?: return@mapNotNull null
-
-                if (latestPkg.versionCode > installed.versionCode && filterSignature(installed, app)) {
-                    FdroidUpdate(latestPkg, app)
-                } else {
-                    null
+                appMap[app.packageName]?.let { installed ->
+                    data.packages[app.packageName]?.firstOrNull()
+                        ?.takeIf { it.versionCode > installed.versionCode && filterSignature(installed, app) }
+                        ?.let { latestPkg -> FdroidUpdate(latestPkg, app) }
                 }
             }
             .parseUpdates(appMap)
