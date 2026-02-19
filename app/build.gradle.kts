@@ -21,6 +21,14 @@ android {
         versionName = if (buildNumber.isEmpty()) "4.0" else "0.0.$buildNumber"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        val properties = Properties()
+        if (file("../local.properties").exists()) {
+            FileInputStream(file("../local.properties")).use { properties.load(it) }
+        }
+
+        val apkMirrorToken = properties.getProperty("apkmirror.token") ?: System.getenv("APKMIRROR_TOKEN") ?: ""
+        buildConfigField("String", "APKMIRROR_TOKEN", "\"$apkMirrorToken\"")
     }
 
     signingConfigs {
