@@ -63,7 +63,7 @@ fun UpdatesTopBar(
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
 		IconButton(
-			onClick = { if (!loading) viewModel.refresh() },
+			onClick = { viewModel.refresh() },
 			enabled = !loading
 		) {
 			if (loading) {
