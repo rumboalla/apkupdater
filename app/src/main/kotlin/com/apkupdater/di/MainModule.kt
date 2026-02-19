@@ -77,10 +77,11 @@ val mainModule = module {
 	single {
 		val client = get<OkHttpClient>().newBuilder()
 			.addInterceptor { chain ->
-				val request = chain.request().newBuilder()
-					.addHeader("Authorization", BuildConfig.APKMIRROR_TOKEN)
-					.build()
-				chain.proceed(request)
+				val requestBuilder = chain.request().newBuilder()
+				if (BuildConfig.APKMIRROR_TOKEN.isNotEmpty()) {
+					requestBuilder.addHeader("Authorization", "Basic ${BuildConfig.APKMIRROR_TOKEN}")
+				}
+				chain.proceed(requestBuilder.build())
 			}
 			.build()
 
