@@ -1,6 +1,7 @@
 package com.apkupdater.ui.component
 
 import android.content.res.Configuration
+import androidx.compose.animation.core.InfiniteTransition
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -70,31 +71,6 @@ fun TvShimmeringGrid() = TvInstalledGrid(false) {
 @Composable
 fun SkeletonItem() {
     val transition = rememberInfiniteTransition("SkeletonItemTransition")
-    val color = MaterialTheme.colorScheme.statusBarColor()
-
-    @Composable
-    fun Modifier.shimmer(): Modifier = composed {
-        var size by remember { mutableStateOf(IntSize.Zero) }
-        val startOffsetX by transition.animateFloat(
-            initialValue = -2 * size.width.toFloat(),
-            targetValue = 2 * size.width.toFloat(),
-            animationSpec = infiniteRepeatable(animation = tween(1000)),
-            label = "shimmer"
-        )
-        background(
-            brush = Brush.linearGradient(
-                colors = listOf(
-                    color.copy(alpha = 0.9f),
-                    color.copy(alpha = 0.3f),
-                    color.copy(alpha = 0.9f)
-                ),
-                start = Offset(startOffsetX, 0f),
-                end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
-            )
-        ).onGloballyPositioned {
-            size = it.size
-        }
-    }
 
     Column {
         // Image placeholder
@@ -104,7 +80,7 @@ fun SkeletonItem() {
                 .aspectRatio(1f)
                 .padding(10.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .shimmer()
+                .shimmer(transition)
         )
         // Text placeholder
         Column(Modifier.padding(top = 4.dp, start = 8.dp, end = 8.dp)) {
@@ -113,7 +89,7 @@ fun SkeletonItem() {
                     .height(14.dp)
                     .fillMaxWidth(0.6f)
                     .clip(RoundedCornerShape(4.dp))
-                    .shimmer()
+                    .shimmer(transition)
             )
             Spacer(Modifier.height(4.dp))
             Box(
@@ -121,9 +97,33 @@ fun SkeletonItem() {
                     .height(12.dp)
                     .fillMaxWidth(0.4f)
                     .clip(RoundedCornerShape(4.dp))
-                    .shimmer()
+                    .shimmer(transition)
             )
         }
+    }
+}
+
+private fun Modifier.shimmer(transition: InfiniteTransition): Modifier = composed {
+    val color = MaterialTheme.colorScheme.statusBarColor()
+    var size by remember { mutableStateOf(IntSize.Zero) }
+    val startOffsetX by transition.animateFloat(
+        initialValue = -2 * size.width.toFloat(),
+        targetValue = 2 * size.width.toFloat(),
+        animationSpec = infiniteRepeatable(animation = tween(1000)),
+        label = "shimmer"
+    )
+    background(
+        brush = Brush.linearGradient(
+            colors = listOf(
+                color.copy(alpha = 0.9f),
+                color.copy(alpha = 0.3f),
+                color.copy(alpha = 0.9f)
+            ),
+            start = Offset(startOffsetX, 0f),
+            end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
+        )
+    ).onGloballyPositioned {
+        size = it.size
     }
 }
 
