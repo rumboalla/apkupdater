@@ -45,6 +45,10 @@ import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.theme.statusBarColor
 import org.koin.androidx.compose.get
 
+private const val SHIMMER_ANIMATION_DURATION_MS = 1000
+private const val SHIMMER_HIGH_ALPHA = 0.9f
+private const val SHIMMER_LOW_ALPHA = 0.3f
+
 @Composable
 fun LoadingGrid() {
     if (get<Prefs>().androidTvUi.get()) {
@@ -107,17 +111,17 @@ private fun Modifier.shimmer(transition: InfiniteTransition): Modifier = compose
     val color = MaterialTheme.colorScheme.statusBarColor()
     var size by remember { mutableStateOf(IntSize.Zero) }
     val startOffsetX by transition.animateFloat(
-        initialValue = -2 * size.width.toFloat(),
-        targetValue = 2 * size.width.toFloat(),
-        animationSpec = infiniteRepeatable(animation = tween(1000)),
+        initialValue = -size.width.toFloat(),
+        targetValue = size.width.toFloat(),
+        animationSpec = infiniteRepeatable(animation = tween(SHIMMER_ANIMATION_DURATION_MS)),
         label = "shimmer"
     )
     background(
         brush = Brush.linearGradient(
             colors = listOf(
-                color.copy(alpha = 0.9f),
-                color.copy(alpha = 0.3f),
-                color.copy(alpha = 0.9f)
+                color.copy(alpha = SHIMMER_HIGH_ALPHA),
+                color.copy(alpha = SHIMMER_LOW_ALPHA),
+                color.copy(alpha = SHIMMER_HIGH_ALPHA)
             ),
             start = Offset(startOffsetX, 0f),
             end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
