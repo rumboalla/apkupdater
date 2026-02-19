@@ -185,7 +185,7 @@ fun TvGroupedUpdateItem(
                     }
                     TvIgnoreVersionButton(update, onIgnoreVersion)
                     Spacer(Modifier.width(8.dp))
-                    TvInstallButton(update) { onInstall(update) }
+                    TvInstallButton(update) { _ -> onInstall(update) }
                 }
             }
         }
