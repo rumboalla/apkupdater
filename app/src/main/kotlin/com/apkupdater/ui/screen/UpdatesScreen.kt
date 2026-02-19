@@ -101,10 +101,9 @@ fun TvGrid(
 	updates: List<AppUpdate>,
 	handler: UriHandler
 ) = TvInstalledGrid {
-	val groupedUpdates = updates.groupBy { it.packageName }
-	items(groupedUpdates.keys.toList()) { packageName ->
+	items(updates.groupBy { it.packageName }.values.toList()) { updatesForPackage ->
 		TvGroupedUpdateItem(
-			groupedUpdates[packageName]!!,
+			updatesForPackage,
 			{ viewModel.install(it, handler) },
 			{ viewModel.ignoreVersion(it) }
 		)

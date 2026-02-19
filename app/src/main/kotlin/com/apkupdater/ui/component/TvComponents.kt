@@ -153,36 +153,40 @@ fun TvGroupedUpdateItem(
     updates: List<AppUpdate>,
     onInstall: (AppUpdate) -> Unit = {},
     onIgnoreVersion: (Int) -> Unit
-) = Card {
-    val first = updates.first()
-    Column {
-        TvCommonItem(
-            packageName = first.packageName,
-            name = first.name,
-            version = first.oldVersion,
-            oldVersion = null,
-            versionCode = first.oldVersionCode,
-            oldVersionCode = null
-        )
+) {
+    if (updates.isEmpty()) return
 
-        updates.forEach { update ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                SourceIcon(
-                    update.source,
-                    Modifier.size(32.dp)
-                )
-                Column(Modifier.padding(start = 8.dp).weight(1f)) {
-                    MediumText(update.version)
-                    SmallText(if (update.versionCode == 0L) "?" else update.versionCode.toString())
+    Card {
+        val first = updates.first()
+        Column {
+            TvCommonItem(
+                packageName = first.packageName,
+                name = first.name,
+                version = first.oldVersion,
+                oldVersion = null,
+                versionCode = first.oldVersionCode,
+                oldVersionCode = null
+            )
+
+            updates.forEach { update ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    SourceIcon(
+                        update.source,
+                        Modifier.size(32.dp)
+                    )
+                    Column(Modifier.padding(start = 8.dp).weight(1f)) {
+                        MediumText(update.version)
+                        SmallText(if (update.versionCode == 0L) "?" else update.versionCode.toString())
+                    }
+                    TvIgnoreVersionButton(update, onIgnoreVersion)
+                    Spacer(Modifier.width(8.dp))
+                    TvInstallButton(update) { onInstall(update) }
                 }
-                TvIgnoreVersionButton(update, onIgnoreVersion)
-                Spacer(Modifier.width(8.dp))
-                TvInstallButton(update) { onInstall(update) }
             }
         }
     }
