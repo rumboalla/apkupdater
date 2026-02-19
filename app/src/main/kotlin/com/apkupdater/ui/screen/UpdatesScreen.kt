@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,14 +53,27 @@ fun UpdatesScreen(viewModel: UpdatesViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
+fun UpdatesTopBar(
+	viewModel: UpdatesViewModel,
+	loading: Boolean = false
+) = TopAppBar(
 	title = {
 		Text(stringResource(R.string.tab_updates))
 	},
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	actions = {
-		IconButton(onClick = { viewModel.refresh() }) {
-			RefreshIcon(stringResource(R.string.refresh_updates))
+		IconButton(
+			onClick = { viewModel.refresh() },
+			enabled = !loading
+		) {
+			if (loading) {
+				CircularProgressIndicator(
+					modifier = Modifier.size(24.dp),
+					strokeWidth = 3.dp,
+				)
+			} else {
+				RefreshIcon(stringResource(R.string.refresh_updates))
+			}
 		}
 	},
 	navigationIcon = {
@@ -71,7 +85,7 @@ fun UpdatesTopBar(viewModel: UpdatesViewModel) = TopAppBar(
 
 @Composable
 fun UpdatesScreenLoading(viewModel: UpdatesViewModel) = Column {
-	UpdatesTopBar(viewModel)
+	UpdatesTopBar(viewModel, loading = true)
 	LoadingGrid()
 }
 
