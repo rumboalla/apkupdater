@@ -24,12 +24,10 @@ android {
 
         val properties = Properties()
         if (file("../local.properties").exists()) {
-            properties.load(FileInputStream(file("../local.properties")))
+            FileInputStream(file("../local.properties")).use { properties.load(it) }
         }
 
-        // Default to the hardcoded token if not provided in local.properties or env var.
-        // Ideally, this should be rotated and removed from the codebase.
-        val apkMirrorToken = properties.getProperty("apkmirror.token") ?: System.getenv("APKMIRROR_TOKEN") ?: "Basic YXBpLWFwa3VwZGF0ZXI6cm01cmNmcnVVakt5MDRzTXB5TVBKWFc4"
+        val apkMirrorToken = properties.getProperty("apkmirror.token") ?: System.getenv("APKMIRROR_TOKEN") ?: ""
         buildConfigField("String", "APKMIRROR_TOKEN", "\"$apkMirrorToken\"")
     }
 
