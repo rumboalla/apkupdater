@@ -78,20 +78,41 @@ fun SourceIcon(source: Source, modifier: Modifier = Modifier) = Icon(
     modifier
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
-    painter = painterResource(
-        id = if(ignored) R.drawable.ic_visible_off else R.drawable.ic_visible
-    ),
-    contentDescription = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
-    modifier = Modifier.clickableNoRipple(onClick).then(modifier)
+private fun TooltipIconButton(
+    @DrawableRes icon: Int,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) = TooltipBox(
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+    state = rememberTooltipState(),
+    tooltip = { PlainTooltip { Text(text) } }
+) {
+    Icon(
+        painter = painterResource(icon),
+        contentDescription = text,
+        modifier = modifier
+            .tooltipAnchor()
+            .clickableNoRipple(onClick)
+    )
+}
+
+@Composable
+fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) = TooltipIconButton(
+    icon = if (ignored) R.drawable.ic_visible_off else R.drawable.ic_visible,
+    text = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
+    onClick = onClick,
+    modifier = modifier
 )
 
 @Composable
-fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
-    painter = painterResource(R.drawable.ic_install),
-    contentDescription = stringResource(R.string.install_cd),
-    modifier = Modifier.clickableNoRipple(onClick).then(modifier)
+fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = TooltipIconButton(
+    icon = R.drawable.ic_install,
+    text = stringResource(R.string.install_cd),
+    onClick = onClick,
+    modifier = modifier
 )
 
 @Composable
