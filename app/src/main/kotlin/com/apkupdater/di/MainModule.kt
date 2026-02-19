@@ -75,8 +75,17 @@ val mainModule = module {
 	}
 
 	single {
+		val client = get<OkHttpClient>().newBuilder()
+			.addInterceptor { chain ->
+				val request = chain.request().newBuilder()
+					.addHeader("Authorization", BuildConfig.APKMIRROR_TOKEN)
+					.build()
+				chain.proceed(request)
+			}
+			.build()
+
 		Retrofit.Builder()
-			.client(get())
+			.client(client)
 			.baseUrl("https://www.apkmirror.com")
 			.addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
 			.build()
