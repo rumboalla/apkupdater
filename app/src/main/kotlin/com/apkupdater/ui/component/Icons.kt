@@ -100,17 +100,20 @@ fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modif
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = TooltipBox(
-    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
-    state = rememberTooltipState(),
-    tooltip = { PlainTooltip { Text(stringResource(R.string.install_cd)) } },
-    modifier = modifier
-) {
-    Icon(
-        painter = painterResource(R.drawable.ic_install),
-        contentDescription = stringResource(R.string.install_cd),
-        modifier = Modifier.clickableNoRipple(onClick)
-    )
+fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val text = stringResource(R.string.install_cd)
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+        state = rememberTooltipState(),
+        tooltip = { PlainTooltip { Text(text) } },
+        modifier = modifier
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_install),
+            contentDescription = text,
+            modifier = Modifier.clickableNoRipple(onClick)
+        )
+    }
 }
 
 @Composable
