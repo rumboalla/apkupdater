@@ -30,8 +30,8 @@ import com.apkupdater.ui.component.EmptyGrid
 import com.apkupdater.ui.component.InstalledGrid
 import com.apkupdater.ui.component.LoadingGrid
 import com.apkupdater.ui.component.RefreshIcon
+import com.apkupdater.ui.component.TvGroupedUpdateItem
 import com.apkupdater.ui.component.TvInstalledGrid
-import com.apkupdater.ui.component.TvUpdateItem
 import com.apkupdater.ui.component.UpdateItem
 import com.apkupdater.ui.icons.ThumbUpFilled
 import com.apkupdater.ui.theme.statusBarColor
@@ -101,11 +101,12 @@ fun TvGrid(
 	updates: List<AppUpdate>,
 	handler: UriHandler
 ) = TvInstalledGrid {
-	items(updates) { update ->
-		TvUpdateItem(
-			update,
-			{ viewModel.install(update, handler) },
-			{ viewModel.ignoreVersion(update.id)}
+	val groupedUpdates = updates.groupBy { it.packageName }
+	items(groupedUpdates.keys.toList()) { packageName ->
+		TvGroupedUpdateItem(
+			groupedUpdates[packageName]!!,
+			{ viewModel.install(it, handler) },
+			{ viewModel.ignoreVersion(it) }
 		)
 	}
 }
