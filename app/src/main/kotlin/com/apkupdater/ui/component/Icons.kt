@@ -78,21 +78,40 @@ fun SourceIcon(source: Source, modifier: Modifier = Modifier) = Icon(
     modifier
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
-    painter = painterResource(
-        id = if(ignored) R.drawable.ic_visible_off else R.drawable.ic_visible
-    ),
-    contentDescription = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
-    modifier = Modifier.clickableNoRipple(onClick).then(modifier)
-)
+fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val text = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd)
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+        state = rememberTooltipState(),
+        tooltip = { PlainTooltip { Text(text) } },
+        modifier = modifier
+    ) {
+        Icon(
+            painter = painterResource(
+                id = if (ignored) R.drawable.ic_visible_off else R.drawable.ic_visible
+            ),
+            contentDescription = text,
+            modifier = Modifier.clickableNoRipple(onClick)
+        )
+    }
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = Icon(
-    painter = painterResource(R.drawable.ic_install),
-    contentDescription = stringResource(R.string.install_cd),
-    modifier = Modifier.clickableNoRipple(onClick).then(modifier)
-)
+fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = TooltipBox(
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+    state = rememberTooltipState(),
+    tooltip = { PlainTooltip { Text(stringResource(R.string.install_cd)) } },
+    modifier = modifier
+) {
+    Icon(
+        painter = painterResource(R.drawable.ic_install),
+        contentDescription = stringResource(R.string.install_cd),
+        modifier = Modifier.clickableNoRipple(onClick)
+    )
+}
 
 @Composable
 fun BoxScope.InstallProgressIcon(
