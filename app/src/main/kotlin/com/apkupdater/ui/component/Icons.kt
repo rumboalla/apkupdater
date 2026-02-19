@@ -82,26 +82,25 @@ fun SourceIcon(source: Source, modifier: Modifier = Modifier) = Icon(
 @Composable
 private fun TooltipIconButton(
     @DrawableRes icon: Int,
-    contentDescription: String,
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    tooltipText: String = contentDescription
 ) = TooltipBox(
     positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
     state = rememberTooltipState(),
-    tooltip = { PlainTooltip { Text(tooltipText) } },
+    tooltip = { PlainTooltip { Text(text) } },
     modifier = modifier.clickableNoRipple(onClick)
 ) {
     Icon(
         painter = painterResource(icon),
-        contentDescription = contentDescription
+        contentDescription = text
     )
 }
 
 @Composable
 fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) = TooltipIconButton(
     icon = if (ignored) R.drawable.ic_visible_off else R.drawable.ic_visible,
-    contentDescription = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
+    text = stringResource(if (ignored) R.string.unignore_cd else R.string.ignore_cd),
     onClick = onClick,
     modifier = modifier
 )
@@ -109,7 +108,7 @@ fun IgnoreIcon(ignored: Boolean, onClick: () -> Unit, modifier: Modifier = Modif
 @Composable
 fun InstallIcon(onClick: () -> Unit, modifier: Modifier = Modifier) = TooltipIconButton(
     icon = R.drawable.ic_install,
-    contentDescription = stringResource(R.string.install_cd),
+    text = stringResource(R.string.install_cd),
     onClick = onClick,
     modifier = modifier
 )
