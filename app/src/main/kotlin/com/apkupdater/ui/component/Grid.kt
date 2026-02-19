@@ -111,8 +111,8 @@ private fun Modifier.shimmer(transition: InfiniteTransition): Modifier = compose
     val color = MaterialTheme.colorScheme.statusBarColor()
     var size by remember { mutableStateOf(IntSize.Zero) }
     val startOffsetX by transition.animateFloat(
-        initialValue = -size.width.toFloat(),
-        targetValue = size.width.toFloat(),
+        initialValue = -2 * size.width.toFloat(),
+        targetValue = 2 * size.width.toFloat(),
         animationSpec = infiniteRepeatable(animation = tween(SHIMMER_ANIMATION_DURATION_MS)),
         label = "shimmer"
     )
