@@ -9,8 +9,6 @@ import com.apkupdater.data.fdroid.FdroidUpdate
 import com.apkupdater.data.fdroid.toAppUpdate
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.Source
-import com.apkupdater.data.ui.getApp
-import com.apkupdater.data.ui.getVersionCode
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.service.FdroidService
 import com.apkupdater.util.getSignatureSha256
@@ -34,14 +32,20 @@ class FdroidRepository(
     suspend fun updates(apps: List<AppInstalled>) = flow {
         val response = service.getJar("${url}index-v1.jar")
         val data = jarToJson(response.byteStream())
-        val appNames = apps.map { it.packageName }
+        val appMap = apps.associateBy { it.packageName }
         val updates = data.apps
             .asSequence()
-            .filter { appNames.contains(it.packageName) }
-            .filter { filterSignature(apps.getApp(it.packageName)!!, it) }
-            .map { FdroidUpdate(data.packages[it.packageName]!![0], it) }
-            .filter { it.apk.versionCode > apps.getVersionCode(it.app.packageName) }
-            .parseUpdates(apps)
+            .mapNotNull { app ->
+                val installed = appMap[app.packageName] ?: return@mapNotNull null
+                val latestPkg = data.packages[app.packageName]?.firstOrNull() ?: return@mapNotNull null
+
+                if (latestPkg.versionCode > installed.versionCode && filterSignature(installed, app)) {
+                    FdroidUpdate(latestPkg, app)
+                } else {
+                    null
+                }
+            }
+            .parseUpdates(appMap)
         emit(updates)
     }.catch {
         emit(emptyList())
@@ -62,12 +66,12 @@ class FdroidRepository(
         Log.e("FdroidRepository", "Error searching.", it)
     }
 
-    private fun Sequence<FdroidUpdate>.parseUpdates(apps: List<AppInstalled>?) = this
+    private fun Sequence<FdroidUpdate>.parseUpdates(apps: Map<String, AppInstalled>?) = this
         .filter { it.apk.minSdkVersion <= api }
         .filter { filterArch(it) }
         .filter { filterAlpha(it) }
         .filter { filterBeta(it) }
-        .map { it.toAppUpdate(apps?.getApp(it.app.packageName), source, url) }
+        .map { it.toAppUpdate(apps?.get(it.app.packageName), source, url) }
         .toList()
 
     private fun filterSignature(installed: AppInstalled, update: FdroidApp) = when {
