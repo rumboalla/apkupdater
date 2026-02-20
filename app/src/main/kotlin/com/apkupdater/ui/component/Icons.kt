@@ -88,14 +88,13 @@ private fun TooltipIconButton(
 ) = TooltipBox(
     positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
     state = rememberTooltipState(),
-    tooltip = { PlainTooltip { Text(text) } }
+    tooltip = { PlainTooltip { Text(text) } },
+    modifier = modifier
 ) {
     Icon(
         painter = painterResource(icon),
         contentDescription = text,
-        modifier = modifier
-            .tooltipAnchor()
-            .clickableNoRipple(onClick)
+        modifier = Modifier.clickableNoRipple(onClick)
     )
 }
 
