@@ -54,7 +54,7 @@ import com.apkupdater.R
 @Composable
 private fun rememberHapticTrigger(): (Int) -> Unit {
     val view = LocalView.current
-    return remember { { view.performHapticFeedback(it) } }
+    return remember(view) { { view.performHapticFeedback(it) } }
 }
 
 @Composable
