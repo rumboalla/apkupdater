@@ -94,7 +94,7 @@ private fun TooltipIconButton(
     Icon(
         painter = painterResource(icon),
         contentDescription = text,
-        modifier = Modifier.clickableNoRipple(onClick)
+        modifier = Modifier.tooltipAnchor().clickableNoRipple(onClick)
     )
 }
 
