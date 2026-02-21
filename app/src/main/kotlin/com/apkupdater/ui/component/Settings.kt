@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
@@ -40,7 +41,6 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -181,16 +181,14 @@ fun DropDownSetting(
         onExpandedChange = { expanded = !expanded },
         modifier = Modifier.align(CenterEnd).width(width.dp)
     ) {
-        CompositionLocalProvider(LocalTextInputService provides null) { // Disable Keyboard
-            OutlinedTextField(
-                readOnly = true,
-                value = selectedOptionText,
-                onValueChange = { setValue(options.indexOf(it)) },
-                modifier = Modifier.menuAnchor().clickable { expanded = !expanded },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                colors = ExposedDropdownMenuDefaults.textFieldColors()
-            )
-        }
+        OutlinedTextField(
+            readOnly = true,
+            value = selectedOptionText,
+            onValueChange = { setValue(options.indexOf(it)) },
+            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable),
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }

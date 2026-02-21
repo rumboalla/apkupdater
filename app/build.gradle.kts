@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -78,7 +79,6 @@ android {
         compose = true
         buildConfig = true
     }
-    composeOptions { kotlinCompilerExtensionVersion = "1.5.1" }
 
     packaging {
         resources {

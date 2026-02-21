@@ -1,26 +1,26 @@
 [versions]
-agp = "8.3.1"
-kotlin = "1.9.0"
-compose-material3 = "1.4.0-alpha04"
+agp = "8.6.0"
+kotlin = "2.0.21"
+compose-material3 = "1.4.0"
 activity-compose = "1.8.2"
-ui = "1.6.4"
+ui = "1.7.5"
 core-ktx = "1.12.0"
-lifecycle = "2.7.0"
+lifecycle = "2.8.7"
 navigation = "2.7.7"
 tv-foundation = "1.0.0-alpha10"
 work = "2.9.0"
 kryptoprefs = "0.4.3"
 libsu = "5.2.1"
 gplayapi = "3.2.11"
-serialization = "1.6.3"
+serialization = "1.7.3"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 coil = "2.6.0"
 versioncompare = "1.5.0"
-koin = "3.5.3"
+koin = "4.0.0"
 jsoup = "1.16.1"
 junit = "4.13.2"
-ui-test-junit4 = "1.6.4"
+ui-test-junit4 = "1.7.5"
 espresso = "3.5.1"
 junit-ext = "1.1.5"
 
@@ -62,3 +62,4 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", vers
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

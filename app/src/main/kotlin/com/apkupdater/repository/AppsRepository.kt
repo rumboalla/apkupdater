@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
+import android.annotation.SuppressLint
 import android.util.Log
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.transform.toAppInstalled
@@ -32,6 +33,7 @@ class AppsRepository(
                 // This avoids GET_SIGNATURES/GET_SIGNING_CERTIFICATES which are heavy
                 val flags = PackageManager.MATCH_ALL
                 val newPackages = if (Build.VERSION.SDK_INT >= 33) {
+                    @SuppressLint("WrongConstant")
                     context.packageManager.getInstalledPackages(PackageManager.PackageInfoFlags.of(flags.toLong()))
                 } else {
                     @Suppress("DEPRECATION")

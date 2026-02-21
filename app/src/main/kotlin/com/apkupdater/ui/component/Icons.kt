@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
@@ -37,7 +38,7 @@ fun ExcludeIcon(
     @StringRes string: Int = if (exclude) includeString else excludeString,
     @StringRes contentDescription: Int = if (exclude) excludeString else includeString,
 ) = TooltipBox(
-    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
     state = rememberTooltipState(),
     tooltip = { PlainTooltip { Text(stringResource(string)) } }
 ) {
@@ -86,7 +87,7 @@ private fun TooltipIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) = TooltipBox(
-    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
     state = rememberTooltipState(),
     tooltip = { PlainTooltip { Text(text) } },
     modifier = modifier.clickableNoRipple(onClick)
@@ -138,7 +139,7 @@ fun RefreshIcon(
     text: String,
     modifier: Modifier = Modifier
 ) = TooltipBox(
-    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
     state = rememberTooltipState(),
     tooltip = { PlainTooltip { Text(text) } }
 ) {
