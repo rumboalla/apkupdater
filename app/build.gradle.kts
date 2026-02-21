@@ -20,7 +20,8 @@ android {
         minSdk = 21
         targetSdk = 35
         versionCode = 52
-        versionName = "0.4"
+        val buildNumber = System.getenv("BUILD_NUMBER").orEmpty()
+        versionName = if (buildNumber.isEmpty()) "0.4" else "0.4.$buildNumber"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
