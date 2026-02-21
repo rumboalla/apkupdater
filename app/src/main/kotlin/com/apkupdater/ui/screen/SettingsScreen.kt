@@ -78,7 +78,7 @@ fun About() = LazyColumn(
 		Column(Modifier.padding(vertical = 16.dp)) {
 			LoadingImageApp(BuildConfig.APPLICATION_ID)
 			LargeTitle(stringResource(R.string.app_name), Modifier.align(CenterHorizontally))
-			MediumText("0.4 (${BuildConfig.BUILD_DATE})", Modifier.align(CenterHorizontally))
+MediumText("${BuildConfig.VERSION_NAME} (${BuildConfig.BUILD_DATE})", Modifier.align(CenterHorizontally))
 			MediumText("Copyright © 2016-${Calendar.getInstance().get(Calendar.YEAR)} rumboalla", Modifier.align(CenterHorizontally))
 			MediumText("Refactored and updated by @harrybarnes", Modifier.align(CenterHorizontally))
 		}
