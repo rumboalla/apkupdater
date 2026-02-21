@@ -49,7 +49,7 @@ import com.apkupdater.ui.component.TvSearchItem
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.SearchViewModel
 import kotlinx.coroutines.delay
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -73,7 +73,7 @@ fun SearchScreenSuccess(
 	viewModel: SearchViewModel
 ) = Column {
 	val uriHandler = LocalUriHandler.current
-	val prefs: Prefs = get()
+	val prefs: Prefs = koinInject()
 
 	if (prefs.androidTvUi.get()) {
 		TvInstalledGrid {

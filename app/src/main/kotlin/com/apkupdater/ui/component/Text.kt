@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.apkupdater.prefs.Prefs
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 
 @Composable
@@ -118,7 +118,7 @@ fun ScrollableText(
     val inner = remember { mutableStateOf(IntSize.Zero) }
     val outer = remember { mutableStateOf(IntSize.Zero) }
 
-    if (get<Prefs>().playTextAnimations.get()) {
+    if (koinInject<Prefs>().playTextAnimations.get()) {
         val effect: suspend (ScrollState) -> Unit = {
             state.scrollTo(0)
             val scroll = (inner.value.width - outer.value.width)

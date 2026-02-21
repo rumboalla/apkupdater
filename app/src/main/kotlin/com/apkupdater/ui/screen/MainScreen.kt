@@ -57,7 +57,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import kotlin.coroutines.CoroutineContext
 
@@ -82,7 +82,7 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	}
 
 	// Used to launch the install intent and get dismissal result
-	val installLog = get<InstallLog>()
+	val installLog = koinInject<InstallLog>()
 	val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 		if (it.resultCode == RESULT_CANCELED) {
 			installLog.cancelCurrentInstall()
@@ -96,7 +96,7 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	intentListener(mainViewModel, updatesViewModel, navController, launcher)
 
 	// Theme
-	val theme = get<Themer>().flow().collectAsStateWithLifecycle().value
+	val theme = koinInject<Themer>().flow().collectAsStateWithLifecycle().value
 
 	// SnackBar
 	val snackBarHostState = handleSnackBar()
@@ -120,7 +120,7 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 @Composable
 fun handleSnackBar(): SnackbarHostState {
 	val snackBarHostState = remember { SnackbarHostState() }
-	get<SnackBar>().flow().CollectAsEffect(Dispatchers.IO) {
+	koinInject<SnackBar>().flow().CollectAsEffect(Dispatchers.IO) {
 		snackBarHostState.showSnackbar(it)
 	}
 	return snackBarHostState
@@ -168,7 +168,7 @@ fun checkNotificationIntent(
 
 @Composable
 fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = BottomAppBar {
-	val badges = get<Badger>().flow().collectAsStateWithLifecycle().value
+	val badges = koinInject<Badger>().flow().collectAsStateWithLifecycle().value
 	mainViewModel.screens.forEach { screen ->
 		val state = navController.currentBackStackEntryAsState().value
 		val selected = state?.destination?.route  == screen.route

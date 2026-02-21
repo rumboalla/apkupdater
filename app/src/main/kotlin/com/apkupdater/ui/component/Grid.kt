@@ -43,7 +43,7 @@ import androidx.tv.foundation.lazy.grid.TvLazyGridScope
 import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
 import com.apkupdater.prefs.Prefs
 import com.apkupdater.ui.theme.statusBarColor
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 private const val SHIMMER_ANIMATION_DURATION_MS = 1000
 private const val SHIMMER_HIGH_ALPHA = 0.9f
@@ -51,7 +51,7 @@ private const val SHIMMER_LOW_ALPHA = 0.3f
 
 @Composable
 fun LoadingGrid() {
-    if (get<Prefs>().androidTvUi.get()) {
+    if (koinInject<Prefs>().androidTvUi.get()) {
         TvShimmeringGrid()
     } else {
         ShimmeringGrid()
@@ -168,7 +168,7 @@ fun TvInstalledGrid(scroll: Boolean = true, content: TvLazyGridScope.() -> Unit)
 
 @Composable
 fun getNumColumns(orientation: Int): Int {
-    val prefs = get<Prefs>()
+    val prefs = koinInject<Prefs>()
     return if(orientation == Configuration.ORIENTATION_PORTRAIT)
         prefs.portraitColumns.get()
     else

@@ -39,7 +39,7 @@ import com.apkupdater.ui.component.TvInstalledGrid
 import com.apkupdater.ui.component.TvInstalledItem
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.AppsViewModel
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -59,7 +59,7 @@ fun AppsScreen(
 @Composable
 fun AppsScreenSuccess(viewModel: AppsViewModel, state: AppsUiState.Success) = Column {
 	AppsTopBar(viewModel, state.excludeSystem, state.excludeAppStore, state.excludeDisabled)
-	if (get<Prefs>().androidTvUi.get()) {
+	if (koinInject<Prefs>().androidTvUi.get()) {
 		TvInstalledGrid {
 			items(state.apps) {
 				TvInstalledItem(it) { app -> viewModel.ignore(app) }

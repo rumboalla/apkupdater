@@ -37,7 +37,7 @@ import com.apkupdater.ui.component.UpdateItem
 import com.apkupdater.ui.icons.ThumbUpFilled
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.viewmodel.UpdatesViewModel
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 
 @Composable
@@ -98,7 +98,7 @@ fun UpdatesScreenSuccess(
 	updates: List<AppUpdate>
 ) = Column {
 	val handler = LocalUriHandler.current
-	val tv = get<Prefs>().androidTvUi.get()
+	val tv = koinInject<Prefs>().androidTvUi.get()
 
 	UpdatesTopBar(viewModel)
 
