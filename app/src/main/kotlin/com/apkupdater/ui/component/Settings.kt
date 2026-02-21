@@ -47,8 +47,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import android.view.HapticFeedbackConstants
+import androidx.compose.ui.platform.LocalView
 import com.apkupdater.R
 
+@Composable
+private fun rememberHapticTrigger(): (Int) -> Unit {
+    val view = LocalView.current
+    return remember(view) { { view.performHapticFeedback(it) } }
+}
 
 @Composable
 fun SliderSetting(
@@ -65,6 +72,7 @@ fun SliderSetting(
         .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
 ) {
     var position by remember { mutableFloatStateOf(getValue()) }
+    val haptic = rememberHapticTrigger()
     Icon(painterResource(id = icon), text, Modifier.align(CenterVertically))
     Column(Modifier.padding(start = 8.dp).fillMaxWidth()) {
         Box(Modifier.fillMaxWidth()) {
@@ -76,8 +84,11 @@ fun SliderSetting(
             valueRange = valueRange,
             steps = steps,
             onValueChange = {
-                position = it
-                setValue(it)
+                if (position != it) {
+                    haptic(HapticFeedbackConstants.CLOCK_TICK)
+                    position = it
+                    setValue(it)
+                }
             },
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         )
@@ -94,6 +105,7 @@ fun SegmentedButtonSetting(
     @DrawableRes icon: Int = R.drawable.ic_system
 ) = Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)) {
     var position by remember { mutableIntStateOf(getValue()) }
+    val haptic = rememberHapticTrigger()
     Icon(painterResource(id = icon), text, Modifier.align(CenterVertically))
     Column(Modifier.padding(start = 8.dp).fillMaxWidth()) {
         Text(text, Modifier.align(Start).padding(start = 8.dp))
@@ -102,6 +114,7 @@ fun SegmentedButtonSetting(
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     onClick = {
+                        haptic(HapticFeedbackConstants.VIRTUAL_KEY)
                         position = index
                         setValue(position)
                     },
@@ -153,6 +166,7 @@ fun DropDownSetting(
 ) = Box(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp).fillMaxWidth()) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[getValue()]) }
+    val haptic = rememberHapticTrigger()
 
     Row(Modifier.align(CenterStart)) {
         Icon(
@@ -185,6 +199,7 @@ fun DropDownSetting(
                 DropdownMenuItem(
                     text = { Text(text = option) },
                     onClick = {
+                        haptic(HapticFeedbackConstants.VIRTUAL_KEY)
                         selectedOptionText = option
                         expanded = false
                         setValue(i)
