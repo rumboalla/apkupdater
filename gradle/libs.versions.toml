@@ -1,7 +1,7 @@
 [versions]
-agp = "8.3.1"
-kotlin = "1.9.0"
-compose-material3 = "1.4.0-alpha04"
+agp = "8.7.0"
+kotlin = "2.0.21"
+compose-material3 = "1.4.0"
 activity-compose = "1.8.2"
 ui = "1.6.4"
 core-ktx = "1.12.0"
@@ -62,3 +62,4 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", vers
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
