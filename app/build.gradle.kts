@@ -91,15 +91,6 @@ android {
     }
 }
 
-// Disable all lint tasks due to a crash in FrequentlyChangingValueDetector.
-// This is caused by a dependency conflict between Kotlin 2.0+ / AGP 8.7+ and Compose M3 1.4.0 strict requirements,
-// preventing the use of a stable, lint-compatible version.
-tasks.configureEach {
-    if (name.contains("lint")) {
-        enabled = false
-    }
-}
-
 dependencies {
 
     implementation(libs.androidx.activity.compose)
