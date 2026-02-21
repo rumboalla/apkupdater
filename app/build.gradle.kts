@@ -88,9 +88,6 @@ android {
 
     lint {
         warning.addAll(arrayOf("ExtraTranslation", "MissingTranslation", "MissingQuantity"))
-        disable.add("FrequentlyChangingValue")
-        checkReleaseBuilds = false
-        abortOnError = false
     }
 }
 
