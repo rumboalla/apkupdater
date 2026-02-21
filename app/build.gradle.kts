@@ -1,5 +1,7 @@
 import java.util.Properties
 import java.io.FileInputStream
+import java.util.Date
+import java.text.SimpleDateFormat
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
 plugins {
@@ -13,13 +15,12 @@ android {
     namespace = "com.apkupdater"
     compileSdk = 35
 
-    val buildNumber = System.getenv("BUILD_NUMBER").orEmpty()
     defaultConfig {
         applicationId = "com.apkupdater" + System.getenv("BUILD_TAG").orEmpty()
         minSdk = 21
         targetSdk = 35
         versionCode = 52
-        versionName = if (buildNumber.isEmpty()) "4.0" else "0.0.$buildNumber"
+        versionName = "0.4"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -30,6 +31,9 @@ android {
 
         val apkMirrorToken = properties.getProperty("apkmirror.token") ?: System.getenv("APKMIRROR_TOKEN") ?: ""
         buildConfigField("String", "APKMIRROR_TOKEN", "\"$apkMirrorToken\"")
+
+        val buildDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        buildConfigField("String", "BUILD_DATE", "\"$buildDate\"")
     }
 
     signingConfigs {

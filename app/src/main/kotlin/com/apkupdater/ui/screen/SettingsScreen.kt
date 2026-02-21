@@ -78,13 +78,20 @@ fun About() = LazyColumn(
 		Column(Modifier.padding(vertical = 16.dp)) {
 			LoadingImageApp(BuildConfig.APPLICATION_ID)
 			LargeTitle(stringResource(R.string.app_name), Modifier.align(CenterHorizontally))
-			MediumText("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})", Modifier.align(CenterHorizontally))
+			MediumText("0.4 (${BuildConfig.BUILD_DATE})", Modifier.align(CenterHorizontally))
 			MediumText("Copyright © 2016-${Calendar.getInstance().get(Calendar.YEAR)} rumboalla", Modifier.align(CenterHorizontally))
+			MediumText("Refactored and updated by @harrybarnes", Modifier.align(CenterHorizontally))
 		}
 	}
 	item {
 		AboutItem(
 			"GitHub - APKUpdater",
+			stringResource(R.string.about_github),
+			"https://github.com/harrydbarnes/apkupdater",
+			{ SourceIcon(GitHubSource, Modifier.size(64.dp).align(CenterVertically)) }
+		)
+		AboutItem(
+			"GitHub - APKUpdater (original)",
 			stringResource(R.string.about_github),
 			"https://github.com/rumboalla/apkupdater",
 			{ SourceIcon(GitHubSource, Modifier.size(64.dp).align(CenterVertically)) }

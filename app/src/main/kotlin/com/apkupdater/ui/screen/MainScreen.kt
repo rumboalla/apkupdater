@@ -11,6 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
@@ -29,8 +31,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.core.util.Consumer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -108,7 +112,22 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 				isRefreshing = isRefreshing.value,
 				onRefresh = { mainViewModel.refresh(appsViewModel, updatesViewModel) }
 			) {
-				NavHost(navController, padding, mainViewModel, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
+				val layoutDirection = LocalLayoutDirection.current
+				val navHostPadding = PaddingValues(
+					start = padding.calculateStartPadding(layoutDirection),
+					top = 0.dp,
+					end = padding.calculateEndPadding(layoutDirection),
+					bottom = padding.calculateBottomPadding()
+				)
+				NavHost(
+					navController,
+					navHostPadding,
+					mainViewModel,
+					appsViewModel,
+					updatesViewModel,
+					searchViewModel,
+					settingsViewModel
+				)
 			}
 		}
 	}
