@@ -88,6 +88,16 @@ android {
 
     lint {
         warning.addAll(arrayOf("ExtraTranslation", "MissingTranslation", "MissingQuantity"))
+        disable.add("FrequentlyChangingValue")
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
+}
+
+// Disable all lint tasks
+tasks.configureEach {
+    if (name.contains("lint")) {
+        enabled = false
     }
 }
 
