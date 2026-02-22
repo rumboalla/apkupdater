@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -68,7 +71,45 @@ fun ShimmeringGrid() = InstalledGrid(false) {
 @Composable
 fun TvShimmeringGrid() = TvInstalledGrid(false) {
     items(16) {
-        SkeletonItem()
+        TvSkeletonItem()
+    }
+}
+
+@Composable
+fun TvSkeletonItem() {
+    val transition = rememberInfiniteTransition("TvSkeletonItemTransition")
+
+    Row(Modifier.padding(8.dp)) {
+        // Image placeholder
+        Box(
+            Modifier
+                .size(100.dp)
+                .padding(10.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .shimmer(transition)
+        )
+        // Text placeholder
+        Column(
+            Modifier
+                .padding(start = 8.dp)
+                .align(Alignment.CenterVertically)
+        ) {
+            Box(
+                Modifier
+                    .height(20.dp)
+                    .width(150.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .shimmer(transition)
+            )
+            Spacer(Modifier.height(8.dp))
+            Box(
+                Modifier
+                    .height(16.dp)
+                    .width(100.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .shimmer(transition)
+            )
+        }
     }
 }
 
