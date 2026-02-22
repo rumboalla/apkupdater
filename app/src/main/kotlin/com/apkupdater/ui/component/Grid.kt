@@ -80,36 +80,39 @@ fun TvShimmeringGrid() = TvInstalledGrid(false) {
 fun TvSkeletonItem() {
     val transition = rememberInfiniteTransition("TvSkeletonItemTransition")
 
-    Row(Modifier.padding(8.dp)) {
-        // Image placeholder
-        Box(
-            Modifier
-                .size(100.dp)
-                .padding(10.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .shimmer(transition)
-        )
-        // Text placeholder
-        Column(
-            Modifier
-                .padding(start = 8.dp)
-                .align(Alignment.CenterVertically)
-        ) {
+    Card {
+        Row {
+            // Image placeholder
             Box(
                 Modifier
-                    .height(20.dp)
-                    .width(150.dp)
-                    .clip(RoundedCornerShape(4.dp))
+                    .padding(8.dp)
+                    .size(100.dp)
+                    .align(Alignment.CenterVertically)
+                    .clip(RoundedCornerShape(8.dp))
                     .shimmer(transition)
             )
-            Spacer(Modifier.height(8.dp))
-            Box(
+            // Text placeholder
+            Column(
                 Modifier
-                    .height(16.dp)
-                    .width(100.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .shimmer(transition)
-            )
+                    .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Box(
+                    Modifier
+                        .height(20.dp)
+                        .width(150.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .shimmer(transition)
+                )
+                Spacer(Modifier.height(8.dp))
+                Box(
+                    Modifier
+                        .height(16.dp)
+                        .width(100.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .shimmer(transition)
+                )
+            }
         }
     }
 }
