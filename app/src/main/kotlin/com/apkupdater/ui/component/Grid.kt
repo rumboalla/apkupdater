@@ -85,8 +85,8 @@ fun TvSkeletonItem() {
             // Image placeholder
             Box(
                 Modifier
-                    .size(100.dp)
                     .padding(8.dp)
+                    .size(100.dp)
                     .align(Alignment.CenterVertically)
                     .clip(RoundedCornerShape(8.dp))
                     .shimmer(transition)
