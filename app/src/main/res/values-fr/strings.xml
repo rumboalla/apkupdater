@@ -1,0 +1,75 @@
+<resources>
+
+    <string name="app_name" translatable="false">APKUpdater</string>
+    <string name="tab_apps">Applications</string>
+    <string name="tab_search">Recherche</string>
+    <string name="tab_updates">Mises à jour</string>
+    <string name="tab_settings">Paramètres</string>
+    <string name="something_went_wrong">"Une erreur s\'est produite\n\uD83E\uDD26"</string>
+    <string name="ignore_version">Ignorer la version</string>
+    <string name="ignore_cd">Ignorer l\'application</string>
+    <string name="unignore_cd">Ne plus ignorer l\'application</string>
+    <string name="refresh_updates">Rechercher des mises à jour</string>
+    <string name="exclude_system_apps">Exclure les applications système</string>
+    <string name="include_system_apps">Inclure les applications système</string>
+    <string name="exclude_app_store">Exclure l\'App Store</string>
+    <string name="include_app_store">Inclure l\'App Store</string>
+    <string name="exclude_disabled_apps">Exclure les applications désactivées</string>
+    <string name="include_disabled_apps">Inclure les applications désactivées</string>
+    <string name="install_cd">Installer</string>
+    <string name="app_cd">Icône de l\'application</string>
+    <string name="install_success">%1$s installée.</string>
+    <string name="install_failure">Échec de l\'installation de %1$s.</string>
+    <string name="root_install_not_supported">L\'installation root de cette application n\'est pas prise en charge.</string>
+
+    // Settings
+    <string name="settings_portrait_columns">Colonnes en mode portrait</string>
+    <string name="settings_landscape_columns">Colonnes en mode paysage</string>
+    <string name="play_text_animations">Animations de texte</string>
+    <string name="settings_sources">Sources</string>
+    <string name="settings_ui">Interface</string>
+    <string name="settings_alarm">Alarme</string>
+    <string name="settings_options">Options</string>
+    <string name="settings_utils">Utilitaires</string>
+    <string name="settings_hour">Heure de l\'alarme</string>
+    <string name="settings_alarm_daily">1 jour</string>
+    <string name="settings_alarm_3day">3 jours</string>
+    <string name="settings_alarm_weekly">7 jours</string>
+    <string name="settings_android_tv_ui" translatable="false">Android TV UI</string>
+    <string name="ignore_alpha">Ignorer les versions alpha</string>
+    <string name="ignore_beta">Ignorer les versions bêta</string>
+    <string name="ignore_preRelease">Ignorer les préversions</string>
+    <string name="use_safe_stores">Utiliser des stores sûrs (Aptoide)</string>
+    <string name="root_install">Installation root</string>
+    <string name="source_apkmirror" translatable="false">ApkMirror</string>
+    <string name="source_fdroid" translatable="false">F-Droid Main</string>
+    <string name="source_izzy" translatable="false">F-Droid Izzy</string>
+    <string name="source_aptoide" translatable="false">Aptoide</string>
+    <string name="source_github" translatable="false">GitHub</string>
+    <string name="source_gitlab" translatable="false">GitLab</string>
+    <string name="source_apkpure" translatable="false">APKPure</string>
+    <string name="source_play" translatable="false">Play</string>
+    <string name="about">À propos</string>
+    <string name="frequency">Fréquence</string>
+    <string name="theme">Thème</string>
+    <string name="theme_system">Système</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="theme_light">Clair</string>
+    <string name="about_github">Obtenez le code source, signalez des bugs, demandez de nouvelles fonctionnalités et ajoutez des traductions.</string>
+    <string name="about_donate">Si vous aimez l\'application, envisagez de faire un don à une cause qui en vaut la peine.</string>
+    <string name="copy_to_clipboard">Copier dans le presse-papiers</string>
+    <string name="copy_app_list">Copier la liste des applications</string>
+    <string name="copy_app_logs">Copier les journaux de l\'application</string>
+
+    // Notifications
+    <string name="notification_channel_name">Mises à jour</string>
+    <string name="notification_channel_description">Canal pour les notifications de mise à jour.</string>
+    <string name="notification_channel_id" translatable="false">updateChannel</string>
+    <string name="notification_update_title">Mises à jour</string>
+    <plurals name="notification_update_description">
+        <item quantity="zero">Aucune mise à jour trouvée.</item>
+        <item quantity="one">%1$d mise à jour trouvée.</item>
+        <item quantity="other">%1$d mises à jour trouvées.</item>
+    </plurals>
+
+</resources>
