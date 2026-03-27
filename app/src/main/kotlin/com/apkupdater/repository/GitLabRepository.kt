@@ -99,14 +99,46 @@ class GitLabRepository(
         packageName: String,
         release: GitLabRelease
     ): String {
-        // TODO: Take into account arch
-        val source = release.assets.sources.find { it.url.endsWith(".apk", true) }
-        if (source != null) return source.url
+        val apks = release.assets.sources.map { it.url }.filter { it.endsWith(".apk", true) }
+            .plus(release.assets.links.map { it.url }.filter { it.endsWith(".apk", true) })
 
-        val link = release.assets.links.find { it.url.endsWith(".apk", true) }
-        if (link != null) return link.url
+        if (apks.isEmpty()) return ""
+        if (apks.size == 1) return apks.first()
 
-        return ""
+        // Try to match exact arch
+        android.os.Build.SUPPORTED_ABIS.forEach { arch ->
+            apks.forEach { apk ->
+                if (apk.contains(arch, true)) {
+                    return apk
+                }
+            }
+        }
+        // Try to match arm64
+        if (android.os.Build.SUPPORTED_ABIS.contains("arm64-v8a")) {
+            apks.forEach { apk ->
+                if (apk.contains("arm64", true)) {
+                    return apk
+                }
+            }
+        }
+        // Try to match x64
+        if (android.os.Build.SUPPORTED_ABIS.contains("x86_64")) {
+            apks.forEach { apk ->
+                if (apk.contains("x64", true)) {
+                    return apk
+                }
+            }
+        }
+        // Try to match arm
+        if (android.os.Build.SUPPORTED_ABIS.contains("armeabi-v7a")) {
+            apks.forEach { apk ->
+                if (apk.contains("arm", true) && !apk.contains("arm64", true)) {
+                    return apk
+                }
+            }
+        }
+
+        return apks.first()
     }
 
 }
