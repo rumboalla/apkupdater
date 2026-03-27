@@ -106,35 +106,21 @@ class GitLabRepository(
         if (apks.size == 1) return apks.first()
 
         // Try to match exact arch
-        android.os.Build.SUPPORTED_ABIS.forEach { arch ->
-            apks.forEach { apk ->
-                if (apk.contains(arch, true)) {
-                    return apk
-                }
-            }
+        for (arch in android.os.Build.SUPPORTED_ABIS) {
+            apks.firstOrNull { it.contains(arch, true) }?.let { return it }
         }
-        // Try to match arm64
-        if (android.os.Build.SUPPORTED_ABIS.contains("arm64-v8a")) {
-            apks.forEach { apk ->
-                if (apk.contains("arm64", true)) {
-                    return apk
-                }
-            }
-        }
-        // Try to match x64
-        if (android.os.Build.SUPPORTED_ABIS.contains("x86_64")) {
-            apks.forEach { apk ->
-                if (apk.contains("x64", true)) {
-                    return apk
-                }
-            }
-        }
-        // Try to match arm
-        if (android.os.Build.SUPPORTED_ABIS.contains("armeabi-v7a")) {
-            apks.forEach { apk ->
-                if (apk.contains("arm", true) && !apk.contains("arm64", true)) {
-                    return apk
-                }
+
+        // Fallback for common arch name variations
+        val supportedAbis = android.os.Build.SUPPORTED_ABIS.toSet()
+        val fallbackChecks = listOf(
+            "arm64-v8a" to { apk: String -> apk.contains("arm64", true) },
+            "x86_64" to { apk: String -> apk.contains("x64", true) },
+            "armeabi-v7a" to { apk: String -> apk.contains("arm", true) && !apk.contains("arm64", true) }
+        )
+
+        for ((abi, predicate) in fallbackChecks) {
+            if (supportedAbis.contains(abi)) {
+                apks.firstOrNull(predicate)?.let { return it }
             }
         }
 
