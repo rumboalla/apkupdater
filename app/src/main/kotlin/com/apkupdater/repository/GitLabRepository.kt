@@ -99,6 +99,7 @@ class GitLabRepository(
         packageName: String,
         release: GitLabRelease
     ): String {
+        Log.d("GitLabRepository", "Selecting APK URL for $packageName from release ${release.tagName}.")
         val apks = release.assets.sources.map { it.url }.filter { it.endsWith(".apk", true) }
             .plus(release.assets.links.map { it.url }.filter { it.endsWith(".apk", true) })
 
