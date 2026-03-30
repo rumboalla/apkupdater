@@ -99,14 +99,37 @@ class GitLabRepository(
         packageName: String,
         release: GitLabRelease
     ): String {
-        // TODO: Take into account arch
-        val source = release.assets.sources.find { it.url.endsWith(".apk", true) }
-        if (source != null) return source.url
+        Log.d("GitLabRepository", "Selecting APK URL for $packageName from release ${release.tagName}.")
+        val apks = release.assets.sources.map { it.url }.filter { it.endsWith(".apk", true) }
+            .plus(release.assets.links.map { it.url }.filter { it.endsWith(".apk", true) })
 
-        val link = release.assets.links.find { it.url.endsWith(".apk", true) }
-        if (link != null) return link.url
+        if (apks.isEmpty()) return ""
+        if (apks.size == 1) return apks.first()
 
-        return ""
+        // Try to match exact arch using filename and delimiter-aware matching
+        for (arch in android.os.Build.SUPPORTED_ABIS) {
+            val archPattern = Regex("(?i)(^|[._-])" + Regex.escape(arch) + "([._-]|$)")
+            apks.firstOrNull { url ->
+                val fileName = Uri.parse(url).lastPathSegment ?: url
+                archPattern.containsMatchIn(fileName)
+            }?.let { return it }
+        }
+
+        // Fallback for common arch name variations
+        val supportedAbis = android.os.Build.SUPPORTED_ABIS.toSet()
+        val fallbackChecks = listOf(
+            "arm64-v8a" to { apk: String -> apk.contains("arm64", true) },
+            "x86_64" to { apk: String -> apk.contains("x64", true) },
+            "armeabi-v7a" to { apk: String -> apk.contains("arm", true) && !apk.contains("arm64", true) }
+        )
+
+        for ((abi, predicate) in fallbackChecks) {
+            if (supportedAbis.contains(abi)) {
+                apks.firstOrNull(predicate)?.let { return it }
+            }
+        }
+
+        return apks.first()
     }
 
 }
