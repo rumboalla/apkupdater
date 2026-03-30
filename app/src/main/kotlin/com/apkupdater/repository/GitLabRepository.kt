@@ -105,9 +105,13 @@ class GitLabRepository(
         if (apks.isEmpty()) return ""
         if (apks.size == 1) return apks.first()
 
-        // Try to match exact arch
+        // Try to match exact arch using filename and delimiter-aware matching
         for (arch in android.os.Build.SUPPORTED_ABIS) {
-            apks.firstOrNull { it.contains(arch, true) }?.let { return it }
+            val archPattern = Regex("(?i)(^|[._-])" + Regex.escape(arch) + "([._-]|$)")
+            apks.firstOrNull { url ->
+                val fileName = Uri.parse(url).lastPathSegment ?: url
+                archPattern.containsMatchIn(fileName)
+            }?.let { return it }
         }
 
         // Fallback for common arch name variations
