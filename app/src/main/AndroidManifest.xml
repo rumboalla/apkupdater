@@ -3,9 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
 >
-    <uses-feature android:name="android.software.leanback" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:ignore="RequestInstallPackagesPolicy" />
@@ -21,18 +18,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
-        android:banner="@drawable/banner"
-        tools:targetApi="34"
+        tools:targetApi="36"
     >
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
+            android:enableOnBackInvokedCallback="true"
         >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

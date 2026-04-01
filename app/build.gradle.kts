@@ -15,16 +15,16 @@ kotlin {
 }
 
 android {
-    namespace = "com.apkupdater"
+    namespace = "com.durcheins.apkupdater"
     compileSdk = 36
 
     val buildNumber = System.getenv("BUILD_NUMBER").orEmpty()
     defaultConfig {
-        applicationId = "com.apkupdater" + System.getenv("BUILD_TAG").orEmpty()
-        minSdk = 23
+        applicationId = "com.durcheins.apkupdater"
+        minSdk = 34
         targetSdk = 36
-        versionCode = if (buildNumber.isEmpty()) 52 else buildNumber.toInt()
-        versionName = if (buildNumber.isEmpty()) "3.0.3" else "0.0.$buildNumber"
+        versionCode = if (buildNumber.isEmpty()) 1 else buildNumber.toInt()
+        versionName = if (buildNumber.isEmpty()) "1.0.0" else "1.0.$buildNumber"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -93,11 +93,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
     implementation("androidx.navigation:navigation-compose:2.9.7")
     implementation("androidx.navigation:navigation-runtime-ktx:2.9.7")
-    implementation("androidx.tv:tv-foundation:1.0.0-alpha12")
     implementation("androidx.work:work-runtime-ktx:2.11.1")
     implementation("com.github.rumboalla.KryptoPrefs:kryptoprefs-gson:0.4.3")
     implementation("com.github.rumboalla.KryptoPrefs:kryptoprefs:0.4.3")
-    implementation("com.github.topjohnwu.libsu:core:6.0.0")
     implementation("com.auroraoss:gplayapi:3.5.8")
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
@@ -130,7 +128,7 @@ androidComponents {
                     doLast {
                         outputs.files.files
                             .flatMap { it.walkTopDown().filter { f -> f.extension == "apk" }.toList() }
-                            .forEach { apk -> runCatching { apk.copyTo(File(apk.parentFile, "${android.defaultConfig.applicationId}-${variant.buildType}.apk"), true) }.getOrNull() }
+                            .forEach { apk -> runCatching { apk.copyTo(File(apk.parentFile, "apkupdater-m3f-durcheins.apk"), true) }.getOrNull() }
                     }
                 }
             }
