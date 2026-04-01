@@ -144,6 +144,9 @@ class SessionInstaller(
 
             val sessionId = packageInstaller.createSession(params)
             var totalBytes = 0L
+            var windowStart = System.currentTimeMillis()
+            var windowBytes = 0L
+            var speed = 0L
             packageInstaller.openSession(sessionId).use { session ->
                 streams.forEach { stream ->
                     session.openWrite("$packageName.${randomUUID()}", 0, -1).use { output ->
@@ -152,7 +155,15 @@ class SessionInstaller(
                         while (bytes >= 0) {
                             output.write(buffer, 0, bytes)
                             totalBytes += bytes
-                            installLog.emitProgress(AppInstallProgress(id, totalBytes))
+                            windowBytes += bytes
+                            val now = System.currentTimeMillis()
+                            val elapsed = now - windowStart
+                            if (elapsed >= 500) {
+                                speed = (windowBytes * 1000L) / elapsed
+                                windowBytes = 0L
+                                windowStart = now
+                            }
+                            installLog.emitProgress(AppInstallProgress(id, totalBytes, speed = speed))
                             bytes = stream.read(buffer)
                         }
                         session.fsync(output)
@@ -250,10 +261,21 @@ fun InputStream.copyToAndNotify(out: OutputStream, id: Int, installLog: InstallL
     var bytesCopied: Long = 0
     val buffer = ByteArray(bufferSize)
     var bytes = read(buffer)
+    var windowStart = System.currentTimeMillis()
+    var windowBytes = 0L
+    var speed = 0L
     while (bytes >= 0) {
         out.write(buffer, 0, bytes)
         bytesCopied += bytes
-        installLog.emitProgress(AppInstallProgress(id, progress = total + bytesCopied))
+        windowBytes += bytes
+        val now = System.currentTimeMillis()
+        val elapsed = now - windowStart
+        if (elapsed >= 500) {
+            speed = (windowBytes * 1000L) / elapsed
+            windowBytes = 0L
+            windowStart = now
+        }
+        installLog.emitProgress(AppInstallProgress(id, progress = total + bytesCopied, speed = speed))
         bytes = read(buffer)
     }
     return bytesCopied

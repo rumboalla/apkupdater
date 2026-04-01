@@ -1,22 +1,22 @@
 package com.durcheins.apkupdater.ui.component
 
- import androidx.compose.foundation.layout.Box
- import androidx.compose.foundation.layout.Column
- import androidx.compose.foundation.layout.fillMaxSize
- import androidx.compose.foundation.layout.padding
- import androidx.compose.foundation.layout.size
- import androidx.compose.runtime.Composable
- import androidx.compose.ui.Alignment
- import androidx.compose.ui.Modifier
- import androidx.compose.ui.draw.alpha
- import androidx.compose.ui.platform.LocalContext
- import androidx.compose.ui.res.stringResource
- import androidx.compose.ui.unit.dp
- import com.durcheins.apkupdater.R
- import com.durcheins.apkupdater.data.ui.AppInstalled
- import com.durcheins.apkupdater.data.ui.AppUpdate
- import com.durcheins.apkupdater.data.ui.Link
- import com.durcheins.apkupdater.util.getAppName
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.durcheins.apkupdater.R
+import com.durcheins.apkupdater.data.ui.AppInstalled
+import com.durcheins.apkupdater.data.ui.AppUpdate
+import com.durcheins.apkupdater.data.ui.Link
+import com.durcheins.apkupdater.util.getAppName
 
 
 @Composable
@@ -40,7 +40,6 @@ fun UpdateImage(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Box {
 		Modifier.align(Alignment.TopStart).padding(4.dp).size(28.dp)
 	)
 }
-
 
 @Composable
 fun SearchImage(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Box {
@@ -71,6 +70,8 @@ fun UpdateItem(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Column {
 		ScrollableText { SmallText(app.packageName) }
 		MediumTitle(app.name.ifEmpty { LocalContext.current.getAppName(app.packageName) })
 	}
+	// Live Download-Fortschritt
+	DownloadProgressOverlay(app)
 }
 
 @Composable
@@ -80,6 +81,8 @@ fun SearchItem(app: AppUpdate, onInstall: (Link) -> Unit = {}) = Column {
 		ScrollableText { SmallText(app.packageName) }
 		MediumTitle(app.name)
 	}
+	// Live Download-Fortschritt
+	DownloadProgressOverlay(app)
 }
 
 @Composable

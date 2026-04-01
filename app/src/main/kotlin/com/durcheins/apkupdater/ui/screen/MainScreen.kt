@@ -7,13 +7,17 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -58,27 +62,24 @@ import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.coroutines.CoroutineContext
 
+private const val NAV_ANIM_DURATION = 300
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
-	// ViewModels
 	val appsViewModel: AppsViewModel = koinViewModel()
 	val updatesViewModel: UpdatesViewModel = koinViewModel()
 	val searchViewModel: SearchViewModel = koinViewModel()
 	val settingsViewModel: SettingsViewModel = koinViewModel()
 
-	// Navigation
 	val navController = rememberNavController()
 
-	// Pull to refresh
 	val isRefreshing = mainViewModel.isRefreshing.collectAsStateWithLifecycle()
 	val pullToRefreshState = rememberPullToRefreshState()
 	LaunchedEffect(Unit) {
 		mainViewModel.refresh(appsViewModel, updatesViewModel)
 	}
 
-	// Used to launch the install intent and get dismissal result
 	val installLog = koinInject<InstallLog>()
 	val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 		if (it.resultCode == RESULT_CANCELED) {
@@ -86,16 +87,10 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 		}
 	}
 
-	// Check intent when cold starting from notification
 	CheckNotificationIntent(mainViewModel, updatesViewModel, navController, launcher)
-
-	// Check notification intent when hot starting
 	IntentListener(mainViewModel, updatesViewModel, navController, launcher)
 
-	// Theme
 	val theme = koinInject<Themer>().flow().collectAsStateWithLifecycle().value
-
-	// SnackBar
 	val snackBarHostState = handleSnackBar()
 
 	AppTheme(theme) {
@@ -160,11 +155,11 @@ fun CheckNotificationIntent(
 }
 
 @Composable
-fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = BottomAppBar {
+fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = NavigationBar {
 	val badges = koinInject<Badger>().flow().collectAsStateWithLifecycle().value
 	mainViewModel.screens.forEach { screen ->
 		val state = navController.currentBackStackEntryAsState().value
-		val selected = state?.destination?.route  == screen.route
+		val selected = state?.destination?.route == screen.route
 		BottomBarItem(mainViewModel, navController, screen, selected, badges[screen.route].orEmpty())
 	}
 }
@@ -172,16 +167,16 @@ fun BottomBar(mainViewModel: MainViewModel, navController: NavController) = Bott
 @Composable
 fun RowScope.BottomBarItem(
 	mainViewModel: MainViewModel,
-    navController: NavController,
-    screen: Screen,
-    selected: Boolean,
-    badge: String
+	navController: NavController,
+	screen: Screen,
+	selected: Boolean,
+	badge: String
 ) = NavigationBarItem(
 	icon = {
 		BadgedBox({ BadgeText(badge) }) {
 			Icon(if (selected) screen.iconSelected else screen.icon, contentDescription = null)
 		}
-   	},
+	},
 	label = {
 		Text(
 			stringResource(screen.resourceId),
@@ -205,7 +200,31 @@ fun NavHost(
 ) = NavHost(
 	navController = navController,
 	startDestination = mainViewModel.getLastRoute(),
-	modifier = Modifier.padding(padding)
+	modifier = Modifier.padding(padding),
+	enterTransition = {
+		slideIntoContainer(
+			towards = AnimatedContentTransitionScope.SlideDirection.Start,
+			animationSpec = tween(NAV_ANIM_DURATION)
+		) + fadeIn(tween(NAV_ANIM_DURATION))
+	},
+	exitTransition = {
+		slideOutOfContainer(
+			towards = AnimatedContentTransitionScope.SlideDirection.Start,
+			animationSpec = tween(NAV_ANIM_DURATION)
+		) + fadeOut(tween(NAV_ANIM_DURATION))
+	},
+	popEnterTransition = {
+		slideIntoContainer(
+			towards = AnimatedContentTransitionScope.SlideDirection.End,
+			animationSpec = tween(NAV_ANIM_DURATION)
+		) + fadeIn(tween(NAV_ANIM_DURATION))
+	},
+	popExitTransition = {
+		slideOutOfContainer(
+			towards = AnimatedContentTransitionScope.SlideDirection.End,
+			animationSpec = tween(NAV_ANIM_DURATION)
+		) + fadeOut(tween(NAV_ANIM_DURATION))
+	}
 ) {
 	composable(Screen.Apps.route) { AppsScreen(appsViewModel) }
 	composable(Screen.Search.route) { SearchScreen(searchViewModel) }

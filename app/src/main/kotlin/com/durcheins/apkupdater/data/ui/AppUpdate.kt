@@ -16,6 +16,7 @@ data class AppUpdate(
 	val isInstalling: Boolean = false,
 	val total: Long = 0L,
 	val progress: Long = 0L,
+	val speed: Long = 0L,  // bytes per second
 	val id: Int = "${source.name}.$packageName.$versionCode.$version".hashCode()
 )
 
@@ -40,6 +41,7 @@ fun MutableList<AppUpdate>.setProgress(progress: AppInstallProgress): MutableLis
 	if (index != -1) {
 		progress.progress?.let { this[index] = this[index].copy(progress = it) }
 		progress.total?.let { this[index] = this[index].copy(total = it) }
+		progress.speed?.let { this[index] = this[index].copy(speed = it) }
 	}
 	return this
 }
