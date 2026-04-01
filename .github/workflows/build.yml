@@ -1,44 +1,87 @@
-name: Android Build
+name: Build APK
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'claude/apkupdater-material3-modernize-4hfn9'
+      - 'main'
+      - '3.x'
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Setup Java 17
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Decode Keystore
-      env:
-        KEYSTORE: ${{ secrets.KEYSTORE }}
-      run: echo $KEYSTORE | base64 --decode > ./app/ci.ks
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-
 
-    - name: Decode Properties
-      env:
-        PROPERTIES: ${{ secrets.PROPERTIES }}
-      run: echo $PROPERTIES | base64 --decode > local.properties
+      # Keystore aus Secret laden (optional - ohne Secret wird Debug-Keystore verwendet)
+      - name: Decode Keystore (optional)
+        if: ${{ secrets.KEYSTORE != '' }}
+        env:
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+        run: echo $KEYSTORE | base64 --decode > ./app/ci.ks
 
-    - name: Build with Gradle
-      env:
-        BUILD_TAG: ".ci"
-        BUILD_NUMBER: ${{ github.run_number }}
-      run: ./gradlew build
+      - name: Decode local.properties (optional)
+        if: ${{ secrets.PROPERTIES != '' }}
+        env:
+          PROPERTIES: ${{ secrets.PROPERTIES }}
+        run: echo $PROPERTIES | base64 --decode > local.properties
 
-    - name: Get current branch name
-      run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+      - name: Build Release APK
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: ./gradlew assembleRelease
 
-    - name: Create Release
-      uses: softprops/action-gh-release@v2
-      if: github.ref == 'refs/heads/3.x'
-      with:
-        tag_name: 0.0.${{ github.run_number }}-ci
-        name: CI-Release-${{ env.BRANCH }}-${{ github.run_number }}
-        files: ./app/build/outputs/apk/release/com.apkupdater.ci-release.apk
-        body: ${{ github.event.head_commit.message }}
-        prerelease: true
+      - name: Rename APK
+        run: |
+          find ./app/build/outputs/apk/release/ -name "*.apk" | head -5
+          cp ./app/build/outputs/apk/release/apkupdater-m3f-durcheins.apk \
+             ./apkupdater-m3f-durcheins.apk 2>/dev/null || \
+          find ./app/build/outputs/apk/release/ -name "*.apk" -exec cp {} ./apkupdater-m3f-durcheins.apk \;
+
+      # APK als Artifact hochladen — immer verfügbar zum Download
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apkupdater-m3f-durcheins
+          path: ./apkupdater-m3f-durcheins.apk
+          retention-days: 30
+
+      # Release erstellen bei Push auf unseren Branch
+      - name: Create GitHub Release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: m3f-${{ github.run_number }}
+          name: "APK Updater M3F - Build ${{ github.run_number }}"
+          files: ./apkupdater-m3f-durcheins.apk
+          body: |
+            **Automatischer Build #${{ github.run_number }}**
+
+            Branch: `${{ github.ref_name }}`
+            Commit: ${{ github.sha }}
+
+            **Änderungen:**
+            ${{ github.event.head_commit.message }}
+
+            ---
+            ⬇️ APK direkt herunterladen: `apkupdater-m3f-durcheins.apk`
+          prerelease: false
+          make_latest: true
