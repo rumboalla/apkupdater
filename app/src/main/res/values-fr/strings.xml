@@ -17,12 +17,14 @@
     <string name="exclude_disabled_apps">Exclure les applications désactivées</string>
     <string name="include_disabled_apps">Inclure les applications désactivées</string>
     <string name="install_cd">Installer</string>
+    <string name="install_all">Installer tout</string>
     <string name="app_cd">Icône de l\'application</string>
     <string name="install_success">%1$s installée.</string>
     <string name="install_failure">Échec de l\'installation de %1$s.</string>
     <string name="root_install_not_supported">L\'installation root de cette application n\'est pas prise en charge.</string>
 
     // Settings
+    <string name="settings_experimental_installer">Utiliser le nouveau programme d\'installation expérimental</string>
     <string name="settings_portrait_columns">Colonnes en mode portrait</string>
     <string name="settings_landscape_columns">Colonnes en mode paysage</string>
     <string name="play_text_animations">Animations de texte</string>
@@ -55,7 +57,7 @@
     <string name="theme_system">Système</string>
     <string name="theme_dark">Sombre</string>
     <string name="theme_light">Clair</string>
-    <string name="about_github">Obtenez le code source, signalez des bugs, demandez de nouvelles fonctionnalités et ajoutez des traductions.</string>
+    <string name="about_github">Obtenez le code source, signalez les bugs, demandez de nouvelles fonctionnalités et ajoutez des traductions.</string>
     <string name="about_donate">Si vous aimez l\'application, envisagez de faire un don à une cause qui en vaut la peine.</string>
     <string name="copy_to_clipboard">Copier dans le presse-papiers</string>
     <string name="copy_app_list">Copier la liste des applications</string>
