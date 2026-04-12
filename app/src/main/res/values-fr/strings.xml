@@ -2,7 +2,7 @@
 
     <string name="app_name" translatable="false">APKUpdater</string>
     <string name="tab_apps">Applications</string>
-    <string name="tab_search">Recherche</string>
+    <string name="tab_search">Rechercher</string>
     <string name="tab_updates">Mises à jour</string>
     <string name="tab_settings">Paramètres</string>
     <string name="something_went_wrong">"Une erreur s\'est produite\n\uD83E\uDD26"</string>
