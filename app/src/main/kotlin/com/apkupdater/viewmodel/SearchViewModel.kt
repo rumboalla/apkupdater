@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 
 class SearchViewModel(
@@ -98,20 +99,26 @@ class SearchViewModel(
     }
 
     override fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
-        mutex.withLock {
-            if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@launch
+        val shouldInstall = mutex.withLock {
+            if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@withLock false
             state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+            return@withLock true
         }
-        downloadAndRootInstall(update.id, update.link)
+        if (shouldInstall) {
+            downloadAndRootInstall(update.id, update.link)
+        }
     }
 
     override fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
-        mutex.withLock {
-            if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@launch
-            if(!installer.checkPermission()) return@launch
+        val shouldInstall = mutex.withLock {
+            if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@withLock false
+            if(!installer.checkPermission()) return@withLock false
             state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+            return@withLock true
         }
-        downloadAndInstall(update.id, update.packageName, update.link)
+        if (shouldInstall) {
+            downloadAndInstall(update.id, update.packageName, update.link)
+        }
     }
 
     override fun sendInstallSnack(log: AppInstallStatus) {
