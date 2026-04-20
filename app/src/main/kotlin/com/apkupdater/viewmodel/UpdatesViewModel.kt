@@ -59,11 +59,13 @@ class UpdatesViewModel(
 		}
 	}
 
-	fun installAll() = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+	fun installAll() = viewModelScope.launch(Dispatchers.IO) {
 		if(installer.checkPermission()) {
 			state.value.updates().forEach { update ->
-				if (state.value.updates().any { it.id == update.id && it.isInstalling }) return@forEach
-				state.value = UpdatesUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+				mutex.withLock {
+					if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@forEach
+					state.value = UpdatesUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+				}
 				viewModelScope.launch(Dispatchers.IO) {
 					downloadAndInstall(update.id, update.packageName, update.link)
 				}
@@ -92,18 +94,21 @@ class UpdatesViewModel(
 		installer.finish()
 	}
 
-	override fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-		if (state.value.updates().any { it.id == update.id && it.isInstalling }) return@launchWithMutex
-		state.value = UpdatesUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+	override fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+		mutex.withLock {
+			if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@launch
+			state.value = UpdatesUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
+		}
 		downloadAndRootInstall(update.id, update.link)
 	}
 
-	override fun downloadAndInstall(update: AppUpdate) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-		if (state.value.updates().any { it.id == update.id && it.isInstalling }) return@launchWithMutex
-		if(installer.checkPermission()) {
+	override fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+		mutex.withLock {
+			if (state.value.updates().any { it.packageName == update.packageName && it.isInstalling }) return@launch
+			if(!installer.checkPermission()) return@launch
 			state.value = UpdatesUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
-			downloadAndInstall(update.id, update.packageName, update.link)
 		}
+		downloadAndInstall(update.id, update.packageName, update.link)
 	}
 
 	override fun sendInstallSnack(log: AppInstallStatus) {
