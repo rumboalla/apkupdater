@@ -44,7 +44,9 @@ class SearchViewModel(
     init {
         subscribeToInstallStatus()
         subscribeToInstallProgress { progress ->
-            state.value = SearchUiState.Success(state.value.mutableUpdates().setProgress(progress))
+            state.value.onSuccess {
+                state.value = SearchUiState.Success(it.updates.toMutableList().setProgress(progress))
+            }
         }
     }
 
@@ -60,8 +62,18 @@ class SearchViewModel(
         badger.changeSearchBadge("")
         searchRepository.search(text).collect {
             it.onSuccess { apps ->
-                state.value = SearchUiState.Success(apps)
-                badger.changeSearchBadge(apps.size.toString())
+                val currentUpdates = state.value.updates()
+                val merged = apps.map { newUpdate ->
+                    currentUpdates.find { it.id == newUpdate.id }?.let { oldUpdate ->
+                        newUpdate.copy(
+                            isInstalling = oldUpdate.isInstalling,
+                            progress = oldUpdate.progress,
+                            total = oldUpdate.total
+                        )
+                    } ?: newUpdate
+                }
+                state.value = SearchUiState.Success(merged)
+                badger.changeSearchBadge(merged.size.toString())
             }.onFailure {
                 badger.changeSearchBadge("!")
                 state.value = SearchUiState.Error
@@ -70,23 +82,29 @@ class SearchViewModel(
     }
 
     override fun cancelInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-        state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(id, false))
+        state.value.onSuccess {
+            state.value = SearchUiState.Success(it.updates.toMutableList().setIsInstalling(id, false))
+        }
         installer.finish()
     }
 
     override fun finishInstall(id: Int) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
-        val updates = state.value.mutableUpdates().removeId(id)
-        state.value = SearchUiState.Success(updates)
-        badger.changeSearchBadge(updates.size.toString())
+        state.value.onSuccess {
+            val updates = it.updates.toMutableList().removeId(id)
+            state.value = SearchUiState.Success(updates)
+            badger.changeSearchBadge(updates.size.toString())
+        }
         installer.finish()
     }
 
-    override fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+    override fun downloadAndRootInstall(update: AppUpdate) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+        if (state.value.updates().any { it.id == update.id && it.isInstalling }) return@launchWithMutex
         state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
         downloadAndRootInstall(update.id, update.link)
     }
 
-    override fun downloadAndInstall(update: AppUpdate) = viewModelScope.launch(Dispatchers.IO) {
+    override fun downloadAndInstall(update: AppUpdate) = viewModelScope.launchWithMutex(mutex, Dispatchers.IO) {
+        if (state.value.updates().any { it.id == update.id && it.isInstalling }) return@launchWithMutex
         if(installer.checkPermission()) {
             state.value = SearchUiState.Success(state.value.mutableUpdates().setIsInstalling(update.id, true))
             downloadAndInstall(update.id, update.packageName, update.link)
