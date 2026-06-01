@@ -3,11 +3,12 @@ package com.apkupdater.repository
 import android.util.Log
 import com.apkupdater.data.ui.AppUpdate
 import com.apkupdater.prefs.Prefs
-import com.apkupdater.util.combine
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 
 
 class UpdatesRepository(
@@ -20,36 +21,63 @@ class UpdatesRepository(
     private val apkPureRepository: ApkPureRepository,
     private val gitLabRepository: GitLabRepository,
     private val playRepository: PlayRepository,
-    private val prefs: Prefs
+    private val prefs: Prefs,
 ) {
 
-    fun updates() = flow<List<AppUpdate>> {
+    fun updates(): Flow<List<AppUpdate>> = flow {
         appsRepository.getApps().collect { result ->
             result.onSuccess { apps ->
                 val filtered = apps.filter { !it.ignored }
                 val sources = mutableListOf<Flow<List<AppUpdate>>>()
-                if (prefs.useApkMirror.get()) sources.add(apkMirrorRepository.updates(filtered))
-                if (prefs.useGitHub.get()) sources.add(gitHubRepository.updates(filtered))
-                if (prefs.useFdroid.get()) sources.add(fdroidRepository.updates(filtered))
-                if (prefs.useIzzy.get()) sources.add(izzyRepository.updates(filtered))
-                if (prefs.useAptoide.get()) sources.add(aptoideRepository.updates(filtered))
-                if (prefs.useApkPure.get()) sources.add(apkPureRepository.updates(filtered))
-                if (prefs.useGitLab.get()) sources.add(gitLabRepository.updates(filtered))
-                if (prefs.usePlay.get()) sources.add(playRepository.updates(filtered))
+                
+                fun addSource(flow: Flow<List<AppUpdate>>, name: String) {
+                    sources.add(
+                        flow.onStart { emit(emptyList()) }.catch { e ->
+                            Log.e("UpdatesRepository", "Error in source $name", e)
+                            emit(emptyList())
+                        }
+                    )
+                }
+
+                if (prefs.useApkMirror.get()) addSource(apkMirrorRepository.updates(filtered), "ApkMirror")
+                if (prefs.useGitHub.get()) addSource(gitHubRepository.updates(filtered), "GitHub")
+                if (prefs.useFdroid.get()) addSource(fdroidRepository.updates(filtered), "Fdroid")
+                if (prefs.useIzzy.get()) addSource(izzyRepository.updates(filtered), "Izzy")
+                if (prefs.useAptoide.get()) addSource(aptoideRepository.updates(filtered), "Aptoide")
+                if (prefs.useApkPure.get()) addSource(apkPureRepository.updates(filtered), "ApkPure")
+                if (prefs.useGitLab.get()) addSource(gitLabRepository.updates(filtered), "GitLab")
+                if (prefs.usePlay.get()) addSource(playRepository.updates(filtered), "Play")
 
                 if (sources.isNotEmpty()) {
-                    sources
-                        .combine { updates -> emit(updates.flatMap { it }) }
-                        .collect()
+                    val combinedFlow = combine(sources) { updatesArray ->
+                        updatesArray.asSequence()
+                            .flatMap { it }
+                            .groupBy { it.packageName }
+                            .map { (packageName, updates) ->
+                                val bestUpdate = updates.maxBy { it.versionCode }
+                                val app = apps.find { it.packageName == packageName }
+                                bestUpdate.copy(isPersistent = app?.isPersistent ?: false)
+                            }
+                            .toList()
+                    }
+                    emitAll(combinedFlow)
                 } else {
                     emit(emptyList())
                 }
             }.onFailure {
                 Log.e("UpdatesRepository", "Error getting apps", it)
+                throw it
             }
         }
-    }.catch {
-        Log.e("UpdatesRepository", "Error getting updates", it)
+    }.catch { e ->
+        Log.e("UpdatesRepository", "Error in updates flow", e)
+        throw e
+    }
+
+    fun ignoreVersion(id: Int) {
+        val ignored = prefs.ignoredVersions.get().toMutableList()
+        ignored.add(id)
+        prefs.ignoredVersions.put(ignored)
     }
 
 }

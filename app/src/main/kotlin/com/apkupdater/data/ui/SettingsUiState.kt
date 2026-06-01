@@ -2,6 +2,6 @@ package com.apkupdater.data.ui
 
 
 sealed class SettingsUiState {
-    object Settings : SettingsUiState()
-    object About : SettingsUiState()
+    data object Settings : SettingsUiState()
+    data object About : SettingsUiState()
 }

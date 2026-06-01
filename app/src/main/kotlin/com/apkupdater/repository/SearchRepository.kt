@@ -35,7 +35,11 @@ class SearchRepository(
         if (sources.isNotEmpty()) {
             sources.combine { updates ->
                 val result = updates.filter { it.isSuccess }.mapNotNull { it.getOrNull() }
-                emit(Result.success(result.flatten().sortedBy { it.name }))
+                val flattened = result.flatten()
+                    .groupBy { it.packageName }
+                    .map { (_, updates) -> updates.maxBy { it.versionCode } }
+                    .sortedBy { it.name }
+                emit(Result.success(flattened))
             }.collect()
         } else {
             emit(Result.success(emptyList()))

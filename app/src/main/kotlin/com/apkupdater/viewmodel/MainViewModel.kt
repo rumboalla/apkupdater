@@ -37,8 +37,9 @@ class MainViewModel(
 		updatesViewModel: UpdatesViewModel
 	) = viewModelScope.launch {
 		isRefreshing.value = true
-		appsViewModel.refresh(false)
-		updatesViewModel.refresh(false).invokeOnCompletion {
+        // Pass true to trigger the smooth loading progress animation on first load
+		appsViewModel.refresh(true)
+		updatesViewModel.refresh(true).invokeOnCompletion {
 			isRefreshing.value = false
 		}
 	}

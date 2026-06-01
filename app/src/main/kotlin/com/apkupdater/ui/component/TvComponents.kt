@@ -13,27 +13,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import com.apkupdater.R
 import com.apkupdater.data.ui.ApkMirrorSource
 import com.apkupdater.data.ui.ApkPureSource
 import com.apkupdater.data.ui.AppInstalled
 import com.apkupdater.data.ui.AppUpdate
+import com.apkupdater.data.ui.Link
 import com.apkupdater.data.ui.Source
 import com.apkupdater.util.getAppName
 import com.apkupdater.util.to2f
 import com.apkupdater.util.toAnnotatedString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -76,18 +81,46 @@ fun TvInstallButton(
     app: AppUpdate,
     onInstall: (String) -> Unit
 ) = ElevatedButton(
-    modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp).width(120.dp),
+    modifier = Modifier.padding(vertical = 8.dp).width(120.dp),
     onClick = { onInstall(app.packageName) }
 ) {
     if (app.isInstalling) {
         if (app.total != 0L && app.progress != 0L) {
             val p = (app.progress.toFloat() / app.total) * 100f
             Text("${p.to2f()}%")
-        } else {
-            CircularProgressIndicator(Modifier.size(24.dp))
         }
     } else {
         Text(stringResource(R.string.install_cd))
+    }
+}
+
+@Composable
+fun TvDirectDownloadButton(
+    app: AppUpdate
+) {
+    val handler = LocalUriHandler.current
+    val scope = rememberCoroutineScope()
+    ElevatedButton(
+        modifier = Modifier.padding(vertical = 8.dp),
+        onClick = {
+            when (val link = app.link) {
+                is Link.Url -> handler.openUri(link.link)
+                is Link.Xapk -> handler.openUri(link.link)
+                is Link.Play -> {
+                    scope.launch(Dispatchers.IO) {
+                        runCatching {
+                            val (files, _) = link.getInstallFiles()
+                            files.firstOrNull()?.url?.let {
+                                handler.openUri(it)
+                            }
+                        }
+                    }
+                }
+                else -> {}
+            }
+        }
+    ) {
+        Text("Visit Link", fontSize = 12.sp)
     }
 }
 
@@ -96,7 +129,7 @@ fun BoxScope.TvSourceIcon(app: AppUpdate) = SourceIcon(
     app.source,
     Modifier
         .align(Alignment.CenterStart)
-        .padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp)
+        .padding(start = 12.dp)
         .size(32.dp)
 )
 
@@ -106,9 +139,9 @@ fun TvInstalledItem(app: AppInstalled, onIgnore: (String) -> Unit = {}) = Card(
 ) {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, null, app.versionCode, null)
-        Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
+        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp), horizontalArrangement = Arrangement.End) {
             ElevatedButton(
-                modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 8.dp, end = 8.dp),
+                modifier = Modifier.padding(vertical = 8.dp),
                 onClick = { onIgnore(app.packageName) }
             ) {
                 Text(stringResource(if (app.ignored) R.string.unignore_cd else R.string.ignore_cd))
@@ -122,7 +155,7 @@ fun TvIgnoreVersionButton(
     app: AppUpdate,
     onIgnoreVersion: (Int) -> Unit,
 ) = ElevatedButton(
-    modifier = Modifier.padding(top = 0.dp, bottom = 8.dp, start = 0.dp, end = 0.dp),
+    modifier = Modifier.padding(vertical = 8.dp),
     onClick = { onIgnoreVersion(app.id) }
 ) {
     Text(stringResource(R.string.ignore_version))
@@ -137,9 +170,14 @@ fun TvUpdateItem(
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode)
         WhatsNew(app.whatsNew, app.source)
-        Box {
+        Box(Modifier.fillMaxWidth()) {
             TvSourceIcon(app)
-            Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp), 
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TvDirectDownloadButton(app)
                 TvIgnoreVersionButton(app, onIgnoreVersion)
                 TvInstallButton(app, onInstall)
             }
@@ -152,9 +190,14 @@ fun TvSearchItem(app: AppUpdate, onInstall: (String) -> Unit = {}) = Card {
     Column {
         TvCommonItem(app.packageName, app.name, app.version, app.oldVersion, app.versionCode, app.oldVersionCode, app.iconUri, true)
         WhatsNew(app.whatsNew, app.source)
-        Box {
+        Box(Modifier.fillMaxWidth()) {
             TvSourceIcon(app)
-            Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.End) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TvDirectDownloadButton(app)
                 TvInstallButton(app, onInstall)
             }
         }

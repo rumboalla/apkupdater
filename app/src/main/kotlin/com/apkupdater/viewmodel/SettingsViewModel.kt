@@ -9,6 +9,7 @@ import com.apkupdater.prefs.Prefs
 import com.apkupdater.repository.AppsRepository
 import com.apkupdater.ui.theme.isDarkTheme
 import com.apkupdater.util.Clipboard
+import com.apkupdater.util.InstallLog
 import com.apkupdater.util.Themer
 import com.apkupdater.util.UpdatesNotification
 import com.apkupdater.worker.UpdatesWorker
@@ -17,6 +18,8 @@ import com.google.gson.GsonBuilder
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,14 +30,16 @@ class SettingsViewModel(
     private val workManager: WorkManager,
 	private val clipboard: Clipboard,
 	private val appsRepository: AppsRepository,
+	private val installLog: InstallLog,
 	private val gson: Gson = GsonBuilder().setPrettyPrinting().create(),
 	private val themer: Themer
 ) : ViewModel() {
 
 	val state = MutableStateFlow<SettingsUiState>(SettingsUiState.Settings)
+	
+	private val _actionState = MutableStateFlow<ActionState>(ActionState.Idle)
+	val actionState: StateFlow<ActionState> = _actionState.asStateFlow()
 
-	fun getNewInstaller() = prefs.newInstaller.get()
-	fun setNewInstaller(b: Boolean) = prefs.newInstaller.put(b)
 	fun setPortraitColumns(n: Int) = prefs.portraitColumns.put(n)
 	fun getPortraitColumns() = prefs.portraitColumns.get()
 	fun setLandscapeColumns(n: Int) = prefs.landscapeColumns.put(n)
@@ -72,6 +77,13 @@ class SettingsViewModel(
 	fun getAlarmHour() = prefs.alarmHour.get()
 	fun getAlarmFrequency() = prefs.alarmFrequency.get()
 	fun getTheme() = prefs.theme.get()
+	fun getBetaTesting() = prefs.betaTesting.get()
+
+	private val _rootStatus = MutableStateFlow<Boolean>(prefs.rootInstall.get())
+	val rootStatus = _rootStatus
+
+    private val _betaStatus = MutableStateFlow<Boolean>(prefs.betaTesting.get())
+    val betaStatus = _betaStatus
 
 	fun setTheme(theme: Int) {
 		prefs.theme.put(theme)
@@ -79,12 +91,30 @@ class SettingsViewModel(
 	}
 
 	fun setRootInstall(b: Boolean) {
-		if (b && Shell.isAppGrantedRoot() == true) {
-			prefs.rootInstall.put(true)
+		if (b) {
+			_actionState.value = ActionState.Loading("Requesting Root Access...")
+			viewModelScope.launch(Dispatchers.IO) {
+				if (Shell.getShell().isRoot) {
+					prefs.rootInstall.put(true)
+					_rootStatus.value = true
+					_actionState.value = ActionState.Success("Root Access Granted")
+				} else {
+					prefs.rootInstall.put(false)
+					_rootStatus.value = false
+					_actionState.value = ActionState.Error("Root Access Denied or Not Available")
+				}
+			}
 		} else {
 			prefs.rootInstall.put(false)
+			_rootStatus.value = false
+			_actionState.value = ActionState.Idle
 		}
 	}
+
+    fun setBetaTesting(b: Boolean) {
+        prefs.betaTesting.put(b)
+        _betaStatus.value = b
+    }
 
 	fun setAlarmFrequency(frequency: Int) {
 		prefs.alarmFrequency.put(frequency)
@@ -114,18 +144,34 @@ class SettingsViewModel(
 		state.value = SettingsUiState.Settings
 	}
 
+	fun dismissActionState() {
+		_actionState.value = ActionState.Idle
+	}
+
 	fun copyAppList() = viewModelScope.launch(Dispatchers.IO) {
+		_actionState.value = ActionState.Loading("Generating App List...")
 		appsRepository.getApps().collectLatest { apps ->
 			apps.onSuccess {
 				clipboard.copy(gson.toJson(it), "App List")
+				_actionState.value = ActionState.Success("App List Copied to Clipboard")
+			}.onFailure {
+				_actionState.value = ActionState.Error("Failed to Generate App List")
 			}
 		}
 	}
 
 	fun copyAppLogs() = viewModelScope.launch(Dispatchers.IO) {
-		val process = Runtime.getRuntime().exec("logcat -d")
-		val data = process.inputStream.readBytes()
-		clipboard.copy(data.decodeToString(), "App Logs")
+		_actionState.value = ActionState.Loading("Copying Logs...")
+		val logs = installLog.logs().value.joinToString("\n")
+		clipboard.copy(logs, "App Logs")
+		_actionState.value = ActionState.Success("Logs Copied to Clipboard")
 	}
 
+}
+
+sealed class ActionState {
+	data object Idle : ActionState()
+	data class Loading(val message: String) : ActionState()
+	data class Success(val message: String) : ActionState()
+	data class Error(val message: String) : ActionState()
 }

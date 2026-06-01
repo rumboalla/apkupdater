@@ -2,8 +2,8 @@ package com.apkupdater.data.ui
 
 
 sealed class UpdatesUiState {
-	data object Loading: UpdatesUiState()
-	data object Error : UpdatesUiState()
+	data class Loading(val stage: UpdateStage, val progress: Float): UpdatesUiState()
+	data class Error(val message: String? = null) : UpdatesUiState()
 	data class Success(val updates: List<AppUpdate>): UpdatesUiState()
 
 	inline fun onLoading(block: (Loading) -> Unit): UpdatesUiState {
@@ -35,4 +35,11 @@ sealed class UpdatesUiState {
 		return emptyList()
 	}
 
+}
+
+enum class UpdateStage {
+	CONNECTING,
+	FETCHING,
+	CHECKING,
+	READY
 }

@@ -22,9 +22,9 @@
     <string name="install_success">%1$s installed.</string>
     <string name="install_failure">%1$s failed to install.</string>
     <string name="root_install_not_supported">Root install of this app is not supported.</string>
+    <string name="persistent_app_warning">This is a persistent system app and cannot be updated this way.</string>
 
     // Settings
-    <string name="settings_experimental_installer">Use Experimental New Installer</string>
     <string name="settings_portrait_columns">Portrait Columns</string>
     <string name="settings_landscape_columns">Landscape Columns</string>
     <string name="play_text_animations">Play Text Animations</string>
@@ -62,6 +62,8 @@
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="copy_app_list">Copy App List</string>
     <string name="copy_app_logs">Copy App Logs</string>
+    <string name="view_app_logs">View App Logs</string>
+    <string name="logs">Logs</string>
 
     // Notifications
     <string name="notification_channel_name">Updates</string>
@@ -73,5 +75,25 @@
         <item quantity="one">Found %1$d update.</item>
         <item quantity="other">Found %1$d updates.</item>
     </plurals>
+
+    // Update Progress Stages
+    <string name="update_stage_connecting">Connecting to server…</string>
+    <string name="update_stage_fetching">Fetching update list…</string>
+    <string name="update_stage_checking">Checking installed apps…</string>
+    <string name="update_stage_ready">Updates ready</string>
+    <string name="update_fetch_failed">Failed to fetch updates</string>
+    <string name="retry">Retry</string>
+
+    // Notification Status
+    <string name="notif_checking">Checking for updates…</string>
+    <string name="notif_downloading">Downloading update…</string>
+    <string name="notif_requesting">Requesting installation…</string>
+    <string name="notif_confirm">Waiting for confirmation…</string>
+    <string name="notif_installing">Installing…</string>
+    <string name="notif_success">Updates completed successfully</string>
+    <string name="notif_failed">Update failed</string>
+
+    // Permissions
+    <string name="permission_install_required">Install permission required. Please enable it in settings.</string>
 
 </resources>

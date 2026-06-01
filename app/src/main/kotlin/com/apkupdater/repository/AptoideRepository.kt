@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.flow
 class AptoideRepository(
     private val context: Context,
     private val service: AptoideService,
-    private val prefs: Prefs
+    private val prefs: Prefs,
 ) {
     companion object {
         val UserAgent = "aptoide-9.20.6.1;" + getTerminal() + ";0x0;id:" + randomUUID() + ";;"
@@ -41,7 +41,7 @@ class AptoideRepository(
         computeFilters(context)
     }
 
-    suspend fun updates(apps: List<AppInstalled>) = flow {
+    fun updates(apps: List<AppInstalled>) = flow {
         val data = apps.map(AppInstalled::toApksData)
         val r = service
             .findUpdates(ListAppsUpdatesRequest(data, query, buildFilterList(), buildStoreList()))

@@ -19,7 +19,7 @@ class AppsRepository(
 
 	suspend fun getApps() = flow {
 		val apps = context.packageManager
-			.getInstalledPackages(PackageManager.MATCH_ALL + getSignatureFlag())
+			.getInstalledPackages(getSignatureFlag())
 			.asSequence()
 			.filter { !excludeSystem() || (it.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM == 0 }
 			.filter { !excludeSystem() || (it.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP == 0 }

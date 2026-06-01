@@ -6,7 +6,9 @@ sealed class AppsUiState {
 	data class Loading(
 		val excludeSystem: Boolean,
 		val excludeAppStore: Boolean,
-		val excludeDisabled: Boolean
+		val excludeDisabled: Boolean,
+		val progress: Float = 0f,
+		val stage: String = ""
 	): AppsUiState()
 
 	data object Error : AppsUiState()

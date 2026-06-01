@@ -19,7 +19,7 @@ class App : Application(), SingletonImageLoader.Factory, KoinComponent {
 	override fun onCreate() {
 		super.onCreate()
 
-		Shell.setDefaultBuilder(Shell.Builder.create().setTimeout(10))
+		Shell.setDefaultBuilder(Shell.Builder.create().setTimeout(30))
 
 		startKoin {
 			androidLogger()
