@@ -238,7 +238,7 @@ fun UpdatesScreenSuccess(
     }
 
 	when {
-		updates.isEmpty() -> EmptyGrid()
+		updates.isEmpty() -> EmptyGrid(stringResource(R.string.no_updates_found))
 		tv -> TvGrid(viewModel, updates, handler)
 		!tv -> Grid(viewModel, updates, handler)
 	}

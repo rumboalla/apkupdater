@@ -98,19 +98,30 @@ fun ProcessingDialog(message: String) = Dialog(
 @Composable
 fun AppsScreenSuccess(viewModel: AppsViewModel, state: AppsUiState.Success) = Column {
 	AppsTopBar(viewModel, state.excludeSystem, state.excludeAppStore, state.excludeDisabled)
-	if (koinInject<Prefs>().androidTvUi.get()) {
-		TvInstalledGrid {
-			items(state.apps) {
-				TvInstalledItem(it) { app -> viewModel.ignore(app) }
-			}
-		}
-	} else {
-		InstalledGrid {
-			items(state.apps) {
-				InstalledItem(it) { app -> viewModel.ignore(app) }
-			}
-		}
-	}
+    
+    if (state.apps.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(
+                text = stringResource(R.string.no_apps_found),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    } else {
+        if (koinInject<Prefs>().androidTvUi.get()) {
+            TvInstalledGrid {
+                items(state.apps) {
+                    TvInstalledItem(it) { app -> viewModel.ignore(app) }
+                }
+            }
+        } else {
+            InstalledGrid {
+                items(state.apps) {
+                    InstalledItem(it) { app -> viewModel.ignore(app) }
+                }
+            }
+        }
+    }
 }
 
 @Composable

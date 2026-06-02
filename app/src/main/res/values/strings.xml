@@ -93,6 +93,10 @@
     <string name="notif_success">Updates completed successfully</string>
     <string name="notif_failed">Update failed</string>
 
+    // Empty States
+    <string name="no_apps_found">No apps found with the current filters.</string>
+    <string name="no_updates_found">No updates currently found!!</string>
+
     // Permissions
     <string name="permission_install_required">Install permission required. Please enable it in settings.</string>
 

@@ -71,8 +71,8 @@ class AppsViewModel(
 	private suspend fun refreshInternal(load: Boolean = true) = withContext(Dispatchers.IO) {
 		badger.changeAppsBadge("")
 		
-		repository.getApps().collect {
-			it.onSuccess { apps ->
+		repository.getApps().collect { result ->
+			result.onSuccess { apps ->
 				state.value = AppsUiState.Success(
 					apps,
 					prefs.excludeSystem.get(),
