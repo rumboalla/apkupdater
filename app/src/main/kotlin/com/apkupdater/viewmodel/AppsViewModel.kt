@@ -9,6 +9,7 @@ import com.apkupdater.repository.AppsRepository
 import com.apkupdater.util.Badger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +26,7 @@ class AppsViewModel(
 
 	private val mutex = Mutex()
 	private val state = MutableStateFlow<AppsUiState>(buildLoadingState())
+	private var loadingJob: Job? = null
 	
 	private val _isProcessing = MutableStateFlow(false)
 	val isProcessing = _isProcessing.asStateFlow()
@@ -37,11 +39,12 @@ class AppsViewModel(
 	fun refresh(load: Boolean = true) = viewModelScope.launch {
 		mutex.withLock {
 			if (load) {
-				viewModelScope.launch {
+				loadingJob?.cancel()
+				loadingJob = viewModelScope.launch {
 					smoothLoadingProgress()
 				}
 			}
-			refreshInternal(load)
+			refreshInternal()
 		}
 	}
 
@@ -68,10 +71,11 @@ class AppsViewModel(
 		}
 	}
 
-	private suspend fun refreshInternal(load: Boolean = true) = withContext(Dispatchers.IO) {
+	private suspend fun refreshInternal() = withContext(Dispatchers.IO) {
 		badger.changeAppsBadge("")
 		
 		repository.getApps().collect { result ->
+			loadingJob?.cancel()
 			result.onSuccess { apps ->
 				state.value = AppsUiState.Success(
 					apps,
@@ -95,7 +99,7 @@ class AppsViewModel(
 		mutex.withLock {
 			withContext(Dispatchers.IO) {
 				prefs.excludeSystem.put(!prefs.excludeSystem.get())
-				refreshInternal(false)
+				refreshInternal()
 			}
 		}
 		
@@ -109,7 +113,7 @@ class AppsViewModel(
 		mutex.withLock {
 			withContext(Dispatchers.IO) {
 				prefs.excludeStore.put(!prefs.excludeStore.get())
-				refreshInternal(false)
+				refreshInternal()
 			}
 		}
 		
@@ -123,7 +127,7 @@ class AppsViewModel(
 		mutex.withLock {
 			withContext(Dispatchers.IO) {
 				prefs.excludeDisabled.put(!prefs.excludeDisabled.get())
-				refreshInternal(false)
+				refreshInternal()
 			}
 		}
 
@@ -140,7 +144,7 @@ class AppsViewModel(
 					ignored.add(packageName)
 				}
 				prefs.ignoredApps.put(ignored)
-				refreshInternal(false)
+				refreshInternal()
 			}
 		}
 	}

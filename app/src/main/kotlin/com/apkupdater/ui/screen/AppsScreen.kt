@@ -56,8 +56,7 @@ fun AppsScreen(
 ) {
     val isProcessing by viewModel.isProcessing.collectAsStateWithLifecycle()
     val processingMessage by viewModel.processingMessage.collectAsStateWithLifecycle()
-
-    if (isProcessing) {
+	if (isProcessing) {
         ProcessingDialog(processingMessage)
     }
 
@@ -127,10 +126,11 @@ fun AppsScreenSuccess(viewModel: AppsViewModel, state: AppsUiState.Success) = Co
 @Composable
 fun AppsScreenLoading(viewModel: AppsViewModel, state: AppsUiState.Loading) = Column {
 	AppsTopBar(viewModel, state.excludeSystem, state.excludeAppStore, state.excludeDisabled)
-	Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+	Box(modifier = Modifier.fillMaxSize()) {
+        LoadingGrid()
 		Column(
 			horizontalAlignment = Alignment.CenterHorizontally,
-			modifier = Modifier.padding(16.dp)
+			modifier = Modifier.align(Alignment.Center).padding(16.dp)
 		) {
 			Text(
 				text = state.stage.ifEmpty { "Loading apps..." },
