@@ -1,6 +1,7 @@
 package com.apkupdater.transform
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.net.Uri
 import android.os.Build
@@ -19,8 +20,9 @@ fun PackageInfo.toAppInstalled(context: Context, ignored: List<String>) = AppIns
 	if (Build.VERSION.SDK_INT >= 28) longVersionCode else versionCode.toLong(),
 	iconUri(packageName, applicationInfo?.icon ?: 0),
 	ignored.contains(packageName),
+	((applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_PERSISTENT) != 0,
 	getSignatureSha1(),
-	getSignatureSha256()
+	getSignatureSha256(),
 )
 
 fun iconUri(packageName: String, id: Int): Uri = "android.resource://$packageName/$id".toUri()

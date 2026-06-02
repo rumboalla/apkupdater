@@ -2,6 +2,7 @@ package com.apkupdater.ui.screen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,35 +10,49 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.apkupdater.BuildConfig
@@ -56,6 +71,7 @@ import com.apkupdater.ui.component.SourceIcon
 import com.apkupdater.ui.component.SwitchSetting
 import com.apkupdater.ui.theme.statusBarColor
 import com.apkupdater.util.isAndroidTv
+import com.apkupdater.viewmodel.ActionState
 import com.apkupdater.viewmodel.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import java.util.Calendar
@@ -63,13 +79,69 @@ import java.util.Calendar
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) = Column {
-	if (viewModel.state.collectAsStateWithLifecycle().value == SettingsUiState.Settings) {
-		SettingsTopBar(viewModel)
-		Settings(viewModel)
-	} else {
-		AboutTopBar(viewModel)
-		About()
+	val state = viewModel.state.collectAsStateWithLifecycle().value
+    val actionState = viewModel.actionState.collectAsStateWithLifecycle().value
+
+    // Global loading bar for actions
+    if (actionState !is ActionState.Idle) {
+        ActionDialog(actionState, viewModel::dismissActionState)
+    }
+
+	when (state) {
+		SettingsUiState.Settings -> {
+			SettingsTopBar(viewModel)
+			Settings(viewModel)
+		}
+		SettingsUiState.About -> {
+			AboutTopBar(viewModel)
+			About()
+		}
 	}
+}
+
+@Composable
+fun ActionDialog(state: ActionState, onDismiss: () -> Unit) = Dialog(
+    onDismissRequest = { if (state !is ActionState.Loading) onDismiss() },
+    properties = DialogProperties(dismissOnBackPress = state !is ActionState.Loading, dismissOnClickOutside = state !is ActionState.Loading)
+) {
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 8.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(24.dp).fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = when (state) {
+                    is ActionState.Loading -> state.message
+                    is ActionState.Success -> state.message
+                    is ActionState.Error -> state.message
+                    else -> ""
+                },
+                style = MaterialTheme.typography.titleMedium
+            )
+            
+            Box(Modifier.padding(vertical = 16.dp).height(8.dp).fillMaxWidth()) {
+                if (state is ActionState.Loading) {
+                    LinearProgressIndicator(Modifier.fillMaxWidth())
+                } else {
+                    // Static full bar for success/error
+                    Box(Modifier.fillMaxWidth().fillMaxSize().background(
+                        if (state is ActionState.Success) Color.Green.copy(alpha = 0.5f)
+                        else Color.Red.copy(alpha = 0.5f)
+                    ))
+                }
+            }
+
+            if (state !is ActionState.Loading) {
+                Button(onClick = onDismiss, modifier = Modifier.align(Alignment.End)) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -154,8 +226,8 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 		LargeTitle(stringResource(R.string.settings_ui), Modifier.padding(start = 16.dp, top = 16.dp))
 		val tvUi = remember { mutableStateOf(viewModel.getAndroidTvUi()) }
 		SwitchSetting(
-			getValue = { viewModel.getAndroidTvUi() },
-			setValue = {
+			checked = viewModel.getAndroidTvUi(),
+			onCheckedChange = {
 				viewModel.setAndroidTvUi(it)
 				tvUi.value = it
 		   	},
@@ -181,10 +253,10 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 			)
 		}
 		SwitchSetting(
-			{ viewModel.getPlayTextAnimations() },
-			{ viewModel.setPlayTextAnimations(it) },
-			stringResource(R.string.play_text_animations),
-			R.drawable.ic_animation
+			checked = viewModel.getPlayTextAnimations(),
+			onCheckedChange = { viewModel.setPlayTextAnimations(it) },
+			text = stringResource(R.string.play_text_animations),
+			icon = R.drawable.ic_animation
 		)
 		SegmentedButtonSetting(
 			stringResource(R.string.theme),
@@ -202,92 +274,86 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 	item {
 		LargeTitle(stringResource(R.string.settings_sources), Modifier.padding(start = 16.dp, top = 16.dp))
 		SwitchSetting(
-			{ viewModel.getUseGitHub() },
-			{ viewModel.setUseGitHub(it) },
-			stringResource(R.string.source_github),
-			R.drawable.ic_github
+			checked = viewModel.getUseGitHub(),
+			onCheckedChange = { viewModel.setUseGitHub(it) },
+			text = stringResource(R.string.source_github),
+			icon = R.drawable.ic_github
 		)
 		SwitchSetting(
-			{ viewModel.getUseGitLab() },
-			{ viewModel.setUseGitLab(it) },
-			stringResource(R.string.source_gitlab),
-			R.drawable.ic_gitlab
+			checked = viewModel.getUseGitLab(),
+			onCheckedChange = { viewModel.setUseGitLab(it) },
+			text = stringResource(R.string.source_gitlab),
+			icon = R.drawable.ic_gitlab
 		)
 		SwitchSetting(
-			{ viewModel.getUseApkMirror() },
-			{ viewModel.setUseApkMirror(it) },
-			stringResource(R.string.source_apkmirror),
-			R.drawable.ic_apkmirror
+			checked = viewModel.getUseApkMirror(),
+			onCheckedChange = { viewModel.setUseApkMirror(it) },
+			text = stringResource(R.string.source_apkmirror),
+			icon = R.drawable.ic_apkmirror
 		)
 		SwitchSetting(
-			{ viewModel.getUseFdroid() },
-			{ viewModel.setUseFdroid(it) },
-			stringResource(R.string.source_fdroid),
-			R.drawable.ic_fdroid
+			checked = viewModel.getUseFdroid(),
+			onCheckedChange = { viewModel.setUseFdroid(it) },
+			text = stringResource(R.string.source_fdroid),
+			icon = R.drawable.ic_fdroid
 		)
 		SwitchSetting(
-			{ viewModel.getUseIzzy() },
-			{ viewModel.setUseIzzy(it) },
-			stringResource(R.string.source_izzy),
-			R.drawable.ic_izzy
+			checked = viewModel.getUseIzzy(),
+			onCheckedChange = { viewModel.setUseIzzy(it) },
+			text = stringResource(R.string.source_izzy),
+			icon = R.drawable.ic_izzy
 		)
 		SwitchSetting(
-			{ viewModel.getUseAptoide() },
-			{ viewModel.setUseAptoide(it) },
-			stringResource(R.string.source_aptoide),
-			R.drawable.ic_aptoide
+			checked = viewModel.getUseAptoide(),
+			onCheckedChange = { viewModel.setUseAptoide(it) },
+			text = stringResource(R.string.source_aptoide),
+			icon = R.drawable.ic_aptoide
 		)
 		SwitchSetting(
-			{ viewModel.getUseApkPure() },
-			{ viewModel.setUseApkPure(it) },
-			stringResource(R.string.source_apkpure),
-			R.drawable.ic_apkpure
+			checked = viewModel.getUseApkPure(),
+			onCheckedChange = { viewModel.setUseApkPure(it) },
+			text = stringResource(R.string.source_apkpure),
+			icon = R.drawable.ic_apkpure
 		)
 		SwitchSetting(
-			{ viewModel.getUsePlay() },
-			{ viewModel.setUsePlay(it) },
-			stringResource(R.string.source_play) + " (Alpha)",
-			R.drawable.ic_play
+			checked = viewModel.getUsePlay(),
+			onCheckedChange = { viewModel.setUsePlay(it) },
+			text = stringResource(R.string.source_play) + " (Alpha)",
+			icon = R.drawable.ic_play
 		)
 	}
 
 	item {
 		LargeTitle(stringResource(R.string.settings_options), Modifier.padding(start = 16.dp, top = 16.dp))
 		SwitchSetting(
-			{ viewModel.getRootInstall() },
-			{ viewModel.setRootInstall(it) },
-			stringResource(R.string.root_install),
-			R.drawable.ic_root
+			checked = viewModel.rootStatus.collectAsStateWithLifecycle().value,
+			onCheckedChange = { viewModel.setRootInstall(it) },
+			text = stringResource(R.string.root_install),
+			icon = R.drawable.ic_root
 		)
 		SwitchSetting(
-			{ viewModel.getIgnoreAlpha() },
-			{ viewModel.setIgnoreAlpha(it) },
-			stringResource(R.string.ignore_alpha),
-			R.drawable.ic_alpha
+			checked = viewModel.getIgnoreAlpha(),
+			onCheckedChange = { viewModel.setIgnoreAlpha(it) },
+			text = stringResource(R.string.ignore_alpha),
+			icon = R.drawable.ic_alpha
 		)
 		SwitchSetting(
-			{ viewModel.getIgnoreBeta() },
-			{ viewModel.setIgnoreBeta(it) },
-			stringResource(R.string.ignore_beta),
-			R.drawable.ic_beta
+			checked = viewModel.getIgnoreBeta(),
+			onCheckedChange = { viewModel.setIgnoreBeta(it) },
+			text = stringResource(R.string.ignore_beta),
+			icon = R.drawable.ic_beta
 		)
 		SwitchSetting(
-			{ viewModel.getIgnorePreRelease() },
-			{ viewModel.setIgnorePreRelease(it) },
-			stringResource(R.string.ignore_preRelease),
-			R.drawable.ic_pre_release
+			checked = viewModel.getIgnorePreRelease(),
+			onCheckedChange = { viewModel.setIgnorePreRelease(it) },
+			text = stringResource(R.string.ignore_preRelease),
+			icon = R.drawable.ic_pre_release
 		)
 		SwitchSetting(
-			{ viewModel.getUseSafeStores() },
-			{ viewModel.setUseSafeStores(it) },
-			stringResource(R.string.use_safe_stores),
-			R.drawable.ic_safe
-		)
-		SwitchSetting(
-			{ viewModel.getNewInstaller() },
-			{ viewModel.setNewInstaller(it) },
-			stringResource(R.string.settings_experimental_installer),
-			R.drawable.ic_root
+			checked = viewModel.getUseSafeStores(),
+			onCheckedChange = { viewModel.setUseSafeStores(it) },
+			text = stringResource(R.string.use_safe_stores),
+			icon = R.drawable.ic_safe
 		)
 	}
 
@@ -295,8 +361,8 @@ fun Settings(viewModel: SettingsViewModel) = LazyColumn {
 		val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
 		LargeTitle(stringResource(R.string.settings_alarm), Modifier.padding(start = 16.dp, top = 16.dp))
 		SwitchSetting(
-			getValue = { viewModel.getEnableAlarm() },
-			setValue = { viewModel.setEnableAlarm(it, launcher) },
+			checked = viewModel.getEnableAlarm(),
+			onCheckedChange = { viewModel.setEnableAlarm(it, launcher) },
 			text = stringResource(R.string.settings_alarm),
 			icon = R.drawable.ic_alarm
 		)
@@ -371,14 +437,9 @@ fun AboutTopBar(viewModel: SettingsViewModel) = TopAppBar(
 	title = { Text(stringResource(R.string.about)) },
 	colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.statusBarColor()),
 	windowInsets = WindowInsets(0),
-	actions = {
-		IconButton(onClick = { viewModel.setSettings() }) {
-			Icon(Icons.Default.Settings, stringResource(R.string.tab_settings))
-		}
-	},
 	navigationIcon = {
-		Box(Modifier.minimumInteractiveComponentSize().size(40.dp), Alignment.Center) {
-			Icon(Icons.Filled.Info, "Tab Icon")
+		IconButton(onClick = { viewModel.setSettings() }) {
+			Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
 		}
 	}
 )

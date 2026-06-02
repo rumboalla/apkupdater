@@ -115,12 +115,11 @@ fun SegmentedButtonSetting(
 
 @Composable
 fun SwitchSetting(
-    getValue: () -> Boolean,
-    setValue: (Boolean) -> Unit,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     text: String,
     @DrawableRes icon: Int = R.drawable.ic_system
-) = Box (Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 16.dp)) {
-    var value by remember { mutableStateOf(getValue()) }
+) = Box (Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 16.dp).clickable { onCheckedChange(!checked) }) {
     Row(Modifier.align(CenterStart)) {
         Icon(
             painterResource(id = icon),
@@ -130,11 +129,8 @@ fun SwitchSetting(
         Text(text, Modifier.align(CenterVertically))
     }
     Switch(
-        checked = value,
-        onCheckedChange = {
-            setValue(it)
-            value = getValue()
-        },
+        checked = checked,
+        onCheckedChange = onCheckedChange,
         modifier = Modifier.align(CenterEnd)
     )
 }

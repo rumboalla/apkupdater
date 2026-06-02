@@ -11,6 +11,7 @@ data class AppInstalled(
 	val versionCode: Long,
 	val iconUri: Uri = Uri.EMPTY,
 	val ignored: Boolean = false,
+	val isPersistent: Boolean = false,
 	val signature: String = "",
 	val signatureSha256: String = ""
 )

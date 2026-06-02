@@ -19,37 +19,41 @@ import kotlinx.coroutines.flow.flow
 class ApkPureRepository(
     gson: Gson,
     private val service: ApkPureService,
-    private val prefs: Prefs
+    private val prefs: Prefs,
 ) {
 
     private val header = gson.toJson(DeviceHeader())
 
-    suspend fun updates(apps: List<AppInstalled>) = flow {
+    fun updates(apps: List<AppInstalled>) = flow {
         val info = apps.map { AppInfoForUpdate(it.packageName, it.versionCode) }
         val r = service.getAppUpdate(header, GetAppUpdate(info))
-        val updates = r.app_update_response
+        val updates = r.app_update_response.asSequence()
             .filter { filterSignature(it.sign, apps.getSignature(it.package_name)) }
             .filter { filterAlpha(it) }
             .filter { filterBeta(it) }
             .map { it.toAppUpdate(apps.getApp(it.package_name)) }
+            .toList()
         emit(updates)
     }.catch {
         Log.e("ApkPureRepository", it.message, it)
         emit(emptyList())
     }
 
-    suspend fun search(text: String) = flow {
+    fun search(text: String) = flow {
         val response = service.search(header, text)
-        val info = response.data.data.mapNotNull { d ->
-            d.data.firstOrNull()?.takeIf { !it.ad }?.app_info?.let {
-                AppInfoForUpdate(it.package_name, 0L, false)
+        val info = response.data.data.asSequence()
+            .mapNotNull { d ->
+                d.data.firstOrNull()?.takeIf { !it.ad }?.app_info?.let {
+                    AppInfoForUpdate(package_name = it.package_name, version_code = 0L, is_system = false)
+                }
             }
-        }
+            .toList()
         val r = service.getAppUpdate(header, GetAppUpdate(info))
-        val updates = r.app_update_response
+        val updates = r.app_update_response.asSequence()
             .filter { filterAlpha(it) }
             .filter { filterBeta(it) }
             .map { it.toAppUpdate(null) }
+            .toList()
         emit(Result.success(updates))
     }.catch {
         Log.e("ApkPureRepository", it.message, it)

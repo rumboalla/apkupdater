@@ -18,34 +18,75 @@ class UpdatesNotification(private val context: Context) {
 
     companion object {
         const val UpdateAction = "updateAction"
+        private const val UPDATE_ID = 42
+        private const val BACKGROUND_ID = 43
     }
 
     private val notificationManager get() = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val channelId = context.getString(R.string.notification_channel_id)
     private val channelName = context.getString(R.string.notification_channel_name)
-    private val updateTitle = context.getString(R.string.notification_update_title)
-    private val updateId = 42
 
-    @SuppressLint("MissingPermission")
-    fun showUpdateNotification(num: Int) {
-        // Intent for the notification click
+    private fun getBaseBuilder(): NotificationCompat.Builder {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             action = UpdateAction
         }
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
-        val builder = NotificationCompat.Builder(context, channelId)
+        return NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_install)
-            .setContentTitle(updateTitle)
-            .setContentText(context.resources.getQuantityString(R.plurals.notification_update_description, num, num))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE))
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun updateProgress(title: String, text: String, progress: Int, indeterminate: Boolean = false) {
+        if (!areNotificationsEnabled()) return
+        createNotificationChannel()
+
+        val builder = getBaseBuilder()
+            .setContentTitle(title)
+            .setContentText(text)
+            .setProgress(100, progress, indeterminate)
+            .setOngoing(true)
+
+        NotificationManagerCompat.from(context).notify(UPDATE_ID, builder.build())
+    }
+
+    @SuppressLint("MissingPermission")
+    fun showStatus(title: String, text: String, success: Boolean? = null) {
+        if (!areNotificationsEnabled()) return
+        createNotificationChannel()
+
+        val builder = getBaseBuilder()
+            .setContentTitle(title)
+            .setContentText(text)
+            .setProgress(0, 0, false)
+            .setOngoing(false)
             .setAutoCancel(true)
 
+        NotificationManagerCompat.from(context).notify(UPDATE_ID, builder.build())
+    }
+
+    @SuppressLint("MissingPermission")
+    fun showUpdateNotification(count: Int) {
+        if (!areNotificationsEnabled()) return
         createNotificationChannel()
-        if (areNotificationsEnabled()) {
-            NotificationManagerCompat.from(context).notify(updateId, builder.build())
-        }
+
+        val title = context.getString(R.string.notification_update_title)
+        val description = context.resources.getQuantityString(R.plurals.notification_update_description, count, count)
+
+        val builder = getBaseBuilder()
+            .setContentTitle(title)
+            .setContentText(description)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+
+        NotificationManagerCompat.from(context).notify(BACKGROUND_ID, builder.build())
     }
 
     fun checkNotificationPermission(launcher: ManagedActivityResultLauncher<String, Boolean>) {

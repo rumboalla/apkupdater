@@ -160,3 +160,10 @@ fun filterVersionTag(version: String) = version
 fun Float.to2f() = String
 	.format(Locale.getDefault(), "%.2f", this)
 	.replace('.', DecimalFormatSymbols.getInstance(Locale.getDefault()).decimalSeparator)
+
+fun Long.formatBytes(): String {
+	if (this <= 0) return "0 B"
+	val units = arrayOf("B", "KB", "MB", "GB", "TB")
+	val digitGroups = (Math.log10(this.toDouble()) / Math.log10(1024.0)).toInt()
+	return java.text.DecimalFormat("#,##0.#").format(this / Math.pow(1024.0, digitGroups.toDouble())) + " " + units[digitGroups]
+}

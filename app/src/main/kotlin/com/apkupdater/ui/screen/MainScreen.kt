@@ -19,8 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -71,9 +69,6 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 	// Navigation
 	val navController = rememberNavController()
 
-	// Pull to refresh
-	val isRefreshing = mainViewModel.isRefreshing.collectAsStateWithLifecycle()
-	val pullToRefreshState = rememberPullToRefreshState()
 	LaunchedEffect(Unit) {
 		mainViewModel.refresh(appsViewModel, updatesViewModel)
 	}
@@ -103,13 +98,7 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
 			snackbarHost = { SnackbarHost(snackBarHostState) },
 			bottomBar = { BottomBar(mainViewModel, navController) }
 		) { padding ->
-			PullToRefreshBox(
-				isRefreshing = isRefreshing.value,
-				onRefresh = { mainViewModel.refresh(appsViewModel, updatesViewModel) },
-				state = pullToRefreshState
-			) {
-				NavHost(navController, padding, mainViewModel, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
-			}
+            NavHost(navController, padding, mainViewModel, appsViewModel, updatesViewModel, searchViewModel, settingsViewModel)
 		}
 	}
 }

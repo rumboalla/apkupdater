@@ -3,7 +3,7 @@ package com.apkupdater.data.ui
 
 sealed class SearchUiState {
     data object Loading: SearchUiState()
-    data object Error : SearchUiState()
+    data class Error(val message: String? = null) : SearchUiState()
     data class Success(val updates: List<AppUpdate>): SearchUiState()
 
     inline fun onLoading(block: (Loading) -> Unit): SearchUiState {

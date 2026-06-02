@@ -28,7 +28,7 @@ class PlayRepository(
     private val context: Context,
     private val playHttpClient: PlayHttpClient,
     private val gson: Gson,
-    private val prefs: Prefs
+    private val prefs: Prefs,
 ) {
     companion object {
         const val AUTH_URL = "https://auroraoss.com/api/auth"
@@ -51,7 +51,7 @@ class PlayRepository(
         if (savedData.email.isEmpty()) {
             return refreshAuth()
         }
-        if (System.currentTimeMillis() - prefs.lastPlayCheck.get() > 60 * 60 * 1_000) {
+        if ((System.currentTimeMillis() - prefs.lastPlayCheck.get()) > 60 * 60 * 1_000) {
             // Update check time
             prefs.lastPlayCheck.put(System.currentTimeMillis())
             Log.i("PlayRepository", "Checking token validity.")
@@ -73,16 +73,18 @@ class PlayRepository(
         return savedData
     }
 
-    suspend fun search(text: String) = flow {
+    fun search(text: String) = flow {
         if (text.contains(" ") || !text.contains(".")) {
             // Normal Search
             val authData = auth()
             val updates = SearchHelper(authData)
                 .using(playHttpClient)
                 .searchResults(text)
-                .streamClusters.values.flatMap { it.clusterAppList }
+                .streamClusters.values.asSequence()
+                .flatMap { it.clusterAppList }
                 .take(10)
-                .map { it.toAppUpdate(::getInstallFiles) }
+                .map { it.toAppUpdate(::getInstallFilesWithHeaders) }
+                .toList()
             emit(Result.success(updates))
         } else {
             // Package Name Search
@@ -90,7 +92,7 @@ class PlayRepository(
             val update = AppDetailsHelper(authData)
                 .using(playHttpClient)
                 .getAppByPackageName(text)
-                .toAppUpdate(::getInstallFiles)
+                .toAppUpdate(::getInstallFilesWithHeaders)
             emit(Result.success(listOf(update)))
         }
     }.catch {
@@ -107,7 +109,7 @@ class PlayRepository(
             .filter { it.versionCode > apps.getVersionCode(it.packageName) }
             .map {
                 it.toAppUpdate(
-                    ::getInstallFiles,
+                    ::getInstallFilesWithHeaders,
                     apps.getVersion(it.packageName),
                     apps.getVersionCode(it.packageName)
                 )
@@ -118,15 +120,30 @@ class PlayRepository(
         Log.e("PlayRepository", "Error looking for updates.", it)
     }
 
-    private fun getInstallFiles(app: App) = PurchaseHelper(auth())
-        .using(playHttpClient)
-        .purchase(app.packageName, app.versionCode, app.offerType)
-        .filter { it.type == PlayFile.Type.BASE || it.type == PlayFile.Type.SPLIT }
+    private fun getInstallFilesWithHeaders(app: App): Pair<List<PlayFile>, Map<String, String>> {
+        Log.i("PlayRepository", "Purchasing ${app.packageName} v${app.versionCode}")
+        val authData = auth()
+        val files = PurchaseHelper(authData)
+            .using(playHttpClient)
+            .purchase(app.packageName, app.versionCode, app.offerType)
+            .filter { it.type == PlayFile.Type.BASE || it.type == PlayFile.Type.SPLIT }
+        
+        if (files.isEmpty()) {
+            Log.e("PlayRepository", "No base or split APKs found for ${app.packageName}")
+            throw Exception("No downloadable files found for this app")
+        }
+
+        val headers = mutableMapOf<String, String>()
+        headers["User-Agent"] = "Android-GMS/2 (Android 14; 34)"
+        headers["Cookie"] = "GoogleAdId=${authData.gsfId}; gsfid=${authData.gsfId}"
+        
+        return Pair(files, headers)
+    }
 
 }
 
 fun App.toAppUpdate(
-    getInstallFiles: (App) -> List<PlayFile>,
+    getInstallFiles: (App) -> Pair<List<PlayFile>, Map<String, String>>,
     oldVersion: String = "",
     oldVersionCode: Long = 0L
 ) = AppUpdate(
